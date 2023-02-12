@@ -3,8 +3,8 @@ enum TypeNameFile {
   normal,
   onlyExtension,
   onlyName,
-  // файлы с похожими именами
+  // files with similar names
   identical,
-  //  стартовое значение
+  // start value
   init
 }

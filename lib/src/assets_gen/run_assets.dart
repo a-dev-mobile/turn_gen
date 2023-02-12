@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:path/path.dart' as p;
 import 'package:turn_gen/constants.dart';
 import 'package:turn_gen/custom_exceptions.dart';
+
 // ignore: depend_on_referenced_packages
 import 'package:turn_gen/logger.dart';
 import 'package:turn_gen/src/assets_gen/enum_type_assets.dart';
@@ -17,7 +18,7 @@ Future<void> runAssets({
   required FLILogger logger,
 }) async {
   logger.progress('\nLooking for the assets folder');
- final slash = Platform.isWindows ? r'\' : '/';
+  final slash = Platform.isWindows ? r'\' : '/';
   final pathAssets = await _searchFolderAssets(pathBase, logger);
 
   logger
@@ -154,8 +155,7 @@ class AppAssets$vFormat {''');
       //  I fill it out to display the complete list
       listStrNameFile.add(l.fileOnlyNameFormat);
 
-      sb.write(
-          '''
+      sb.write('''
  
   /// * Size:\t${l.size}
   /// * File path: _${l.fileFromAssetsPath}
@@ -166,8 +166,7 @@ class AppAssets$vFormat {''');
 ''');
     }
 
-    sb.write(
-        '''
+    sb.write('''
 
   /// List of all assets
   static const List<String> values = $listStrNameFile;
@@ -176,8 +175,7 @@ class AppAssets$vFormat {''');
     listStrNameFile.clear();
   }
 
-  await File(pathGenFile).writeAsString(
-      '''
+  await File(pathGenFile).writeAsString('''
 ${ConstConsole.GEN_MSG}
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -305,10 +303,10 @@ bool _isExistFolder(String path) {
 }
 
 String _formatFileName(String s) {
-  final sFormat = s.replaceAll('.', '_');
+  final sFormat = s.trim();
 
   final separatedWords =
-      sFormat.split(RegExp(r'[!@#<>?":`~;[\]\\|=+)(*&^%-\s_]+'));
+      sFormat.split(RegExp(r'[!@#<>?":`~;[\]\\|=+)(*&^%-\.-—\s_]+'));
   var newString = '';
 
   if (separatedWords[0].isEmpty ||
@@ -334,7 +332,7 @@ String _formatFileName(String s) {
       text = _replaceCharAt(text, i, AlphabetRuEn.upperMap[letter]!);
     }
   }
-  // reserved word 
+  // reserved word
   return text == 'values' ? 'vValues' : text;
 }
 
