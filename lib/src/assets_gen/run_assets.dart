@@ -144,6 +144,7 @@ Future<void> runAssets({
   final sb = StringBuffer();
   var listAssets = <AssetItem>[];
   final listStrNameFile = <String>[];
+  var symbol = '';
   for (final v in extensionUniq) {
     vFormat = _extensionFormat(v);
     sb.write('''
@@ -152,9 +153,15 @@ class AppAssets$vFormat {''');
 
     listAssets = assetsList.where((e) => e.fileOnlyExtension == v).toList();
     for (final l in listAssets) {
+      // line screening
+      if (l.fileFromAssetsPath
+          .contains(RegExp(r'[&$]+'))) {
+        symbol = 'r';
+      } else {
+        symbol = '';
+      }
       //  I fill it out to display the complete list
       listStrNameFile.add(l.fileOnlyNameFormat);
-
       sb.write('''
  
   /// * Size:\t${l.size}
@@ -162,7 +169,7 @@ class AppAssets$vFormat {''');
   ///     * Accessed: ${l.dateAccessed}
   ///     * Changed:  ${l.dateChanged}
   ///     * Modified: ${l.dateModified}
-  static const String ${l.fileOnlyNameFormat} = '${l.fileFromAssetsPath}';
+  static const String ${l.fileOnlyNameFormat} = $symbol'${l.fileFromAssetsPath}';
 ''');
     }
 
@@ -306,13 +313,13 @@ String _formatFileName(String s) {
   final sFormat = s.trim();
 
   final separatedWords =
-      sFormat.split(RegExp(r'[!@#<>?":`~;[\]\\|=+)(*&^%-\.-—\s_]+'));
+      sFormat.split(RegExp(r'[!@#<>?":`~;[\]\\|=+)(*&^%-\.-$—\s_]+'));
   var newString = '';
 
   if (separatedWords[0].isEmpty ||
       int.tryParse(separatedWords[0]) != null ||
       int.tryParse(separatedWords[0][0]) != null) {
-    separatedWords[0] = '${ConstHelper.replaceIfFirstLetterNumber}$s';
+    separatedWords[0] = ConstHelper.replaceIfFirstLetterNumber;
   }
 
   for (final word in separatedWords) {
