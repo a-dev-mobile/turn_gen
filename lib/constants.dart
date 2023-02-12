@@ -9,21 +9,23 @@ class ConstHelper {
   static const String namePackage = 'turn_gen';
   static const String nameConfigAssetsOutput = 'assets_output';
 
-
   ///
   static const String noExtension = 'noExtension';
+  static const String replaceIfFirstLetterNumber = 'n';
 
   static const String configName = 'turn_gen';
 }
 
 class ConstConsole {
-  static String introMessage(String currentVersion) => '''
+  static String introMessage(String currentVersion) =>
+      '''
 
   ════════════════════════════════════════════
      TURN_GEN (v$currentVersion)                               
   ════════════════════════════════════════════''';
 
-  static const String GEN_MSG = '''
+  static const String GEN_MSG =
+      '''
 //          --TURN_GEN--
 //  *************************************
 //           GENERATED CODE 

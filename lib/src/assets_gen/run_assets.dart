@@ -9,6 +9,7 @@ import 'package:turn_gen/custom_exceptions.dart';
 import 'package:turn_gen/logger.dart';
 import 'package:turn_gen/src/assets_gen/enum_type_assets.dart';
 import 'package:turn_gen/src/assets_gen/model/asset_item.dart';
+import 'package:turn_gen/src/assets_gen/ru_to_lat/alpabet.dart';
 import 'package:yaml/yaml.dart';
 
 Future<void> runAssets({
@@ -153,7 +154,8 @@ class AppAssets$vFormat {''');
       //  I fill it out to display the complete list
       listStrNameFile.add(l.fileOnlyNameFormat);
 
-      sb.write('''
+      sb.write(
+          '''
  
   /// * Size:\t${l.size}
   /// * File path: _${l.fileFromAssetsPath}
@@ -164,7 +166,8 @@ class AppAssets$vFormat {''');
 ''');
     }
 
-    sb.write('''
+    sb.write(
+        '''
 
   /// List of all assets
   static const List<String> values = $listStrNameFile;
@@ -173,7 +176,8 @@ class AppAssets$vFormat {''');
     listStrNameFile.clear();
   }
 
-  await File(pathGenFile).writeAsString('''
+  await File(pathGenFile).writeAsString(
+      '''
 ${ConstConsole.GEN_MSG}
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -309,13 +313,28 @@ String _formatFileName(String s) {
 
   if (separatedWords[0].isEmpty ||
       int.tryParse(separatedWords[0]) != null ||
-      int.tryParse(separatedWords[0][0]) != null) separatedWords[0] = 'n';
+      int.tryParse(separatedWords[0][0]) != null) {
+    separatedWords[0] = '${ConstHelper.replaceIfFirstLetterNumber}$s';
+  }
 
   for (final word in separatedWords) {
     if (word.isEmpty) continue;
+    // ignore: use_string_buffers
     newString += word[0].toUpperCase() + word.substring(1).toLowerCase();
   }
-  final text = '${newString[0].toLowerCase()}${newString.substring(1)}';
+  var text = '${newString[0].toLowerCase()}${newString.substring(1)}';
+
+  var letter = '';
+
+  for (var i = 0; i < text.length; i++) {
+    letter = text[i];
+    if (AlphabetRuEn.lowerMap.containsKey(letter)) {
+      text = _replaceCharAt(text, i, AlphabetRuEn.lowerMap[letter]!);
+    } else if (AlphabetRuEn.upperMap.containsKey(letter)) {
+      text = _replaceCharAt(text, i, AlphabetRuEn.upperMap[letter]!);
+    }
+  }
+  // reserved word 
   return text == 'values' ? 'vValues' : text;
 }
 
@@ -369,4 +388,10 @@ String _incrNameFile(String text) {
   final updateText = text.replaceAll(intInStr, '');
 
   return '$updateText$i';
+}
+
+String _replaceCharAt(String oldString, int index, String newChar) {
+  return oldString.substring(0, index) +
+      newChar +
+      oldString.substring(index + 1);
 }
