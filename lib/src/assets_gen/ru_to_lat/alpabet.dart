@@ -27,13 +27,12 @@ class AlphabetRuEn {
     'Ч': 'CH',
     'Ш': 'SH',
     'Щ': 'SHH',
-    'Ъ': '',
+    'Ъ': 'J',
     'Ы': 'Y',
-    'Ь': '',
+    'Ь': 'I',
     'Э': "E'",
     'Ю': 'YU',
     'Я': 'YA',
-   
   };
 
   static const lowerMap = <String, String>{
@@ -64,12 +63,11 @@ class AlphabetRuEn {
     'ч': 'ch',
     'ш': 'sh',
     'щ': 'shh',
-    'ъ': '',
+    'ъ': 'j',
     'ы': 'y',
-    'ь': '',
+    'ь': 'i',
     'э': 'e',
     'ю': 'yu',
     'я': 'ya',
-   
   };
 }
