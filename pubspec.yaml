@@ -1,0 +1,26 @@
+name: turn_gen
+description: A package that simplifies the generation of additional features
+version: 0.0.1
+maintainer: Dmitriy Trofimov
+homepage: https://github.com/a-dev-mobile/turn_gen
+repository: https://github.com/a-dev-mobile/turn_gen/
+issue_tracker: https://github.com/a-dev-mobile/turn_gen/issues
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  path: any
+  args: any
+  cli_util: any
+  collection: any
+  yaml: any
+  intl: any
+dev_dependencies:
+  # Analyzer extensions
+  dart_code_metrics: ^5.5.1
+  very_good_analysis: ^4.0.0+1
+
+
+turn_gen:
+  assets_output: "lib/gen/"

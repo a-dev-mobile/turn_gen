@@ -1,0 +1,67 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+linter:
+  rules:
+    public_member_api_docs: false
+    sort_pub_dependencies: false
+    lines_longer_than_80_chars: false
+    # sort_constructors_first: false
+    # non_constant_identifier_names: false
+    # constant_identifier_names: false
+
+analyzer:
+  # errors:
+  # argument_type_not_assignable: ignore
+  # invalid_assignment: ignore
+  plugins:
+    - dart_code_metrics
+  # strong-mode:
+  # implicit-dynamic: true
+  # implicit-casts: true
+
+  exclude:
+    # Generated code
+
+
+    - "lib/**.gen.dart"
+    - "lib/generated_plugin_registrant.dart"
+
+    # Tests
+    - "test/**.mocks.dart"
+    # - "test/*.dart"
+    - ".test_coverage.dart"
+    # Web
+    - "web/**"
+    # Build
+    - "build/**"
+    # Assets
+    - "assets/**"
+
+dart_code_metrics:
+  extends:
+    - package:dart_code_metrics/presets/all.yaml
+  rules:
+    - member-ordering: false
+    - prefer-match-file-name: false
+    - avoid-dynamic: false
+    - format-comment: false
+    - prefer-commenting-analyzer-ignores: false
+    - avoid-non-ascii-symbols: false
+    - prefer-single-widget-per-file:
+        ignore-private-widgets: true
+    - prefer-correct-identifier-length: false
+    - prefer-moving-to-variable:
+        allowed-duplicated-chains: 3
+    - arguments-ordering: false
+    - avoid-late-keyword: false
+
+    - avoid-nested-conditional-expressions: false
+    - prefer-static-class:
+        ignore-annotations:
+          - allowedAnnotation
+        ignore-private: true
+    - no-equal-arguments:
+        ignored-parameters:
+          - height
+          - width
+          - Duration.zero

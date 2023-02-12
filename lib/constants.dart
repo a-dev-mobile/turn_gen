@@ -1,0 +1,39 @@
+// ignore_for_file: constant_identifier_names
+import 'package:path/path.dart' as path;
+
+class ConstHelper {
+  /// Relative pubspec.yaml path
+  static final String pubspecFilePath = path.join('pubspec.yaml');
+
+  /// pubspec.yaml
+  static const String namePackage = 'turn_gen';
+  static const String nameConfigAssetsOutput = 'assets_output';
+
+
+  ///
+  static const String noExtension = 'noExtension';
+
+  static const String configName = 'turn_gen';
+}
+
+class ConstConsole {
+  static String introMessage(String currentVersion) => '''
+
+  ════════════════════════════════════════════
+     TURN_GEN (v$currentVersion)                               
+  ════════════════════════════════════════════''';
+
+  static const String GEN_MSG = '''
+//          --TURN_GEN--
+//  *************************************
+//           GENERATED CODE 
+//  *************************************
+  ''';
+}
+
+class ConstArgOptionFlag {
+  static const String fileOption = 'file';
+  static const String typeOption = 'type';
+  static const String helpFlag = 'help';
+  static const String verboseFlag = 'verbose';
+}
