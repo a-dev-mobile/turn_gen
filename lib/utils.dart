@@ -54,8 +54,9 @@ abstract class UtilsRegex {
     required String content,
   }) {
     final regexFindNameState = RegExp(regex, multiLine: true);
-    var match = regexFindNameState.allMatches(content);
+    final match = regexFindNameState.allMatches(content);
     if (match.isEmpty) {
+      
       print('');
       print('---no matches found---');
       print('');
@@ -69,7 +70,7 @@ abstract class UtilsRegex {
     required String content,
   }) {
     final regexFindNameState = RegExp(regex, multiLine: true);
-    var matches = regexFindNameState.allMatches(content);
+    final matches = regexFindNameState.allMatches(content);
     if (matches.isEmpty) {
       print('');
       print('---no matches found---');

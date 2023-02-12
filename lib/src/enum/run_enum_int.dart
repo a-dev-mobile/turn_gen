@@ -35,18 +35,20 @@ enum LocaleEnum {
 переносы должны быть указаны как >>>  LF
  */
 
+// ignore: prefer-static-class
 Future<void> runEnumInt(
-    {required String path, required FLILogger logger}) async {
-  String contentFile = await UtilsString.readFile(path: path);
+    {required String path, required FLILogger logger,}) async {
+  var contentFile = await UtilsString.readFile(path: path);
 
   if (contentFile.contains('GENERATED CODE')) {
     logger.info('Файл $path \nуже имеет генерированные данные');
+  
     return;
   }
 
-  String enumContent = UtilsString.replaceToEmpty(
+  var enumContent = UtilsString.replaceToEmpty(
     text: UtilsRegex.getTextRegexLastMatch(
-        content: contentFile, regex: r'enum\s+\w+\s+{[\s\S]+?}'),
+        content: contentFile, regex: r'enum\s+\w+\s+{[\s\S]+?}',),
     replaceable: [
       '\n',
       '  ',
@@ -54,7 +56,7 @@ Future<void> runEnumInt(
   );
 
   final enumHeader = UtilsRegex.getTextRegexLastMatch(
-      content: enumContent, regex: r'enum\s+\w+\s+{');
+      content: enumContent, regex: r'enum\s+\w+\s+{',);
 
   final enumName = UtilsString.replaceToEmpty(
     text: enumHeader,
@@ -72,52 +74,52 @@ Future<void> runEnumInt(
       '}',
     ],
   );
-  String enumBracketsWithoutFinalAndConst = enumBrackets;
+  var enumBracketsWithoutFinalAndConst = enumBrackets;
 
   if (enumBrackets.contains('const') && enumBrackets.contains('final')) {
     enumBracketsWithoutFinalAndConst = UtilsString.replaceToEmpty(
       text: enumBrackets,
       replaceable: [
         UtilsRegex.getTextRegexLastMatch(
-            content: enumContent, regex: r'const[\s\S]+?;'),
+            content: enumContent, regex: r'const[\s\S]+?;',),
         UtilsRegex.getTextRegexLastMatch(
-            content: enumContent, regex: r'final[\s\S]+?;'),
+            content: enumContent, regex: r'final[\s\S]+?;',),
       ],
     );
   }
   final listItemValue = UtilsRegex.getTextRegexListMatch(
-      content: enumBracketsWithoutFinalAndConst, regex: r'\([\s\S]+?\)');
+      content: enumBracketsWithoutFinalAndConst, regex: r'\([\s\S]+?\)',);
 
   final listItemName = UtilsRegex.getTextRegexListMatch(
-      content: enumBracketsWithoutFinalAndConst, regex: r'\w+(\s+|)\(');
-  String key = '';
-  String value = '';
+      content: enumBracketsWithoutFinalAndConst, regex: r'\w+(\s+|)\(',);
+  var key = '';
+  var value = '';
   final map = <String, String>{};
 
-  for (int i = 0; i < listItemName.length; i++) {
+  for (var i = 0; i < listItemName.length; i++) {
     key = UtilsString.replaceToEmpty(text: listItemName[i], replaceable: [
       '(',
-    ]);
+    ],);
     value = UtilsString.replaceToEmpty(text: listItemValue[i], replaceable: [
       '(',
       ')',
       '\'',
       '"',
-    ]);
+    ],);
     map[key] = value;
   }
 
-  StringBuffer constructor = StringBuffer();
-  StringBuffer fromValue = StringBuffer();
+  var constructor = StringBuffer();
+  var fromValue = StringBuffer();
 
   /// Pattern matching
-  StringBuffer mapStart = StringBuffer();
-  StringBuffer mapEnd = StringBuffer();
-  StringBuffer maybeMapStart = StringBuffer();
-  StringBuffer maybeMapEnd = StringBuffer();
-  StringBuffer maybeMapOrNullStart = StringBuffer();
-  StringBuffer maybeMapOrNullEnd = StringBuffer();
-  String lastSymbolArg = '';
+  var mapStart = StringBuffer();
+  var mapEnd = StringBuffer();
+  var maybeMapStart = StringBuffer();
+  var maybeMapEnd = StringBuffer();
+  var maybeMapOrNullStart = StringBuffer();
+  var maybeMapOrNullEnd = StringBuffer();
+  var lastSymbolArg = '';
   map.forEach((k, v) {
     {
       lastSymbolArg = k == map.keys.last ? ';' : ',';
