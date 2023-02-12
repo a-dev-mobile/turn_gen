@@ -17,7 +17,7 @@ Future<void> runAssets({
   required FLILogger logger,
 }) async {
   logger.progress('\nLooking for the assets folder');
-
+ final slash = Platform.isWindows ? r'\' : '/';
   final pathAssets = await _searchFolderAssets(pathBase, logger);
 
   logger
@@ -45,7 +45,7 @@ Future<void> runAssets({
   for (final v in allFiles) {
     fileFullPatch = v.path;
 
-    fileNameWithExtension = fileFullPatch.split(r'\').last;
+    fileNameWithExtension = fileFullPatch.split(slash).last;
     final fileNameWithExtensionSplit = fileNameWithExtension.split('.');
     // если есть больше одной точки в имени файла
     if (fileNameWithExtensionSplit.length >= 3) {
@@ -362,7 +362,7 @@ String _getPathAssetsOutput(String basePath, FLILogger logger) {
     if (configValue == null) return '';
 
     final relPath = configValue.toString();
-    final path = p.join(basePath, relPath).replaceAll('/', r'\');
+    final path = p.join(basePath, relPath);
 
     logger
       ..info('Path found: $path')
