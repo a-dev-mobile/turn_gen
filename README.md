@@ -82,9 +82,9 @@ After running the script, you will get additional methods and override the stand
 
 ### Assets
 
-TurnGen также позволяет генерировать строковые константы всех файлов в папке assets, c возможностью использования различных символов и букв в названии файла.
+TurnGen also allows you to generate string constants of all files in the assets folder, with the ability to use different characters and letters in the file name.
 
-Необходимо добавить путь к файлу констант:
+You need to add the path to the constant file:
 
 ```yaml
 dev_dependencies:
@@ -94,7 +94,7 @@ turn_gen:
   assets_output: "lib/gen/" 
 ```
 
-Для запуска используем команду:
+We use the command to start it:
 
 ```shell
 # 1
