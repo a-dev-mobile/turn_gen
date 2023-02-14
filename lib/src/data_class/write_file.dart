@@ -72,35 +72,35 @@ $fromMapSb    );
   }
 
   $className copyWith({
-${copyWithStart.toString()}  }) {
+$copyWithStart  }) {
     return $className(
-${copyWithEnd.toString()}    );
+$copyWithEnd    );
   }
   
   String toJson() => json.encode(toMap());
   
     
-  factory $className.fromJson(String source) => $className.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory $className.fromJson(String source) => $className.fromMap(json.decode(source) as Map<String, dynamic>,);
   
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is $className &&
-${equals.toString()}  }
+$equals  }
   
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-${hashCode.toString()}]);
+$hashCode]);
   
   @override
   String toString() {
-    return '$className(${toString.toString()})';
+    return '$className($toString)';
     }
   }\n''';
 
-  file.writeAsString(
+  final _ = file.writeAsString(
     UtilsString.replaceToEmpty(
       text: newContent,
       replaceable: [],
