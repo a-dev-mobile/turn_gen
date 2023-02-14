@@ -72,7 +72,7 @@ data
 
     final typeString = argResults[ConstArgOptionFlag.typeOption].toString();
     final typeRun = TypeRun.fromValue(typeString, fallback: TypeRun.none);
-    logger.info('Type of generator used: : ${typeRun.value}');
+    logger.info('Type of generator used: ${typeRun.value}');
     switch (typeRun) {
       case TypeRun.enumDefault:
         await runEnumDefault(path: path, logger: logger);

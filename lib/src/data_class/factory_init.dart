@@ -17,7 +17,7 @@ String _getWordConst(Varable v) {
   return init;
 }
 
-String _getDefaultInitValue(TypeVarable type, String init, bool isCanNull) {
+String _getDefaultInitValue(EnumTypeVarable type, String init, bool isCanNull) {
   final mapDefault = init.isEmpty ? '{}' : init;
   final listDefault = init.isEmpty ? '[]' : init;
   final isNullAndEmptyInit = isCanNull && init.isEmpty;
@@ -29,13 +29,13 @@ String _getDefaultInitValue(TypeVarable type, String init, bool isCanNull) {
     int_: () {
       final v = int.tryParse(init);
       if (v == null) return 0;
-      
+
       return init;
     },
     double_: () {
       final v = double.tryParse(init);
       if (v == null) return 0;
-      
+
       return UtilsNumber.removeTrailingZerosAndNumberfy(v);
     },
     num_: () {
@@ -45,13 +45,13 @@ String _getDefaultInitValue(TypeVarable type, String init, bool isCanNull) {
       return UtilsNumber.removeTrailingZerosAndNumberfy(v);
     },
     list_string_: () {
-      if (init.isEmpty) return [];
-     
+      if (init.isEmpty) return <String>[];
+
       return init.replaceAll('null', '');
     },
     list_int_: () {
-      if (init.isEmpty) return [];
-     
+      if (init.isEmpty) return <String>[];
+
       return init.replaceAll('null', '');
     },
     list_int_null: () => listDefault,
@@ -95,7 +95,9 @@ String _getDefaultInitValue(TypeVarable type, String init, bool isCanNull) {
     list_other: () => listDefault,
     none_: () => init,
     date_time: () => 'DateTime.now()',
-    data: () => init, list_data: ()=>listDefault,
+    data: () => init,
+    list_data: () => listDefault,
+    list_data_null: () => listDefault,
   );
 
   // print(initValue.toString());

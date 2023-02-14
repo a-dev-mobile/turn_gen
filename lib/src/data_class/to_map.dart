@@ -2,14 +2,14 @@
 
 part of 'run_data_class.dart';
 
-String _getToMap(Varable v) {
+String _getToMapVarable(Varable v) {
   final type = v.type;
   final name = v.name;
-  final nameEnum = v.nameObject;
-  final toMap = v.toMap;
+
+  final toMap = v.toMap_;
   final isCanNull = v.isCanNull;
   final initComment = v.initValueComment;
-  final error = 'error';
+  const error = 'error';
 
   if (toMap.isNotEmpty) return toMap;
   final yes_null_default_yes = isCanNull && initComment.isNotEmpty;
@@ -18,15 +18,15 @@ String _getToMap(Varable v) {
   final no_null_default_no = !isCanNull && initComment.isEmpty;
 
   switch (type) {
-    case TypeVarable.string_:
+    case EnumTypeVarable.string_:
 
-    case TypeVarable.bool_:
+    case EnumTypeVarable.bool_:
 
-    case TypeVarable.int_:
+    case EnumTypeVarable.int_:
 
-    case TypeVarable.num_:
+    case EnumTypeVarable.num_:
 
-    case TypeVarable.double_:
+    case EnumTypeVarable.double_:
       if (yes_null_default_yes) {
         return name;
       } else if (yes_null_default_no) {
@@ -38,7 +38,7 @@ String _getToMap(Varable v) {
       }
       return error;
 
-    case TypeVarable.none_:
+    case EnumTypeVarable.none_:
       if (yes_null_default_yes) {
         return error;
       } else if (yes_null_default_no) {
@@ -50,91 +50,91 @@ String _getToMap(Varable v) {
       }
       return error;
 
-    case TypeVarable.enum_:
+    case EnumTypeVarable.enum_:
       if (yes_null_default_yes) {
-        return "$name?.index";
+        return '$name?.index';
       } else if (yes_null_default_no) {
-        return "$name?.index";
+        return '$name?.index';
       } else if (no_null_default_yes) {
-        return "$name.index";
+        return '$name.index';
       } else if (no_null_default_no) {
-        return "$name.index";
+        return '$name.index';
       }
       return error;
 // SET
-    case TypeVarable.set_double:
-    case TypeVarable.set_double_null:
-    case TypeVarable.set_:
-    case TypeVarable.set_string:
-    case TypeVarable.set_string_null:
-    case TypeVarable.set_int:
-    case TypeVarable.set_int_null:
-    case TypeVarable.set_bool:
-    case TypeVarable.set_bool_null:
+    case EnumTypeVarable.set_double:
+    case EnumTypeVarable.set_double_null:
+    case EnumTypeVarable.set_:
+    case EnumTypeVarable.set_string:
+    case EnumTypeVarable.set_string_null:
+    case EnumTypeVarable.set_int:
+    case EnumTypeVarable.set_int_null:
+    case EnumTypeVarable.set_bool:
+    case EnumTypeVarable.set_bool_null:
       if (yes_null_default_yes) {
-        return "$name?.toList()";
+        return '$name?.toList()';
       } else if (yes_null_default_no) {
-        return "$name?.toList()";
+        return '$name?.toList()';
       } else if (no_null_default_yes) {
-        return "$name.toList()";
+        return '$name.toList()';
       } else if (no_null_default_no) {
-        return "$name.toList()";
+        return '$name.toList()';
       }
       return error;
 
     // MAP
-    case TypeVarable.map_string_bool:
-    case TypeVarable.map_string_bool_null:
-    case TypeVarable.map_string_double_:
-    case TypeVarable.map_string_double_null:
-    case TypeVarable.map_string_dynamic_:
-    case TypeVarable.map_string_int:
-    case TypeVarable.map_string_string:
-    case TypeVarable.map_string_int_null:
-    case TypeVarable.map_string_string_null:
+    case EnumTypeVarable.map_string_bool:
+    case EnumTypeVarable.map_string_bool_null:
+    case EnumTypeVarable.map_string_double_:
+    case EnumTypeVarable.map_string_double_null:
+    case EnumTypeVarable.map_string_dynamic_:
+    case EnumTypeVarable.map_string_int:
+    case EnumTypeVarable.map_string_string:
+    case EnumTypeVarable.map_string_int_null:
+    case EnumTypeVarable.map_string_string_null:
       if (yes_null_default_yes) {
-        return "$name?.map(MapEntry.new)";
+        return '$name?.map(MapEntry.new)';
       } else if (yes_null_default_no) {
-        return "$name?.map(MapEntry.new)";
+        return '$name?.map(MapEntry.new)';
       } else if (no_null_default_yes) {
-        return "$name.map(MapEntry.new)";
+        return '$name.map(MapEntry.new)';
       } else if (no_null_default_no) {
-        return "$name.map(MapEntry.new)";
+        return '$name.map(MapEntry.new)';
       }
       return error;
 
-    case TypeVarable.map_:
-    case TypeVarable.map_dynamic_dynamic_:
-    case TypeVarable.map_int_bool:
-    case TypeVarable.map_int_bool_null:
-    case TypeVarable.map_int_double:
-    case TypeVarable.map_int_double_null:
-    case TypeVarable.map_int_dynamic_:
-    case TypeVarable.map_int_string:
-    case TypeVarable.map_int_string_null:
+    case EnumTypeVarable.map_:
+    case EnumTypeVarable.map_dynamic_dynamic_:
+    case EnumTypeVarable.map_int_bool:
+    case EnumTypeVarable.map_int_bool_null:
+    case EnumTypeVarable.map_int_double:
+    case EnumTypeVarable.map_int_double_null:
+    case EnumTypeVarable.map_int_dynamic_:
+    case EnumTypeVarable.map_int_string:
+    case EnumTypeVarable.map_int_string_null:
       if (yes_null_default_yes) {
-        return "$name?.map((k, e) => MapEntry(k.toString(), e))";
+        return '$name?.map((k, e) => MapEntry(k.toString(), e))';
       } else if (yes_null_default_no) {
-        return "$name?.map((k, e) => MapEntry(k.toString(), e))";
+        return '$name?.map((k, e) => MapEntry(k.toString(), e))';
       } else if (no_null_default_yes) {
-        return "$name.map((k, e) => MapEntry(k.toString(), e))";
+        return '$name.map((k, e) => MapEntry(k.toString(), e))';
       } else if (no_null_default_no) {
-        return "$name.map((k, e) => MapEntry(k.toString(), e))";
+        return '$name.map((k, e) => MapEntry(k.toString(), e))';
       }
       return error;
-    case TypeVarable.list_other:
-    case TypeVarable.list_:
-    case TypeVarable.list_bool_:
-    case TypeVarable.list_bool_null:
-    case TypeVarable.list_double_:
-    case TypeVarable.list_double_null:
-    case TypeVarable.list_dynamic_:
-    case TypeVarable.list_int_:
-    case TypeVarable.list_int_null:
-    case TypeVarable.list_string_:
-    case TypeVarable.list_string_null:
+    case EnumTypeVarable.list_other:
+    case EnumTypeVarable.list_:
+    case EnumTypeVarable.list_bool_:
+    case EnumTypeVarable.list_bool_null:
+    case EnumTypeVarable.list_double_:
+    case EnumTypeVarable.list_double_null:
+    case EnumTypeVarable.list_dynamic_:
+    case EnumTypeVarable.list_int_:
+    case EnumTypeVarable.list_int_null:
+    case EnumTypeVarable.list_string_:
+    case EnumTypeVarable.list_string_null:
       return name;
-    case TypeVarable.list_map_int_dynamic_:
+    case EnumTypeVarable.list_map_int_dynamic_:
       if (yes_null_default_yes) {
         return '''$name?.map((e) => e.map((k, e) => MapEntry(k.toString(), e))).toList()''';
       } else if (yes_null_default_no) {
@@ -147,7 +147,7 @@ String _getToMap(Varable v) {
 
       return error;
 
-    case TypeVarable.list_map_int_string_:
+    case EnumTypeVarable.list_map_int_string_:
       if (yes_null_default_yes) {
         return '''$name?.map((e) => e.map((k, e) => MapEntry(k.toString(), e))).toList()''';
       } else if (yes_null_default_no) {
@@ -160,50 +160,62 @@ String _getToMap(Varable v) {
 
       return error;
 
-    case TypeVarable.list_map_int_string_null:
+    case EnumTypeVarable.list_map_int_string_null:
       if (yes_null_default_yes) {
         return '''$name?.map((e) => e.map((k, e) => MapEntry(k.toString(), e))).toList()''';
       } else if (yes_null_default_no) {
         return '''$name?.map((e) => e.map((k, e) => MapEntry(k.toString(), e))).toList()''';
       } else if (no_null_default_yes) {
-        return "$name.map((e) => e.map((k, e) => MapEntry(k.toString(), e))).toList()";
+        return '$name.map((e) => e.map((k, e) => MapEntry(k.toString(), e))).toList()';
       } else if (no_null_default_no) {
-        return "$name.map((e) => e.map((k, e) => MapEntry(k.toString(), e))).toList()";
+        return '$name.map((e) => e.map((k, e) => MapEntry(k.toString(), e))).toList()';
       }
       return error;
-    case TypeVarable.date_time:
+    case EnumTypeVarable.date_time:
       if (yes_null_default_yes) {
-        return "$name?.toIso8601String()";
+        return '$name?.toIso8601String()';
       } else if (yes_null_default_no) {
-        return "$name?.toIso8601String()";
+        return '$name?.toIso8601String()';
       } else if (no_null_default_yes) {
-        return "$name.toIso8601String()";
+        return '$name.toIso8601String()';
       } else if (no_null_default_no) {
-        return "$name.toIso8601String()";
+        return '$name.toIso8601String()';
       }
       return error;
-    case TypeVarable.data:
+    case EnumTypeVarable.data:
       if (yes_null_default_yes) {
-        return "$name?.toMap() ?? $initComment";
+        return '$name?.toMap() ?? $initComment';
       } else if (yes_null_default_no) {
-        return "$name?.toMap()";
+        return '$name?.toMap()';
       } else if (no_null_default_yes) {
-        return "$name.toMap()";
+        return '$name.toMap()';
       } else if (no_null_default_no) {
-        return "$name.toMap()";
+        return '$name.toMap()';
       }
       return error;
 
-    case TypeVarable.list_data:
+    case EnumTypeVarable.list_data:
       if (yes_null_default_yes) {
-        return "$name?.map((e) => e.toJson()).toList()  ?? $initComment";
+        return '$name?.map((e) => e?.toJson()).toList()  ?? $initComment';
       } else if (yes_null_default_no) {
-        return "$name?.map((e) => e.toJson()).toList()";
+        return '$name?.map((e) => e?.toJson()).toList()';
       } else if (no_null_default_yes) {
-        return "$name.map((e) => e.toJson()).toList()";
+        return '$name.map((e) => e.toJson()).toList()';
       } else if (no_null_default_no) {
-        return "$name.map((e) => e.toJson()).toList()";
+        return '$name.map((e) => e.toJson()).toList()';
       }
       return error;
+    case EnumTypeVarable.list_data_null:
+      if (yes_null_default_yes) {
+        return '$name?.map((e) => e?.toJson()).toList()  ?? $initComment';
+      } else if (yes_null_default_no) {
+        return '$name?.map((e) => e?.toJson()).toList()';
+      } else if (no_null_default_yes) {
+        return '$name.map((e) => e?.toJson()).toList()';
+      } else if (no_null_default_no) {
+        return '$name.map((e) => e?.toJson()).toList()';
+      }
+      return error;
+ 
   }
 }

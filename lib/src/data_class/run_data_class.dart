@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:turn_gen/constants.dart';
 import 'package:turn_gen/logger.dart';
-import 'package:turn_gen/src/data_class/type_variable_enum.dart';
+import 'package:turn_gen/src/data_class/data_class.dart';
+
 import 'package:turn_gen/utils.dart';
 
 part 'to_map.dart';
@@ -26,8 +28,29 @@ Future<void> runData({required String path, required FLILogger logger}) async {
       ..info('***')
       ..info('');
 
-    return;
+    exit(0);
   }
+
+  final firstSettingClass = UtilsRegex.getTextRegexLastMatch(
+    content: contentFile,
+    regex: r'\/\*[\s\S]+?\*\/\s+(class|@immutable)',
+  );
+
+  final firstSettingContent = UtilsRegex.getTextRegexLastMatch(
+    content: firstSettingClass,
+    regex: r'\/\*[\s\S]+?\*\/',
+  );
+
+  final listFirstSetting = <FirstSetting>[
+    ..._getFirstSetting(
+      content: firstSettingContent,
+      isUse: true,
+    ),
+    ..._getFirstSetting(
+      content: firstSettingContent,
+      isUse: false,
+    ),
+  ];
 
   final classContent = UtilsString.replaceToEmpty(
     text: UtilsRegex.getTextRegexLastMatch(
@@ -79,7 +102,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   var nameObject = '';
   var finalLine = '';
   var isCanNull = false;
-  var type = TypeVarable.none_;
+  var type = EnumTypeVarable.none_;
   var typeStr = '';
   var initValueTemp = '';
   var initValueDefault = '';
@@ -87,10 +110,11 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   var toMap = '';
   var fromMap = '';
 
-  const splitType = 'type:';
-  const splitInit = 'init:';
+  final splitType = '${EnumUsedFeatures.type.value}:';
+  final splitInit = '${EnumUsedFeatures.init.value}:';
   const splitToMap = 'toMap:';
   const splitFromMap = 'fromMap:';
+
   for (var i = 0; i < listItemFinal.length; i++) {
     isCanNull = false;
 
@@ -104,26 +128,19 @@ Future<void> runData({required String path, required FLILogger logger}) async {
     final _ = listSplit.removeLast();
 
     typeStr = listSplit.join(' ').trim();
-// определяю null значение или нет
+// determining whether null is a value or not
     if (typeStr.substring(typeStr.length - 1) == '?') {
       isCanNull = true;
       typeStr = typeStr.substring(0, typeStr.length - 1);
     }
-    // подбираю тип
-    type = TypeVarable.fromValue(typeStr, fallback: TypeVarable.none_);
+    // picking up the type of
+    type = EnumTypeVarable.fromValue(typeStr, fallback: EnumTypeVarable.none_);
 
     nameObject = '';
-    // если не получилось подобрать смотрю есть ли значение в комментарии
-    if (type == TypeVarable.none_ && listItemDef[i].contains(splitType)) {
-      final temp = listItemDef[i]
-          .split('\n')
-          .firstWhere((e) => e.contains(splitType))
-          .replaceAll(splitType, '')
-          .replaceAll('//', '')
-          .replaceAll('/*', '')
-          .replaceAll('*/', '')
-          .trim();
-      type = TypeVarable.fromValue(temp, fallback: TypeVarable.none_);
+    // If it does not work, I see if there is a value in the commentary
+    if (type == EnumTypeVarable.none_ && listItemDef[i].contains(splitType)) {
+      final temp = _splitUsedFeatures(listItemDef, i, splitType);
+      type = EnumTypeVarable.fromValue(temp, fallback: EnumTypeVarable.none_);
       nameObject = typeStr;
     }
     //
@@ -131,45 +148,20 @@ Future<void> runData({required String path, required FLILogger logger}) async {
     //
     toMap = '';
     if (listItemDef[i].contains(splitToMap)) {
-      final temp = listItemDef[i]
-          .split('\n')
-          .firstWhere((e) => e.contains(splitToMap))
-          .replaceAll(splitToMap, '')
-          .replaceAll('//', '')
-          .replaceAll('/*', '')
-          .replaceAll('*/', '')
-          .trim();
-
-      toMap = temp;
+      toMap = _splitUsedFeatures(listItemDef, i, splitToMap);
     }
 
 //
     //
     fromMap = '';
     if (listItemDef[i].contains(splitFromMap)) {
-      final temp = listItemDef[i]
-          .split('\n')
-          .firstWhere((e) => e.contains(splitFromMap))
-          .replaceAll(splitFromMap, '')
-          .replaceAll('//', '')
-          .replaceAll('/*', '')
-          .replaceAll('*/', '')
-          .trim();
-
-      fromMap = temp;
+      fromMap =  _splitUsedFeatures(listItemDef, i, splitFromMap);
     }
     initValueTemp = '';
     initValueDefault = '';
     initValueComment = '';
     if (listItemDef[i].contains(splitInit)) {
-      final temp = listItemDef[i]
-          .split('\n')
-          .firstWhere((e) => e.contains(splitInit))
-          .replaceAll(splitInit, '')
-          .replaceAll('//', '')
-          .replaceAll('/*', '')
-          .replaceAll('*/', '')
-          .trim();
+      final temp = _splitUsedFeatures(listItemDef, i, splitInit);
 
       initValueTemp = temp;
       initValueComment = temp;
@@ -184,8 +176,8 @@ Future<void> runData({required String path, required FLILogger logger}) async {
         name: name,
         nameObject: nameObject,
         type: type,
-        toMap: toMap,
-        fromMap: fromMap,
+        toMap_: toMap,
+        fromMap_: fromMap,
         initValueComment: initValueComment,
         initValueDefault: initValueDefault,
       ),
@@ -203,7 +195,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   final hashCode = StringBuffer();
 
   var typeStrTemp = '';
-  var v = Varable();
+  var v = const Varable();
 
   for (var i = 0; i < listVar.length; i++) {
     v = listVar[i];
@@ -237,7 +229,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
 ''');
     }
 
-    typeStrTemp = v.type == TypeVarable.enum_ ? v.nameObject : v.type.value;
+    typeStrTemp = v.type == EnumTypeVarable.enum_ ? v.nameObject : v.type.value;
     if (v.nameObject.isNotEmpty) {
       typeStrTemp = v.nameObject;
     }
@@ -251,7 +243,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
 ''');
 
     toMapSb.write('''
-      '${v.name}': ${_getToMap(v)}, 
+      '${v.name}': ${_getToMapVarable(v)}, 
 ''');
 
     fromMapSb.write('''
@@ -270,6 +262,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
 
   final file = File(path);
   writeToFile(
+    listFirstSetting,
     contentFile,
     classHeader,
     className,
@@ -287,51 +280,54 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   );
 }
 
-class Varable {
-  // enum
-  final TypeVarable type;
-  final String name;
-  final String nameObject;
-  final String initValueDefault;
-  final String initValueComment;
-  final String toMap;
-  final String fromMap;
-  final bool isCanNull;
-  Varable({
-    this.type = TypeVarable.none_,
-    this.name = '',
-    this.nameObject = '',
-    this.initValueDefault = '',
-    this.initValueComment = '',
-    this.toMap = '',
-    this.fromMap = '',
-    this.isCanNull = false,
-  });
+List<FirstSetting> _getFirstSetting({
+  required String content,
+  required bool isUse,
+}) {
+  if (content.isEmpty || !content.contains('$isUse')) return <FirstSetting>[];
 
-  Varable copyWith({
-    TypeVarable? type,
-    String? name,
-    String? nameObject,
-    String? initValueDefault,
-    String? initValueComment,
-    String? toMap,
-    String? fromMap,
-    bool? isCanNull,
-  }) {
-    return Varable(
-      type: type ?? this.type,
-      name: name ?? this.name,
-      nameObject: nameObject ?? this.nameObject,
-      initValueDefault: initValueDefault ?? this.initValueDefault,
-      initValueComment: initValueComment ?? this.initValueComment,
-      toMap: toMap ?? this.toMap,
-      fromMap: fromMap ?? this.fromMap,
-      isCanNull: isCanNull ?? this.isCanNull,
+  final rawList = content
+      .split('\n')
+      .firstWhere((e) => e.contains('$isUse:'))
+      .replaceAll('$isUse:', '')
+      .replaceAll('//', '')
+      .replaceAll('/*', '')
+      .replaceAll('*/', '')
+      .replaceAll(',', '')
+      .replaceAll('-', '')
+      .replaceAll('_', '')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .trim()
+      .toLowerCase();
+  final listFirstSetting = <FirstSetting>[];
+  var en = EnumUsedFeatures.none;
+
+  for (final v in rawList.split(' ')) {
+    en = EnumUsedFeatures.fromValue(v.toLowerCase(),
+        fallback: EnumUsedFeatures.none);
+    //  do not record if not detected
+    if (en == EnumUsedFeatures.none) continue;
+
+    listFirstSetting.add(
+      FirstSetting(
+        isUsed: isUse,
+        enumUsedFeatures: EnumUsedFeatures.fromValue(v.toLowerCase(),
+            fallback: EnumUsedFeatures.none),
+      ),
     );
   }
 
-  @override
-  String toString() {
-    return 'Varable(type: $type, name: $name, nameObject: $nameObject, initValueDefault: $initValueDefault, initValueComment: $initValueComment, toMap: $toMap, fromMap: $fromMap, isCanNull: $isCanNull)';
-  }
+  return listFirstSetting;
+}
+
+String _splitUsedFeatures(List<String> listItemDef, int i, String split) {
+  return listItemDef[i]
+     
+      .split('\n')
+      .firstWhere((e) => e.contains(split))
+      .replaceAll(split, '')
+      .replaceAll('//', '')
+      .replaceAll('/*', '')
+      .replaceAll('*/', '')
+      .trim();
 }
