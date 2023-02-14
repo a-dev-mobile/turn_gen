@@ -1,2 +1,3 @@
 // Generated code. Do not modify.
-const packageVersion = '0.0.2';
+// ignore: prefer-static-class
+const packageVersion = '0.0.4';

@@ -2,16 +2,17 @@
 
 part of 'run_data_class.dart';
 
+// ignore: prefer-static-class
 String getFromMap(Varable v) {
   final type = v.type;
   final name = v.name;
-  String nameObject = v.nameObject;
+  var nameObject = v.nameObject;
 
   final fromMap = v.fromMap;
   final isCanNull = v.isCanNull;
   final initComment = v.initValueComment;
   final initDefault_ = v.initValueDefault;
-  final error = 'error';
+  const error = 'error';
 
   if (fromMap.isNotEmpty) return fromMap;
   final yes_null_default_yes = isCanNull && initComment.isNotEmpty;
@@ -51,16 +52,14 @@ String getFromMap(Varable v) {
       return error;
 
     case TypeVarable.enum_:
-      if (isCanNull) {
-        return initComment.isEmpty
-            ? "map['$name'] != null ? $nameObject.values[map['$name'] as int] : null"
-            : "map['$name'] != null ? $nameObject.values[map['$name'] as int] : $initComment";
-      } else {
-        return "$nameObject.values[map['$name'] as int]";
-      }
+      return isCanNull
+          ? initComment.isEmpty
+              ? "map['$name'] != null ? $nameObject.values[map['$name'] as int] : null"
+              : "map['$name'] != null ? $nameObject.values[map['$name'] as int] : $initComment"
+          : "$nameObject.values[map['$name'] as int]";
 
     case TypeVarable.int_:
-      String base = '''map['$name'] as int''';
+      final base = '''map['$name'] as int''';
       if (isCanNull && initComment.isEmpty) return '$base?';
 
       if (initComment.isNotEmpty) return '$base? ?? $initComment';
