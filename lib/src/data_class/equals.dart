@@ -2,7 +2,7 @@ part of 'run_data_class.dart';
 
 String _getEquals(Varable v, bool isLast) {
   final type = v.type;
-  final name = v.name;
+  final name = v.nameVar;
   final end = isLast ? ');\n' : '&& \n';
   switch (type) {
     case EnumTypeVarable.list_:
@@ -62,6 +62,5 @@ String _getEquals(Varable v, bool isLast) {
       return '            (identical(other.$name, $name) || other.$name == $name)$end';
     case EnumTypeVarable.list_other:
       return 'error _getEquals';
-
   }
 }

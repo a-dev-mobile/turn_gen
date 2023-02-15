@@ -35,17 +35,23 @@ enum LocaleEnum {
 переносы должны быть указаны как >>>  LF
  */
 
-Future<void> runEnumString(
-    {required String path, required FLILogger logger}) async {
-  String contentFile = await UtilsString.readFile(path: path);
+// ignore: prefer-static-class
+Future<void> runEnumString({
+  required String path,
+  required FLILogger logger,
+}) async {
+  final contentFile = await UtilsString.readFile(path: path);
   if (contentFile.contains('GENERATED CODE')) {
     logger.info('Файл $path \nуже имеет генерированные данные');
+  
     return;
   }
 
-  String enumContent = UtilsString.replaceToEmpty(
+  final enumContent = UtilsString.replaceToEmpty(
     text: UtilsRegex.getTextRegexLastMatch(
-        content: contentFile, regex: r'enum\s+\w+\s+{[\s\S]+?}'),
+      content: contentFile,
+      regex: r'enum\s+\w+\s+{[\s\S]+?}',
+    ),
     replaceable: [
       '\n',
       '  ',
@@ -53,7 +59,9 @@ Future<void> runEnumString(
   );
 
   final enumHeader = UtilsRegex.getTextRegexLastMatch(
-      content: enumContent, regex: r'enum\s+\w+\s+{');
+    content: enumContent,
+    regex: r'enum\s+\w+\s+{',
+  );
 
   final enumName = UtilsString.replaceToEmpty(
     text: enumHeader,
@@ -71,52 +79,66 @@ Future<void> runEnumString(
       '}',
     ],
   );
-  String enumBracketsWithoutFinalAndConst = enumBrackets;
+  var enumBracketsWithoutFinalAndConst = enumBrackets;
 
   if (enumBrackets.contains('const') && enumBrackets.contains('final')) {
     enumBracketsWithoutFinalAndConst = UtilsString.replaceToEmpty(
       text: enumBrackets,
       replaceable: [
         UtilsRegex.getTextRegexLastMatch(
-            content: enumContent, regex: r'const[\s\S]+?;'),
+          content: enumContent,
+          regex: r'const[\s\S]+?;',
+        ),
         UtilsRegex.getTextRegexLastMatch(
-            content: enumContent, regex: r'final[\s\S]+?;'),
+          content: enumContent,
+          regex: r'final[\s\S]+?;',
+        ),
       ],
     );
   }
   final listItemValue = UtilsRegex.getTextRegexListMatch(
-      content: enumBracketsWithoutFinalAndConst, regex: r'\([\s\S]+?\)');
+    content: enumBracketsWithoutFinalAndConst,
+    regex: r'\([\s\S]+?\)',
+  );
 
   final listItemName = UtilsRegex.getTextRegexListMatch(
-      content: enumBracketsWithoutFinalAndConst, regex: r'\w+(\s+|)\(');
-  String key = '';
-  String value = '';
+    content: enumBracketsWithoutFinalAndConst,
+    regex: r'\w+(\s+|)\(',
+  );
+  var key = '';
+  var value = '';
   final map = <String, String>{};
 
-  for (int i = 0; i < listItemName.length; i++) {
-    key = UtilsString.replaceToEmpty(text: listItemName[i], replaceable: [
-      '(',
-    ]);
-    value = UtilsString.replaceToEmpty(text: listItemValue[i], replaceable: [
-      '(',
-      ')',
-      '\'',
-      '"',
-    ]);
+  for (var i = 0; i < listItemName.length; i++) {
+    key = UtilsString.replaceToEmpty(
+      text: listItemName[i],
+      replaceable: [
+        '(',
+      ],
+    );
+    value = UtilsString.replaceToEmpty(
+      text: listItemValue[i],
+      replaceable: [
+        '(',
+        ')',
+        "'",
+        '"',
+      ],
+    );
     map[key] = value;
   }
 
-  StringBuffer constructor = StringBuffer();
-  StringBuffer fromValue = StringBuffer();
+  final constructor = StringBuffer();
+  final fromValue = StringBuffer();
 
   /// Pattern matching
-  StringBuffer mapStart = StringBuffer();
-  StringBuffer mapEnd = StringBuffer();
-  StringBuffer maybeMapStart = StringBuffer();
-  StringBuffer maybeMapEnd = StringBuffer();
-  StringBuffer maybeMapOrNullStart = StringBuffer();
-  StringBuffer maybeMapOrNullEnd = StringBuffer();
-  String lastSymbolArg = '';
+  final mapStart = StringBuffer();
+  final mapEnd = StringBuffer();
+  final maybeMapStart = StringBuffer();
+  final maybeMapEnd = StringBuffer();
+  final maybeMapOrNullStart = StringBuffer();
+  final maybeMapOrNullEnd = StringBuffer();
+  var lastSymbolArg = '';
   map.forEach((k, v) {
     {
       lastSymbolArg = k == map.keys.last ? ';' : ',';
@@ -156,7 +178,7 @@ Future<void> runEnumString(
 
   final file = File(path);
 
-  file.writeAsString('''
+  final _ = await file.writeAsString('''
   // ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
   /*
   $contentFile
@@ -165,7 +187,7 @@ Future<void> runEnumString(
 ${ConstConsole.GEN_MSG}
 
 enum $enumName with Comparable<$enumName> { 
-${constructor.toString()}
+$constructor
   const $enumName(this.value);
 
   final String value;
@@ -175,7 +197,7 @@ ${constructor.toString()}
     $enumName? fallback,
   }) {
     switch (value) {
-${fromValue.toString()}
+$fromValue
       default:
         return fallback ?? (throw ArgumentError.value(value));
     }
@@ -183,29 +205,29 @@ ${fromValue.toString()}
 
   /// Pattern matching
   T map<T>({
-${mapStart.toString()}
+$mapStart
   }) {
     switch (this) {
-${mapEnd.toString()}
+$mapEnd
     }
   }
   
   /// Pattern matching
   T maybeMap<T>({
     required T Function() orElse,
-${maybeMapStart.toString()}
+$maybeMapStart
   }) =>
       map<T>(
-${maybeMapEnd.toString()}
+$maybeMapEnd
       );
 
   /// Pattern matching
   T? maybeMapOrNull<T>({
-${maybeMapOrNullStart.toString()}
+$maybeMapOrNullStart
   }) =>
       maybeMap<T?>(
         orElse: () => null,
-${maybeMapOrNullEnd.toString()}        
+$maybeMapOrNullEnd        
       );
 
   @override
@@ -215,7 +237,9 @@ ${maybeMapOrNullEnd.toString()}
   String toString() => value;
    }\n''');
 
-  print('***');
-  print('✓ Successfully generated extra features for enum with String value\n');
-  print('***');
+  logger
+    ..info('***')
+    ..info(
+        '✓ Successfully generated extra features for enum with String value\n',)
+    ..info('***');
 }

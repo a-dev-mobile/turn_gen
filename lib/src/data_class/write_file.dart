@@ -2,6 +2,7 @@ part of 'run_data_class.dart';
 
 // ignore: prefer-static-class
 void writeToFile(
+  FLILogger logger,
   List<FirstSetting> listSetting,
   String contentFile,
   String classHeader,
@@ -18,51 +19,65 @@ void writeToFile(
   StringBuffer hashCode,
   File file,
 ) {
-  var isActiveToMap = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.toMap,
-      ))?.isUsed ??
-      true;
+  final noSetting = listSetting
+      .firstWhere(
+        (v) => v.keySetting == EnumKeySetting.no,
+        orElse: FirstSetting.new,
+      )
+      .listValueSetting;
 
-  var isActiveToJson = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.toJson,
-      ))?.isUsed ??
-      true;
-  var isActiveFromMap = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.fromMap,
-      ))?.isUsed ??
-      true;
+  final onlySetting = listSetting
+      .firstWhere(
+        (v) => v.keySetting == EnumKeySetting.only,
+        orElse: FirstSetting.new,
+      )
+      .listValueSetting;
 
-  var isActiveFromJson = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.fromJson,
-      ))?.isUsed ??
-      true;
-  var isActiveToString = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.toString_,
-      ))?.isUsed ??
-      true;
+  var isActiveToMap = true;
+  var isActiveToJson = true;
+  var isActiveFromMap = true;
+  var isActiveFromJson = true;
+  var isActiveToString = true;
+  var isActiveHash = true;
+  var isActiveEquals = true;
+  var isActiveCopyWith = true;
+  // only no setting
+  var isOnlyCopyWith = false;
+  var isOnlyFromJson = false;
 
-  var isActiveHashCode = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.hashCode_,
-      ))?.isUsed ??
-      true;
-
-  var isActiveHash = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.hash_,
-      ))?.isUsed ??
-      true;
-  var isActiveEquals = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.equals_,
-      ))?.isUsed ??
-      true;
-
-  var isOnlyCopyWith = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.copyWith,
-      ))?.isUsed ??
-      false;
-
+  if (onlySetting.contains(EnumValueSetting.copyWith)) {
+    isOnlyCopyWith = true;
+  }
+  if (onlySetting.contains(EnumValueSetting.fromJson)) {
+    isOnlyFromJson = true;
+  }
+  //
+  if (noSetting.contains(EnumValueSetting.toMap)) {
+    isActiveToMap = false;
+  }
+  if (noSetting.contains(EnumValueSetting.copyWith)) {
+    isActiveCopyWith = false;
+  }
+  if (noSetting.contains(EnumValueSetting.toJson)) {
+    isActiveToJson = false;
+  }
+  if (noSetting.contains(EnumValueSetting.fromMap)) {
+    isActiveFromMap = false;
+  }
+  if (noSetting.contains(EnumValueSetting.fromJson)) {
+    isActiveFromJson = false;
+  }
+  if (noSetting.contains(EnumValueSetting.toString_)) {
+    isActiveToString = false;
+  }
+  if (noSetting.contains(EnumValueSetting.hash_)) {
+    isActiveHash = false;
+  }
+  if (noSetting.contains(EnumValueSetting.equals_)) {
+    isActiveEquals = false;
+  }
 // hash_and_equals  отключают или включают одновременно
-  var isActiveHashAndEquals =
-      isActiveHashCode && isActiveEquals && isActiveHash;
+  var isActiveHashAndEquals = isActiveEquals && isActiveHash;
 
   if (!isActiveToMap) {
     isActiveToJson = false;
@@ -71,14 +86,26 @@ void writeToFile(
   if (!isActiveFromMap) {
     isActiveFromJson = false;
   }
-// если активна copywith все остальное отключаем
+  // если активна copywith все остальное отключаем
   if (isOnlyCopyWith) {
+    isActiveCopyWith = true;
     isActiveFromJson = false;
     isActiveToMap = false;
     isActiveEquals = false;
     isActiveHash = false;
     isActiveHashAndEquals = false;
     isActiveFromMap = false;
+    isActiveToJson = false;
+    isActiveToString = false;
+  }
+  if (isOnlyFromJson) {
+    isActiveFromJson = true;
+    isActiveCopyWith = false;
+    isActiveToMap = false;
+    isActiveEquals = false;
+    isActiveHash = false;
+    isActiveHashAndEquals = false;
+    isActiveFromMap = true;
     isActiveToJson = false;
     isActiveToString = false;
   }
@@ -89,27 +116,27 @@ void writeToFile(
   // if (!header.contains(add4)) {
   //   header = "\n$add4$header\n";
   // }
-  if (!isOnlyCopyWith) {
-    if (!header.contains('part of')) {
-      if (header.contains('@immutable')) {
-        const add3 = "import 'package:meta/meta.dart';";
-        if (!header.contains(add3)) {
-          header = '$add3\n$header';
-        }
-      }
-      if (equals.toString().contains('DeepCollectionEquality')) {
-        const add2 = "import 'package:collection/collection.dart';";
-        if (!header.contains(add2)) {
-          header = '$add2\n$header';
-        }
-      }
+  // if (!isOnlyCopyWith) {
+  //   if (!header.contains('part of')) {
+  // if (header.contains('@immutable')) {
+  //   const add3 = "import 'package:meta/meta.dart';";
+  //   if (!header.contains(add3)) {
+  //     header = '$add3\n$header';
+  //   }
+  // }
+  //     if (equals.toString().contains('DeepCollectionEquality')&&isActiveToString) {
+  //       const add2 = "import 'package:collection/collection.dart';";
+  //       if (!header.contains(add2)) {
+  //         header = '$add2\n$header';
+  //       }
+  //     }
 
-      const add1 = "import 'dart:convert';";
-      if (!header.contains(add1)) {
-        header = '$add1\n$header';
-      }
-    }
-  }
+  //     const add1 = "import 'dart:convert';";
+  //     if (!header.contains(add1)) {
+  //       header = '$add1\n$header';
+  //     }
+  //   }
+  // }
   const add5 = '// ignore_for_file: sort_constructors_first';
   if (!header.contains(add5)) {
     header = '$add5\n$header';
@@ -126,12 +153,8 @@ $constructor  });
 $factoryInit      ); 
   */
 ${_getToMap(toMapSb, isActiveToMap)}
-${_getFromMap(className, fromMapSb, isActiveFromMap)}
-  $className copyWith({
-$copyWithStart  }) {
-    return $className(
-$copyWithEnd    );
-  }
+${_getFromMap_(className, fromMapSb, isActiveFromMap)}
+${_getCopyWith(className, copyWithStart, copyWithEnd, isActiveCopyWith)}
 ${_getToJson(isActiveToJson)}  
 ${_getFromJson(className, isActiveFromJson)}  
 ${_getHashAndEquals(className, equals, hashCode, isActiveHashAndEquals)}
@@ -145,9 +168,27 @@ ${_getToString(className, toString, isActiveToString)}
     ),
   );
 
-  print('***');
-  print('✓ Successfully generated extra features for data class');
-  print('***');
+  logger
+    ..info('***')
+    ..info('✓ Successfully generated extra features for data class')
+    ..info('***');
+}
+
+String _getCopyWith(
+  String className,
+  StringBuffer copyWithStart,
+  StringBuffer copyWithEnd,
+  bool isActive,
+) {
+  return isActive
+      ? '''
+  $className copyWith({
+$copyWithStart  }) {
+    return $className(
+$copyWithEnd    );
+  }
+'''
+      : '';
 }
 
 String _getToMap(StringBuffer toMapSb, bool isActive) {
@@ -161,7 +202,7 @@ $toMapSb    };
       : '';
 }
 
-String _getFromMap(String className, StringBuffer fromMapSb, bool isActive) {
+String _getFromMap_(String className, StringBuffer fromMapSb, bool isActive) {
   return isActive
       ? '''
     factory $className.fromMap(Map<String, dynamic> map) {

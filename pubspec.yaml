@@ -1,6 +1,6 @@
 name: turn_gen
 description: A package that simplifies the generation of additional features
-version: 0.0.4
+version: 0.0.5
 maintainer: Dmitriy Trofimov
 homepage: https://github.com/a-dev-mobile/turn_gen
 repository: https://github.com/a-dev-mobile/turn_gen/

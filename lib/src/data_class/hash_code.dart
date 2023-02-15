@@ -2,7 +2,7 @@ part of 'run_data_class.dart';
 
 String _getHashCode(Varable v) {
   final type = v.type;
-  final name = v.name;
+  final name = v.nameVar;
   const end = ',\n';
   switch (type) {
     case EnumTypeVarable.list_:
@@ -61,6 +61,5 @@ String _getHashCode(Varable v) {
     case EnumTypeVarable.date_time:
     case EnumTypeVarable.data:
       return '        $name$end';
-     
   }
 }

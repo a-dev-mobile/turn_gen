@@ -1,5 +1,5 @@
-  // ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
-  /*
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
+/*
   enum TypeRun {
   enumDefault('enum_default'),
   enumInt('enum_int'),
@@ -10,12 +10,12 @@
 }
 
   */
-  
-  //  ******************************
-  // GENERATED CODE BELOW - DO NOT MODIFY
-  //  ******************************
 
-enum TypeRun with Comparable<TypeRun> { 
+//  ******************************
+// GENERATED CODE BELOW - DO NOT MODIFY
+//  ******************************
+
+enum TypeRun with Comparable<TypeRun> {
   enumDefault('enum_default'),
   enumInt('enum_int'),
   enumString('enum_string'),
@@ -58,25 +58,23 @@ enum TypeRun with Comparable<TypeRun> {
     required T Function() data,
     required T Function() assets,
     required T Function() none,
-
   }) {
     switch (this) {
       case TypeRun.enumDefault:
-        return enumDefault();     
+        return enumDefault();
       case TypeRun.enumInt:
-        return enumInt();     
+        return enumInt();
       case TypeRun.enumString:
-        return enumString();     
+        return enumString();
       case TypeRun.data:
-        return data();     
+        return data();
       case TypeRun.assets:
-        return assets();     
+        return assets();
       case TypeRun.none:
-        return none();     
-
+        return none();
     }
   }
-  
+
   /// Pattern matching
   T maybeMap<T>({
     required T Function() orElse,
@@ -86,16 +84,14 @@ enum TypeRun with Comparable<TypeRun> {
     T Function()? data,
     T Function()? assets,
     T Function()? none,
-
   }) =>
       map<T>(
-      enumDefault: enumDefault ?? orElse,     
-      enumInt: enumInt ?? orElse,     
-      enumString: enumString ?? orElse,     
-      data: data ?? orElse,     
-      assets: assets ?? orElse,     
-      none: none ?? orElse,     
-
+        enumDefault: enumDefault ?? orElse,
+        enumInt: enumInt ?? orElse,
+        enumString: enumString ?? orElse,
+        data: data ?? orElse,
+        assets: assets ?? orElse,
+        none: none ?? orElse,
       );
 
   /// Pattern matching
@@ -106,17 +102,15 @@ enum TypeRun with Comparable<TypeRun> {
     T Function()? data,
     T Function()? assets,
     T Function()? none,
-
   }) =>
       maybeMap<T?>(
         orElse: () => null,
-        enumDefault: enumDefault,  
-        enumInt: enumInt,  
-        enumString: enumString,  
-        data: data,  
-        assets: assets,  
-        none: none,  
-        
+        enumDefault: enumDefault,
+        enumInt: enumInt,
+        enumString: enumString,
+        data: data,
+        assets: assets,
+        none: none,
       );
 
   @override
@@ -124,4 +118,4 @@ enum TypeRun with Comparable<TypeRun> {
 
   @override
   String toString() => value;
-   }
+}
