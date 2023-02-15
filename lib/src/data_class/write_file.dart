@@ -18,45 +18,48 @@ void writeToFile(
   StringBuffer hashCode,
   File file,
 ) {
+/* final listNo = listSetting.whereNotNull();
+
+
   var isActiveToMap = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.toMap,
-      ))?.isUsed ??
-      true;
+        (v) => v.keySetting == EnumKeySetting.no,
+      ))?.valueSetting ==
+      EnumValueSetting.toMap;
 
   var isActiveToJson = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.toJson,
+        (v) => v.keySetting == EnumKeySetting.toJson,
       ))?.isUsed ??
       true;
   var isActiveFromMap = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.fromMap,
+        (v) => v.keySetting == EnumKeySetting.fromMap,
       ))?.isUsed ??
       true;
 
   var isActiveFromJson = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.fromJson,
+        (v) => v.keySetting == EnumKeySetting.fromJson,
       ))?.isUsed ??
       true;
   var isActiveToString = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.toString_,
+        (v) => v.keySetting == EnumKeySetting.toString_,
       ))?.isUsed ??
       true;
 
   var isActiveHashCode = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.hashCode_,
+        (v) => v.keySetting == EnumKeySetting.hashCode_,
       ))?.isUsed ??
       true;
 
   var isActiveHash = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.hash_,
+        (v) => v.keySetting == EnumKeySetting.hash_,
       ))?.isUsed ??
       true;
   var isActiveEquals = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.equals_,
+        (v) => v.keySetting == EnumKeySetting.equals_,
       ))?.isUsed ??
       true;
 
   var isOnlyCopyWith = (listSetting.firstWhereOrNull(
-        (v) => v.enumUsedFeatures == EnumUsedFeatures.copyWith,
+        (v) => v.keySetting == EnumKeySetting.copyWith,
       ))?.isUsed ??
       false;
 
@@ -212,5 +215,5 @@ String _getToJson(bool isActive) {
 String _getFromJson(String className, bool isActive) {
   return isActive
       ? 'factory $className.fromJson(String source) => $className.fromMap(json.decode(source) as Map<String, dynamic>,);'
-      : '';
+      : ''; */
 }

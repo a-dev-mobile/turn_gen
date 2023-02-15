@@ -30,25 +30,28 @@ Future<void> runData({required String path, required FLILogger logger}) async {
 
     exit(0);
   }
+// prepare settings for splitting
+  final splitType = EnumKeySetting.type.value;
+  final splitInit = EnumKeySetting.init.value;
+  final splitToMap = EnumKeySetting.toMap.value;
+  final splitFromMap = EnumKeySetting.fromMap.value;
+  final splitNo = EnumKeySetting.no.value;
+  final splitOnly = EnumKeySetting.only.value;
+  final splitUse = EnumKeySetting.use.value;
 
-  final firstSettingClass = UtilsRegex.getTextRegexLastMatch(
+  final rawSettingClass = UtilsRegex.getTextRegexLastMatch(
     content: contentFile,
     regex: r'\/\*[\s\S]+?\*\/\s+(class|@immutable)',
   );
 
-  final firstSettingContent = UtilsRegex.getTextRegexLastMatch(
-    content: firstSettingClass,
+  final settingClass = UtilsRegex.getTextRegexLastMatch(
+    content: rawSettingClass,
     regex: r'\/\*[\s\S]+?\*\/',
   );
 
   final listFirstSetting = <FirstSetting>[
-    ..._getFirstSetting(
-      content: firstSettingContent,
-      isUse: true,
-    ),
-    ..._getFirstSetting(
-      content: firstSettingContent,
-      isUse: false,
+    ..._getSetting(
+      content: settingClass,
     ),
   ];
 
@@ -110,11 +113,6 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   var toMap = '';
   var fromMap = '';
 
-  final splitType = '${EnumUsedFeatures.type.value}:';
-  final splitInit = '${EnumUsedFeatures.init.value}:';
-  const splitToMap = 'toMap:';
-  const splitFromMap = 'fromMap:';
-
   for (var i = 0; i < listItemFinal.length; i++) {
     isCanNull = false;
 
@@ -155,7 +153,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
     //
     fromMap = '';
     if (listItemDef[i].contains(splitFromMap)) {
-      fromMap =  _splitUsedFeatures(listItemDef, i, splitFromMap);
+      fromMap = _splitUsedFeatures(listItemDef, i, splitFromMap);
     }
     initValueTemp = '';
     initValueDefault = '';
@@ -173,8 +171,8 @@ Future<void> runData({required String path, required FLILogger logger}) async {
     listVar.add(
       Varable(
         isCanNull: isCanNull,
-        name: name,
-        nameObject: nameObject,
+        nameVar: name,
+        nameData: nameObject,
         type: type,
         toMap_: toMap,
         fromMap_: fromMap,
@@ -202,15 +200,15 @@ Future<void> runData({required String path, required FLILogger logger}) async {
 
     if (v.initValueComment.isNotEmpty) {
       constructor.write('''
-    this.${v.name} = ${v.initValueComment},
+    this.${v.nameVar} = ${v.initValueComment},
 ''');
     } else if (!v.isCanNull && v.initValueComment.isEmpty) {
       constructor.write('''
-    required this.${v.name},
+    required this.${v.nameVar},
 ''');
     } else if (v.isCanNull && v.initValueComment.isEmpty) {
       constructor.write('''
-    this.${v.name},
+    this.${v.nameVar},
 ''');
     }
 
@@ -219,38 +217,38 @@ Future<void> runData({required String path, required FLILogger logger}) async {
         ..info('')
         ..info('-- INFO --')
         ..info(
-          '${v.type}? ${v.name} is null, but init value > ${v.initValueDefault}',
+          '${v.type}? ${v.nameVar} is null, but init value > ${v.initValueDefault}',
         );
     }
 
     if (v.initValueDefault.isNotEmpty && _getWordConst(v).isNotEmpty) {
       factoryInit.write('''
-        ${v.name}: ${_getWordConst(v)},
+        ${v.nameVar}: ${_getWordConst(v)},
 ''');
     }
 
-    typeStrTemp = v.type == EnumTypeVarable.enum_ ? v.nameObject : v.type.value;
-    if (v.nameObject.isNotEmpty) {
-      typeStrTemp = v.nameObject;
+    typeStrTemp = v.type == EnumTypeVarable.enum_ ? v.nameData : v.type.value;
+    if (v.nameData.isNotEmpty) {
+      typeStrTemp = v.nameData;
     }
 
     copyWithStart.write('''
-    $typeStrTemp? ${v.name},
+    $typeStrTemp? ${v.nameVar},
 ''');
 
     copyWithEnd.write('''
-      ${v.name}: ${v.name} ?? this.${v.name}, 
+      ${v.nameVar}: ${v.nameVar} ?? this.${v.nameVar}, 
 ''');
 
     toMapSb.write('''
-      '${v.name}': ${_getToMapVarable(v)}, 
+      '${v.nameVar}': ${_getToMapVarable(v)}, 
 ''');
 
     fromMapSb.write('''
-      ${v.name}: ${getFromMap(v)}, 
+      ${v.nameVar}: ${getFromMap(v)}, 
 ''');
 
-    toString.write('${v.name}: \$${v.name}, ');
+    toString.write('${v.nameVar}: \$${v.nameVar}, ');
 
     equals.write(_getEquals(v, i == listVar.length - 1));
     hashCode.write(
@@ -280,49 +278,99 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   );
 }
 
-List<FirstSetting> _getFirstSetting({
+List<FirstSetting> _getSetting({
   required String content,
-  required bool isUse,
 }) {
-  if (content.isEmpty || !content.contains('$isUse')) return <FirstSetting>[];
+  final settingRegExp = RegExp(r'(\w+\s+:)|(\w+:)');
+  final listFirstSetting = <FirstSetting>[];
 
-  final rawList = content
-      .split('\n')
-      .firstWhere((e) => e.contains('$isUse:'))
-      .replaceAll('$isUse:', '')
-      .replaceAll('//', '')
-      .replaceAll('/*', '')
-      .replaceAll('*/', '')
+  if (!content.contains(settingRegExp)) return listFirstSetting;
+
+  final contentFormat = content
+      .replaceAll(' :', ':')
       .replaceAll(',', '')
       .replaceAll('-', '')
       .replaceAll('_', '')
-      .replaceAll(RegExp(r'\s+'), ' ')
-      .trim()
-      .toLowerCase();
-  final listFirstSetting = <FirstSetting>[];
-  var en = EnumUsedFeatures.none;
+      
+      .replaceAll(':', ': ')
+      .replaceAll(RegExp(r'\s+'), ' ');
+  var keySetting = EnumKeySetting.none;
 
-  for (final v in rawList.split(' ')) {
-    en = EnumUsedFeatures.fromValue(v.toLowerCase(),
-        fallback: EnumUsedFeatures.none);
-    //  do not record if not detected
-    if (en == EnumUsedFeatures.none) continue;
+  for (final key in EnumKeySetting.values) {
+    keySetting = EnumKeySetting.none;
 
-    listFirstSetting.add(
-      FirstSetting(
-        isUsed: isUse,
-        enumUsedFeatures: EnumUsedFeatures.fromValue(v.toLowerCase(),
-            fallback: EnumUsedFeatures.none),
-      ),
-    );
+
+
+    // if it contains settings, then continue
+    if (contentFormat.contains(key.value)) {
+      keySetting = key;
+
+      final tempList = contentFormat.split(' ')
+        ..removeWhere((e) => e.contains('*'));
+      final indexKey = tempList.indexOf(key.value);
+        final listSetting = <EnumValueSetting>[];
+      for (var i = indexKey + 1; i < tempList.length; i++) {
+
+        if (tempList[i].contains(':')) break;
+        final setting = tempList[i];
+        final tempEnum = EnumValueSetting.fromValue(
+          setting.toLowerCase(),
+          fallback: EnumValueSetting.none,
+        );
+        if (tempEnum != EnumValueSetting.none) {
+          listSetting.add(tempEnum);
+        }
+      }
+
+      listFirstSetting.add(
+        FirstSetting(keySetting: keySetting, listValueSetting: listSetting),
+      );
+
+    } else {
+      continue;
+    }
+  
   }
 
   return listFirstSetting;
 }
 
+// final rawList = content
+//     .split('\n')
+//     .firstWhere((e) => e.contains('$isUse:'))
+//     .replaceAll('$isUse:', '')
+//     .replaceAll('//', '')
+//     .replaceAll('/*', '')
+//     .replaceAll('*/', '')
+//     .replaceAll(',', '')
+//     .replaceAll('-', '')
+//     .replaceAll('_', '')
+//     .replaceAll(RegExp(r'\s+'), ' ')
+//     .trim()
+//     .toLowerCase();
+// final listFirstSetting = <FirstSetting>[];
+// var en = EnumKeySetting.none;
+
+// for (final v in rawList.split(' ')) {
+//   en = EnumKeySetting.fromValue(v.toLowerCase(),
+//       fallback: EnumKeySetting.none);
+//   //  do not record if not detected
+//   if (en == EnumKeySetting.none) continue;
+
+//   listFirstSetting.add(
+//     FirstSetting(
+//       isUsed: isUse,
+//       keySetting: EnumKeySetting.fromValue(v.toLowerCase(),
+//           fallback: EnumKeySetting.none),
+//     ),
+//   );
+// }
+
+// return listFirstSetting;
+// }
+
 String _splitUsedFeatures(List<String> listItemDef, int i, String split) {
   return listItemDef[i]
-     
       .split('\n')
       .firstWhere((e) => e.contains(split))
       .replaceAll(split, '')

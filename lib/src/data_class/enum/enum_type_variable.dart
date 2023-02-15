@@ -56,15 +56,13 @@
   map_int_dynamic_(Map<int, dynamic>),
   date_time(DateTime),
   map_dynamic_dynamic_(Map<dynamic, dynamic>),
-  data('data'),
 
-  list_data(List<T>),
-  list_data_null(List<T?>),
+  data(data),
+
+  list_data(List<data>),
+
+  list_data_null(List<data?>),
   none_('none');
-
-  const TypeVarable(this.value);
-
-  final String value;
 }
 
   */
@@ -123,8 +121,8 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
   date_time('DateTime'),
   map_dynamic_dynamic_('Map<dynamic, dynamic>'),
   data('data'),
-  list_data('List<T>'),
-  list_data_null('List<T?>'),
+  list_data('List<data>'),
+  list_data_null('List<data?>'),
   none_('none');
 
   const EnumTypeVarable(this.value);
@@ -234,9 +232,9 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
         return map_dynamic_dynamic_;
       case 'data':
         return data;
-      case 'List<T>':
+      case 'List<data>':
         return list_data;
-      case 'List<T?>':
+      case 'List<data?>':
         return list_data_null;
       case 'none':
         return none_;

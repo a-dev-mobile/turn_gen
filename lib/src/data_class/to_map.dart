@@ -4,7 +4,7 @@ part of 'run_data_class.dart';
 
 String _getToMapVarable(Varable v) {
   final type = v.type;
-  final name = v.name;
+  final name = v.nameVar;
 
   final toMap = v.toMap_;
   final isCanNull = v.isCanNull;
@@ -216,6 +216,5 @@ String _getToMapVarable(Varable v) {
         return '$name.map((e) => e?.toJson()).toList()';
       }
       return error;
- 
   }
 }

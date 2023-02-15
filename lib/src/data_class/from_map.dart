@@ -5,8 +5,8 @@ part of 'run_data_class.dart';
 // ignore: prefer-static-class
 String getFromMap(Varable v) {
   final type = v.type;
-  final name = v.name;
-  var nameObject = v.nameObject;
+  final name = v.nameVar;
+  var nameObject = v.nameData;
 
   final fromMap = v.fromMap_;
   final isCanNull = v.isCanNull;
@@ -20,7 +20,8 @@ String getFromMap(Varable v) {
   final no_null_default_yes = !isCanNull && initComment.isNotEmpty;
   final no_null_default_no = !isCanNull && initComment.isEmpty;
 
-  if (type == EnumTypeVarable.list_data||type == EnumTypeVarable.list_data_null) {
+  if (type == EnumTypeVarable.list_data ||
+      type == EnumTypeVarable.list_data_null) {
     nameObject = nameObject.replaceAll('List<', '').replaceAll('>', '');
   }
 
@@ -636,7 +637,7 @@ String getFromMap(Varable v) {
         return "map['$name'] != null ? (map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList() : null";
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()";
-//osition_type: sition_type'] as List<dynamic>).map((e) => DictionaryItem.fromMap(e as Map<String, dynamic>)).toList(), 
+//osition_type: sition_type'] as List<dynamic>).map((e) => DictionaryItem.fromMap(e as Map<String, dynamic>)).toList(),
       } else if (no_null_default_no) {
         return "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()";
       }

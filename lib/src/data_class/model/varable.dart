@@ -6,15 +6,17 @@ import 'package:meta/meta.dart';
 import 'package:turn_gen/src/data_class/enum/enum.dart';
 
 @immutable
-class Varable {   
+class Varable { 
 /* type: enum 
 init: EnumTypeVarable.none_
  */
   final EnumTypeVarable type;
   /* init:'' */
-  final String name;
+  //variable name
+  final String nameVar;
   /* init:'' */
-  final String nameObject;
+  //variable type name
+  final String nameData;
   /* init:'' */
   final String initValueDefault;
   /* init:'' */
@@ -25,22 +27,30 @@ init: EnumTypeVarable.none_
   final String fromMap_;
   /* init:false */
   final bool isCanNull;
+  /* init:false */
+  final bool isArray;
+  /* type: enum 
+init: EnumTypeVarable.none_
+ */
+  final EnumTypeVarable typeArray;
 // end
    
-//          --TURN_GEN--
-//  *************************************
-//           GENERATED CODE 
-//  *************************************
+  //  ******************************
+  // GENERATED CODE BELOW - DO NOT MODIFY
+  //  ******************************
+
   
   const Varable({
     this.type = EnumTypeVarable.none_,
-    this.name = '',
-    this.nameObject = '',
+    this.nameVar = '',
+    this.nameData = '',
     this.initValueDefault = '',
     this.initValueComment = '',
     this.toMap_ = '',
     this.fromMap_ = '',
     this.isCanNull = false,
+    this.isArray = false,
+    this.typeArray = EnumTypeVarable.none_,
   });
   /*
   
@@ -51,13 +61,15 @@ init: EnumTypeVarable.none_
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'type': type.index, 
-      'name': name, 
-      'nameObject': nameObject, 
+      'nameVar': nameVar, 
+      'nameData': nameData, 
       'initValueDefault': initValueDefault, 
       'initValueComment': initValueComment, 
       'toMap_': toMap_, 
       'fromMap_': fromMap_, 
       'isCanNull': isCanNull, 
+      'isArray': isArray, 
+      'typeArray': typeArray.index, 
     };
   }
 
@@ -65,42 +77,48 @@ init: EnumTypeVarable.none_
   factory Varable.fromMap(Map<String, dynamic> map) {
     return Varable(
       type: EnumTypeVarable.values[map['type'] as int], 
-      name: map['name'] as String? ?? '' , 
-      nameObject: map['nameObject'] as String? ?? '' , 
+      nameVar: map['nameVar'] as String? ?? '' , 
+      nameData: map['nameData'] as String? ?? '' , 
       initValueDefault: map['initValueDefault'] as String? ?? '' , 
       initValueComment: map['initValueComment'] as String? ?? '' , 
       toMap_: map['toMap_'] as String? ?? '' , 
       fromMap_: map['fromMap_'] as String? ?? '' , 
       isCanNull: map['isCanNull'] as bool? ?? false, 
+      isArray: map['isArray'] as bool? ?? false, 
+      typeArray: EnumTypeVarable.values[map['typeArray'] as int], 
     );
   }
 
   Varable copyWith({
     EnumTypeVarable? type,
-    String? name,
-    String? nameObject,
+    String? nameVar,
+    String? nameData,
     String? initValueDefault,
     String? initValueComment,
     String? toMap_,
     String? fromMap_,
     bool? isCanNull,
+    bool? isArray,
+    EnumTypeVarable? typeArray,
   }) {
     return Varable(
       type: type ?? this.type, 
-      name: name ?? this.name, 
-      nameObject: nameObject ?? this.nameObject, 
+      nameVar: nameVar ?? this.nameVar, 
+      nameData: nameData ?? this.nameData, 
       initValueDefault: initValueDefault ?? this.initValueDefault, 
       initValueComment: initValueComment ?? this.initValueComment, 
       toMap_: toMap_ ?? this.toMap_, 
       fromMap_: fromMap_ ?? this.fromMap_, 
       isCanNull: isCanNull ?? this.isCanNull, 
+      isArray: isArray ?? this.isArray, 
+      typeArray: typeArray ?? this.typeArray, 
     );
   }
   
   String toJson() => json.encode(toMap());
   
     
-  factory Varable.fromJson(String source) => Varable.fromMap(json.decode(source) as Map<String, dynamic>,);
+  factory Varable.fromJson(String source) => Varable.fromMap(json.decode(source) as Map<String, dynamic>);
   
   @override
   bool operator ==(dynamic other) {
@@ -108,30 +126,34 @@ init: EnumTypeVarable.none_
         (other.runtimeType == runtimeType &&
             other is Varable &&
             (identical(other.type, type) || other.type == type)&& 
-            (identical(other.name, name) || other.name == name)&& 
-            (identical(other.nameObject, nameObject) || other.nameObject == nameObject)&& 
+            (identical(other.nameVar, nameVar) || other.nameVar == nameVar)&& 
+            (identical(other.nameData, nameData) || other.nameData == nameData)&& 
             (identical(other.initValueDefault, initValueDefault) || other.initValueDefault == initValueDefault)&& 
             (identical(other.initValueComment, initValueComment) || other.initValueComment == initValueComment)&& 
             (identical(other.toMap_, toMap_) || other.toMap_ == toMap_)&& 
             (identical(other.fromMap_, fromMap_) || other.fromMap_ == fromMap_)&& 
-            (identical(other.isCanNull, isCanNull) || other.isCanNull == isCanNull));
+            (identical(other.isCanNull, isCanNull) || other.isCanNull == isCanNull)&& 
+            (identical(other.isArray, isArray) || other.isArray == isArray)&& 
+            (identical(other.typeArray, typeArray) || other.typeArray == typeArray));
   }
   
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
         type,
-        name,
-        nameObject,
+        nameVar,
+        nameData,
         initValueDefault,
         initValueComment,
         toMap_,
         fromMap_,
         isCanNull,
+        isArray,
+        typeArray,
 ]);
   
   @override
   String toString() {
-    return 'Varable(type: $type, name: $name, nameObject: $nameObject, initValueDefault: $initValueDefault, initValueComment: $initValueComment, toMap_: $toMap_, fromMap_: $fromMap_, isCanNull: $isCanNull, )';
+    return 'Varable(type: $type, nameVar: $nameVar, nameData: $nameData, initValueDefault: $initValueDefault, initValueComment: $initValueComment, toMap_: $toMap_, fromMap_: $fromMap_, isCanNull: $isCanNull, isArray: $isArray, typeArray: $typeArray, )';
     }
   }
