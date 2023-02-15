@@ -6,7 +6,7 @@ class InvalidConfigException implements Exception {
 
   @override
   String toString() {
-    return generateError(this, message);
+    return ErrorMsg.generate(this, message);
   }
 }
 
@@ -16,7 +16,7 @@ class NoPathFoundException implements Exception {
 
   @override
   String toString() {
-    return generateError(this, message);
+    return ErrorMsg.generate(this, message);
   }
 }
 
@@ -26,7 +26,7 @@ class NoConfigFoundException implements Exception {
 
   @override
   String toString() {
-    return generateError(this, message);
+    return ErrorMsg.generate(this, message);
   }
 }
 
@@ -40,6 +40,6 @@ class FileNotFoundException implements Exception {
 
   @override
   String toString() {
-    return generateError(this, '$fileName file not found');
+    return ErrorMsg.generate(this, '$fileName file not found');
   }
 }

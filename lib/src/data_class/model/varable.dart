@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:turn_gen/src/data_class/enum/enum.dart';
 
 @immutable
-class Varable { 
+class Varable {
 /* type: enum 
 init: EnumTypeVarable.none_
  */
@@ -34,12 +34,11 @@ init: EnumTypeVarable.none_
  */
   final EnumTypeVarable typeArray;
 // end
-   
+
   //  ******************************
   // GENERATED CODE BELOW - DO NOT MODIFY
   //  ******************************
 
-  
   const Varable({
     this.type = EnumTypeVarable.none_,
     this.nameVar = '',
@@ -60,32 +59,31 @@ init: EnumTypeVarable.none_
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'type': type.index, 
-      'nameVar': nameVar, 
-      'nameData': nameData, 
-      'initValueDefault': initValueDefault, 
-      'initValueComment': initValueComment, 
-      'toMap_': toMap_, 
-      'fromMap_': fromMap_, 
-      'isCanNull': isCanNull, 
-      'isArray': isArray, 
-      'typeArray': typeArray.index, 
+      'type': type.index,
+      'nameVar': nameVar,
+      'nameData': nameData,
+      'initValueDefault': initValueDefault,
+      'initValueComment': initValueComment,
+      'toMap_': toMap_,
+      'fromMap_': fromMap_,
+      'isCanNull': isCanNull,
+      'isArray': isArray,
+      'typeArray': typeArray.index,
     };
   }
 
-    
   factory Varable.fromMap(Map<String, dynamic> map) {
     return Varable(
-      type: EnumTypeVarable.values[map['type'] as int], 
-      nameVar: map['nameVar'] as String? ?? '' , 
-      nameData: map['nameData'] as String? ?? '' , 
-      initValueDefault: map['initValueDefault'] as String? ?? '' , 
-      initValueComment: map['initValueComment'] as String? ?? '' , 
-      toMap_: map['toMap_'] as String? ?? '' , 
-      fromMap_: map['fromMap_'] as String? ?? '' , 
-      isCanNull: map['isCanNull'] as bool? ?? false, 
-      isArray: map['isArray'] as bool? ?? false, 
-      typeArray: EnumTypeVarable.values[map['typeArray'] as int], 
+      type: EnumTypeVarable.values[map['type'] as int],
+      nameVar: map['nameVar'] as String? ?? '',
+      nameData: map['nameData'] as String? ?? '',
+      initValueDefault: map['initValueDefault'] as String? ?? '',
+      initValueComment: map['initValueComment'] as String? ?? '',
+      toMap_: map['toMap_'] as String? ?? '',
+      fromMap_: map['fromMap_'] as String? ?? '',
+      isCanNull: map['isCanNull'] as bool? ?? false,
+      isArray: map['isArray'] as bool? ?? false,
+      typeArray: EnumTypeVarable.values[map['typeArray'] as int],
     );
   }
 
@@ -102,41 +100,47 @@ init: EnumTypeVarable.none_
     EnumTypeVarable? typeArray,
   }) {
     return Varable(
-      type: type ?? this.type, 
-      nameVar: nameVar ?? this.nameVar, 
-      nameData: nameData ?? this.nameData, 
-      initValueDefault: initValueDefault ?? this.initValueDefault, 
-      initValueComment: initValueComment ?? this.initValueComment, 
-      toMap_: toMap_ ?? this.toMap_, 
-      fromMap_: fromMap_ ?? this.fromMap_, 
-      isCanNull: isCanNull ?? this.isCanNull, 
-      isArray: isArray ?? this.isArray, 
-      typeArray: typeArray ?? this.typeArray, 
+      type: type ?? this.type,
+      nameVar: nameVar ?? this.nameVar,
+      nameData: nameData ?? this.nameData,
+      initValueDefault: initValueDefault ?? this.initValueDefault,
+      initValueComment: initValueComment ?? this.initValueComment,
+      toMap_: toMap_ ?? this.toMap_,
+      fromMap_: fromMap_ ?? this.fromMap_,
+      isCanNull: isCanNull ?? this.isCanNull,
+      isArray: isArray ?? this.isArray,
+      typeArray: typeArray ?? this.typeArray,
     );
   }
-  
+
   String toJson() => json.encode(toMap());
-  
-    
-  factory Varable.fromJson(String source) => Varable.fromMap(json.decode(source) as Map<String, dynamic>);
-  
+
+  factory Varable.fromJson(String source) =>
+      Varable.fromMap(json.decode(source) as Map<String, dynamic>);
+
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Varable &&
-            (identical(other.type, type) || other.type == type)&& 
-            (identical(other.nameVar, nameVar) || other.nameVar == nameVar)&& 
-            (identical(other.nameData, nameData) || other.nameData == nameData)&& 
-            (identical(other.initValueDefault, initValueDefault) || other.initValueDefault == initValueDefault)&& 
-            (identical(other.initValueComment, initValueComment) || other.initValueComment == initValueComment)&& 
-            (identical(other.toMap_, toMap_) || other.toMap_ == toMap_)&& 
-            (identical(other.fromMap_, fromMap_) || other.fromMap_ == fromMap_)&& 
-            (identical(other.isCanNull, isCanNull) || other.isCanNull == isCanNull)&& 
-            (identical(other.isArray, isArray) || other.isArray == isArray)&& 
-            (identical(other.typeArray, typeArray) || other.typeArray == typeArray));
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.nameVar, nameVar) || other.nameVar == nameVar) &&
+            (identical(other.nameData, nameData) ||
+                other.nameData == nameData) &&
+            (identical(other.initValueDefault, initValueDefault) ||
+                other.initValueDefault == initValueDefault) &&
+            (identical(other.initValueComment, initValueComment) ||
+                other.initValueComment == initValueComment) &&
+            (identical(other.toMap_, toMap_) || other.toMap_ == toMap_) &&
+            (identical(other.fromMap_, fromMap_) ||
+                other.fromMap_ == fromMap_) &&
+            (identical(other.isCanNull, isCanNull) ||
+                other.isCanNull == isCanNull) &&
+            (identical(other.isArray, isArray) || other.isArray == isArray) &&
+            (identical(other.typeArray, typeArray) ||
+                other.typeArray == typeArray));
   }
-  
+
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -150,10 +154,10 @@ init: EnumTypeVarable.none_
         isCanNull,
         isArray,
         typeArray,
-]);
-  
+      ]);
+
   @override
   String toString() {
     return 'Varable(type: $type, nameVar: $nameVar, nameData: $nameData, initValueDefault: $initValueDefault, initValueComment: $initValueComment, toMap_: $toMap_, fromMap_: $fromMap_, isCanNull: $isCanNull, isArray: $isArray, typeArray: $typeArray, )';
-    }
   }
+}

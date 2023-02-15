@@ -4,6 +4,15 @@ export 'package:cli_util/cli_logging.dart' show Progress;
 
 /// generated extra features Logger
 class FLILogger {
+  /// Creates a instance of [FLILogger].
+  /// In case [isVerbose] is `true`,
+  /// it logs all the [verbose] logs to console
+  // ignore: avoid_positional_boolean_parameters
+  FLILogger(this.isVerbose) {
+    final ansi = Ansi(Ansi.terminalSupportsAnsi);
+    _logger =
+        isVerbose ? Logger.verbose(ansi: ansi) : Logger.standard(ansi: ansi);
+  }
   late Logger _logger;
 
   /// Returns true if this is a verbose logger
@@ -11,15 +20,6 @@ class FLILogger {
 
   /// Gives access to internal logger
   Logger get rawLogger => _logger;
-
-  /// Creates a instance of [FLILogger].
-  /// In case [isVerbose] is `true`,
-  /// it logs all the [verbose] logs to console
-  FLILogger(this.isVerbose) {
-    final ansi = Ansi(Ansi.terminalSupportsAnsi);
-    _logger =
-        isVerbose ? Logger.verbose(ansi: ansi) : Logger.standard(ansi: ansi);
-  }
 
   /// Logs error messages
   void error(Object? message) => _logger.stderr('⚠️$message');

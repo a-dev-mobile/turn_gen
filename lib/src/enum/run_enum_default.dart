@@ -23,45 +23,47 @@ T? maybeMapOrNull<T>
 
  */
 
-Future<void> runEnumDefault(
-    {required String path, required FLILogger logger}) async {
-  String contentFile = await UtilsString.readFile(path: path);
+// ignore: prefer-static-class
+Future<void> runEnumDefault({
+  required String path,
+  required FLILogger logger,
+}) async {
+  final contentFile = await UtilsString.readFile(path: path);
 
   if (contentFile.contains('GENERATED CODE')) {
     logger.info('Файл $path \nуже имеет генерированные данные');
+    
     return;
   }
 
-  String nameEnum = findText(
-    start: "enum",
-    end: "{",
+  final nameEnum = _findText(
+    start: 'enum',
+    end: '{',
     oldContent: contentFile,
   );
 
-  List<String> argEnum = findText(
+  final argEnum = _findText(
     start: nameEnum,
-    end: "}",
+    end: '}',
     oldContent: contentFile,
   ).replaceAll('{', '').replaceAll(' ', '').replaceAll('\n', '').split(',');
 
-  if (argEnum.last.isEmpty) argEnum.removeLast();
-  if (argEnum.last.isEmpty) argEnum.removeLast();
-  if (argEnum.last.isEmpty) argEnum.removeLast();
+  _badCode(argEnum);
 
-  StringBuffer constructor = StringBuffer();
-  StringBuffer fromValue = StringBuffer();
+  final constructor = StringBuffer();
+  final fromValue = StringBuffer();
 
   /// Pattern matching
-  StringBuffer mapStart = StringBuffer();
-  StringBuffer mapEnd = StringBuffer();
-  StringBuffer maybeMapStart = StringBuffer();
-  StringBuffer maybeMapEnd = StringBuffer();
-  StringBuffer maybeMapOrNullStart = StringBuffer();
-  StringBuffer maybeMapOrNullEnd = StringBuffer();
-  String v = '';
-  String lastSymbolArg = '';
+  final mapStart = StringBuffer();
+  final mapEnd = StringBuffer();
+  final maybeMapStart = StringBuffer();
+  final maybeMapEnd = StringBuffer();
+  final maybeMapOrNullStart = StringBuffer();
+  final maybeMapOrNullEnd = StringBuffer();
+  var v = '';
+  var lastSymbolArg = '';
 
-  for (int i = 0; i < argEnum.length; i++) {
+  for (var i = 0; i < argEnum.length; i++) {
     v = argEnum[i];
 
     if (v == '\n' || v.isEmpty) continue;
@@ -102,7 +104,7 @@ Future<void> runEnumDefault(
 
   final file = File(path);
 
-  file.writeAsString('''
+ final _ = await file.writeAsString('''
   // ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
   /*
   $contentFile
@@ -111,7 +113,7 @@ Future<void> runEnumDefault(
 ${ConstConsole.GEN_MSG}
 
 enum $nameEnum with Comparable<$nameEnum> { 
-${constructor.toString()}
+$constructor
   const $nameEnum(this.value);
 
   final String value;
@@ -121,7 +123,7 @@ ${constructor.toString()}
     $nameEnum? fallback,
   }) {
     switch (value) {
-${fromValue.toString()}
+$fromValue
       default:
         return fallback ?? (throw ArgumentError.value(value));
     }
@@ -129,29 +131,29 @@ ${fromValue.toString()}
 
   /// Pattern matching
   T map<T>({
-${mapStart.toString()}
+$mapStart
   }) {
     switch (this) {
-${mapEnd.toString()}
+$mapEnd
     }
   }
   
   /// Pattern matching
   T maybeMap<T>({
     required T Function() orElse,
-${maybeMapStart.toString()}
+$maybeMapStart
   }) =>
       map<T>(
-${maybeMapEnd.toString()}
+$maybeMapEnd
       );
 
   /// Pattern matching
   T? maybeMapOrNull<T>({
-${maybeMapOrNullStart.toString()}
+$maybeMapOrNullStart
   }) =>
       maybeMap<T?>(
         orElse: () => null,
-${maybeMapOrNullEnd.toString()}        
+$maybeMapOrNullEnd        
       );
 
   @override
@@ -161,13 +163,22 @@ ${maybeMapOrNullEnd.toString()}
   String toString() => value;
    }\n''');
 
-  print('***');
-  print('✓ Successfully generated extra features for enum with default value');
-  print('***');
+  logger..info('***')
+  ..info('✓ Successfully generated extra features for enum with default value')
+  ..info('***');
 }
 
-String findText(
-    {required String oldContent, required String start, required String end}) {
+void _badCode(List<String> argEnum) {
+    if (argEnum.last.isEmpty) argEnum.removeLast();
+  if (argEnum.last.isEmpty) argEnum.removeLast();
+  if (argEnum.last.isEmpty) argEnum.removeLast();
+}
+
+String _findText({
+  required String oldContent,
+  required String start,
+  required String end,
+}) {
   final startIndex = oldContent.indexOf(start.trim());
   final endIndex = oldContent.indexOf(end.trim(), startIndex + start.length);
 

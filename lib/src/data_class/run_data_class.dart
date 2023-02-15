@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
-import 'package:collection/collection.dart';
 import 'package:turn_gen/constants.dart';
 import 'package:turn_gen/logger.dart';
 import 'package:turn_gen/src/data_class/data_class.dart';
@@ -35,9 +34,6 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   final splitInit = EnumKeySetting.init.value;
   final splitToMap = EnumKeySetting.toMap.value;
   final splitFromMap = EnumKeySetting.fromMap.value;
-  final splitNo = EnumKeySetting.no.value;
-  final splitOnly = EnumKeySetting.only.value;
-  final splitUse = EnumKeySetting.use.value;
 
   final rawSettingClass = UtilsRegex.getTextRegexLastMatch(
     content: contentFile,
@@ -96,6 +92,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
       ..info('put a comment (/*   */) over each final variable')
       ..info('***')
       ..info('');
+    exit(0);
   }
 
   final listVar = <Varable>[];
@@ -116,13 +113,19 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   for (var i = 0; i < listItemFinal.length; i++) {
     isCanNull = false;
 
-    finalLine = UtilsString.replaceToEmpty(
-      text: listItemFinal[i],
-      replaceable: ['final', '  ', ';'],
-    ).trim();
-    listSplit = finalLine.split(' ');
+    finalLine = listItemFinal[i]
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .replaceAll(';', '')
+        .replaceAll('final', '')
+        .trim();
 
-    name = listSplit.last.trim();
+    // finalLine = UtilsString.replaceToEmpty(
+    //   text: listItemFinal[i],
+    //   replaceable: ['final', '  ', ';'],
+    // ).trim();
+    listSplit = finalLine.split(' ');
+    // берем имя и удаляем его
+    name = listSplit.last;
     final _ = listSplit.removeLast();
 
     typeStr = listSplit.join(' ').trim();
@@ -245,7 +248,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
 ''');
 
     fromMapSb.write('''
-      ${v.nameVar}: ${getFromMap(v)}, 
+      ${v.nameVar}: ${_getFromMap(v)}, 
 ''');
 
     toString.write('${v.nameVar}: \$${v.nameVar}, ');
@@ -260,6 +263,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
 
   final file = File(path);
   writeToFile(
+    logger,
     listFirstSetting,
     contentFile,
     classHeader,
@@ -291,15 +295,12 @@ List<FirstSetting> _getSetting({
       .replaceAll(',', '')
       .replaceAll('-', '')
       .replaceAll('_', '')
-      
       .replaceAll(':', ': ')
       .replaceAll(RegExp(r'\s+'), ' ');
   var keySetting = EnumKeySetting.none;
 
   for (final key in EnumKeySetting.values) {
     keySetting = EnumKeySetting.none;
-
-
 
     // if it contains settings, then continue
     if (contentFormat.contains(key.value)) {
@@ -308,9 +309,8 @@ List<FirstSetting> _getSetting({
       final tempList = contentFormat.split(' ')
         ..removeWhere((e) => e.contains('*'));
       final indexKey = tempList.indexOf(key.value);
-        final listSetting = <EnumValueSetting>[];
+      final listSetting = <EnumValueSetting>[];
       for (var i = indexKey + 1; i < tempList.length; i++) {
-
         if (tempList[i].contains(':')) break;
         final setting = tempList[i];
         final tempEnum = EnumValueSetting.fromValue(
@@ -325,11 +325,9 @@ List<FirstSetting> _getSetting({
       listFirstSetting.add(
         FirstSetting(keySetting: keySetting, listValueSetting: listSetting),
       );
-
     } else {
       continue;
     }
-  
   }
 
   return listFirstSetting;

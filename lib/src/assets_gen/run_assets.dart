@@ -154,8 +154,7 @@ class AppAssets$vFormat {''');
     listAssets = assetsList.where((e) => e.fileOnlyExtension == v).toList();
     for (final l in listAssets) {
       // line screening
-      if (l.fileFromAssetsPath
-          .contains(RegExp(r'[&$]+'))) {
+      if (l.fileFromAssetsPath.contains(RegExp(r'[&$]+'))) {
         symbol = 'r';
       } else {
         symbol = '';
@@ -234,16 +233,16 @@ Future<String> _getFileSize(String filepath, int decimals) async {
   return '${(bytes / pow(1024, i)).toStringAsFixed(decimals)} ${suffixes[i]}';
 }
 
-void _foundFilesWithoutName(List<AssetItem> assetsList, FLILogger logger) {
-  final fileNoneList =
-      assetsList.where((v) => v.fileOnlyExtension == ConstHelper.noExtension);
-  if (fileNoneList.isNotEmpty) {
-    logger.info('\nFiles without a name:');
-    for (final v in fileNoneList) {
-      logger.info(v.fileFullPath);
-    }
-  }
-}
+// void _foundFilesWithoutName(List<AssetItem> assetsList, FLILogger logger) {
+//   final fileNoneList =
+//       assetsList.where((v) => v.fileOnlyExtension == ConstHelper.noExtension);
+//   if (fileNoneList.isNotEmpty) {
+//     logger.info('\nFiles without a name:');
+//     for (final v in fileNoneList) {
+//       logger.info(v.fileFullPath);
+//     }
+//   }
+// }
 
 void _sendErrorIfNotConfigInPubspec(String pathGenFolder) {
   if (pathGenFolder.isEmpty) {
@@ -370,7 +369,7 @@ String _getPathAssetsOutput(String basePath, FLILogger logger) {
     final path = p.join(basePath, relPath);
 
     logger
-      ..info('Path found: $path')
+      ..info('Path found: ${path.replaceAll(r'\', '/')}')
       ..info('');
 
     return path;

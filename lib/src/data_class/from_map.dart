@@ -2,8 +2,7 @@
 
 part of 'run_data_class.dart';
 
-// ignore: prefer-static-class
-String getFromMap(Varable v) {
+String _getFromMap(Varable v) {
   final type = v.type;
   final name = v.nameVar;
   var nameObject = v.nameData;
@@ -11,7 +10,7 @@ String getFromMap(Varable v) {
   final fromMap = v.fromMap_;
   final isCanNull = v.isCanNull;
   final initComment = v.initValueComment;
-  final initDefault_ = v.initValueDefault;
+
   const error = 'error';
 
   if (fromMap.isNotEmpty) return fromMap;

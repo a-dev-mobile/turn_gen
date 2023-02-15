@@ -1,5 +1,5 @@
-  // ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
-  /*
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
+/*
   
   
   enum EnumKeySetting {
@@ -15,12 +15,12 @@
 
   
   */
-  
-  //  ******************************
-  // GENERATED CODE BELOW - DO NOT MODIFY
-  //  ******************************
 
-enum EnumKeySetting with Comparable<EnumKeySetting> { 
+//  ******************************
+// GENERATED CODE BELOW - DO NOT MODIFY
+//  ******************************
+
+enum EnumKeySetting with Comparable<EnumKeySetting> {
   type('type:'),
   fromMap('frommap:'),
   toMap('tomap:'),
@@ -71,29 +71,27 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
     required T Function() no,
     required T Function() use,
     required T Function() none,
-
   }) {
     switch (this) {
       case EnumKeySetting.type:
-        return type();     
+        return type();
       case EnumKeySetting.fromMap:
-        return fromMap();     
+        return fromMap();
       case EnumKeySetting.toMap:
-        return toMap();     
+        return toMap();
       case EnumKeySetting.init:
-        return init();     
+        return init();
       case EnumKeySetting.only:
-        return only();     
+        return only();
       case EnumKeySetting.no:
-        return no();     
+        return no();
       case EnumKeySetting.use:
-        return use();     
+        return use();
       case EnumKeySetting.none:
-        return none();     
-
+        return none();
     }
   }
-  
+
   /// Pattern matching
   T maybeMap<T>({
     required T Function() orElse,
@@ -105,18 +103,16 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
     T Function()? no,
     T Function()? use,
     T Function()? none,
-
   }) =>
       map<T>(
-      type: type ?? orElse,     
-      fromMap: fromMap ?? orElse,     
-      toMap: toMap ?? orElse,     
-      init: init ?? orElse,     
-      only: only ?? orElse,     
-      no: no ?? orElse,     
-      use: use ?? orElse,     
-      none: none ?? orElse,     
-
+        type: type ?? orElse,
+        fromMap: fromMap ?? orElse,
+        toMap: toMap ?? orElse,
+        init: init ?? orElse,
+        only: only ?? orElse,
+        no: no ?? orElse,
+        use: use ?? orElse,
+        none: none ?? orElse,
       );
 
   /// Pattern matching
@@ -129,19 +125,17 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
     T Function()? no,
     T Function()? use,
     T Function()? none,
-
   }) =>
       maybeMap<T?>(
         orElse: () => null,
-        type: type,  
-        fromMap: fromMap,  
-        toMap: toMap,  
-        init: init,  
-        only: only,  
-        no: no,  
-        use: use,  
-        none: none,  
-        
+        type: type,
+        fromMap: fromMap,
+        toMap: toMap,
+        init: init,
+        only: only,
+        no: no,
+        use: use,
+        none: none,
       );
 
   @override
@@ -149,4 +143,4 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
 
   @override
   String toString() => value;
-   }
+}

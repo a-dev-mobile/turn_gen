@@ -2,7 +2,7 @@ part of 'run_data_class.dart';
 
 // добавляем ли const в factory init
 String _getWordConst(Varable v) {
-  final type = v.type;
+  // final type = v.type;
   final init = v.initValueDefault;
   final initComment = v.initValueComment;
 

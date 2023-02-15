@@ -1,15 +1,11 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:path/path.dart' as path;
+abstract class ErrorMsg {
+  static String generate(Exception e, String? error) {
+    final errorOutput = error == null ? '' : ' \n$error';
 
-void printStatus(String message) {
-  print('• $message');
-}
-
-String generateError(Exception e, String? error) {
-  final errorOutput = error == null ? '' : ' \n$error';
-  return '\n✗ ERROR: ${(e).runtimeType.toString()}$errorOutput';
+    return '\n✗ ERROR: ${(e).runtimeType}$errorOutput';
+  }
 }
 
 abstract class UtilsNumber {
@@ -32,8 +28,10 @@ abstract class UtilsString {
     }
   }
 
-  static String replaceToEmpty(
-      {required String text, required List<String> replaceable}) {
+  static String replaceToEmpty({
+    required String text,
+    required List<String> replaceable,
+  }) {
     var result = text;
     for (final i in replaceable) {
       result = result.replaceAll(i, '');
@@ -50,7 +48,6 @@ abstract class UtilsRegex {
     final regexFindNameState = RegExp(regex, multiLine: true);
     final match = regexFindNameState.allMatches(content);
     if (match.isEmpty) {
-        
       return '';
     }
 
@@ -63,11 +60,10 @@ abstract class UtilsRegex {
   }) {
     final regexFindNameState = RegExp(regex, multiLine: true);
     final matches = regexFindNameState.allMatches(content);
-    if (matches.isEmpty) {
-        }
+    if (matches.isEmpty) {}
     final list = <String>[];
     for (final Match m in matches) {
-      var match = m[0]!;
+      final match = m[0]!;
       list.add(match);
     }
 
