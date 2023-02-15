@@ -95,7 +95,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
     exit(0);
   }
 
-  final listVar = <Varable>[];
+  final listVarMain = <Varable>[];
   var listSplit = <String>[];
 
   var name = '';
@@ -124,7 +124,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
     //   replaceable: ['final', '  ', ';'],
     // ).trim();
     listSplit = finalLine.split(' ');
-    // берем имя и удаляем его
+    // take the name and delete it
     name = listSplit.last;
     final _ = listSplit.removeLast();
 
@@ -169,9 +169,9 @@ Future<void> runData({required String path, required FLILogger logger}) async {
     }
     initValueDefault = _getDefaultInitValue(type, initValueTemp, isCanNull);
 
-    // print('');
 
-    listVar.add(
+
+    listVarMain.add(
       Varable(
         isCanNull: isCanNull,
         nameVar: name,
@@ -198,23 +198,50 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   var typeStrTemp = '';
   var v = const Varable();
 
-  for (var i = 0; i < listVar.length; i++) {
-    v = listVar[i];
+// I sort the Required varable first
+  final listVarSort = [...listVarMain];
 
-    if (v.initValueComment.isNotEmpty) {
+  final listRequired = listVarMain
+      .where((v) => !v.isCanNull && v.initValueComment.isEmpty)
+      .toList();
+  listVarSort.removeWhere(listRequired.contains);
+
+  final listYesInit =
+      listVarSort.where((v) => v.initValueComment.isNotEmpty).toList();
+  listVarSort.removeWhere(listYesInit.contains);
+
+  final listNoInit = [...listVarSort];
+
+  listVarSort
+    ..clear()
+    ..addAll(listRequired)
+    ..addAll(listYesInit)
+    ..addAll(listNoInit);
+// listRequired
+  for (var i = 0; i < listRequired.length; i++) {
+    v = listRequired[i];
+    constructor.write('''
+    required this.${v.nameVar},
+''');
+  }
+  // listYesInit
+  for (var i = 0; i < listYesInit.length; i++) {
+    v = listYesInit[i];
       constructor.write('''
     this.${v.nameVar} = ${v.initValueComment},
 ''');
-    } else if (!v.isCanNull && v.initValueComment.isEmpty) {
-      constructor.write('''
-    required this.${v.nameVar},
-''');
-    } else if (v.isCanNull && v.initValueComment.isEmpty) {
+  }
+  // listNoInit
+  for (var i = 0; i < listNoInit.length; i++) {
+    v = listNoInit[i];
       constructor.write('''
     this.${v.nameVar},
 ''');
-    }
+  }
 
+  // Showing warning is null var, but init value have
+  for (var i = 0; i < listVarSort.length; i++) {
+        v = listVarSort[i];
     if (v.isCanNull && v.initValueDefault.isNotEmpty) {
       logger
         ..info('')
@@ -253,7 +280,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
 
     toString.write('${v.nameVar}: \$${v.nameVar}, ');
 
-    equals.write(_getEquals(v, i == listVar.length - 1));
+    equals.write(_getEquals(v, i == listVarSort.length - 1));
     hashCode.write(
       _getHashCode(
         v,
