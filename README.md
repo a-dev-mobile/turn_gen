@@ -53,21 +53,18 @@ dart run turn_gen -t enum_default -f <path to your file>
 If you use `VSCode`, you can add the task to your `tasks.json`
 
 ```json
-        // GEN enum_default
     {
       "label": "GEN enum_default",
       "type": "dart",
       "command": "dart",
       "args": ["run", "turn_gen", "-t", "enum_default", "-f", "${file}"],
     },
-        // GEN enum_int
     {
       "label": "GEN enum_int",
       "type": "dart",
       "command": "dart",
       "args": ["run", "turn_gen", "-t", "enum_int", "-f", "${file}"],
     },
-        // GEN enum_string    
     {
       "label": "GEN enum_string",
       "type": "dart",
@@ -181,7 +178,6 @@ dart run turn_gen -t assets -f <path to your workspace folder>
 If you are using `VSCode`, you can add the task to your `tasks.json`.
 
 ```json
-       // GEN assets   
     {
       "label": "GEN assets",
       "type": "dart",
@@ -352,7 +348,6 @@ dart run turn_gen -t data -f <path to your file>
 If you use `VSCode`, you can add the task to your `tasks.json`.
 
 ```json
-    // GEN data class
     {
       "label": "GEN data class",
       "type": "dart",
