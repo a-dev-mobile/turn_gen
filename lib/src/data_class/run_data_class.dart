@@ -100,7 +100,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
 
   var name = '';
   var nameObject = '';
-  var finalLine = '';
+
   var isCanNull = false;
   var type = EnumTypeVarable.none_;
   var typeStr = '';
@@ -109,21 +109,15 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   var initValueComment = '';
   var toMap = '';
   var fromMap = '';
-
+/* init: null type: enum */ /* 
+init: Map<t , v> 
+type: asda fromMap: asdasd*/
   for (var i = 0; i < listItemFinal.length; i++) {
+    final finalVarable = _formatFinalVarablse(listItemFinal[i]);
+    final setingVarableMap = _formatSettingVarable(listItemDef[i]);
     isCanNull = false;
 
-    finalLine = listItemFinal[i]
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .replaceAll(';', '')
-        .replaceAll('final', '')
-        .trim();
-
-    // finalLine = UtilsString.replaceToEmpty(
-    //   text: listItemFinal[i],
-    //   replaceable: ['final', '  ', ';'],
-    // ).trim();
-    listSplit = finalLine.split(' ');
+    listSplit = finalVarable.split(' ');
     // take the name and delete it
     name = listSplit.last;
     final _ = listSplit.removeLast();
@@ -138,39 +132,52 @@ Future<void> runData({required String path, required FLILogger logger}) async {
     type = EnumTypeVarable.fromValue(typeStr, fallback: EnumTypeVarable.none_);
 
     nameObject = '';
+
     // If it does not work, I see if there is a value in the commentary
-    if (type == EnumTypeVarable.none_ && listItemDef[i].contains(splitType)) {
-      final temp = _splitUsedFeatures(listItemDef, i, splitType);
-      type = EnumTypeVarable.fromValue(temp, fallback: EnumTypeVarable.none_);
+    if (type == EnumTypeVarable.none_ &&
+        setingVarableMap.containsKey(EnumKeySetting.type)) {
+      type = EnumTypeVarable.fromValue(
+        setingVarableMap[EnumKeySetting.type],
+        fallback: EnumTypeVarable.none_,
+      );
+
       nameObject = typeStr;
     }
     //
 
-    //
+    // toMap
     toMap = '';
-    if (listItemDef[i].contains(splitToMap)) {
-      toMap = _splitUsedFeatures(listItemDef, i, splitToMap);
+    if (setingVarableMap.containsKey(EnumKeySetting.toMap)) {
+      toMap = setingVarableMap[EnumKeySetting.toMap] ?? '';
     }
 
 //
     //
     fromMap = '';
-    if (listItemDef[i].contains(splitFromMap)) {
-      fromMap = _splitUsedFeatures(listItemDef, i, splitFromMap);
+    if (setingVarableMap.containsKey(EnumKeySetting.fromMap)) {
+      fromMap = setingVarableMap[EnumKeySetting.fromMap] ?? '';
     }
     initValueTemp = '';
     initValueDefault = '';
     initValueComment = '';
-    if (listItemDef[i].contains(splitInit)) {
-      final temp = _splitUsedFeatures(listItemDef, i, splitInit);
+    if (setingVarableMap.containsKey(EnumKeySetting.init)) {
+      final temp = setingVarableMap[EnumKeySetting.init] ?? '';
 
       initValueTemp = temp;
       initValueComment = temp;
     }
     initValueDefault = _getDefaultInitValue(type, initValueTemp, isCanNull);
 
-
-
+    if (type == EnumTypeVarable.none_) {
+      logger
+        ..error('$finalVarable - type is not defined')
+        ..info('Add a hint above the variable, for example:')
+        ..info('/* type: enum */ \t\tfor enum types')
+        ..info('/* type: data */ \t\tfor data types')
+        ..info('/* type: List<data> */ \t\tfor list data types')
+        ..info('/* type: List<data?> */ \tfor list data types, allowing null')
+        ..info('');
+    }
     listVarMain.add(
       Varable(
         isCanNull: isCanNull,
@@ -227,27 +234,27 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   // listYesInit
   for (var i = 0; i < listYesInit.length; i++) {
     v = listYesInit[i];
-      constructor.write('''
+    constructor.write('''
     this.${v.nameVar} = ${v.initValueComment},
 ''');
   }
   // listNoInit
   for (var i = 0; i < listNoInit.length; i++) {
     v = listNoInit[i];
-      constructor.write('''
+    constructor.write('''
     this.${v.nameVar},
 ''');
   }
 
   // Showing warning is null var, but init value have
   for (var i = 0; i < listVarSort.length; i++) {
-        v = listVarSort[i];
+    v = listVarSort[i];
     if (v.isCanNull && v.initValueDefault.isNotEmpty) {
       logger
         ..info('')
         ..info('-- INFO --')
         ..info(
-          '${v.type}? ${v.nameVar} is null, but init value > ${v.initValueDefault}',
+          '(${v.type}? ${v.nameVar}) is null, but init value > ${v.initValueDefault}',
         );
     }
 
@@ -309,6 +316,96 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   );
 }
 
+String _getTypeRaw(String content, String split) {
+  // final map = <String, String>{};
+  // for (var i in EnumKeySetting.values) {
+  //   final splitContent = content.split(i.value);
+  //   if (splitContent.isEmpty) continue;
+  //   map[i] = splitContent[]
+  //   var a;
+  // }
+  final tempList = content.split(' ')..removeWhere((e) => e.contains('*'));
+  final indexKey = tempList.indexOf(split);
+  // final _ =tempList.removeAt(indexKey);
+
+  final listSetting = <EnumValueSetting>[];
+  for (final key in EnumKeySetting.values) {}
+
+  // final indexKey = tempList.indexOf(key.value);
+
+  var a;
+
+  return tempList[indexKey + 1];
+}
+
+Map<EnumKeySetting, String> _formatSettingVarable(String content) {
+  // ignore: prefer-immediate-return
+  var contentFormat = content
+      .replaceAll(':', ': ')
+      .replaceAll(',', ', ')
+      .replaceAll('<', ' <')
+      .replaceAll('>', '> ')
+      .replaceAll('/*', '')
+      .replaceAll('*/', '')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .replaceAll(' ,', ',')
+      .replaceAll(' :', ':');
+
+  final setting = [
+    'init:',
+    'INIT:',
+    'TYPE:',
+    'fromMap:',
+    'toMap:',
+    'tomap:',
+    'TOMAP:',
+    'toMAP:',
+    'frommap:',
+    'FROMMAP:',
+    'fromMAP:',
+  ];
+
+  for (final v in setting) {
+    if (contentFormat.contains(v)) {
+      contentFormat = contentFormat.replaceAll(v, '\n$v');
+    }
+  }
+  final map = <EnumKeySetting, String>{};
+  final split = contentFormat.split('\n');
+  var splitTemp = <String>[];
+  var strKey = '';
+  var strValue = '';
+  var enumKey = EnumKeySetting.none;
+
+  for (var i = 0; i < split.length; i++) {
+    enumKey = EnumKeySetting.none;
+
+    if (split[i].isEmpty || !split[i].contains(':')) continue;
+    splitTemp = split[i].split(':');
+
+    strKey = '${splitTemp.first.toLowerCase()}:';
+    strValue = splitTemp.last.trim();
+    enumKey = EnumKeySetting.fromValue(strKey, fallback: EnumKeySetting.none);
+
+    if (enumKey == EnumKeySetting.none) continue;
+
+    map[enumKey] = strValue;
+  }
+
+  return map;
+}
+
+String _formatFinalVarablse(String content) {
+  // ignore: prefer-immediate-return
+  final contentFormat = content
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .replaceAll(';', '')
+      .replaceAll('final', '')
+      .trim();
+
+  return contentFormat;
+}
+
 List<FirstSetting> _getSetting({
   required String content,
 }) {
@@ -358,49 +455,4 @@ List<FirstSetting> _getSetting({
   }
 
   return listFirstSetting;
-}
-
-// final rawList = content
-//     .split('\n')
-//     .firstWhere((e) => e.contains('$isUse:'))
-//     .replaceAll('$isUse:', '')
-//     .replaceAll('//', '')
-//     .replaceAll('/*', '')
-//     .replaceAll('*/', '')
-//     .replaceAll(',', '')
-//     .replaceAll('-', '')
-//     .replaceAll('_', '')
-//     .replaceAll(RegExp(r'\s+'), ' ')
-//     .trim()
-//     .toLowerCase();
-// final listFirstSetting = <FirstSetting>[];
-// var en = EnumKeySetting.none;
-
-// for (final v in rawList.split(' ')) {
-//   en = EnumKeySetting.fromValue(v.toLowerCase(),
-//       fallback: EnumKeySetting.none);
-//   //  do not record if not detected
-//   if (en == EnumKeySetting.none) continue;
-
-//   listFirstSetting.add(
-//     FirstSetting(
-//       isUsed: isUse,
-//       keySetting: EnumKeySetting.fromValue(v.toLowerCase(),
-//           fallback: EnumKeySetting.none),
-//     ),
-//   );
-// }
-
-// return listFirstSetting;
-// }
-
-String _splitUsedFeatures(List<String> listItemDef, int i, String split) {
-  return listItemDef[i]
-      .split('\n')
-      .firstWhere((e) => e.contains(split))
-      .replaceAll(split, '')
-      .replaceAll('//', '')
-      .replaceAll('/*', '')
-      .replaceAll('*/', '')
-      .trim();
 }
