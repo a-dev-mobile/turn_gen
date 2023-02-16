@@ -114,7 +114,7 @@ init: Map<t , v>
 type: asda fromMap: asdasd*/
   for (var i = 0; i < listItemFinal.length; i++) {
     final finalVarable = _formatFinalVarablse(listItemFinal[i]);
-    final setingVarableMap = _formatSettingVarable(listItemDef[i]);
+    final settingVarableMap = _formatSettingVarable(listItemDef[i]);
     isCanNull = false;
 
     listSplit = finalVarable.split(' ');
@@ -135,9 +135,9 @@ type: asda fromMap: asdasd*/
 
     // If it does not work, I see if there is a value in the commentary
     if (type == EnumTypeVarable.none_ &&
-        setingVarableMap.containsKey(EnumKeySetting.type)) {
+        settingVarableMap.containsKey(EnumKeySetting.type)) {
       type = EnumTypeVarable.fromValue(
-        setingVarableMap[EnumKeySetting.type],
+        settingVarableMap[EnumKeySetting.type],
         fallback: EnumTypeVarable.none_,
       );
 
@@ -147,21 +147,21 @@ type: asda fromMap: asdasd*/
 
     // toMap
     toMap = '';
-    if (setingVarableMap.containsKey(EnumKeySetting.toMap)) {
-      toMap = setingVarableMap[EnumKeySetting.toMap] ?? '';
+    if (settingVarableMap.containsKey(EnumKeySetting.toMap)) {
+      toMap = settingVarableMap[EnumKeySetting.toMap] ?? '';
     }
 
 //
     //
     fromMap = '';
-    if (setingVarableMap.containsKey(EnumKeySetting.fromMap)) {
-      fromMap = setingVarableMap[EnumKeySetting.fromMap] ?? '';
+    if (settingVarableMap.containsKey(EnumKeySetting.fromMap)) {
+      fromMap = settingVarableMap[EnumKeySetting.fromMap] ?? '';
     }
     initValueTemp = '';
     initValueDefault = '';
     initValueComment = '';
-    if (setingVarableMap.containsKey(EnumKeySetting.init)) {
-      final temp = setingVarableMap[EnumKeySetting.init] ?? '';
+    if (settingVarableMap.containsKey(EnumKeySetting.init)) {
+      final temp = settingVarableMap[EnumKeySetting.init] ?? '';
 
       initValueTemp = temp;
       initValueComment = temp;
@@ -169,14 +169,7 @@ type: asda fromMap: asdasd*/
     initValueDefault = _getDefaultInitValue(type, initValueTemp, isCanNull);
 
     if (type == EnumTypeVarable.none_) {
-      logger
-        ..error('$finalVarable - type is not defined')
-        ..info('Add a hint above the variable, for example:')
-        ..info('/* type: enum */ \t\tfor enum types')
-        ..info('/* type: data */ \t\tfor data types')
-        ..info('/* type: List<data> */ \t\tfor list data types')
-        ..info('/* type: List<data?> */ \tfor list data types, allowing null')
-        ..info('');
+      logger.error('($finalVarable) - type is not defined');
     }
     listVarMain.add(
       Varable(
@@ -343,8 +336,7 @@ Map<EnumKeySetting, String> _formatSettingVarable(String content) {
   var contentFormat = content
       .replaceAll(':', ': ')
       .replaceAll(',', ', ')
-      .replaceAll('<', ' <')
-      .replaceAll('>', '> ')
+
       .replaceAll('/*', '')
       .replaceAll('*/', '')
       .replaceAll(RegExp(r'\s+'), ' ')
@@ -355,6 +347,7 @@ Map<EnumKeySetting, String> _formatSettingVarable(String content) {
     'init:',
     'INIT:',
     'TYPE:',
+    'type:',
     'fromMap:',
     'toMap:',
     'tomap:',

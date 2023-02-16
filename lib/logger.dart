@@ -22,7 +22,7 @@ class FLILogger {
   Logger get rawLogger => _logger;
 
   /// Logs error messages
-  void error(Object? message) => _logger.stderr('⚠️$message');
+  void error(Object? message) => _logger.stderr('⚠️ $message');
 
   /// Prints to console if [isVerbose] is true
   void verbose(Object? message) => _logger.trace(message.toString());
