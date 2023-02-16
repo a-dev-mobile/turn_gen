@@ -164,7 +164,7 @@ $maybeMapOrNullEnd
   logger
     ..info('***')
     ..info(
-        '✓ Successfully generated extra features for enum with default value')
+        '✓ Successfully generated extra features for enum with default value',)
     ..info('***');
 }
 
