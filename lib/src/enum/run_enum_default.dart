@@ -30,7 +30,7 @@ Future<void> runEnumDefault({
 
   if (contentFile.contains('GENERATED CODE')) {
     logger.info('Файл $path \nуже имеет генерированные данные');
-    
+
     return;
   }
 
@@ -102,7 +102,7 @@ Future<void> runEnumDefault({
 
   final file = File(path);
 
- final _ = await file.writeAsString('''
+  final _ = await file.writeAsString('''
   // ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
   /*
   $contentFile
@@ -161,13 +161,15 @@ $maybeMapOrNullEnd
   String toString() => value;
    }\n''');
 
-  logger..info('***')
-  ..info('✓ Successfully generated extra features for enum with default value')
-  ..info('***');
+  logger
+    ..info('***')
+    ..info(
+        '✓ Successfully generated extra features for enum with default value')
+    ..info('***');
 }
 
 void _badCode(List<String> argEnum) {
-    if (argEnum.last.isEmpty) argEnum.removeLast();
+  if (argEnum.last.isEmpty) argEnum.removeLast();
   if (argEnum.last.isEmpty) argEnum.removeLast();
   if (argEnum.last.isEmpty) argEnum.removeLast();
 }

@@ -41,7 +41,7 @@ Future<void> runEnumString({
   final contentFile = await UtilsString.readFile(path: path);
   if (contentFile.contains('GENERATED CODE')) {
     logger.info('Файл $path \nуже имеет генерированные данные');
-  
+
     return;
   }
 
@@ -238,6 +238,7 @@ $maybeMapOrNullEnd
   logger
     ..info('***')
     ..info(
-        '✓ Successfully generated extra features for enum with String value\n',)
+      '✓ Successfully generated extra features for enum with String value\n',
+    )
     ..info('***');
 }

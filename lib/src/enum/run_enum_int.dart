@@ -177,7 +177,7 @@ Future<void> runEnumInt({
 
   final file = File(path);
 
-final _ =  await file.writeAsString('''
+  final _ = await file.writeAsString('''
   // ignore_for_file:no-magic-number, constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
   /*
   $contentFile

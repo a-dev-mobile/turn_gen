@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
-
 import 'package:turn_gen/src/src.dart';
 
 part 'to_map.dart';
@@ -302,13 +301,11 @@ type: asda fromMap: asdasd*/
   );
 }
 
-
 Map<EnumKeySetting, String> _formatSettingVarable(String content) {
   // ignore: prefer-immediate-return
   var contentFormat = content
       .replaceAll(':', ': ')
       .replaceAll(',', ', ')
-
       .replaceAll('/*', '')
       .replaceAll('*/', '')
       .replaceAll(RegExp(r'\s+'), ' ')
