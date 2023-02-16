@@ -345,15 +345,15 @@ And to start, we use the command:
 dart run turn_gen -t data -f <path to your file>
 ```
 
-If you use `VSCode`, you can add the task to your `tasks.json`.
+If you use `VSCode`, you can add the task to your `tasks.json`
 
 ```json
-    {
-      "label": "GEN data class",
-      "type": "dart",
-      "command": "dart",
-      "args": ["run", "turn_gen", "-t", "data", "-f", "${file}"]
-    },
+    {
+      "label": "GEN data",
+      "type": "dart",
+      "command": "dart",
+      "args": ["run", "turn_gen", "-t", "data", "-f", "${file}"]
+    }
 ```
 
 After executing the script you get a typical `dart` class with new and overridden methods :
