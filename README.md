@@ -1,15 +1,15 @@
 # TurnGen
 
-TurnGen is a set of scripts, combined into a command line tool, all scripts are written in dart language and designed for dart(flutter) developers, this tool simplifies some tasks for us, such as:
+TurnGen is a set of scripts combined into a command line tool, all scripts are written in dart language and executed instantly, they are designed to minimize boilerplate code and simplify different tasks, such as
+
 - Working with Enum classes
 - Creating different methods in the Data class without using build_runner
-- Generating links of all files from the assets folder
-
-## How to use
+- Generating links to all files in the assets folder
 
 ## Install
 
-To use TurnGen, you only need TurnGen by adding it to the `pubspec.yaml` file as a `dev_dependencies`:
+To use TurnGen, simply add TurnGen to the `pubspec.yaml` file as `dev_dependencies`:
+
 For a Flutter project:
 
 ```shell
@@ -21,7 +21,8 @@ For a Dart project:
 ```shell
 dart pub add --dev turn_gen
 ```
-If you are going to use the file reference generator from the asset folder, don't forget to add the output file path to `pubspec.yami`:
+
+If you are going to use the link generator for files in the asset folder, don't forget to add the output file path to `pubspec.yami`:
 
 ```yaml
 turn_gen:
@@ -30,13 +31,14 @@ turn_gen:
 
 Then run `flutter pub get` or `dart pub get` to install the package.
 
+## Use
 
 ### Enum
 
 ![enum_type](https://github.com/a-dev-mobile/turn_gen/blob/master/resources/enum_type.png)
 
-The figure above shows 3 options for using enum classes.
-And for each variant you run your own script, to determine the type of class enum you need to add to the argument `-t` the value of the script name and to the argument `-f` the path to the file
+The figure above shows 3 ways to use enumeration classes.
+And for each variant you run a different script, to define the enum variant, you need to add to the argument `-t` the value of the script name and to the argument `-f` the path to the file
 
 ```shell
 # 1
@@ -48,7 +50,7 @@ dart run turn_gen -t enum_default -f <path to your file>
 
 ```
 
-If you are using `VSCode`, you can add the task to your `tasks.json`
+If you use `VSCode`, you can add the task to your `tasks.json`
 
 ```json
         // GEN enum_default
@@ -81,6 +83,8 @@ After running the script, you will get additional methods and override the stand
 - `maybeMap`
 - `compareTo`
 - `toString`
+
+#### Example
   
 ```dart
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
@@ -117,7 +121,6 @@ enum Locale with Comparable<Locale> {
         return fallback ?? (throw ArgumentError.value(value));
     }
   }
-
   T map<T>({
     required T Function() en,
     required T Function() ru,
@@ -129,7 +132,6 @@ enum Locale with Comparable<Locale> {
         return ru();
     }
   }
-
   T maybeMap<T>({
     required T Function() orElse,
     T Function()? en,
@@ -139,7 +141,6 @@ enum Locale with Comparable<Locale> {
         en: en ?? orElse,
         ru: ru ?? orElse,
       );
-
   T? maybeMapOrNull<T>({
     T Function()? en,
     T Function()? ru,
@@ -149,7 +150,6 @@ enum Locale with Comparable<Locale> {
         en: en,
         ru: ru,
       );
-
   @override
   int compareTo(Locale other) => index.compareTo(other.index);
 
@@ -163,22 +163,22 @@ enum Locale with Comparable<Locale> {
 
 ### Assets
 
-TurnGen also allows you to generate string constants of all files in the assets folder, with the ability to use different characters and letters in the file name.
+TurnGen also allows you to generate string constants of all files in the assets folder, with the ability to use different characters and letters in the file name, and, if identical file names are found, to add to the constant name a number
 
-You need to add the path to the constant file:
+You need to add the path where to generate the file:
 
 ```yaml
 turn_gen:
   assets_output: "lib/gen/" 
 ```
 
-We use the command to start it:
+And to start, we use the command:
 
 ```shell
 dart run turn_gen -t assets -f <path to your workspace folder>
 ```
 
-If you are using `VSCode`, you can add the task to your `tasks.json`
+If you are using `VSCode`, you can add the task to your `tasks.json`.
 
 ```json
        // GEN assets   
@@ -190,7 +190,9 @@ If you are using `VSCode`, you can add the task to your `tasks.json`
     },
 ```
 
-After running the script, you will get all the paths to the files in one class:
+After running the script, you will get all the file paths in one class:
+
+#### Example
 
 ```dart
 //          --TURN_GEN--
@@ -215,26 +217,12 @@ class AppAssetsENV {
 }
 
 class AppAssetsPNG {
-  /// * Size: 1.3 MB
-  /// * File path: _assets/app_icon/android_dev.png
-  ///     * Accessed: 2023-02-12
-  ///     * Changed:  2023-02-12
-  ///     * Modified: 2022-05-20
-  static const String androidDev = 'assets/app_icon/android_dev.png';
-
   /// * Size: 815.1 KB
   /// * File path: _assets/app_icon/android_prod.png
   ///     * Accessed: 2023-02-12
   ///     * Changed:  2023-02-12
   ///     * Modified: 2022-05-20
   static const String androidProd = 'assets/app_icon/android_prod.png';
-
-  /// * Size: 1.4 MB
-  /// * File path: _assets/app_icon/ios_dev.png
-  ///     * Accessed: 2023-02-12
-  ///     * Changed:  2023-02-12
-  ///     * Modified: 2022-05-20
-  static const String iosDev = 'assets/app_icon/ios_dev.png';
 
   /// * Size: 847.5 KB
   /// * File path: _assets/app_icon/ios_prod.png
@@ -245,9 +233,7 @@ class AppAssetsPNG {
 
   /// List of all assets
   static const List<String> values = [
-    androidDev,
     androidProd,
-    iosDev,
     iosProd,
   ];
 }
@@ -256,7 +242,203 @@ class AppAssetsPNG {
 
 ### Data class
 
-in the works...
+TurnGen scripts can generate and override additional methods to `dart` classes, such as
+
+- `toMap`/`fromJson` and `fromMap`/`fromJson` for Map/Json serialization and deserialization
+- `copyWith` - to clone an object with different properties
+- `operator ==` and override `hashCode` (since TurnGet only works with immutable classes)
+- `toString` -  to display a list of all object properties
+
+Most importantly, we use the standard `dart` class simply by adding comments to the body for customization, the obligatory comments are shown below:
+
+```dart
+@immutable
+class RegistrationState {
+  /* */  
+  final bool isLoad;
+  /* */
+  final String? name;
+  /* */
+  final List<int> activitySelected;
+// end
+}
+```
+
+Now let's describe the basic conditions for using TurnGen:
+
+- All fields of the class must be - `final`
+- There should be a comment above each field - `/* */`
+- After declaring all the fields, put a comment at the end - `// end`
+
+And that's it!
+
+#### Additional class settings
+
+You can add an additional setting at the beginning of the class, also using comments, for example:
+
+- There will only be a copyWith method.
+
+```dart
+/* only: copyWith  */
+class RegistrationState {
+...
+```
+
+- Remove a certain method or several
+
+```dart
+/* no: fromMap toMap  */
+class RegistrationState {
+...
+```
+
+- Use the `equatable` library
+
+```dart
+/* use: equatable  */
+class RegistrationState {
+...
+```
+
+In the examples above, you can combine different options from other methods or libraries (in the future)
+
+#### Additional variable settings
+
+The field also has settings, we just write our keywords in the comments above the class, for example:
+
+- Initialize a variable
+
+```dart
+  /* init: true */
+  final bool isLoad;
+  /* init: 'Jon' */
+  final String name;
+```
+
+- Specify explicitly the type, initialize the variable
+
+```dart
+/*
+type: enum
+init: FormzSubmissionStatus.initial
+*/
+  final FormzSubmissionStatus status;
+/*
+type: data
+init: const DateRegModel()
+*/
+  final DateRegModel dateRegModel;
+```
+
+- Override `toMap` or `fromMap` methods if TurnGen does not define a variable type
+
+```dart
+/*
+init: const DateRegModel()
+fromMap: DateRegModel.fromMap(map['dateRegModel'] as Map<String, dynamic>)
+toMap: dateRegModel.toMap()
+*/
+  final DateRegModel dateRegModel;
+```
+
+#### Use
+
+And to start, we use the command:
+
+```shell
+dart run turn_gen -t data -f <path to your file>
+```
+
+If you use `VSCode`, you can add the task to your `tasks.json`.
+
+```json
+    // GEN data class
+    {
+      "label": "GEN data class",
+      "type": "dart",
+      "command": "dart",
+      "args": ["run", "turn_gen", "-t", "data", "-f", "${file}"]
+    },
+```
+
+After executing the script you get a typical `dart` class with new and overridden methods :
+
+#### Example
+
+```dart
+@immutable
+class RegistrationState {
+  /* */
+  final bool isLoad;
+  /* */
+  final String? name;
+  /* */
+  final List<int> activitySelected;
+// end
+//          --TURN_GEN--
+//  *************************************
+//           GENERATED CODE
+//  *************************************
+  const RegistrationState({
+    required this.isLoad,
+    required this.activitySelected,
+    this.name,
+  });
+  /*
+   factory RegistrationState.init() => RegistrationState(
+        isLoad: false,
+        activitySelected: const [],
+      );
+  */
+Map<String, dynamic> toMap() {
+  return <String, dynamic>{
+      'isLoad': isLoad,
+      'activitySelected': activitySelected,
+      'name': name,
+    };
+  }
+    factory RegistrationState.fromMap(Map<String, dynamic> map) {
+    return RegistrationState(
+      isLoad: map['isLoad'] as bool,
+      activitySelected: (map['activitySelected'] as List<dynamic>).map((e) => e as int).toList(),
+      name: map['name'] as String?,
+    );
+  }
+  RegistrationState copyWith({
+    bool? isLoad,
+    List<int>? activitySelected,
+    String? name,
+  }) {
+    return RegistrationState(
+      isLoad: isLoad ?? this.isLoad,
+      activitySelected: activitySelected ?? this.activitySelected,
+      name: name ?? this.name,
+    );
+  }
+  String toJson() => json.encode(toMap());  
+  factory RegistrationState.fromJson(String source) => RegistrationState.fromMap(json.decode(source) as Map<String, dynamic>,);  
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is RegistrationState &&
+            (identical(other.isLoad, isLoad) || other.isLoad == isLoad)&&
+            const DeepCollectionEquality().equals(other.activitySelected, activitySelected,)&&
+            (identical(other.name, name) || other.name == name));
+  }
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        isLoad,
+        const DeepCollectionEquality().hash(activitySelected,),
+        name,
+]);
+      @override
+  String toString() {
+    return 'RegistrationState(isLoad: $isLoad, activitySelected: $activitySelected, name: $name, )';
+    }
+}
+```
 
 ## Help
 
@@ -264,8 +446,7 @@ If you encounter any issues [please report them here](https://github.com/a-dev-m
 
 ### License
 
-```
-Copyright 2023 TURN_GEN
+Copyright 2023 TurnGen
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -278,4 +459,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-```
