@@ -3,14 +3,8 @@ import 'dart:math';
 
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as p;
-import 'package:turn_gen/constants.dart';
-import 'package:turn_gen/custom_exceptions.dart';
+import 'package:turn_gen/src/src.dart';
 
-// ignore: depend_on_referenced_packages
-import 'package:turn_gen/logger.dart';
-import 'package:turn_gen/src/assets_gen/enum_type_assets.dart';
-import 'package:turn_gen/src/assets_gen/model/asset_item.dart';
-import 'package:turn_gen/src/assets_gen/ru_to_lat/alpabet.dart';
 import 'package:yaml/yaml.dart';
 
 Future<void> runAssets({

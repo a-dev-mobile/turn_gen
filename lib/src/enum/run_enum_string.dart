@@ -1,9 +1,7 @@
 import 'dart:io';
 
 // ignore: depend_on_referenced_packages
-import 'package:turn_gen/constants.dart';
-import 'package:turn_gen/logger.dart';
-import 'package:turn_gen/utils.dart';
+import 'package:turn_gen/src/src.dart';
 
 /* 
 генерируется в одном файле 

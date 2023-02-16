@@ -1,4 +1,4 @@
-import 'package:turn_gen/utils.dart';
+import 'package:turn_gen/src/src.dart';
 
 class InvalidConfigException implements Exception {
   const InvalidConfigException([this.message]);

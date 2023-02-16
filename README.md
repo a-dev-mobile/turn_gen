@@ -1,38 +1,42 @@
 # TurnGen
 
-A command line tool that simplifies the task of generating advanced dart language features. Fully flexible, allowing you to choose (argument -t and value >>> enum_default, enum_string, enum_int, data, assets) and the path to the file or directory, where to add new features.
+TurnGen is a set of scripts, combined into a command line tool, all scripts are written in dart language and designed for dart(flutter) developers, this tool simplifies some tasks for us, such as:
+1 Working with Enum classes
+2 Creating different methods in the Data class without using build_runner
+3 Generating links of all files from the assets folder
 
-## Setup
+## How to use
 
-The setup of TURN_GEN is really easy. Just add the following to your `pubspec.yaml`:
+## Install
 
-```yaml
-#  In the future, I will move it to pub dev
+To use TurnGen, you only need TurnGen by adding it to the `pubspec.yaml` file as a `dev_dependencies`:
+For a Flutter project:
 
-dev_dependencies:
-  turn_gen:
-    git:
-      url: https://github.com/a-dev-mobile/turn_gen.git
-      ref: master 
+```shell
+flutter pub add --dev turn_gen
 ```
 
-If you will use GEN assets, don't forget to add the path where to generate the file to pubspec:
+For a Dart project:
+
+```shell
+dart pub add --dev turn_gen
+```
+If you are going to use the file reference generator from the asset folder, don't forget to add the output file path to `pubspec.yami`:
 
 ```yaml
-dev_dependencies:
-  turn_gen:
-...
 turn_gen:
   assets_output: "lib/gen/" 
 ```
 
 Then run `flutter pub get` or `dart pub get` to install the package.
 
-## How to use
 
 ### Enum
 
 ![enum_type](https://github.com/a-dev-mobile/turn_gen/blob/master/resources/enum_type.png)
+
+The figure above shows 3 options for using enum classes.
+And for each variant you run your own script, to determine the type of class enum you need to add to the argument `-t` the value of the script name and to the argument `-f` the path to the file
 
 ```shell
 # 1
@@ -44,7 +48,7 @@ dart run turn_gen -t enum_default -f <path to your file>
 
 ```
 
-You can then add a launch config to your `launch.json` to generate...
+If you are using `VSCode`, you can add the task to your `tasks.json`
 
 ```json
         // GEN enum_default
@@ -78,7 +82,84 @@ After running the script, you will get additional methods and override the stand
 - `compareTo`
 - `toString`
   
-![enum_example](https://github.com/a-dev-mobile/turn_gen/blob/master/resources/enum_example.png)
+```dart
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
+/*
+  enum Locale {
+  en('en_US'),
+  ru('ru_RU'),
+}*/
+
+//          --TURN_GEN--
+//  *************************************
+//           GENERATED CODE
+//  *************************************
+
+enum Locale with Comparable<Locale> {
+  en('en_US'),
+  ru('ru_RU');
+
+  const Locale(this.value);
+
+  final String value;
+
+  static Locale fromValue(
+    String? value, {
+    Locale? fallback,
+  }) {
+    switch (value) {
+      case 'en_US':
+        return en;
+      case 'ru_RU':
+        return ru;
+
+      default:
+        return fallback ?? (throw ArgumentError.value(value));
+    }
+  }
+
+  T map<T>({
+    required T Function() en,
+    required T Function() ru,
+  }) {
+    switch (this) {
+      case Locale.en:
+        return en();
+      case Locale.ru:
+        return ru();
+    }
+  }
+
+  T maybeMap<T>({
+    required T Function() orElse,
+    T Function()? en,
+    T Function()? ru,
+  }) =>
+      map<T>(
+        en: en ?? orElse,
+        ru: ru ?? orElse,
+      );
+
+  T? maybeMapOrNull<T>({
+    T Function()? en,
+    T Function()? ru,
+  }) =>
+      maybeMap<T?>(
+        orElse: () => null,
+        en: en,
+        ru: ru,
+      );
+
+  @override
+  int compareTo(Locale other) => index.compareTo(other.index);
+
+  @override
+  String toString() => value;
+}
+
+
+
+```
 
 ### Assets
 
@@ -87,9 +168,6 @@ TurnGen also allows you to generate string constants of all files in the assets 
 You need to add the path to the constant file:
 
 ```yaml
-dev_dependencies:
-  turn_gen:
-...
 turn_gen:
   assets_output: "lib/gen/" 
 ```
@@ -97,11 +175,10 @@ turn_gen:
 We use the command to start it:
 
 ```shell
-# 1
 dart run turn_gen -t assets -f <path to your workspace folder>
 ```
 
-You can then add a launch config to your `launch.json` to generate...
+If you are using `VSCode`, you can add the task to your `tasks.json`
 
 ```json
        // GEN assets   

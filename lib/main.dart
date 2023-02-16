@@ -1,16 +1,7 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:turn_gen/constants.dart';
-import 'package:turn_gen/custom_exceptions.dart';
-import 'package:turn_gen/enum_type_run.dart';
-import 'package:turn_gen/logger.dart';
-import 'package:turn_gen/src/assets_gen/run_assets.dart';
-import 'package:turn_gen/src/data_class/run_data_class.dart';
-
-import 'package:turn_gen/src/enum/run_enum_default.dart';
-import 'package:turn_gen/src/enum/run_enum_int.dart';
-import 'package:turn_gen/src/enum/run_enum_string.dart';
+import 'package:turn_gen/src/src.dart';
 
 // ignore: prefer-static-class
 Future<void> runFromArguments(List<String> arguments) async {

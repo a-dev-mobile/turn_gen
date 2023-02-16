@@ -1,11 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
-import 'package:turn_gen/constants.dart';
-import 'package:turn_gen/logger.dart';
-import 'package:turn_gen/src/data_class/data_class.dart';
 
-import 'package:turn_gen/utils.dart';
+import 'package:turn_gen/src/src.dart';
 
 part 'to_map.dart';
 part 'from_map.dart';
@@ -30,10 +27,6 @@ Future<void> runData({required String path, required FLILogger logger}) async {
     exit(0);
   }
 // prepare settings for splitting
-  final splitType = EnumKeySetting.type.value;
-  final splitInit = EnumKeySetting.init.value;
-  final splitToMap = EnumKeySetting.toMap.value;
-  final splitFromMap = EnumKeySetting.fromMap.value;
 
   final rawSettingClass = UtilsRegex.getTextRegexLastMatch(
     content: contentFile,
@@ -309,27 +302,6 @@ type: asda fromMap: asdasd*/
   );
 }
 
-String _getTypeRaw(String content, String split) {
-  // final map = <String, String>{};
-  // for (var i in EnumKeySetting.values) {
-  //   final splitContent = content.split(i.value);
-  //   if (splitContent.isEmpty) continue;
-  //   map[i] = splitContent[]
-  //   var a;
-  // }
-  final tempList = content.split(' ')..removeWhere((e) => e.contains('*'));
-  final indexKey = tempList.indexOf(split);
-  // final _ =tempList.removeAt(indexKey);
-
-  final listSetting = <EnumValueSetting>[];
-  for (final key in EnumKeySetting.values) {}
-
-  // final indexKey = tempList.indexOf(key.value);
-
-  var a;
-
-  return tempList[indexKey + 1];
-}
 
 Map<EnumKeySetting, String> _formatSettingVarable(String content) {
   // ignore: prefer-immediate-return
