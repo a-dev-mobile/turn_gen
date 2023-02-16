@@ -1,9 +1,9 @@
 # TurnGen
 
 TurnGen is a set of scripts, combined into a command line tool, all scripts are written in dart language and designed for dart(flutter) developers, this tool simplifies some tasks for us, such as:
-1 Working with Enum classes
-2 Creating different methods in the Data class without using build_runner
-3 Generating links of all files from the assets folder
+- Working with Enum classes
+- Creating different methods in the Data class without using build_runner
+- Generating links of all files from the assets folder
 
 ## How to use
 
