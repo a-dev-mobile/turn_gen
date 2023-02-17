@@ -3,7 +3,8 @@ part of 'run_data_class.dart';
 // ignore: prefer-static-class
 void writeToFile(
   FLILogger logger,
-  List<FirstSetting> listSetting,
+  List<String> listNameVar,
+  List<FirstSetting> listFirstSetting,
   String contentFile,
   String classHeader,
   String className,
@@ -19,19 +20,27 @@ void writeToFile(
   StringBuffer hashCode,
   File file,
 ) {
-  final noSetting = listSetting
+  final noSetting = listFirstSetting
       .firstWhere(
         (v) => v.keySetting == EnumKeySetting.no,
         orElse: FirstSetting.new,
       )
       .listValueSetting;
 
-  final onlySetting = listSetting
+  final onlySetting = listFirstSetting
       .firstWhere(
         (v) => v.keySetting == EnumKeySetting.only,
         orElse: FirstSetting.new,
       )
       .listValueSetting;
+  final useSetting = listFirstSetting
+      .firstWhere(
+        (v) => v.keySetting == EnumKeySetting.use,
+        orElse: FirstSetting.new,
+      )
+      .listValueSetting;
+
+  _msgOnlyOne(onlySetting, logger);
 
   var isActiveToMap = true;
   var isActiveToJson = true;
@@ -42,15 +51,14 @@ void writeToFile(
   var isActiveEquals = true;
   var isActiveCopyWith = true;
   // only no setting
-  var isOnlyCopyWith = false;
-  var isOnlyFromJson = false;
+  final isOnlyCopyWith = onlySetting.contains(EnumValueSetting.copyWith);
+  final isOnlyFromMap = onlySetting.contains(EnumValueSetting.fromMap);
+  final isOnlyFromJson = onlySetting.contains(EnumValueSetting.fromJson);
+  final isOnlyToJson = onlySetting.contains(EnumValueSetting.toJson);
+  final isOnlyToMap = onlySetting.contains(EnumValueSetting.toMap);
+//   use setting
+  final isUseEquatable = useSetting.contains(EnumValueSetting.equatable);
 
-  if (onlySetting.contains(EnumValueSetting.copyWith)) {
-    isOnlyCopyWith = true;
-  }
-  if (onlySetting.contains(EnumValueSetting.fromJson)) {
-    isOnlyFromJson = true;
-  }
   //
   if (noSetting.contains(EnumValueSetting.toMap)) {
     isActiveToMap = false;
@@ -97,8 +105,7 @@ void writeToFile(
     isActiveFromMap = false;
     isActiveToJson = false;
     isActiveToString = false;
-  }
-  if (isOnlyFromJson) {
+  } else if (isOnlyFromJson || isOnlyFromMap) {
     isActiveFromJson = true;
     isActiveCopyWith = false;
     isActiveToMap = false;
@@ -108,6 +115,22 @@ void writeToFile(
     isActiveFromMap = true;
     isActiveToJson = false;
     isActiveToString = false;
+  } else if (isOnlyToJson || isOnlyToMap) {
+    isActiveToMap = true;
+    isActiveToJson = true;
+    isActiveFromJson = false;
+    isActiveCopyWith = false;
+    isActiveEquals = false;
+    isActiveHash = false;
+    isActiveHashAndEquals = false;
+    isActiveFromMap = false;
+    isActiveToString = false;
+  }
+  if (isUseEquatable) {
+    isActiveToString = false;
+    isActiveHashAndEquals = false;
+    isActiveEquals = false;
+    isActiveHash = false;
   }
 
   var header = contentFile.split(classHeader).first;
@@ -159,19 +182,35 @@ ${_getToJson(isActiveToJson)}
 ${_getFromJson(className, isActiveFromJson)}  
 ${_getHashAndEquals(className, equals, hashCode, isActiveHashAndEquals)}
 ${_getToString(className, toString, isActiveToString)}
+${_getEquatable(listNameVar, isUseEquatable)}
 }\n''';
 
-  final _ = file.writeAsString(
-    UtilsString.replaceToEmpty(
-      text: newContent,
-      replaceable: [],
-    ),
-  );
+  final _ = file.writeAsString(newContent);
 
   logger
     ..info('***')
     ..info('✓ Successfully generated extra features for data class')
     ..info('***');
+}
+
+void _msgOnlyOne(List<EnumValueSetting> onlySetting, FLILogger logger) {
+  if (onlySetting.length > 1) {
+    logger
+      ..info('\n(only:) - supports only one value')
+      ..info('will be used last - ${onlySetting.last.value}\n');
+  }
+}
+
+String _getEquatable(List<String> listNameVar, bool isActive) {
+  return isActive
+      ? '''
+  @override
+  List<Object?> get props => $listNameVar;
+  
+  @override
+  bool get stringify => true;
+'''
+      : '';
 }
 
 String _getCopyWith(

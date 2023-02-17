@@ -27,7 +27,7 @@ analyzer:
     - "lib/generated_plugin_registrant.dart"
 
     # Tests
-    - "test/**.mocks.dart"
+    - "test/**"
     # - "test/*.dart"
     - ".test_coverage.dart"
     # Web

@@ -279,10 +279,11 @@ type: asda fromMap: asdasd*/
       ),
     );
   }
-
+  final listNameVar = listVarSort.map((e) => e.nameVar).toList();
   final file = File(path);
   writeToFile(
     logger,
+    listNameVar,
     listFirstSetting,
     contentFile,
     classHeader,
@@ -377,12 +378,15 @@ List<FirstSetting> _getSetting({
   if (!content.contains(settingRegExp)) return listFirstSetting;
 
   final contentFormat = content
-      .replaceAll(' :', ':')
-      .replaceAll(',', '')
-      .replaceAll('-', '')
-      .replaceAll('_', '')
       .replaceAll(':', ': ')
-      .replaceAll(RegExp(r'\s+'), ' ');
+      .replaceAll(',', ', ')
+      .replaceAll('/*', '')
+      .replaceAll('*/', '')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .replaceAll(' ,', '')
+      .replaceAll(' :', ':')
+      .trim();
+
   var keySetting = EnumKeySetting.none;
 
   for (final key in EnumKeySetting.values) {
@@ -392,8 +396,7 @@ List<FirstSetting> _getSetting({
     if (contentFormat.contains(key.value)) {
       keySetting = key;
 
-      final tempList = contentFormat.split(' ')
-        ..removeWhere((e) => e.contains('*'));
+      final tempList = contentFormat.split(' ');
       final indexKey = tempList.indexOf(key.value);
       final listSetting = <EnumValueSetting>[];
       for (var i = indexKey + 1; i < tempList.length; i++) {
