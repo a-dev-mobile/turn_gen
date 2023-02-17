@@ -46,19 +46,18 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   final classContent = UtilsString.replaceToEmpty(
     text: UtilsRegex.getTextRegexLastMatch(
       content: contentFile,
-      regex: r'class\s+\w+\s+{[\s\S]+?(\/\/\s+end)',
+      regex: r'class[\s\S]+?(\/\/\s+end)',
     ),
     replaceable: [''],
   );
   final classHeader = UtilsRegex.getTextRegexLastMatch(
     content: classContent,
-    regex: r'class\s+\w+\s+{',
+    regex: r'class[\s\S]+?{',
   );
 
-  final className = UtilsString.replaceToEmpty(
-    text: classHeader,
-    replaceable: ['class', ' ', '{'],
-  );
+  final className = _getNameClass(classHeader);
+
+  _msgIfNotNameClass(className, logger);
 
   final classBrackets = UtilsString.replaceToEmpty(
     text: classContent,
@@ -302,6 +301,16 @@ type: asda fromMap: asdasd*/
   );
 }
 
+void _msgIfNotNameClass(String className, FLILogger logger) {
+  if (className.isEmpty) {
+    logger
+      ..info('\n')
+      ..error('TurnGen did not define the name of the class')
+      ..info('\n');
+    exit(0);
+  }
+}
+
 Map<EnumKeySetting, String> _formatSettingVarable(String content) {
   // ignore: prefer-immediate-return
   var contentFormat = content
@@ -420,4 +429,16 @@ List<FirstSetting> _getSetting({
   }
 
   return listFirstSetting;
+}
+
+String _getNameClass(String classHeader) {
+  final splitHeaderClass =
+      classHeader.replaceAll(RegExp(r'\s+'), ' ').trim().split(' ');
+
+  for (var i = 0; i < splitHeaderClass.length; i++) {
+    final v = splitHeaderClass[i];
+    if (v == 'class') return splitHeaderClass[i + 1];
+  }
+
+  return '';
 }

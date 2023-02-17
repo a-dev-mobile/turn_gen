@@ -1,5 +1,5 @@
-  // ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
-  /*
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
+/*
   
   enum EnumValueSetting {
   fromMap('frommap'),
@@ -15,12 +15,12 @@
   }
   
   */
-  
-  //  ******************************
-  // GENERATED CODE BELOW - DO NOT MODIFY
-  //  ******************************
 
-enum EnumValueSetting with Comparable<EnumValueSetting> { 
+//  ******************************
+// GENERATED CODE BELOW - DO NOT MODIFY
+//  ******************************
+
+enum EnumValueSetting with Comparable<EnumValueSetting> {
   fromMap('frommap'),
   toMap('tomap'),
   toJson('tojson'),
@@ -79,33 +79,31 @@ enum EnumValueSetting with Comparable<EnumValueSetting> {
     required T Function() equals_,
     required T Function() hash_,
     required T Function() none,
-
   }) {
     switch (this) {
       case EnumValueSetting.fromMap:
-        return fromMap();     
+        return fromMap();
       case EnumValueSetting.toMap:
-        return toMap();     
+        return toMap();
       case EnumValueSetting.toJson:
-        return toJson();     
+        return toJson();
       case EnumValueSetting.fromJson:
-        return fromJson();     
+        return fromJson();
       case EnumValueSetting.toString_:
-        return toString_();     
+        return toString_();
       case EnumValueSetting.copyWith:
-        return copyWith();     
+        return copyWith();
       case EnumValueSetting.equatable:
-        return equatable();     
+        return equatable();
       case EnumValueSetting.equals_:
-        return equals_();     
+        return equals_();
       case EnumValueSetting.hash_:
-        return hash_();     
+        return hash_();
       case EnumValueSetting.none:
-        return none();     
-
+        return none();
     }
   }
-  
+
   /// Pattern matching
   T maybeMap<T>({
     required T Function() orElse,
@@ -119,20 +117,18 @@ enum EnumValueSetting with Comparable<EnumValueSetting> {
     T Function()? equals_,
     T Function()? hash_,
     T Function()? none,
-
   }) =>
       map<T>(
-      fromMap: fromMap ?? orElse,     
-      toMap: toMap ?? orElse,     
-      toJson: toJson ?? orElse,     
-      fromJson: fromJson ?? orElse,     
-      toString_: toString_ ?? orElse,     
-      copyWith: copyWith ?? orElse,     
-      equatable: equatable ?? orElse,     
-      equals_: equals_ ?? orElse,     
-      hash_: hash_ ?? orElse,     
-      none: none ?? orElse,     
-
+        fromMap: fromMap ?? orElse,
+        toMap: toMap ?? orElse,
+        toJson: toJson ?? orElse,
+        fromJson: fromJson ?? orElse,
+        toString_: toString_ ?? orElse,
+        copyWith: copyWith ?? orElse,
+        equatable: equatable ?? orElse,
+        equals_: equals_ ?? orElse,
+        hash_: hash_ ?? orElse,
+        none: none ?? orElse,
       );
 
   /// Pattern matching
@@ -147,21 +143,19 @@ enum EnumValueSetting with Comparable<EnumValueSetting> {
     T Function()? equals_,
     T Function()? hash_,
     T Function()? none,
-
   }) =>
       maybeMap<T?>(
         orElse: () => null,
-        fromMap: fromMap,  
-        toMap: toMap,  
-        toJson: toJson,  
-        fromJson: fromJson,  
-        toString_: toString_,  
-        copyWith: copyWith,  
-        equatable: equatable,  
-        equals_: equals_,  
-        hash_: hash_,  
-        none: none,  
-        
+        fromMap: fromMap,
+        toMap: toMap,
+        toJson: toJson,
+        fromJson: fromJson,
+        toString_: toString_,
+        copyWith: copyWith,
+        equatable: equatable,
+        equals_: equals_,
+        hash_: hash_,
+        none: none,
       );
 
   @override
@@ -169,4 +163,4 @@ enum EnumValueSetting with Comparable<EnumValueSetting> {
 
   @override
   String toString() => value;
-   }
+}

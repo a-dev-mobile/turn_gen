@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:intl/intl.dart';
 import 'package:path/path.dart' as p;
 import 'package:turn_gen/src/src.dart';
 
@@ -198,7 +197,7 @@ void _errorIfNotFiles(List<AssetItem> assetsList, FLILogger logger) {
 }
 
 String _getDateFormat(DateTime date) {
-  return DateFormat('yyyy-MM-dd').format(date);
+  return '${date.year}-${date.month}-${date.day}';
 }
 
 String _extensionFormat(String v) {

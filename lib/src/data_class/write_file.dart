@@ -42,14 +42,14 @@ void writeToFile(
 
   _msgOnlyOne(onlySetting, logger);
 
-  var isActiveToMap = true;
-  var isActiveToJson = true;
-  var isActiveFromMap = true;
-  var isActiveFromJson = true;
-  var isActiveToString = true;
-  var isActiveHash = true;
-  var isActiveEquals = true;
-  var isActiveCopyWith = true;
+  var isActiveToMap = !noSetting.contains(EnumValueSetting.toMap);
+  var isActiveToJson = !noSetting.contains(EnumValueSetting.toJson);
+  var isActiveFromMap = !noSetting.contains(EnumValueSetting.fromMap);
+  var isActiveFromJson = !noSetting.contains(EnumValueSetting.fromJson);
+  var isActiveToString = !noSetting.contains(EnumValueSetting.toString_);
+  var isActiveHash = !noSetting.contains(EnumValueSetting.hash_);
+  var isActiveEquals = !noSetting.contains(EnumValueSetting.equals_);
+  var isActiveCopyWith = !noSetting.contains(EnumValueSetting.copyWith);
   // only no setting
   final isOnlyCopyWith = onlySetting.contains(EnumValueSetting.copyWith);
   final isOnlyFromMap = onlySetting.contains(EnumValueSetting.fromMap);
@@ -59,42 +59,20 @@ void writeToFile(
 //   use setting
   final isUseEquatable = useSetting.contains(EnumValueSetting.equatable);
 
-  //
-  if (noSetting.contains(EnumValueSetting.toMap)) {
-    isActiveToMap = false;
-  }
-  if (noSetting.contains(EnumValueSetting.copyWith)) {
-    isActiveCopyWith = false;
-  }
-  if (noSetting.contains(EnumValueSetting.toJson)) {
-    isActiveToJson = false;
-  }
-  if (noSetting.contains(EnumValueSetting.fromMap)) {
-    isActiveFromMap = false;
-  }
-  if (noSetting.contains(EnumValueSetting.fromJson)) {
-    isActiveFromJson = false;
-  }
-  if (noSetting.contains(EnumValueSetting.toString_)) {
-    isActiveToString = false;
-  }
-  if (noSetting.contains(EnumValueSetting.hash_)) {
-    isActiveHash = false;
-  }
-  if (noSetting.contains(EnumValueSetting.equals_)) {
-    isActiveEquals = false;
-  }
-// hash_and_equals  отключают или включают одновременно
+// hash_and_equals disable or enable at the same time
   var isActiveHashAndEquals = isActiveEquals && isActiveHash;
 
-  if (!isActiveToMap) {
+  if (!isActiveToMap | !isActiveToJson) {
     isActiveToJson = false;
+    isActiveToMap = false;
   }
 
-  if (!isActiveFromMap) {
+  if (!isActiveFromMap || !isActiveFromJson) {
     isActiveFromJson = false;
+    isActiveFromMap = false;
   }
-  // если активна copywith все остальное отключаем
+
+// if copywith is active, disable everything else
   if (isOnlyCopyWith) {
     isActiveCopyWith = true;
     isActiveFromJson = false;
@@ -166,7 +144,7 @@ void writeToFile(
   }
 
   final newContent = '''
-${header}class $className { $classBrackets
+$header$classHeader $classBrackets
    
 ${ConstConsole.GEN_MSG}
   const $className({
@@ -196,8 +174,9 @@ ${_getEquatable(listNameVar, isUseEquatable)}
 void _msgOnlyOne(List<EnumValueSetting> onlySetting, FLILogger logger) {
   if (onlySetting.length > 1) {
     logger
+      ..info('\n')
       ..info('\n(only:) - supports only one value')
-      ..info('will be used last - ${onlySetting.last.value}\n');
+      ..info('\n');
   }
 }
 

@@ -1,7 +1,5 @@
-import 'package:meta/meta.dart';
 import 'package:turn_gen/src/data_class/data_class.dart';
 
-@immutable
 class FirstSetting {
   // end
 

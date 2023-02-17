@@ -1,6 +1,6 @@
 # TurnGen
 
-TurnGen is a set of scripts combined into a command line tool, all scripts are written in dart language and executed instantly, they are designed to minimize boilerplate code and simplify different tasks, such as
+TurnGen is a set of scripts combined into a command line tool, all scripts are written in dart language and run instantly, they are designed to minimize coding and simplify various tasks such as:
 
 - Working with Enum classes
 - Creating different methods in the Data class without using build_runner
@@ -54,19 +54,19 @@ If you use `VSCode`, you can add the task to your `tasks.json`
 
 ```json
     {
-      "label": "GEN enum_default",
+      "label": "turn_gen enum_default",
       "type": "dart",
       "command": "dart",
       "args": ["run", "turn_gen", "-t", "enum_default", "-f", "${file}"],
     },
     {
-      "label": "GEN enum_int",
+      "label": "turn_gen enum_int",
       "type": "dart",
       "command": "dart",
       "args": ["run", "turn_gen", "-t", "enum_int", "-f", "${file}"],
     },
     {
-      "label": "GEN enum_string",
+      "label": "turn_gen enum_string",
       "type": "dart",
       "command": "dart",
       "args": ["run", "turn_gen", "-t", "enum_string", "-f", "${file}"],
@@ -179,7 +179,7 @@ If you are using `VSCode`, you can add the task to your `tasks.json`.
 
 ```json
     {
-      "label": "GEN assets",
+      "label": "turn_gen assets",
       "type": "dart",
       "command": "dart",
       "args": ["run", "turn_gen", "-t", "assets", "-f", "${workspaceFolder}"]
@@ -299,10 +299,9 @@ class RegistrationState {
 In the examples above, you can combine different options from other methods or libraries (in the future)
 
 #### Additional variable settings
+The variable also has settings, we just write our keywords in the comments above the class, for example:
 
-The field also has settings, we just write our keywords in the comments above the class, for example:
-
-- Initialize a variable
+- You can initialize the variable with any text
 
 ```dart
   /* init: true */
@@ -311,7 +310,7 @@ The field also has settings, we just write our keywords in the comments above th
   final String name;
 ```
 
-- Specify explicitly the type, initialize the variable
+- If the type of the variable is not defined, you can explicitly specify it with the keyword: `type:` and possible variants `enum` `data` `List<data>`
 
 ```dart
 /*
@@ -324,6 +323,8 @@ type: data
 init: const DateRegModel()
 */
   final DateRegModel dateRegModel;
+ /* type: List<data> */
+  final List<Name> nameList;
 ```
 
 - Override `toMap` or `fromMap` methods if TurnGen does not define a variable type
@@ -349,7 +350,7 @@ If you use `VSCode`, you can add the task to your `tasks.json`
 
 ```json
     {
-      "label": "GEN data",
+      "label": "turn_gen data",
       "type": "dart",
       "command": "dart",
       "args": ["run", "turn_gen", "-t", "data", "-f", "${file}"]
