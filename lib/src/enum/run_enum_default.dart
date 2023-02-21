@@ -29,7 +29,7 @@ Future<void> runEnumDefault({
   final contentFile = await UtilsString.readFile(path: path);
 
   if (contentFile.contains('GENERATED CODE')) {
-    logger.info('Файл $path \nуже имеет генерированные данные');
+    logger.info('File $path \nalready has generated data');
 
     return;
   }
@@ -54,6 +54,8 @@ Future<void> runEnumDefault({
   /// Pattern matching
   final mapStart = StringBuffer();
   final mapEnd = StringBuffer();
+  final mapConstStart = StringBuffer();
+  final mapConstEnd = StringBuffer();
   final maybeMapStart = StringBuffer();
   final maybeMapEnd = StringBuffer();
   final maybeMapOrNullStart = StringBuffer();
@@ -83,6 +85,15 @@ Future<void> runEnumDefault({
       case $nameEnum.$v:
         return $v();     
 ''');
+    mapConstStart.write('''
+    required T $v,
+''');
+
+    mapConstEnd.write('''
+      case $nameEnum.$v:
+        return $v;     
+''');
+
     maybeMapStart.write('''
     T Function()? $v,
 ''');
@@ -127,7 +138,7 @@ $fromValue
     }
   }
 
-  /// Pattern matching
+
   T map<T>({
 $mapStart
   }) {
@@ -135,8 +146,15 @@ $mapStart
 $mapEnd
     }
   }
-  
-  /// Pattern matching
+
+  T mapConst<T>({
+$mapConstStart
+  }) {
+    switch (this) {
+$mapConstEnd
+    }
+  }
+
   T maybeMap<T>({
     required T Function() orElse,
 $maybeMapStart
@@ -145,7 +163,6 @@ $maybeMapStart
 $maybeMapEnd
       );
 
-  /// Pattern matching
   T? maybeMapOrNull<T>({
 $maybeMapOrNullStart
   }) =>

@@ -202,7 +202,6 @@ $fromValue
     }
   }
 
-  /// Pattern matching
   T map<T>({
 $mapStart
   }) {
@@ -211,7 +210,7 @@ $mapEnd
     }
   }
   
-  /// Pattern matching
+
   T maybeMap<T>({
     required T Function() orElse,
 $maybeMapStart
@@ -220,7 +219,6 @@ $maybeMapStart
 $maybeMapEnd
       );
 
-  /// Pattern matching
   T? maybeMapOrNull<T>({
 $maybeMapOrNullStart
   }) =>

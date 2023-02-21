@@ -1,4 +1,9 @@
 
+## 0.0.7
+
+- fixed `toMap` and `fromMap` for the `Map` type
+- added for `enum` type - method  `T mapConst<T>`
+
 ## 0.0.6
 
 - fixed work with mixin `equatable`

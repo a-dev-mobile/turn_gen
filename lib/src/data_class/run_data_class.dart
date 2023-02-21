@@ -278,11 +278,11 @@ type: asda fromMap: asdasd*/
       ),
     );
   }
-  final listNameVar = listVarSort.map((e) => e.nameVar).toList();
+  final listNameSortVar = listVarSort.map((e) => e.nameVar).toList();
   final file = File(path);
   writeToFile(
     logger,
-    listNameVar,
+    listNameSortVar,
     listFirstSetting,
     contentFile,
     classHeader,

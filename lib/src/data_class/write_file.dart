@@ -3,7 +3,7 @@ part of 'run_data_class.dart';
 // ignore: prefer-static-class
 void writeToFile(
   FLILogger logger,
-  List<String> listNameVar,
+  List<String> listNameNoSortVar,
   List<FirstSetting> listFirstSetting,
   String contentFile,
   String classHeader,
@@ -160,7 +160,7 @@ ${_getToJson(isActiveToJson)}
 ${_getFromJson(className, isActiveFromJson)}  
 ${_getHashAndEquals(className, equals, hashCode, isActiveHashAndEquals)}
 ${_getToString(className, toString, isActiveToString)}
-${_getEquatable(listNameVar, isUseEquatable)}
+${_getEquatable(listNameNoSortVar, isUseEquatable)}
 }\n''';
 
   final _ = file.writeAsString(newContent);

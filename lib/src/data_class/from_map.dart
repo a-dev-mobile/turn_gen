@@ -458,7 +458,7 @@ String _getFromMap(Varable v) {
       } else if (yes_null_default_no) {
         return "map['$name'] as Map<String, dynamic>?";
       } else if (no_null_default_yes) {
-        return "map['$name'] as Map<String, dynamic>?";
+        return "map['$name'] as Map<String, dynamic>";
       } else if (no_null_default_no) {
         return "map['$name'] as Map<String, dynamic>";
       }
