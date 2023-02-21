@@ -1,4 +1,9 @@
 
+## 0.0.8
+
+- if the value is `required`, it now goes first to initialization since rule `always_put_required_named_parameters_first`
+
+
 ## 0.0.7
 
 - fixed `toMap` and `fromMap` for the `Map` type

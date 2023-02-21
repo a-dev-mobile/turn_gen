@@ -231,8 +231,8 @@ type: asda fromMap: asdasd*/
   }
 
   // Showing warning is null var, but init value have
-  for (var i = 0; i < listVarSort.length; i++) {
-    v = listVarSort[i];
+  for (var i = 0; i < listVarMain.length; i++) {
+    v = listVarMain[i];
     if (v.isCanNull && v.initValueDefault.isNotEmpty) {
       logger
         ..info('')
