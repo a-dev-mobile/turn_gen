@@ -20,7 +20,7 @@
 // GENERATED CODE BELOW - DO NOT MODIFY
 //  ******************************
 
-enum EnumKeySetting with Comparable<EnumKeySetting> {
+enum EnumKeySettingDataClass with Comparable<EnumKeySettingDataClass> {
   type('type:'),
   fromMap('frommap:'),
   toMap('tomap:'),
@@ -30,13 +30,13 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
   use('use:'),
   none('none:');
 
-  const EnumKeySetting(this.value);
+  const EnumKeySettingDataClass(this.value);
 
   final String value;
 
-  static EnumKeySetting fromValue(
+  static EnumKeySettingDataClass fromValue(
     String? value, {
-    EnumKeySetting? fallback,
+    EnumKeySettingDataClass? fallback,
   }) {
     switch (value) {
       case 'type:':
@@ -73,21 +73,21 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
     required T Function() none,
   }) {
     switch (this) {
-      case EnumKeySetting.type:
+      case EnumKeySettingDataClass.type:
         return type();
-      case EnumKeySetting.fromMap:
+      case EnumKeySettingDataClass.fromMap:
         return fromMap();
-      case EnumKeySetting.toMap:
+      case EnumKeySettingDataClass.toMap:
         return toMap();
-      case EnumKeySetting.init:
+      case EnumKeySettingDataClass.init:
         return init();
-      case EnumKeySetting.only:
+      case EnumKeySettingDataClass.only:
         return only();
-      case EnumKeySetting.no:
+      case EnumKeySettingDataClass.no:
         return no();
-      case EnumKeySetting.use:
+      case EnumKeySettingDataClass.use:
         return use();
-      case EnumKeySetting.none:
+      case EnumKeySettingDataClass.none:
         return none();
     }
   }
@@ -139,7 +139,7 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
       );
 
   @override
-  int compareTo(EnumKeySetting other) => index.compareTo(other.index);
+  int compareTo(EnumKeySettingDataClass other) => index.compareTo(other.index);
 
   @override
   String toString() => value;

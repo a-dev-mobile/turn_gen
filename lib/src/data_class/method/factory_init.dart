@@ -1,4 +1,4 @@
-part of 'run_data_class.dart';
+part of '../run_data_class.dart';
 
 // добавляем ли const в factory init
 String _getWordConst(Varable v) {
@@ -93,7 +93,7 @@ String _getDefaultInitValue(EnumTypeVarable type, String init, bool isCanNull) {
     list_map_int_string_: () => listDefault,
     list_map_int_string_null: () => listDefault,
     list_other: () => listDefault,
-    none_: () => init,
+    none: () => init,
     date_time: () => 'DateTime.now()',
     data: () => init,
     list_data: () => listDefault,

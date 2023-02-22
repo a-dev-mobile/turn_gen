@@ -20,7 +20,7 @@
 // GENERATED CODE BELOW - DO NOT MODIFY
 //  ******************************
 
-enum EnumValueSetting with Comparable<EnumValueSetting> {
+enum EnumValueSettingDataClass with Comparable<EnumValueSettingDataClass> {
   fromMap('frommap'),
   toMap('tomap'),
   toJson('tojson'),
@@ -32,13 +32,13 @@ enum EnumValueSetting with Comparable<EnumValueSetting> {
   hash_('hash'),
   none('none');
 
-  const EnumValueSetting(this.value);
+  const EnumValueSettingDataClass(this.value);
 
   final String value;
 
-  static EnumValueSetting fromValue(
+  static EnumValueSettingDataClass fromValue(
     String? value, {
-    EnumValueSetting? fallback,
+    EnumValueSettingDataClass? fallback,
   }) {
     switch (value) {
       case 'frommap':
@@ -81,25 +81,25 @@ enum EnumValueSetting with Comparable<EnumValueSetting> {
     required T Function() none,
   }) {
     switch (this) {
-      case EnumValueSetting.fromMap:
+      case EnumValueSettingDataClass.fromMap:
         return fromMap();
-      case EnumValueSetting.toMap:
+      case EnumValueSettingDataClass.toMap:
         return toMap();
-      case EnumValueSetting.toJson:
+      case EnumValueSettingDataClass.toJson:
         return toJson();
-      case EnumValueSetting.fromJson:
+      case EnumValueSettingDataClass.fromJson:
         return fromJson();
-      case EnumValueSetting.toString_:
+      case EnumValueSettingDataClass.toString_:
         return toString_();
-      case EnumValueSetting.copyWith:
+      case EnumValueSettingDataClass.copyWith:
         return copyWith();
-      case EnumValueSetting.equatable:
+      case EnumValueSettingDataClass.equatable:
         return equatable();
-      case EnumValueSetting.equals_:
+      case EnumValueSettingDataClass.equals_:
         return equals_();
-      case EnumValueSetting.hash_:
+      case EnumValueSettingDataClass.hash_:
         return hash_();
-      case EnumValueSetting.none:
+      case EnumValueSettingDataClass.none:
         return none();
     }
   }
@@ -159,7 +159,8 @@ enum EnumValueSetting with Comparable<EnumValueSetting> {
       );
 
   @override
-  int compareTo(EnumValueSetting other) => index.compareTo(other.index);
+  int compareTo(EnumValueSettingDataClass other) =>
+      index.compareTo(other.index);
 
   @override
   String toString() => value;

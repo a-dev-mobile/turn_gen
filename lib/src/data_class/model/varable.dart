@@ -5,7 +5,7 @@ import 'package:turn_gen/src/data_class/enum/enum.dart';
 
 class Varable {
 /* type: enum 
-init: EnumTypeVarable.none_
+init: EnumTypeVarable.none
  */
   final EnumTypeVarable type;
   /* init:'' */
@@ -27,7 +27,7 @@ init: EnumTypeVarable.none_
   /* init:false */
   final bool isArray;
   /* type: enum 
-init: EnumTypeVarable.none_
+init: EnumTypeVarable.none
  */
   final EnumTypeVarable typeArray;
 // end
@@ -37,7 +37,7 @@ init: EnumTypeVarable.none_
   //  ******************************
 
   const Varable({
-    this.type = EnumTypeVarable.none_,
+    this.type = EnumTypeVarable.none,
     this.nameVar = '',
     this.nameData = '',
     this.initValueDefault = '',
@@ -46,7 +46,7 @@ init: EnumTypeVarable.none_
     this.fromMap_ = '',
     this.isCanNull = false,
     this.isArray = false,
-    this.typeArray = EnumTypeVarable.none_,
+    this.typeArray = EnumTypeVarable.none,
   });
 
   Varable copyWith({

@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-part of 'run_data_class.dart';
+part of '../run_data_class.dart';
 
 String _getToMapVarable(Varable v) {
   final type = v.type;
@@ -38,7 +38,7 @@ String _getToMapVarable(Varable v) {
       }
       return error;
 
-    case EnumTypeVarable.none_:
+    case EnumTypeVarable.none:
       if (yes_null_default_yes) {
         return error;
       } else if (yes_null_default_no) {

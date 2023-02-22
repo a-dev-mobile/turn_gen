@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:args/args.dart';
 import 'package:turn_gen/src/src.dart';
 
+
+
 // ignore: prefer-static-class
 Future<void> runFromArguments(List<String> arguments) async {
   // ignore: cascade_invocations
@@ -84,6 +86,9 @@ data
       case TypeRun.none:
         logger.error('Generator type not defined');
         exit(0);
+      case TypeRun.union:
+        await runUnion(path: path, logger: logger);
+        break;
     }
   } catch (e) {
     stderr

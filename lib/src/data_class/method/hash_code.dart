@@ -1,9 +1,9 @@
-part of 'run_data_class.dart';
+part of '../run_data_class.dart';
 
-String _getEquals(Varable v, bool isLast) {
+String _getHashCode(Varable v) {
   final type = v.type;
   final name = v.nameVar;
-  final end = isLast ? ');\n' : '&& \n';
+  const end = ',\n';
   switch (type) {
     case EnumTypeVarable.list_:
     case EnumTypeVarable.list_bool_:
@@ -38,29 +38,28 @@ String _getEquals(Varable v, bool isLast) {
     case EnumTypeVarable.map_string_int_null:
     case EnumTypeVarable.map_string_string_null:
 
+    case EnumTypeVarable.set_int:
+    case EnumTypeVarable.set_int_null:
     case EnumTypeVarable.set_:
     case EnumTypeVarable.set_string:
     case EnumTypeVarable.set_string_null:
-    case EnumTypeVarable.set_int:
-    case EnumTypeVarable.set_int_null:
     case EnumTypeVarable.set_bool:
     case EnumTypeVarable.set_bool_null:
     case EnumTypeVarable.set_double:
     case EnumTypeVarable.set_double_null:
+    case EnumTypeVarable.list_other:
     case EnumTypeVarable.list_data:
     case EnumTypeVarable.list_data_null:
-      return '            const DeepCollectionEquality().equals(other.$name, $name,)$end';
+      return '        const DeepCollectionEquality().hash($name,)$end';
     case EnumTypeVarable.bool_:
     case EnumTypeVarable.double_:
     case EnumTypeVarable.enum_:
     case EnumTypeVarable.int_:
     case EnumTypeVarable.num_:
     case EnumTypeVarable.string_:
-    case EnumTypeVarable.none_:
+    case EnumTypeVarable.none:
     case EnumTypeVarable.date_time:
     case EnumTypeVarable.data:
-      return '            (identical(other.$name, $name) || other.$name == $name)$end';
-    case EnumTypeVarable.list_other:
-      return 'error _getEquals';
+      return '        $name$end';
   }
 }
