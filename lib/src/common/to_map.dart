@@ -1,8 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
-part of '../run_data_class.dart';
 
-String _getToMapVarable(Varable v) {
+
+import 'package:turn_gen/src/src.dart';
+
+// ignore: prefer-static-class
+String getToMapVarable(Varable v) {
   final type = v.type;
   final name = v.nameVar;
 
@@ -217,4 +220,6 @@ String _getToMapVarable(Varable v) {
       }
       return error;
   }
+
+    return '';
 }

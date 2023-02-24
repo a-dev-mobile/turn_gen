@@ -22,20 +22,20 @@ void writeToFile(
 ) {
   final noSetting = listFirstSetting
       .firstWhere(
-        (v) => v.keySetting == EnumKeySettingDataClass.no,
+        (v) => v.keySetting == EnumKeySetting.no,
         orElse: FirstSetting.new,
       )
       .listValueSetting;
 
   final onlySetting = listFirstSetting
       .firstWhere(
-        (v) => v.keySetting == EnumKeySettingDataClass.only,
+        (v) => v.keySetting == EnumKeySetting.only,
         orElse: FirstSetting.new,
       )
       .listValueSetting;
   final useSetting = listFirstSetting
       .firstWhere(
-        (v) => v.keySetting == EnumKeySettingDataClass.use,
+        (v) => v.keySetting == EnumKeySetting.use,
         orElse: FirstSetting.new,
       )
       .listValueSetting;
@@ -175,7 +175,9 @@ ${_getEquatable(listNameNoSortVar, isUseEquatable)}
 }
 
 void _msgOnlyOne(
-    List<EnumValueSettingDataClass> onlySetting, FLILogger logger) {
+  List<EnumValueSettingDataClass> onlySetting,
+  FLILogger logger,
+) {
   if (onlySetting.length > 1) {
     logger
       ..info('\n')

@@ -31,13 +31,11 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
 
   final listUnionName = _getUnionName(listFormatUnionItem, className);
   if (listUnionName.contains(_emptyUnionName)) {
-
     logger
       ..info('\n')
       ..error('TurnGen does not support default constructor, add factory name')
       ..info('\n');
     exit(0);
-
   }
 
   final listUnionItem = <UnionItemModel>[];
@@ -64,6 +62,15 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
       var isRequired = false;
       var initValue = '';
 
+      final rawSetting = UtilsRegex.getTextRegexLastMatch(
+        content: v,
+        regex: r'\/\*[\s\S]+?\*\/',
+      );
+      // очистка настроек
+      v = v.replaceAll(rawSetting, '').trim();
+      textBrackets = textBrackets.replaceAll(rawSetting, '').trim();
+
+      final mapSettingParam = getMapSettingVarable(rawSetting);
       //  узнаю required или нет
       if (v.contains(RegExp('^required '))) {
         isRequired = true;
@@ -91,6 +98,17 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
         isCanNull = true;
         typeVar = typeVar.replaceAll(RegExp(r'\?$'), '');
       }
+      var typeEnum =
+          EnumTypeVarable.fromValue(typeVar, fallback: EnumTypeVarable.none);
+// если есть ручной тип
+      if (mapSettingParam.keys.contains(EnumKeySetting.type)) {
+        typeEnum = EnumTypeVarable.fromValue(
+          mapSettingParam[EnumKeySetting.type],
+          fallback: EnumTypeVarable.none,
+        );
+      }
+
+
       final nameWithTag = '_${nameVar}_$unionName';
       listStartWriteParams.add('final $typeVar? $nameWithTag;');
       listParamsForMap[nameWithTag] = 'null';
@@ -101,7 +119,8 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
           initValue: initValue.trim(),
           name: nameVar.trim(),
           typeStr: typeVar.trim(),
-          // nameWithTag: nameWithTag,
+          typeEnum: typeEnum,
+          mapSetting: mapSettingParam,
           isCanNull: isCanNull,
         ),
       );
@@ -209,57 +228,6 @@ void _msgNotUnion(List<String> listUnion, FLILogger logger) {
       ..info('\n');
     exit(0);
   }
-}
-
-Map<EnumKeySettingUnion, String> _formatSettingVarable(String content) {
-  // ignore: prefer-immediate-return
-  var contentFormat = content
-      .replaceAll(':', ': ')
-      .replaceAll(',', ', ')
-      .replaceAll('/*', '')
-      .replaceAll('*/', '')
-      .replaceAll(RegExp(r'\s+'), ' ')
-      .replaceAll(' ,', ',')
-      .replaceAll(' :', ':');
-
-  final setting = [
-    'init:',
-    'INIT:',
-    'TYPE:',
-    'type:',
-  ];
-
-  for (final v in setting) {
-    if (contentFormat.contains(v)) {
-      contentFormat = contentFormat.replaceAll(v, '\n$v');
-    }
-  }
-  final map = <EnumKeySettingUnion, String>{};
-  final split = contentFormat.split('\n');
-  var splitTemp = <String>[];
-  var strKey = '';
-  var strValue = '';
-  var enumKey = EnumKeySettingUnion.none;
-
-  for (var i = 0; i < split.length; i++) {
-    enumKey = EnumKeySettingUnion.none;
-
-    if (split[i].isEmpty || !split[i].contains(':')) continue;
-    splitTemp = split[i].split(':');
-
-    strKey = '${splitTemp.first.toLowerCase()}:';
-    strValue = splitTemp.last.trim();
-    enumKey = EnumKeySettingUnion.fromValue(
-      strKey,
-      fallback: EnumKeySettingUnion.none,
-    );
-
-    if (enumKey == EnumKeySettingDataClass.none) continue;
-
-    map[enumKey] = strValue;
-  }
-
-  return map;
 }
 
 String _formatFinalVarablse(String content) {

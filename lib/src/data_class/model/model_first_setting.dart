@@ -6,7 +6,7 @@ class FirstSetting {
   /* type: enum
   init:  EnumKeySetting.none
    */
-  final EnumKeySettingDataClass keySetting;
+  final EnumKeySetting keySetting;
   /* 
   type: List<data>
   init:  const <EnumValueSetting>[]
@@ -15,7 +15,7 @@ class FirstSetting {
   // end
 
   const FirstSetting({
-    this.keySetting = EnumKeySettingDataClass.none,
+    this.keySetting = EnumKeySetting.none,
     this.listValueSetting = const <EnumValueSettingDataClass>[],
   });
 }

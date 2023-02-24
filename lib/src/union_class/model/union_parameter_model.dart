@@ -1,14 +1,19 @@
 // ignore_for_file: sort_constructors_first
 
-import 'package:turn_gen/src/common/enum_type_variable.dart';
+import 'package:turn_gen/src/common/enum/enum_type_variable.dart';
+import 'package:turn_gen/src/src.dart';
 
-/* no: hash tojson fromjson*/
-class UnionParameterModel {  
+/* no:  tojson fromjson*/
+class UnionParameterModel {   
   /* init: '' */
   final String typeStr;
+  /* init: EnumTypeVarable.none type: enum */
+  final EnumTypeVarable typeEnum;
+
   /* init: '' */
   final String name;
-
+  /* init: const {} type: Map<EnumKeySetting, String> */
+  final Map<EnumKeySetting, String> mapSetting;
   /* init: false */
   final bool isCanNull;
   /* init:'' */
@@ -24,7 +29,9 @@ class UnionParameterModel {
   
   const UnionParameterModel({
     this.typeStr = '',
+    this.typeEnum = EnumTypeVarable.none,
     this.name = '',
+    this.mapSetting = const {},
     this.isCanNull = false,
     this.initValue = '',
     this.isRequired = false,
@@ -37,14 +44,18 @@ class UnionParameterModel {
 
   UnionParameterModel copyWith({
     String? typeStr,
+    EnumTypeVarable? typeEnum,
     String? name,
+    Map<EnumKeySetting, String>? mapSetting,
     bool? isCanNull,
     String? initValue,
     bool? isRequired,
   }) {
     return UnionParameterModel(
       typeStr: typeStr ?? this.typeStr, 
+      typeEnum: typeEnum ?? this.typeEnum, 
       name: name ?? this.name, 
+      mapSetting: mapSetting ?? this.mapSetting, 
       isCanNull: isCanNull ?? this.isCanNull, 
       initValue: initValue ?? this.initValue, 
       isRequired: isRequired ?? this.isRequired, 
@@ -53,10 +64,35 @@ class UnionParameterModel {
 
   
   
-
+      
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UnionParameterModel &&
+            (identical(other.typeStr, typeStr) || other.typeStr == typeStr)&& 
+            (identical(other.typeEnum, typeEnum) || other.typeEnum == typeEnum)&& 
+            (identical(other.name, name) || other.name == name)&& 
+            (identical(other.mapSetting, mapSetting) || other.mapSetting == mapSetting)&& 
+            (identical(other.isCanNull, isCanNull) || other.isCanNull == isCanNull)&& 
+            (identical(other.initValue, initValue) || other.initValue == initValue)&& 
+            (identical(other.isRequired, isRequired) || other.isRequired == isRequired));
+  }
+  
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        typeStr,
+        typeEnum,
+        name,
+        mapSetting,
+        isCanNull,
+        initValue,
+        isRequired,
+]);
       @override
   String toString() {
-    return 'UnionParameterModel(typeStr: $typeStr, name: $name, isCanNull: $isCanNull, initValue: $initValue, isRequired: $isRequired, )';
+    return 'UnionParameterModel(typeStr: $typeStr, typeEnum: $typeEnum, name: $name, mapSetting: $mapSetting, isCanNull: $isCanNull, initValue: $initValue, isRequired: $isRequired, )';
     }
 
 }

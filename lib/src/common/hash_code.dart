@@ -1,8 +1,9 @@
-part of '../run_data_class.dart';
 
-String _getHashCode(Varable v) {
-  final type = v.type;
-  final name = v.nameVar;
+
+import 'package:turn_gen/src/src.dart';
+
+// ignore: prefer-static-class
+String getHashCode(EnumTypeVarable type, String nameVar) {
   const end = ',\n';
   switch (type) {
     case EnumTypeVarable.list_:
@@ -16,6 +17,7 @@ String _getHashCode(Varable v) {
     case EnumTypeVarable.list_map_int_dynamic_:
     case EnumTypeVarable.list_map_int_string_:
     case EnumTypeVarable.list_map_int_string_null:
+    case EnumTypeVarable.list_map_string_dynamic_:
     case EnumTypeVarable.list_string_:
     case EnumTypeVarable.list_string_null:
 
@@ -50,7 +52,7 @@ String _getHashCode(Varable v) {
     case EnumTypeVarable.list_other:
     case EnumTypeVarable.list_data:
     case EnumTypeVarable.list_data_null:
-      return '        const DeepCollectionEquality().hash($name,)$end';
+      return '        const DeepCollectionEquality().hash($nameVar,)$end';
     case EnumTypeVarable.bool_:
     case EnumTypeVarable.double_:
     case EnumTypeVarable.enum_:
@@ -60,6 +62,7 @@ String _getHashCode(Varable v) {
     case EnumTypeVarable.none:
     case EnumTypeVarable.date_time:
     case EnumTypeVarable.data:
-      return '        $name$end';
+      return '        $nameVar$end';
+     
   }
 }

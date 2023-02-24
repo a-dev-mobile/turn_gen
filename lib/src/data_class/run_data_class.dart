@@ -1,12 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
+import 'package:turn_gen/src/common/from_map.dart';
+import 'package:turn_gen/src/common/setting_help.dart';
+import 'package:turn_gen/src/common/to_map.dart';
 import 'package:turn_gen/src/src.dart';
 
-part 'method/to_map.dart';
-part 'method/from_map.dart';
-part 'method/equals.dart';
-part 'method/hash_code.dart';
 part 'method/factory_init.dart';
 part 'write_file.dart';
 
@@ -104,7 +103,7 @@ init: Map<t , v>
 type: asda fromMap: asdasd*/
   for (var i = 0; i < listItemFinal.length; i++) {
     final finalVarable = _formatFinalVarablse(listItemFinal[i]);
-    final settingVarableMap = _formatSettingVarable(listItemDef[i]);
+    final settingVarableMap = getMapSettingVarable(listItemDef[i]);
     isCanNull = false;
 
     listSplit = finalVarable.split(' ');
@@ -125,9 +124,9 @@ type: asda fromMap: asdasd*/
 
     // If it does not work, I see if there is a value in the commentary
     if (type == EnumTypeVarable.none &&
-        settingVarableMap.containsKey(EnumKeySettingDataClass.type)) {
+        settingVarableMap.containsKey(EnumKeySetting.type)) {
       type = EnumTypeVarable.fromValue(
-        settingVarableMap[EnumKeySettingDataClass.type],
+        settingVarableMap[EnumKeySetting.type],
         fallback: EnumTypeVarable.none,
       );
 
@@ -137,21 +136,21 @@ type: asda fromMap: asdasd*/
 
     // toMap
     toMap = '';
-    if (settingVarableMap.containsKey(EnumKeySettingDataClass.toMap)) {
-      toMap = settingVarableMap[EnumKeySettingDataClass.toMap] ?? '';
+    if (settingVarableMap.containsKey(EnumKeySetting.toMap)) {
+      toMap = settingVarableMap[EnumKeySetting.toMap] ?? '';
     }
 
 //
     //
     fromMap = '';
-    if (settingVarableMap.containsKey(EnumKeySettingDataClass.fromMap)) {
-      fromMap = settingVarableMap[EnumKeySettingDataClass.fromMap] ?? '';
+    if (settingVarableMap.containsKey(EnumKeySetting.fromMap)) {
+      fromMap = settingVarableMap[EnumKeySetting.fromMap] ?? '';
     }
     initValueTemp = '';
     initValueDefault = '';
     initValueComment = '';
-    if (settingVarableMap.containsKey(EnumKeySettingDataClass.init)) {
-      final temp = settingVarableMap[EnumKeySettingDataClass.init] ?? '';
+    if (settingVarableMap.containsKey(EnumKeySetting.init)) {
+      final temp = settingVarableMap[EnumKeySetting.init] ?? '';
 
       initValueTemp = temp;
       initValueComment = temp;
@@ -261,19 +260,20 @@ type: asda fromMap: asdasd*/
 ''');
 
     toMapSb.write('''
-      '${v.nameVar}': ${_getToMapVarable(v)}, 
+      '${v.nameVar}': ${getToMapVarable(v)}, 
 ''');
 
     fromMapSb.write('''
-      ${v.nameVar}: ${_getFromMap(v)}, 
+      ${v.nameVar}: ${getFromMap(v)}, 
 ''');
 
     toString.write('${v.nameVar}: \$${v.nameVar}, ');
 
-    equals.write(_getEquals(v, i == listVarSort.length - 1));
+    equals.write(getEquals(v.type, v.nameVar, i == listVarSort.length - 1));
     hashCode.write(
-      _getHashCode(
-        v,
+      getHashCode(
+        v.type,
+        v.nameVar,
       ),
     );
   }
@@ -310,63 +310,6 @@ void _msgIfNotNameClass(String className, FLILogger logger) {
   }
 }
 
-Map<EnumKeySettingDataClass, String> _formatSettingVarable(String content) {
-  // ignore: prefer-immediate-return
-  var contentFormat = content
-      .replaceAll(':', ': ')
-      .replaceAll(',', ', ')
-      .replaceAll('/*', '')
-      .replaceAll('*/', '')
-      .replaceAll(RegExp(r'\s+'), ' ')
-      .replaceAll(' ,', ',')
-      .replaceAll(' :', ':');
-
-  final setting = [
-    'init:',
-    'INIT:',
-    'TYPE:',
-    'type:',
-    'fromMap:',
-    'toMap:',
-    'tomap:',
-    'TOMAP:',
-    'toMAP:',
-    'frommap:',
-    'FROMMAP:',
-    'fromMAP:',
-  ];
-
-  for (final v in setting) {
-    if (contentFormat.contains(v)) {
-      contentFormat = contentFormat.replaceAll(v, '\n$v');
-    }
-  }
-  final map = <EnumKeySettingDataClass, String>{};
-  final split = contentFormat.split('\n');
-  var splitTemp = <String>[];
-  var strKey = '';
-  var strValue = '';
-  var enumKey = EnumKeySettingDataClass.none;
-
-  for (var i = 0; i < split.length; i++) {
-    enumKey = EnumKeySettingDataClass.none;
-
-    if (split[i].isEmpty || !split[i].contains(':')) continue;
-    splitTemp = split[i].split(':');
-
-    strKey = '${splitTemp.first.toLowerCase()}:';
-    strValue = splitTemp.last.trim();
-    enumKey = EnumKeySettingDataClass.fromValue(strKey,
-        fallback: EnumKeySettingDataClass.none);
-
-    if (enumKey == EnumKeySettingDataClass.none) continue;
-
-    map[enumKey] = strValue;
-  }
-
-  return map;
-}
-
 String _formatFinalVarablse(String content) {
   // ignore: prefer-immediate-return
   final contentFormat = content
@@ -396,10 +339,10 @@ List<FirstSetting> _getSetting({
       .replaceAll(' :', ':')
       .trim();
 
-  var keySetting = EnumKeySettingDataClass.none;
+  var keySetting = EnumKeySetting.none;
 
-  for (final key in EnumKeySettingDataClass.values) {
-    keySetting = EnumKeySettingDataClass.none;
+  for (final key in EnumKeySetting.values) {
+    keySetting = EnumKeySetting.none;
 
     // if it contains settings, then continue
     if (contentFormat.contains(key.value)) {

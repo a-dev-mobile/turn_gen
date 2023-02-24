@@ -2,7 +2,11 @@ part of 'run_union_class.dart';
 
 // ignore: prefer-static-class
 void unionWriteToFile(
-    FLILogger logger, File file, UnionCommonModel model, String contentFile) {
+  FLILogger logger,
+  File file,
+  UnionCommonModel model,
+  String contentFile,
+) {
   /* ****************************** */
   final sbAllParams = StringBuffer();
   for (final v in model.listParams) {
@@ -185,6 +189,100 @@ $sbMaybeMapCase    }
 }''');
 
   /* ****************************** */
+  //      Hash
+  /* ****************************** */
+  final sbHashTemp = StringBuffer();
+  // ignore: cascade_invocations
+  sbHashTemp.write('''
+  @override
+  int get hashCode {
+    switch (_tag) {
+''');
+
+  for (final l in model.listUnion) {
+    sbHashTemp.write('''
+
+      case _${model.nameClass}Tag.${l.nameUnion}:
+        return Object.hashAll([runtimeType,''');
+    final length = l.listParameters.length;
+
+    // if (length == 0) sbHash.write(']);');
+
+    for (var i = 0; i < length; i++) {
+      final p = l.listParameters[i];
+      sbHashTemp.write(
+        getHashCode(p.typeEnum, '_${p.name}_${l.nameUnion}')
+            .replaceAll(RegExp(r'\s+'), ' '),
+      );
+    }
+    sbHashTemp.write(''']);''');
+  }
+  sbHashTemp.write('''
+  
+  }
+}''');
+
+  final sbHash = StringBuffer(
+    sbHashTemp
+        .toString()
+        .replaceAll(',]);', ']);')
+        .replaceAll(', ]);', ']);')
+        .replaceAll(',)]);', ')]);'),
+  );
+
+  /* ****************************** */
+
+  /* ****************************** */
+  //      Equals
+  /* ****************************** */
+  final sbEqualsTemp = StringBuffer();
+  // ignore: cascade_invocations
+  sbEqualsTemp.write('''
+  @override
+  bool operator ==(dynamic other) {
+    switch (_tag) {
+''');
+
+  for (final l in model.listUnion) {
+    final lastText = l.listParameters.isEmpty ? '' : ' && ';
+    sbEqualsTemp.write('''
+
+      case _${model.nameClass}Tag.${l.nameUnion}:
+        return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ${model.nameClass} $lastText 
+''');
+    final length = l.listParameters.length;
+
+    // if (length == 0) sbHash.write(']);');
+
+    for (var i = 0; i < length; i++) {
+      final isLast = i + 1 == length;
+      final lastText = isLast ? ');' : '';
+      final p = l.listParameters[i];
+      //  sbEqualsTemp.write(' && ');
+
+      sbEqualsTemp
+        .write(
+          getEquals(p.typeEnum, '_${p.name}_${l.nameUnion}', isLast)
+              .replaceAll(RegExp(r'\s+'), ' '),
+        );
+    }
+  }
+  sbEqualsTemp.write('''
+  
+  }
+}''');
+
+  final sbEquals = StringBuffer(
+    sbEqualsTemp.toString(),
+    /* .replaceAll(',]);', ']);')
+      .replaceAll(', ]);', ']);')
+      .replaceAll(',)]);', ')]);') */
+  );
+
+  /* ****************************** */
+
   final sbExtendsClass = StringBuffer();
 
   for (final l in model.listUnion) {
@@ -245,6 +343,12 @@ ${ConstConsole.GEN_MSG_START}
 
 class ${model.nameClass} {
 
+
+$sbEquals
+
+
+$sbHash
+
 $sbMaybeMap
 
 $sbMap
@@ -280,7 +384,9 @@ String _getNameExtendsClass(UnionCommonModel model, UnionItemModel l) {
 }
 
 void _msgOnlyOne(
-    List<EnumValueSettingDataClass> onlySetting, FLILogger logger) {
+  List<EnumValueSettingDataClass> onlySetting,
+  FLILogger logger,
+) {
   if (onlySetting.length > 1) {
     logger
       ..info('\n')

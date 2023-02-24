@@ -1,4 +1,5 @@
 export 'assets_gen/assets_gen.dart';
+export 'common/common.dart';
 export 'constants.dart';
 export 'custom_exceptions.dart';
 export 'data_class/data_class.dart';

@@ -1,5 +1,6 @@
   // ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
   /*
+  
   enum EnumTypeVarable {
   enum_('enum'),
 
@@ -25,6 +26,7 @@
   list_map_int_string_(List<Map<int, String>>),
   list_map_int_string_null(List<Map<int, String?>>),
   list_map_int_dynamic_(List<Map<int, dynamic>>),
+  list_map_string_dynamic_(List<Map<String, dynamic>>),
 
   set_(Set),
   set_string(Set<String>),
@@ -92,6 +94,7 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
   list_map_int_string_('List<Map<int, String>>'),
   list_map_int_string_null('List<Map<int, String?>>'),
   list_map_int_dynamic_('List<Map<int, dynamic>>'),
+  list_map_string_dynamic_('List<Map<String, dynamic>>'),
   set_('Set'),
   set_string('Set<String>'),
   set_string_null('Set<String?>'),
@@ -174,6 +177,8 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
         return list_map_int_string_null;
       case 'List<Map<int, dynamic>>':
         return list_map_int_dynamic_;
+      case 'List<Map<String, dynamic>>':
+        return list_map_string_dynamic_;
       case 'Set':
         return set_;
       case 'Set<String>':
@@ -266,6 +271,7 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
     required T Function() list_map_int_string_,
     required T Function() list_map_int_string_null,
     required T Function() list_map_int_dynamic_,
+    required T Function() list_map_string_dynamic_,
     required T Function() set_,
     required T Function() set_string,
     required T Function() set_string_null,
@@ -341,6 +347,8 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
         return list_map_int_string_null();     
       case EnumTypeVarable.list_map_int_dynamic_:
         return list_map_int_dynamic_();     
+      case EnumTypeVarable.list_map_string_dynamic_:
+        return list_map_string_dynamic_();     
       case EnumTypeVarable.set_:
         return set_();     
       case EnumTypeVarable.set_string:
@@ -432,6 +440,7 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
     T Function()? list_map_int_string_,
     T Function()? list_map_int_string_null,
     T Function()? list_map_int_dynamic_,
+    T Function()? list_map_string_dynamic_,
     T Function()? set_,
     T Function()? set_string,
     T Function()? set_string_null,
@@ -487,6 +496,7 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
       list_map_int_string_: list_map_int_string_ ?? orElse,     
       list_map_int_string_null: list_map_int_string_null ?? orElse,     
       list_map_int_dynamic_: list_map_int_dynamic_ ?? orElse,     
+      list_map_string_dynamic_: list_map_string_dynamic_ ?? orElse,     
       set_: set_ ?? orElse,     
       set_string: set_string ?? orElse,     
       set_string_null: set_string_null ?? orElse,     
@@ -544,6 +554,7 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
     T Function()? list_map_int_string_,
     T Function()? list_map_int_string_null,
     T Function()? list_map_int_dynamic_,
+    T Function()? list_map_string_dynamic_,
     T Function()? set_,
     T Function()? set_string,
     T Function()? set_string_null,
@@ -600,6 +611,7 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
         list_map_int_string_: list_map_int_string_,  
         list_map_int_string_null: list_map_int_string_null,  
         list_map_int_dynamic_: list_map_int_dynamic_,  
+        list_map_string_dynamic_: list_map_string_dynamic_,  
         set_: set_,  
         set_string: set_string,  
         set_string_null: set_string_null,  
