@@ -113,6 +113,47 @@ $sbMapCase    }
 ''');
 
   /* ****************************** */
+  /* ****************************** */
+
+  final sbMaybeMap = StringBuffer();
+  // ignore: cascade_invocations
+  sbMaybeMap.write('''
+  T maybeMap<T>({
+''');
+
+  final sbMaybeMapCase = StringBuffer();
+  for (final l in model.listUnion) {
+    final nameClassExtends = _getNameExtendsClass(model, l);
+    final sbReturn = StringBuffer();
+    for (var i = 0; i < l.listParameters.length; i++) {
+      final p = l.listParameters[i];
+      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
+
+      final letterNotNull = p.isCanNull ? '!' : '!';
+
+      sbReturn.write('_${p.name}_${l.nameUnion}$letterNotNull$lastText');
+    }
+
+    sbMaybeMap.write('''
+     T Function ($nameClassExtends v)? ${l.nameUnion},
+''');
+
+    sbMaybeMapCase.write('''
+      case _${model.nameClass}Tag.${l.nameUnion}:
+        if(${l.nameUnion} != null) return ${l.nameUnion}($nameClassExtends($sbReturn));
+        return orElse();
+''');
+  }
+
+  sbMaybeMap.write('''
+      required T Function() orElse,
+}) {
+    switch (_tag) {
+$sbMaybeMapCase    }
+  }
+''');
+
+  /* ****************************** */
   final sbToString = StringBuffer();
   // ignore: cascade_invocations
   sbToString.write('''
@@ -199,11 +240,13 @@ $contentFile
 
 ${ConstConsole.GEN_MSG_START}
 // coverage:ignore-file
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 class ${model.nameClass} {
+
+$sbMaybeMap
+
 $sbMap
 
 $sbUnionClass
