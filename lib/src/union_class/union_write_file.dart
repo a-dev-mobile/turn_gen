@@ -242,7 +242,7 @@ $sbMaybeMapCase    }
   bool operator ==(dynamic other) {
     switch (_tag) {
 ''');
-
+  var lastTextTemp = '';
   for (final l in model.listUnion) {
     final lastText = l.listParameters.isEmpty ? '' : ' && ';
     sbEqualsTemp.write('''
@@ -256,20 +256,19 @@ $sbMaybeMapCase    }
 
     // if (length == 0) sbHash.write(']);');
 
+    lastTextTemp = length == 0 ? ');' : '';
     for (var i = 0; i < length; i++) {
       final isLast = i + 1 == length;
-      final lastText = isLast ? ');' : '';
       final p = l.listParameters[i];
       //  sbEqualsTemp.write(' && ');
 
-      sbEqualsTemp
-        .write(
-          getEquals(p.typeEnum, '_${p.name}_${l.nameUnion}', isLast)
-              .replaceAll(RegExp(r'\s+'), ' '),
-        );
+      sbEqualsTemp.write(
+        getEquals(p.typeEnum, '_${p.name}_${l.nameUnion}', isLast)
+            .replaceAll(RegExp(r'\s+'), ' '),
+      );
     }
   }
-  sbEqualsTemp.write('''
+  sbEqualsTemp.write('''$lastTextTemp
   
   }
 }''');
