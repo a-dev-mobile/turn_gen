@@ -183,7 +183,7 @@ Future<void> runEnumInt({
   $contentFile
   */
   
-${ConstConsole.GEN_MSG}
+${ConstConsole.GEN_MSG_START}
 
 enum $enumName with Comparable<$enumName> { 
 $constructor
@@ -234,8 +234,5 @@ $maybeMapOrNullEnd
   String toString() => value.toString();
    }\n''');
 
-  logger
-    ..info('***')
-    ..info('✓ Successfully generated extra features for enum with int value')
-    ..info('***');
+  logger.info(ConstConsole.GEN_MSG_END);
 }

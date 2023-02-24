@@ -119,7 +119,7 @@ Future<void> runEnumDefault({
   $contentFile
   */
   
-${ConstConsole.GEN_MSG}
+${ConstConsole.GEN_MSG_START}
 
 enum $nameEnum with Comparable<$nameEnum> { 
 $constructor
@@ -178,12 +178,7 @@ $maybeMapOrNullEnd
   String toString() => value;
    }\n''');
 
-  logger
-    ..info('***')
-    ..info(
-      '✓ Successfully generated extra features for enum with default value',
-    )
-    ..info('***');
+  logger.info(ConstConsole.GEN_MSG_END);
 }
 
 void _badCode(List<String> argEnum) {

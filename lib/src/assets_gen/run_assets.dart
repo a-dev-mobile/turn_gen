@@ -175,7 +175,7 @@ class AppAssets$vFormat {''');
   }
 
   await File(pathGenFile).writeAsString('''
-${ConstConsole.GEN_MSG}
+${ConstConsole.GEN_MSG_START}
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
@@ -183,10 +183,7 @@ $sb
 
 ''');
 
-  logger
-    ..info('***')
-    ..info('✓ Successfully generated extra features for assets')
-    ..info('***');
+  logger.info(ConstConsole.GEN_MSG_END);
 }
 
 void _errorIfNotFiles(List<AssetItem> assetsList, FLILogger logger) {

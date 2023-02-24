@@ -18,17 +18,26 @@ class ConstHelper {
 
 class ConstConsole {
   static String introMessage(String currentVersion) => '''
-
+}
   ════════════════════════════════════════════
      TURN_GEN (v$currentVersion)                               
   ════════════════════════════════════════════''';
 
-  static const String GEN_MSG = '''
+  static const String GEN_MSG_START = '''
 //          --TURN_GEN--
 //  *************************************
 //           GENERATED CODE 
 //  *************************************
   ''';
+
+  static const String GEN_MSG_END = '''
+//          --TURN_GEN--
+//  *************************************
+//         ✓ Successfully 
+//  *************************************
+  ''';
+
+
 }
 
 class ConstArgOptionFlag {

@@ -45,19 +45,25 @@ void writeToFile(
   var isActiveToMap = !noSetting.contains(EnumValueSettingDataClass.toMap);
   var isActiveToJson = !noSetting.contains(EnumValueSettingDataClass.toJson);
   var isActiveFromMap = !noSetting.contains(EnumValueSettingDataClass.fromMap);
-  var isActiveFromJson = !noSetting.contains(EnumValueSettingDataClass.fromJson);
-  var isActiveToString = !noSetting.contains(EnumValueSettingDataClass.toString_);
+  var isActiveFromJson =
+      !noSetting.contains(EnumValueSettingDataClass.fromJson);
+  var isActiveToString =
+      !noSetting.contains(EnumValueSettingDataClass.toString_);
   var isActiveHash = !noSetting.contains(EnumValueSettingDataClass.hash_);
   var isActiveEquals = !noSetting.contains(EnumValueSettingDataClass.equals_);
-  var isActiveCopyWith = !noSetting.contains(EnumValueSettingDataClass.copyWith);
+  var isActiveCopyWith =
+      !noSetting.contains(EnumValueSettingDataClass.copyWith);
   // only no setting
-  final isOnlyCopyWith = onlySetting.contains(EnumValueSettingDataClass.copyWith);
+  final isOnlyCopyWith =
+      onlySetting.contains(EnumValueSettingDataClass.copyWith);
   final isOnlyFromMap = onlySetting.contains(EnumValueSettingDataClass.fromMap);
-  final isOnlyFromJson = onlySetting.contains(EnumValueSettingDataClass.fromJson);
+  final isOnlyFromJson =
+      onlySetting.contains(EnumValueSettingDataClass.fromJson);
   final isOnlyToJson = onlySetting.contains(EnumValueSettingDataClass.toJson);
   final isOnlyToMap = onlySetting.contains(EnumValueSettingDataClass.toMap);
 //   use setting
-  final isUseEquatable = useSetting.contains(EnumValueSettingDataClass.equatable);
+  final isUseEquatable =
+      useSetting.contains(EnumValueSettingDataClass.equatable);
 
 // hash_and_equals disable or enable at the same time
   var isActiveHashAndEquals = isActiveEquals && isActiveHash;
@@ -146,7 +152,7 @@ void writeToFile(
   final newContent = '''
 $header$classHeader $classBrackets
    
-${ConstConsole.GEN_MSG}
+${ConstConsole.GEN_MSG_START}
   const $className({
 $constructor  });
   /*
@@ -165,13 +171,11 @@ ${_getEquatable(listNameNoSortVar, isUseEquatable)}
 
   final _ = file.writeAsString(newContent);
 
-  logger
-    ..info('***')
-    ..info('✓ Successfully generated extra features for data class')
-    ..info('***');
+  logger.info(ConstConsole.GEN_MSG_END);
 }
 
-void _msgOnlyOne(List<EnumValueSettingDataClass> onlySetting, FLILogger logger) {
+void _msgOnlyOne(
+    List<EnumValueSettingDataClass> onlySetting, FLILogger logger) {
   if (onlySetting.length > 1) {
     logger
       ..info('\n')

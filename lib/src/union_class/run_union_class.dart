@@ -2,7 +2,10 @@
 import 'dart:io';
 
 import 'package:turn_gen/src/src.dart';
-import 'package:turn_gen/src/union_class/enum/enum_key_setting.dart';
+
+part 'union_write_file.dart';
+
+const String _emptyUnionName = 'default_';
 
 // ignore: prefer-static-class
 Future<void> runUnion({required String path, required FLILogger logger}) async {
@@ -27,16 +30,30 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
   final listFormatUnionItem = _getFormatItemUnion(listUnionRawItem);
 
   final listUnionName = _getUnionName(listFormatUnionItem, className);
+  if (listUnionName.contains(_emptyUnionName)) {
+
+    logger
+      ..info('\n')
+      ..error('TurnGen does not support default constructor, add factory name')
+      ..info('\n');
+    exit(0);
+
+  }
+
+  final listUnionItem = <UnionItemModel>[];
+
+  final listStartWriteParams = <String>['final _${className}Tag _tag;'];
+  final listParamsForMap = <String, String>{'_tag': 'null'};
 
   for (var i = 0; i < listFormatUnionItem.length; i++) {
-    final listUnionItem = <UnionItemModel>[];
     final v = listFormatUnionItem[i];
-    final textBrackets = UtilsRegex.getTextRegexLastMatch(
+    final unionName = listUnionName[i];
+
+    var textBrackets = UtilsRegex.getTextRegexLastMatch(
       content: v,
       regex: r'\([\s\S]+?\)',
     );
-    // todo
-
+    if (textBrackets.isEmpty) textBrackets = '()';
     final enumParam = _getTypeParameter(textBrackets);
 
     final listParamRaw = textBrackets.split(',');
@@ -66,219 +83,59 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
         initValue = v.split('=').last.trim();
         v = v.replaceAll(initValue, '').replaceAll('=', '').trim();
       }
+
+      final nameVar = v.split(' ').last;
+      var typeVar = v.replaceAll(' $nameVar', '').trim();
+      var isCanNull = false;
+      if (typeVar[typeVar.length - 1] == '?') {
+        isCanNull = true;
+        typeVar = typeVar.replaceAll(RegExp(r'\?$'), '');
+      }
+      final nameWithTag = '_${nameVar}_$unionName';
+      listStartWriteParams.add('final $typeVar? $nameWithTag;');
+      listParamsForMap[nameWithTag] = 'null';
       listParamFormat.add(v);
       listParamModel.add(
-          UnionParameterModel(isRequired: isRequired, initValue: initValue));
+        UnionParameterModel(
+          isRequired: isRequired,
+          initValue: initValue.trim(),
+          name: nameVar.trim(),
+          typeStr: typeVar.trim(),
+          // nameWithTag: nameWithTag,
+          isCanNull: isCanNull,
+        ),
+      );
     }
 
-    listUnionItem.add(UnionItemModel(
+    listUnionItem.add(
+      UnionItemModel(
+        paramStr: textBrackets,
         nameUnion: listUnionName[i],
         parameter: enumParam,
-        listParameters: listParamModel));
-
-    var a;
+        listParameters: listParamModel,
+      ),
+    );
   }
-
-  final listItemDef = UtilsRegex.getTextRegexListMatch(
-    content: classBrackets,
-    regex: r'\/\*[\s\S]+?\*\/',
+  final commonModel = UnionCommonModel(
+    nameClass: className,
+    listParams: listStartWriteParams,
+    listUnion: listUnionItem,
   );
 
-  if (listItemDef.length != listItemDef.length) {
-    logger
-      ..info('')
-      ..info('***')
-      ..info('put a comment (/*   */) over each final variable')
-      ..info('***')
-      ..info('');
-    exit(0);
+// пересобираю общую модель всех параметров с уникальным параметром каждого union
+  final newListUnion = <UnionItemModel>[];
+  for (final u in commonModel.listUnion) {
+    final newlistParamsForMap = Map<String, String>.from(listParamsForMap);
+    newlistParamsForMap['_tag'] = '_${className}Tag.${u.nameUnion}';
+    for (final p in u.listParameters) {
+      newlistParamsForMap['_${p.name}_${u.nameUnion}'] = p.name;
+    }
+    newListUnion.add(u.copyWith(mapNameWithTag: newlistParamsForMap));
   }
+  final newCommonModel = commonModel.copyWith(listUnion: newListUnion);
 
-//   final listVarMain = <Varable>[];
-//   var listSplit = <String>[];
-
-//   var name = '';
-//   var nameObject = '';
-
-//   var isCanNull = false;
-//   var type = EnumTypeVarable.none;
-//   var typeStr = '';
-//   var initValueTemp = '';
-//   var initValueDefault = '';
-//   var initValueComment = '';
-//   var toMap = '';
-//   var fromMap = '';
-// /* init: null type: enum */ /*
-// init: Map<t , v>
-// type: asda fromMap: asdasd*/
-//   for (var i = 0; i < listItemFinal.length; i++) {
-//     final finalVarable = _formatFinalVarablse(listItemFinal[i]);
-//     final settingVarableMap = _formatSettingVarable(listItemDef[i]);
-//     isCanNull = false;
-
-//     listSplit = finalVarable.split(' ');
-//     // take the name and delete it
-//     name = listSplit.last;
-//     final _ = listSplit.removeLast();
-
-//     typeStr = listSplit.join(' ').trim();
-// // determining whether null is a value or not
-//     if (typeStr.substring(typeStr.length - 1) == '?') {
-//       isCanNull = true;
-//       typeStr = typeStr.substring(0, typeStr.length - 1);
-//     }
-//     // picking up the type of
-//     type = EnumTypeVarable.fromValue(typeStr, fallback: EnumTypeVarable.none);
-
-//     nameObject = '';
-
-//     // If it does not work, I see if there is a value in the commentary
-//     if (type == EnumTypeVarable.none &&
-//         settingVarableMap.containsKey(EnumKeySettingUnion.type)) {
-//       type = EnumTypeVarable.fromValue(
-//         settingVarableMap[EnumKeySettingDataClass.type],
-//         fallback: EnumTypeVarable.none,
-//       );
-
-//       nameObject = typeStr;
-//     }
-//     //
-
-//     // toMap
-
-// //
-//     //
-
-//     initValueTemp = '';
-//     initValueDefault = '';
-//     initValueComment = '';
-//     if (settingVarableMap.containsKey(EnumKeySettingDataClass.init)) {
-//       final temp = settingVarableMap[EnumKeySettingDataClass.init] ?? '';
-
-//       initValueTemp = temp;
-//       initValueComment = temp;
-//     }
-
-//     if (type == EnumTypeVarable.none) {
-//       logger.error('($finalVarable) - type is not defined');
-//     }
-//     listVarMain.add(
-//       Varable(
-//         isCanNull: isCanNull,
-//         nameVar: name,
-//         nameData: nameObject,
-//         type: type,
-//         toMap_: toMap,
-//         fromMap_: fromMap,
-//         initValueComment: initValueComment,
-//         initValueDefault: initValueDefault,
-//       ),
-//     );
-//   }
-
-//   final constructor = StringBuffer();
-//   final factoryInit = StringBuffer();
-//   final copyWithStart = StringBuffer();
-//   final copyWithEnd = StringBuffer();
-//   final toMapSb = StringBuffer();
-//   final fromMapSb = StringBuffer();
-//   final toString = StringBuffer();
-//   final equals = StringBuffer();
-//   final hashCode = StringBuffer();
-
-//   var typeStrTemp = '';
-//   var v = const Varable();
-
-// // I sort the Required varable first
-//   final listVarSort = [...listVarMain];
-
-//   final listRequired = listVarMain
-//       .where((v) => !v.isCanNull && v.initValueComment.isEmpty)
-//       .toList();
-//   listVarSort.removeWhere(listRequired.contains);
-
-//   final listYesInit =
-//       listVarSort.where((v) => v.initValueComment.isNotEmpty).toList();
-//   listVarSort.removeWhere(listYesInit.contains);
-
-//   final listNoInit = [...listVarSort];
-
-//   listVarSort
-//     ..clear()
-//     ..addAll(listRequired)
-//     ..addAll(listYesInit)
-//     ..addAll(listNoInit);
-// // listRequired
-//   for (var i = 0; i < listRequired.length; i++) {
-//     v = listRequired[i];
-//     constructor.write('''
-//     required this.${v.nameVar},
-// ''');
-//   }
-//   // listYesInit
-//   for (var i = 0; i < listYesInit.length; i++) {
-//     v = listYesInit[i];
-//     constructor.write('''
-//     this.${v.nameVar} = ${v.initValueComment},
-// ''');
-//   }
-//   // listNoInit
-//   for (var i = 0; i < listNoInit.length; i++) {
-//     v = listNoInit[i];
-//     constructor.write('''
-//     this.${v.nameVar},
-// ''');
-//   }
-
-//   // Showing warning is null var, but init value have
-//   for (var i = 0; i < listVarMain.length; i++) {
-//     v = listVarMain[i];
-//     if (v.isCanNull && v.initValueDefault.isNotEmpty) {
-//       logger
-//         ..info('')
-//         ..info('-- INFO --')
-//         ..info(
-//           '(${v.type}? ${v.nameVar}) is null, but init value > ${v.initValueDefault}',
-//         );
-//     }
-
-//     typeStrTemp = v.type == EnumTypeVarable.enum_ ? v.nameData : v.type.value;
-//     if (v.nameData.isNotEmpty) {
-//       typeStrTemp = v.nameData;
-//     }
-
-//     copyWithStart.write('''
-//     $typeStrTemp? ${v.nameVar},
-// ''');
-
-//     copyWithEnd.write('''
-//       ${v.nameVar}: ${v.nameVar} ?? this.${v.nameVar},
-// ''');
-
-//     toString.write('${v.nameVar}: \$${v.nameVar}, ');
-//   }
-//   final listNameSortVar = listVarSort.map((e) => e.nameVar).toList();
-//   final file = File(path);
-//   // writeToFile(
-//   //   logger,
-//   //   listNameSortVar,
-//   //   // listFirstSetting,
-//   //   contentFile,
-//   //   classHeader,
-//   //   className,
-//   //   classBrackets,
-//   //   constructor,
-//   //   factoryInit,
-//   //   copyWithStart,
-//   //   copyWithEnd,
-//   //   toMapSb,
-//   //   fromMapSb,
-//   //   toString,
-//   //   equals,
-//   //   hashCode,
-//   //   file,
-//   // );
-// }
+  final file = File(path);
+  unionWriteToFile(logger, file, newCommonModel, contentFile);
 }
 
 String _cleanParam(String value) {
@@ -313,11 +170,21 @@ EnumParameter _getTypeParameter(String textBrackets) {
 }
 
 List<String> _getUnionName(
-    List<String> listFormatUnionRawItem, String className) {
+  List<String> listFormatUnionRawItem,
+  String className,
+) {
   final list = <String>[];
 
   for (final v in listFormatUnionRawItem) {
-    list.add(v.replaceAll(className, '').replaceAll('.', '').split(' ').first);
+    final union =
+        v.replaceAll(className, '').replaceAll('.', '').split(' ').first;
+
+    if (union.isEmpty) {
+      list.add(_emptyUnionName);
+      continue;
+    }
+
+    list.add(union);
   }
 
   return list;
@@ -382,8 +249,10 @@ Map<EnumKeySettingUnion, String> _formatSettingVarable(String content) {
 
     strKey = '${splitTemp.first.toLowerCase()}:';
     strValue = splitTemp.last.trim();
-    enumKey = EnumKeySettingUnion.fromValue(strKey,
-        fallback: EnumKeySettingUnion.none);
+    enumKey = EnumKeySettingUnion.fromValue(
+      strKey,
+      fallback: EnumKeySettingUnion.none,
+    );
 
     if (enumKey == EnumKeySettingDataClass.none) continue;
 
@@ -426,47 +295,49 @@ List<String> _getFormatItemUnion(
 ) {
   final formatList = <String>[];
   for (final v in content) {
-    formatList.add(v
-        .replaceAll(':', ' : ')
-        .replaceAll('?', ' ? ')
-        .replaceAll(',', ' , ')
-        .replaceAll('>', ' > ')
-        .replaceAll('<', ' < ')
-        .replaceAll('(', ' ( ')
-        .replaceAll(')', ' ) ')
-        .replaceAll(']', ' ] ')
-        .replaceAll('[', ' [ ')
-        .replaceAll('}', ' } ')
-        .replaceAll('{', ' { ')
-        .replaceAll('=', ' = ')
-        .replaceAll(':', ' : ')
-        .replaceAll(',', ' , ')
-        .replaceAll(';', ' ; ')
-        .replaceAll('.', ' . ')
-        .replaceAll(',', ' , ')
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .replaceAll(' :', ':')
-        .replaceAll(' ? ', '? ')
-        .replaceAll(' >', '>')
-        // .replaceAll('> ', '>')
-        .replaceAll(' <', '<')
-        .replaceAll('< ', '<')
-        .replaceAll('( ', '(')
-        .replaceAll(' )', ')')
-        .replaceAll(' ]', ']')
-        .replaceAll('] ', ']')
-        .replaceAll(' [', '[')
-        .replaceAll('[ ', '[')
-        .replaceAll(' }', '}')
-        .replaceAll('{ ', '{')
-        .replaceAll(' ;', ';')
-        .replaceAll(' .', '.')
-        .replaceAll('. ', '.')
-        .replaceAll(' :', ':')
-        .replaceAll(' ,', ',')
-        .replaceAll(',[', ', [')
-        .replaceAll(',{', ', {')
-        .trim());
+    formatList.add(
+      v
+          .replaceAll(':', ' : ')
+          .replaceAll('?', ' ? ')
+          .replaceAll(',', ' , ')
+          .replaceAll('>', ' > ')
+          .replaceAll('<', ' < ')
+          .replaceAll('(', ' ( ')
+          .replaceAll(')', ' ) ')
+          .replaceAll(']', ' ] ')
+          .replaceAll('[', ' [ ')
+          .replaceAll('}', ' } ')
+          .replaceAll('{', ' { ')
+          .replaceAll('=', ' = ')
+          .replaceAll(':', ' : ')
+          .replaceAll(',', ' , ')
+          .replaceAll(';', ' ; ')
+          .replaceAll('.', ' . ')
+          .replaceAll(',', ' , ')
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .replaceAll(' :', ':')
+          .replaceAll(' ? ', '? ')
+          .replaceAll(' >', '>')
+          // .replaceAll('> ', '>')
+          .replaceAll(' <', '<')
+          .replaceAll('< ', '<')
+          .replaceAll('( ', '(')
+          .replaceAll(' )', ')')
+          .replaceAll(' ]', ']')
+          .replaceAll('] ', ']')
+          .replaceAll(' [', '[')
+          .replaceAll('[ ', '[')
+          .replaceAll(' }', '}')
+          .replaceAll('{ ', '{')
+          .replaceAll(' ;', ';')
+          .replaceAll(' .', '.')
+          .replaceAll('. ', '.')
+          .replaceAll(' :', ':')
+          .replaceAll(' ,', ',')
+          .replaceAll(',[', ', [')
+          .replaceAll(',{', ', {')
+          .trim(),
+    );
   }
 
   return formatList;
