@@ -5,6 +5,7 @@ TurnGen is a set of scripts combined into a command line tool, all scripts are w
 - Working with Enum classes
 - Creating different methods in the Data class without using build_runner
 - Generating links to all files in the assets folder
+- Create union types from standard constructors
 
 ## Install
 
@@ -299,6 +300,7 @@ class RegistrationState {
 In the examples above, you can combine different options from other methods or libraries (in the future)
 
 #### Additional variable settings
+
 The variable also has settings, we just write our keywords in the comments above the class, for example:
 
 - You can initialize the variable with any text
@@ -433,6 +435,259 @@ Map<String, dynamic> toMap() {
   String toString() {
     return 'RegistrationState(isLoad: $isLoad, activitySelected: $activitySelected, name: $name, )';
     }
+}
+```
+
+### Union types
+
+TurnGen scripts can generate "union types" by creating a class with named constructors, but making it private. This class is not used anywhere, but it is convenient to use it to change the generated code. And add the `// end` comment at the end of the class, as in the example below:
+
+```dart
+class _Union {
+  _Union.success({required List<User> listUser});
+  _Union.load();
+  _Union.init([String hello = 'Hello world']);
+  _Union.error({String msg = ''});
+}
+
+// end
+```
+
+#### Use
+
+And to start, we use the command:
+
+```shell
+dart run turn_gen -t union -f <path to your file>
+```
+
+If you use `VSCode`, you can add the task to your `tasks.json`
+
+```json
+    {
+      "label": "turn_gen union",
+      "type": "dart",
+      "command": "dart",
+      "args": ["run", "turn_gen", "-t", "union", "-f", "${file}"]
+    }
+```
+
+After running the script, you will get additional methods and override the standard ones:
+
+- `map`
+- `maybeMap`
+- `mapOrNull`
+- `when`
+- `compareTo`
+- `toString`, `operator ==`, `hashCode`
+
+#### toJson / fromJson
+
+In developing...
+
+#### Example
+
+```dart
+
+class _Union {
+  _Union.success({required List<User> listUser});
+  _Union.load();
+  _Union.init([String hello = 'Hello world']);
+  _Union.error({String msg = ''});
+}
+
+// end
+
+//          --TURN_GEN--
+//  *************************************
+//           GENERATED CODE 
+//  *************************************
+  
+@immutable
+class Union {
+  const Union.success({required List<User> listUser}):
+        _tag = _UnionTag.success,
+        _listUser_success = listUser,
+        _hello_init = null,
+        _msg_error = null;
+  const Union.load():
+        _tag = _UnionTag.load,
+        _listUser_success = null,
+        _hello_init = null,
+        _msg_error = null;
+  const Union.init([String hello = 'Hello world']):
+        _tag = _UnionTag.init,
+        _listUser_success = null,
+        _hello_init = hello,
+        _msg_error = null;
+  const Union.error({String msg = ''}):
+        _tag = _UnionTag.error,
+        _listUser_success = null,
+        _hello_init = null,
+        _msg_error = msg;
+
+  T? mapOrNull<T>({
+    T? Function(_UnionSuccess v)? success,
+    T? Function(_UnionLoad v)? load,
+    T? Function(_UnionInit v)? init,
+    T? Function(_UnionError v)? error,
+  }) {
+    switch (_tag) {
+      case _UnionTag.success:
+        return success?.call(_UnionSuccess(_listUser_success!));
+      case _UnionTag.load:
+        return load?.call(const _UnionLoad());
+      case _UnionTag.init:
+        return init?.call(_UnionInit(_hello_init!));
+      case _UnionTag.error:
+        return error?.call(_UnionError(_msg_error!));
+    }
+  }
+
+  T map<T>({
+    required T Function(_UnionSuccess v) success,
+    required T Function(_UnionLoad v) load,
+    required T Function(_UnionInit v) init,
+    required T Function(_UnionError v) error,
+  }) {
+    switch (_tag) {
+      case _UnionTag.success:
+        return success(_UnionSuccess(_listUser_success!));
+      case _UnionTag.load:
+        return load(const _UnionLoad());
+      case _UnionTag.init:
+        return init(_UnionInit(_hello_init!));
+      case _UnionTag.error:
+        return error(_UnionError(_msg_error!));
+    }
+  }
+
+  T maybeMap<T>({
+    T Function(_UnionSuccess v)? success,
+    T Function(_UnionLoad v)? load,
+    T Function(_UnionInit v)? init,
+    T Function(_UnionError v)? error,
+      required T Function() orElse,
+  }) {
+    switch (_tag) {
+      case _UnionTag.success:
+        if(success != null) return success(_UnionSuccess(_listUser_success!));
+        return orElse();
+      case _UnionTag.load:
+        if(load != null) return load(const _UnionLoad());
+        return orElse();
+      case _UnionTag.init:
+        if(init != null) return init(_UnionInit(_hello_init!));
+        return orElse();
+      case _UnionTag.error:
+        if(error != null) return error(_UnionError(_msg_error!));
+        return orElse();
+    }
+  }
+
+  T when<T>({
+    required T Function (List<User> listUser) success,
+    required T Function () load,
+    required T Function (String hello) init,
+    required T Function (String msg) error,
+}) {
+    switch (_tag) {
+      case _UnionTag.success:
+        return success(_listUser_success!);
+      case _UnionTag.load:
+        return load();
+      case _UnionTag.init:
+        return init(_hello_init!);
+      case _UnionTag.error:
+        return error(_msg_error!);
+    }
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    switch (_tag) {
+
+      case _UnionTag.success:
+        return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Union  &&  
+ const DeepCollectionEquality().equals(other._listUser_success, _listUser_success,)); 
+      case _UnionTag.load:
+        return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Union ); 
+
+      case _UnionTag.init:
+        return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Union  &&  
+ (identical(other._hello_init, _hello_init) || other._hello_init == _hello_init)); 
+      case _UnionTag.error:
+        return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Union  &&  
+ (identical(other._msg_error, _msg_error) || other._msg_error == _msg_error));   
+  }
+}
+  @override
+  int get hashCode {
+    switch (_tag) {
+
+      case _UnionTag.success:
+        return Object.hashAll([runtimeType, const DeepCollectionEquality().hash(_listUser_success)]);
+      case _UnionTag.load:
+        return Object.hashAll([runtimeType]);
+      case _UnionTag.init:
+        return Object.hashAll([runtimeType, _hello_init]);
+      case _UnionTag.error:
+        return Object.hashAll([runtimeType, _msg_error]);  
+  }
+}
+  @override
+  String toString() {
+    switch (_tag) {
+
+      case _UnionTag.success:
+        return 'Union.success(listUser: $_listUser_success)';
+      case _UnionTag.load:
+        return 'Union.load()';
+      case _UnionTag.init:
+        return 'Union.init(hello: $_hello_init)';
+      case _UnionTag.error:
+        return 'Union.error(msg: $_msg_error)';  
+  }
+}
+  final _UnionTag _tag;
+  final List<User>? _listUser_success;
+  final String? _hello_init;
+  final String? _msg_error;
+
+}
+
+enum _UnionTag {
+  success,
+  load,
+  init,
+  error,
+}
+@immutable
+class _UnionSuccess extends Union {
+  const _UnionSuccess(this.listUser) : super.success(listUser: listUser);
+  final List<User> listUser;
+}
+@immutable
+class _UnionLoad extends Union {
+  const _UnionLoad() : super.load();
+}
+@immutable
+class _UnionInit extends Union {
+  const _UnionInit(this.hello) : super.init( hello);
+  final String hello;
+}
+@immutable
+class _UnionError extends Union {
+  const _UnionError(this.msg) : super.error(msg: msg);
+  final String msg;
 }
 ```
 

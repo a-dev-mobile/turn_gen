@@ -1,5 +1,5 @@
-  // ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
-  /*
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
+/*
     enum EnumParameter {
   default_,
   defaultWithOptional,
@@ -10,14 +10,13 @@
 }
   
   */
-  
+
 //          --TURN_GEN--
 //  *************************************
-//           GENERATED CODE 
+//           GENERATED CODE
 //  *************************************
-  
 
-enum EnumParameter with Comparable<EnumParameter> { 
+enum EnumParameter with Comparable<EnumParameter> {
   default_('default_'),
   defaultWithOptional('defaultWithOptional'),
   defaultWithRequired('defaultWithRequired'),
@@ -52,7 +51,6 @@ enum EnumParameter with Comparable<EnumParameter> {
     }
   }
 
-
   T map<T>({
     required T Function() default_,
     required T Function() defaultWithOptional,
@@ -60,22 +58,20 @@ enum EnumParameter with Comparable<EnumParameter> {
     required T Function() optional,
     required T Function() required,
     required T Function() none,
-
   }) {
     switch (this) {
       case EnumParameter.default_:
-        return default_();     
+        return default_();
       case EnumParameter.defaultWithOptional:
-        return defaultWithOptional();     
+        return defaultWithOptional();
       case EnumParameter.defaultWithRequired:
-        return defaultWithRequired();     
+        return defaultWithRequired();
       case EnumParameter.optional:
-        return optional();     
+        return optional();
       case EnumParameter.required:
-        return required();     
+        return required();
       case EnumParameter.none:
-        return none();     
-
+        return none();
     }
   }
 
@@ -86,22 +82,20 @@ enum EnumParameter with Comparable<EnumParameter> {
     required T optional,
     required T required,
     required T none,
-
   }) {
     switch (this) {
       case EnumParameter.default_:
-        return default_;     
+        return default_;
       case EnumParameter.defaultWithOptional:
-        return defaultWithOptional;     
+        return defaultWithOptional;
       case EnumParameter.defaultWithRequired:
-        return defaultWithRequired;     
+        return defaultWithRequired;
       case EnumParameter.optional:
-        return optional;     
+        return optional;
       case EnumParameter.required:
-        return required;     
+        return required;
       case EnumParameter.none:
-        return none;     
-
+        return none;
     }
   }
 
@@ -113,16 +107,14 @@ enum EnumParameter with Comparable<EnumParameter> {
     T Function()? optional,
     T Function()? required,
     T Function()? none,
-
   }) =>
       map<T>(
-      default_: default_ ?? orElse,     
-      defaultWithOptional: defaultWithOptional ?? orElse,     
-      defaultWithRequired: defaultWithRequired ?? orElse,     
-      optional: optional ?? orElse,     
-      required: required ?? orElse,     
-      none: none ?? orElse,     
-
+        default_: default_ ?? orElse,
+        defaultWithOptional: defaultWithOptional ?? orElse,
+        defaultWithRequired: defaultWithRequired ?? orElse,
+        optional: optional ?? orElse,
+        required: required ?? orElse,
+        none: none ?? orElse,
       );
 
   T? maybeMapOrNull<T>({
@@ -132,17 +124,15 @@ enum EnumParameter with Comparable<EnumParameter> {
     T Function()? optional,
     T Function()? required,
     T Function()? none,
-
   }) =>
       maybeMap<T?>(
         orElse: () => null,
-        default_: default_,  
-        defaultWithOptional: defaultWithOptional,  
-        defaultWithRequired: defaultWithRequired,  
-        optional: optional,  
-        required: required,  
-        none: none,  
-        
+        default_: default_,
+        defaultWithOptional: defaultWithOptional,
+        defaultWithRequired: defaultWithRequired,
+        optional: optional,
+        required: required,
+        none: none,
       );
 
   @override
@@ -150,4 +140,4 @@ enum EnumParameter with Comparable<EnumParameter> {
 
   @override
   String toString() => value;
-   }
+}

@@ -1,6 +1,8 @@
+// ignore_for_file: prefer-static-class
+import 'dart:io';
+
 import 'package:turn_gen/src/src.dart';
 
-// ignore: prefer-static-class
 Map<EnumKeySetting, String> getMapSettingVarable(String content) {
   var contentFormat = content
       .replaceAll(':', ': ')
@@ -57,4 +59,17 @@ Map<EnumKeySetting, String> getMapSettingVarable(String content) {
   }
 
   return map;
+}
+
+void msgIfNodEnd(String contentFile, FLILogger logger) {
+  if (!contentFile.contains(RegExp(r'(\/\/\s+end)'))) {
+    logger
+      ..info('')
+      ..info('***')
+      ..info('put a comment (// end ) where to start generating')
+      ..info('***')
+      ..info('');
+
+    exit(0);
+  }
 }

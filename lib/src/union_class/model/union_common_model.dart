@@ -3,10 +3,11 @@
 import 'package:turn_gen/src/union_class/union_class.dart';
 
 /* no: hash tojson fromjson*/
-class UnionCommonModel {  
+class UnionCommonModel { 
   /* init: '' */
   final String nameClass;
-
+  /* init: '' */
+  final String contentToEnd;
   /* init: const [] */
   final List<String> listParams;
 
@@ -22,6 +23,7 @@ class UnionCommonModel {
   
   const UnionCommonModel({
     this.nameClass = '',
+    this.contentToEnd = '',
     this.listParams = const [],
     this.listUnion = const [],
   });
@@ -33,11 +35,13 @@ class UnionCommonModel {
 
   UnionCommonModel copyWith({
     String? nameClass,
+    String? contentToEnd,
     List<String>? listParams,
     List<UnionItemModel>? listUnion,
   }) {
     return UnionCommonModel(
       nameClass: nameClass ?? this.nameClass, 
+      contentToEnd: contentToEnd ?? this.contentToEnd, 
       listParams: listParams ?? this.listParams, 
       listUnion: listUnion ?? this.listUnion, 
     );
@@ -48,7 +52,7 @@ class UnionCommonModel {
 
       @override
   String toString() {
-    return 'UnionCommonModel(nameClass: $nameClass, listParams: $listParams, listUnion: $listUnion, )';
+    return 'UnionCommonModel(nameClass: $nameClass, contentToEnd: $contentToEnd, listParams: $listParams, listUnion: $listUnion, )';
     }
 
 }

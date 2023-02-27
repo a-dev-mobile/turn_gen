@@ -1,7 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-
-
 import 'package:turn_gen/src/src.dart';
 
 // ignore: prefer-static-class
@@ -42,15 +40,7 @@ String getToMapVarable(Varable v) {
       return error;
 
     case EnumTypeVarable.none:
-      if (yes_null_default_yes) {
-        return error;
-      } else if (yes_null_default_no) {
-        return error;
-      } else if (no_null_default_yes) {
-        return error;
-      } else if (no_null_default_no) {
-        return error;
-      }
+   
       return error;
 
     case EnumTypeVarable.enum_:
@@ -162,7 +152,18 @@ String getToMapVarable(Varable v) {
       }
 
       return error;
+        case EnumTypeVarable.list_map_string_dynamic_:
+      if (yes_null_default_yes) {
+        return '''$name?.map((e) => e.map(MapEntry.new)).toList()''';
+      } else if (yes_null_default_no) {
+        return '''$name?.map((e) => e.map(MapEntry.new)).toList()''';
+      } else if (no_null_default_yes) {
+        return '''$name.map((e) => e.map(MapEntry.new)).toList()''';
+      } else if (no_null_default_no) {
+        return '''$name.map((e) => e.map(MapEntry.new)).toList()''';
+      }
 
+      return error;
     case EnumTypeVarable.list_map_int_string_null:
       if (yes_null_default_yes) {
         return '''$name?.map((e) => e.map((k, e) => MapEntry(k.toString(), e))).toList()''';
@@ -219,7 +220,9 @@ String getToMapVarable(Varable v) {
         return '$name.map((e) => e?.toJson()).toList()';
       }
       return error;
+
+
   }
 
-    return '';
+
 }

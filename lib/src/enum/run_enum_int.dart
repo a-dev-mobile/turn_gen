@@ -47,7 +47,7 @@ Future<void> runEnumInt({
   }
 
   final enumContent = UtilsString.replaceToEmpty(
-    text: UtilsRegex.getTextRegexLastMatch(
+    text: UtilsRegex.getTextRegexMatch(
       content: contentFile,
       regex: r'enum\s+\w+\s+{[\s\S]+?}',
     ),
@@ -57,7 +57,7 @@ Future<void> runEnumInt({
     ],
   );
 
-  final enumHeader = UtilsRegex.getTextRegexLastMatch(
+  final enumHeader = UtilsRegex.getTextRegexMatch(
     content: enumContent,
     regex: r'enum\s+\w+\s+{',
   );
@@ -84,11 +84,11 @@ Future<void> runEnumInt({
     enumBracketsWithoutFinalAndConst = UtilsString.replaceToEmpty(
       text: enumBrackets,
       replaceable: [
-        UtilsRegex.getTextRegexLastMatch(
+        UtilsRegex.getTextRegexMatch(
           content: enumContent,
           regex: r'const[\s\S]+?;',
         ),
-        UtilsRegex.getTextRegexLastMatch(
+        UtilsRegex.getTextRegexMatch(
           content: enumContent,
           regex: r'final[\s\S]+?;',
         ),

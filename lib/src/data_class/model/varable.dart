@@ -1,7 +1,6 @@
 // ignore_for_file: sort_constructors_first
 // ignore_for_file: prefer_const_constructors_in_immutables,
 
-import 'package:turn_gen/src/data_class/enum/enum.dart';
 import 'package:turn_gen/src/src.dart';
 
 class Varable {

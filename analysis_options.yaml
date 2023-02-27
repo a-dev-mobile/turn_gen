@@ -47,6 +47,7 @@ dart_code_metrics:
     - format-comment: false
     - prefer-commenting-analyzer-ignores: false
     - avoid-non-ascii-symbols: false
+    - no-equal-arguments: false
     - prefer-single-widget-per-file:
         ignore-private-widgets: true
     - prefer-correct-identifier-length: false

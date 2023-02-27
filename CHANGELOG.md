@@ -1,8 +1,13 @@
 
+## 0.1.0
+
+- Added ability to generate "union types"
+- Adding hints to the data class generator
+- `List<Map<String, dynamic>>` support added to TurnGen
+
 ## 0.0.8
 
 - if the value is `required`, it now goes first to initialization since rule `always_put_required_named_parameters_first`
-
 
 ## 0.0.7
 

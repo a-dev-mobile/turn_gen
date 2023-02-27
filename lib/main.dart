@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:args/args.dart';
 import 'package:turn_gen/src/src.dart';
 
-
-
 // ignore: prefer-static-class
 Future<void> runFromArguments(List<String> arguments) async {
   // ignore: cascade_invocations
@@ -65,7 +63,8 @@ data
 
     final typeString = argResults[ConstArgOptionFlag.typeOption].toString();
     final typeRun = TypeRun.fromValue(typeString, fallback: TypeRun.none);
-    logger.info('Type of generator used: ${typeRun.value}');
+    logger..info('Type of generator used: `${typeRun.value}`')
+    ..progress('load');
     switch (typeRun) {
       case TypeRun.enumDefault:
         await runEnumDefault(path: path, logger: logger);

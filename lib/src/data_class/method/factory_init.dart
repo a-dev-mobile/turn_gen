@@ -92,13 +92,13 @@ String _getDefaultInitValue(EnumTypeVarable type, String init, bool isCanNull) {
     list_map_int_dynamic_: () => listDefault,
     list_map_int_string_: () => listDefault,
     list_map_int_string_null: () => listDefault,
-    list_map_string_dynamic_: ()  => listDefault,
+    list_map_string_dynamic_: () => listDefault,
     list_other: () => listDefault,
     none: () => init,
     date_time: () => 'DateTime.now()',
     data: () => init,
     list_data: () => listDefault,
-    list_data_null: () => listDefault, 
+    list_data_null: () => listDefault,
   );
 
   // print(initValue.toString());

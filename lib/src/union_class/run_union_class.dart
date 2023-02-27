@@ -11,23 +11,37 @@ const String _emptyUnionName = 'default_';
 Future<void> runUnion({required String path, required FLILogger logger}) async {
   final contentFile = await UtilsString.readFile(path: path);
 
-  final classHeader = UtilsRegex.getTextRegexLastMatch(
+  final classHeader = UtilsRegex.getTextRegexMatch(
     content: contentFile,
     regex: r'class[\s\S]+?{',
+    isLast: false,
   );
 
-  final className = _getNameClass(classHeader);
-
+  final className = _getNameClass(classHeader).replaceAll(RegExp('^_'), '');
   _msgIfNotNameClass(className, logger);
 
-  final classBrackets = contentFile.replaceAll(classHeader, '');
+  msgIfNodEnd(contentFile, logger);
+
+  final contentToEnd = UtilsRegex.getTextRegexMatch(
+    content: contentFile,
+    regex: r'[\s\S]+?(\/\/\s+end)',
+  );
+
+  final classToEnd = UtilsRegex.getTextRegexMatch(
+    content: contentFile,
+    regex: r'class[\s\S]+?(\/\/\s+end)',
+  );
+  final classBrackets = UtilsRegex.getTextRegexMatch(
+    content: classToEnd,
+    regex: r'\{[\s\S]+\}',
+  );
 
   final listUnionRawItem = UtilsRegex.getTextRegexListMatch(
     content: classBrackets,
-    regex: '$className[\\s\\S]+?;',
+    regex: '(.*)_$className[\\s\\S]+?;',
   );
 
-  final listFormatUnionItem = _getFormatItemUnion(listUnionRawItem);
+  final listFormatUnionItem = _getFormatItemUnion(className, listUnionRawItem);
 
   final listUnionName = _getUnionName(listFormatUnionItem, className);
   if (listUnionName.contains(_emptyUnionName)) {
@@ -47,7 +61,7 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
     final v = listFormatUnionItem[i];
     final unionName = listUnionName[i];
 
-    var textBrackets = UtilsRegex.getTextRegexLastMatch(
+    var textBrackets = UtilsRegex.getTextRegexMatch(
       content: v,
       regex: r'\([\s\S]+?\)',
     );
@@ -62,7 +76,7 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
       var isRequired = false;
       var initValue = '';
 
-      final rawSetting = UtilsRegex.getTextRegexLastMatch(
+      final rawSetting = UtilsRegex.getTextRegexMatch(
         content: v,
         regex: r'\/\*[\s\S]+?\*\/',
       );
@@ -77,9 +91,11 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
         v = v.replaceAll(RegExp('^required '), '');
       }
 
-      if (v.contains('<') && !v.contains('>')) {
+      if (v.contains('<') && !v.contains('>') ||
+          v.contains('[') && !v.contains(']')) {
         v = '$v, ${_cleanParam(listParamRaw[i + 1])}';
-      } else if (v.contains('>') && !v.contains('<')) {
+      } else if (v.contains('>') && !v.contains('<') ||
+          v.contains(']') && !v.contains('[')) {
         continue;
       } else {
         if (v.isEmpty) continue;
@@ -100,7 +116,7 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
       }
       var typeEnum =
           EnumTypeVarable.fromValue(typeVar, fallback: EnumTypeVarable.none);
-// если есть ручной тип
+      // если есть ручной тип
       if (mapSettingParam.keys.contains(EnumKeySetting.type)) {
         typeEnum = EnumTypeVarable.fromValue(
           mapSettingParam[EnumKeySetting.type],
@@ -108,6 +124,18 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
         );
       }
 
+      if (typeEnum == EnumTypeVarable.none) {
+        if (typeVar.contains(RegExp(r'^List<.*\?>'))) {
+          typeEnum = EnumTypeVarable.list_data_null;
+          _msgAnotherType(logger, typeEnum, typeVar);
+        } else if (typeVar.contains(RegExp('^List<.*>'))) {
+          typeEnum = EnumTypeVarable.list_data;
+          _msgAnotherType(logger, typeEnum, typeVar);
+        } else if (typeVar.contains(RegExp(r'(|\w)(e|E)num\w'))) {
+          typeEnum = EnumTypeVarable.enum_;
+          _msgAnotherType(logger, typeEnum, typeVar);
+        }
+      }
 
       final nameWithTag = '_${nameVar}_$unionName';
       listStartWriteParams.add('final $typeVar? $nameWithTag;');
@@ -136,6 +164,7 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
     );
   }
   final commonModel = UnionCommonModel(
+    contentToEnd: contentToEnd,
     nameClass: className,
     listParams: listStartWriteParams,
     listUnion: listUnionItem,
@@ -155,6 +184,23 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
 
   final file = File(path);
   unionWriteToFile(logger, file, newCommonModel, contentFile);
+}
+
+void _msgAnotherType(
+  FLILogger logger,
+  EnumTypeVarable typeEnum,
+  String typeVar,
+) {
+  logger
+    ..info('')
+    ..info('-- INFO --')
+    ..info('TurnGen did not define a variable type for `$typeVar`')
+    ..info('Type was assigned: `${typeEnum.value}`')
+    ..info('')
+    ..info('To specify another, use a comment:')
+    ..info(
+      'Example: /* type: `enum` or `data` or `List<data>` or `List<data?>` */ for: `$typeVar`',
+    );
 }
 
 String _cleanParam(String value) {
@@ -219,52 +265,15 @@ void _msgIfNotNameClass(String className, FLILogger logger) {
   }
 }
 
-void _msgNotUnion(List<String> listUnion, FLILogger logger) {
-  if (listUnion.isEmpty) {
-    logger
-      ..info('\n')
-      ..error('Union not specified ')
-      ..info('add for example: /* union: data loading error */')
-      ..info('\n');
-    exit(0);
-  }
-}
-
-String _formatFinalVarablse(String content) {
-  // ignore: prefer-immediate-return
-  final contentFormat = content
-      .replaceAll(RegExp(r'\s+'), ' ')
-      .replaceAll(';', '')
-      .replaceAll('final', '')
-      .trim();
-
-  return contentFormat;
-}
-
-List<String> _getSetting({
-  required String content,
-}) {
-  final contentFormat = content
-      .replaceAll(':', ': ')
-      .replaceAll(',', ', ')
-      .replaceAll('/*', '')
-      .replaceAll('*/', '')
-      .replaceAll(RegExp(r'\s+'), ' ')
-      .replaceAll(' ,', '')
-      .replaceAll(' :', ':')
-      .replaceAll('union:', '')
-      .trim();
-
-  return contentFormat.split(' ');
-}
-
 List<String> _getFormatItemUnion(
+  String className,
   List<String> content,
 ) {
   final formatList = <String>[];
   for (final v in content) {
     formatList.add(
       v
+          .trim()
           .replaceAll(':', ' : ')
           .replaceAll('?', ' ? ')
           .replaceAll(',', ' , ')
@@ -286,7 +295,6 @@ List<String> _getFormatItemUnion(
           .replaceAll(' :', ':')
           .replaceAll(' ? ', '? ')
           .replaceAll(' >', '>')
-          // .replaceAll('> ', '>')
           .replaceAll(' <', '<')
           .replaceAll('< ', '<')
           .replaceAll('( ', '(')
@@ -304,6 +312,8 @@ List<String> _getFormatItemUnion(
           .replaceAll(' ,', ',')
           .replaceAll(',[', ', [')
           .replaceAll(',{', ', {')
+          .replaceAll(RegExp('^const '), '')
+          .replaceAll('_$className', className)
           .trim(),
     );
   }

@@ -1,5 +1,3 @@
-
-
 import 'package:turn_gen/src/src.dart';
 
 // ignore: prefer-static-class
@@ -63,6 +61,5 @@ String getHashCode(EnumTypeVarable type, String nameVar) {
     case EnumTypeVarable.date_time:
     case EnumTypeVarable.data:
       return '        $nameVar$end';
-     
   }
 }

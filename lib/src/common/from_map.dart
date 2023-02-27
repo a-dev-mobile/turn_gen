@@ -346,6 +346,17 @@ String getFromMap(Varable v) {
         return "(map['$name'] as List<dynamic>).map((e) => (e as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e))).toList()";
       }
       return error;
+          case EnumTypeVarable.list_map_string_dynamic_:
+      if (yes_null_default_yes) {
+        return "(map['$name'] as List<dynamic>?)?.map((e) => (e as Map<String, dynamic>).map(MapEntry.new)).toList() ?? $initComment";
+      } else if (yes_null_default_no) {
+        return "(map['$name'] as List<dynamic>?)?.map((e) => (e as Map<String, dynamic>).map(MapEntry.new)).toList()";
+      } else if (no_null_default_yes) {
+        return "(map['$name'] as List<dynamic>?)?.map((e) => (e as Map<String, dynamic>).map(MapEntry.new)).toList() ?? $initComment";
+      } else if (no_null_default_no) {
+        return "(map['$name'] as List<dynamic>).map((e) => (e as Map<String, dynamic>).map(MapEntry.new)).toList()";
+      }
+      return error;
     case EnumTypeVarable.list_map_int_string_:
       if (yes_null_default_yes) {
         return "(map['$name']  as List<dynamic>?)?.map((e) => (e as Map<String, dynamic>).map( (k, e) => MapEntry(int.parse(k), e as String), )) .toList() ?? $initComment";
@@ -642,7 +653,8 @@ String getFromMap(Varable v) {
         return "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()";
       }
       return error;
+
   }
-  
-  return '';
+
+
 }

@@ -31,13 +31,12 @@ class ConstConsole {
   ''';
 
   static const String GEN_MSG_END = '''
-//          --TURN_GEN--
-//  *************************************
-//         ✓ Successfully 
-//  *************************************
+
+           --TURN_GEN--
+  *************************************
+         ✓ Successfully 
+  *************************************
   ''';
-
-
 }
 
 class ConstArgOptionFlag {

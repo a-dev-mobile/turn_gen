@@ -1,5 +1,5 @@
-  // ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
-  /*
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
+/*
   
   
   enum EnumKeySettingUnion {
@@ -8,12 +8,12 @@
   none('none:');
 }
   */
-  
-  //  ******************************
-  // GENERATED CODE BELOW - DO NOT MODIFY
-  //  ******************************
 
-enum EnumKeySettingUnion with Comparable<EnumKeySettingUnion> { 
+//  ******************************
+// GENERATED CODE BELOW - DO NOT MODIFY
+//  ******************************
+
+enum EnumKeySettingUnion with Comparable<EnumKeySettingUnion> {
   type('type:'),
   init('init:'),
   none('none:');
@@ -44,32 +44,28 @@ enum EnumKeySettingUnion with Comparable<EnumKeySettingUnion> {
     required T Function() type,
     required T Function() init,
     required T Function() none,
-
   }) {
     switch (this) {
       case EnumKeySettingUnion.type:
-        return type();     
+        return type();
       case EnumKeySettingUnion.init:
-        return init();     
+        return init();
       case EnumKeySettingUnion.none:
-        return none();     
-
+        return none();
     }
   }
-  
+
   /// Pattern matching
   T maybeMap<T>({
     required T Function() orElse,
     T Function()? type,
     T Function()? init,
     T Function()? none,
-
   }) =>
       map<T>(
-      type: type ?? orElse,     
-      init: init ?? orElse,     
-      none: none ?? orElse,     
-
+        type: type ?? orElse,
+        init: init ?? orElse,
+        none: none ?? orElse,
       );
 
   /// Pattern matching
@@ -77,14 +73,12 @@ enum EnumKeySettingUnion with Comparable<EnumKeySettingUnion> {
     T Function()? type,
     T Function()? init,
     T Function()? none,
-
   }) =>
       maybeMap<T?>(
         orElse: () => null,
-        type: type,  
-        init: init,  
-        none: none,  
-        
+        type: type,
+        init: init,
+        none: none,
       );
 
   @override
@@ -92,4 +86,4 @@ enum EnumKeySettingUnion with Comparable<EnumKeySettingUnion> {
 
   @override
   String toString() => value;
-   }
+}

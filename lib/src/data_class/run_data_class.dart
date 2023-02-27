@@ -1,9 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
-import 'package:turn_gen/src/common/from_map.dart';
-import 'package:turn_gen/src/common/setting_help.dart';
-import 'package:turn_gen/src/common/to_map.dart';
 import 'package:turn_gen/src/src.dart';
 
 part 'method/factory_init.dart';
@@ -13,24 +10,15 @@ part 'write_file.dart';
 Future<void> runData({required String path, required FLILogger logger}) async {
   final contentFile = await UtilsString.readFile(path: path);
 
-  if (!contentFile.contains(RegExp(r'(\/\/\s+end)'))) {
-    logger
-      ..info('')
-      ..info('***')
-      ..info('put a comment (// end ) where to start generating')
-      ..info('***')
-      ..info('');
-
-    exit(0);
-  }
+  msgIfNodEnd(contentFile, logger);
 // prepare settings for splitting
 
-  final rawSettingClass = UtilsRegex.getTextRegexLastMatch(
+  final rawSettingClass = UtilsRegex.getTextRegexMatch(
     content: contentFile,
     regex: r'\/\*[\s\S]+?\*\/\s+(class|@immutable)',
   );
 
-  final settingClass = UtilsRegex.getTextRegexLastMatch(
+  final settingClass = UtilsRegex.getTextRegexMatch(
     content: rawSettingClass,
     regex: r'\/\*[\s\S]+?\*\/',
   );
@@ -42,13 +30,13 @@ Future<void> runData({required String path, required FLILogger logger}) async {
   ];
 
   final classContent = UtilsString.replaceToEmpty(
-    text: UtilsRegex.getTextRegexLastMatch(
+    text: UtilsRegex.getTextRegexMatch(
       content: contentFile,
       regex: r'class[\s\S]+?(\/\/\s+end)',
     ),
     replaceable: [''],
   );
-  final classHeader = UtilsRegex.getTextRegexLastMatch(
+  final classHeader = UtilsRegex.getTextRegexMatch(
     content: classContent,
     regex: r'class[\s\S]+?{',
   );

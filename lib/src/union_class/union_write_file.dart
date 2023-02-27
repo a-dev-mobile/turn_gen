@@ -78,6 +78,7 @@ $sbCase    }
 ''');
 
   /* ****************************** */
+  // toMap
   /* ****************************** */
 
   final sbMap = StringBuffer();
@@ -101,22 +102,76 @@ $sbCase    }
     }
 
     sbMap.write('''
-    required T Function ($nameClassExtends v) ${l.nameUnion},
+    required T Function($nameClassExtends v) ${l.nameUnion},
 ''');
-
+    final constText = sbReturn.isEmpty ? 'const ' : '';
     sbMapCase.write('''
       case _${model.nameClass}Tag.${l.nameUnion}:
-        return ${l.nameUnion}($nameClassExtends($sbReturn));
+        return ${l.nameUnion}($constText$nameClassExtends($sbReturn));
 ''');
   }
   sbMap.write('''
-}) {
+  }) {
     switch (_tag) {
 $sbMapCase    }
   }
 ''');
 
   /* ****************************** */
+  // map or null
+  /* ****************************** */
+/* 
+
+  T? mapOrNull<T>({
+    T? Function(_SplashStateInit v)? init,
+    T? Function(_SplashStateSuccess v)? success,
+  }) {
+    switch (_tag) {
+      case _SplashStateTag.init:
+        return init?.call(const _SplashStateInit());
+
+      case _SplashStateTag.success:
+        return success?.call(const _SplashStateSuccess());
+    }
+  }
+ */
+  final sbMapOrNull = StringBuffer();
+  // ignore: cascade_invocations
+  sbMapOrNull.write('''
+  T? mapOrNull<T>({
+''');
+
+  final sbMapOrNullCase = StringBuffer();
+  for (final l in model.listUnion) {
+    final nameClassExtends = _getNameExtendsClass(model, l);
+
+    final sbReturn = StringBuffer();
+    for (var i = 0; i < l.listParameters.length; i++) {
+      final p = l.listParameters[i];
+      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
+
+      final letterNotNull = p.isCanNull ? '!' : '!';
+
+      sbReturn.write('_${p.name}_${l.nameUnion}$letterNotNull$lastText');
+    }
+
+    sbMapOrNull.write('''
+    T? Function($nameClassExtends v)? ${l.nameUnion},
+''');
+    final constText = sbReturn.isEmpty ? 'const ' : '';
+    sbMapOrNullCase.write('''
+      case _${model.nameClass}Tag.${l.nameUnion}:
+        return ${l.nameUnion}?.call($constText$nameClassExtends($sbReturn));
+''');
+  }
+  sbMapOrNull.write('''
+  }) {
+    switch (_tag) {
+$sbMapOrNullCase    }
+  }
+''');
+  /* ****************************** */
+  // maybeMap
   /* ****************************** */
 
   final sbMaybeMap = StringBuffer();
@@ -139,24 +194,26 @@ $sbMapCase    }
     }
 
     sbMaybeMap.write('''
-     T Function ($nameClassExtends v)? ${l.nameUnion},
+    T Function($nameClassExtends v)? ${l.nameUnion},
 ''');
-
+    final constText = sbReturn.isEmpty ? 'const ' : '';
     sbMaybeMapCase.write('''
       case _${model.nameClass}Tag.${l.nameUnion}:
-        if(${l.nameUnion} != null) return ${l.nameUnion}($nameClassExtends($sbReturn));
+        if(${l.nameUnion} != null) return ${l.nameUnion}($constText$nameClassExtends($sbReturn));
         return orElse();
 ''');
   }
 
   sbMaybeMap.write('''
       required T Function() orElse,
-}) {
+  }) {
     switch (_tag) {
 $sbMaybeMapCase    }
   }
 ''');
 
+  /* ****************************** */
+  // toString
   /* ****************************** */
   final sbToString = StringBuffer();
   // ignore: cascade_invocations
@@ -231,8 +288,6 @@ $sbMaybeMapCase    }
   );
 
   /* ****************************** */
-
-  /* ****************************** */
   //      Equals
   /* ****************************** */
   final sbEqualsTemp = StringBuffer();
@@ -242,9 +297,8 @@ $sbMaybeMapCase    }
   bool operator ==(dynamic other) {
     switch (_tag) {
 ''');
-  var lastTextTemp = '';
   for (final l in model.listUnion) {
-    final lastText = l.listParameters.isEmpty ? '' : ' && ';
+    final lastText = l.listParameters.isEmpty ? ');' : ' && ';
     sbEqualsTemp.write('''
 
       case _${model.nameClass}Tag.${l.nameUnion}:
@@ -256,7 +310,7 @@ $sbMaybeMapCase    }
 
     // if (length == 0) sbHash.write(']);');
 
-    lastTextTemp = length == 0 ? ');' : '';
+    // lastTextTemp = length == 0 ? ');' : '';
     for (var i = 0; i < length; i++) {
       final isLast = i + 1 == length;
       final p = l.listParameters[i];
@@ -268,7 +322,7 @@ $sbMaybeMapCase    }
       );
     }
   }
-  sbEqualsTemp.write('''$lastTextTemp
+  sbEqualsTemp.write('''
   
   }
 }''');
@@ -285,7 +339,7 @@ $sbMaybeMapCase    }
   final sbExtendsClass = StringBuffer();
 
   for (final l in model.listUnion) {
-    var nameClass = _getNameExtendsClass(model, l);
+    final nameClass = _getNameExtendsClass(model, l);
     final sbParam = StringBuffer();
     final sbParamSuper = StringBuffer();
     final sbParamFinal = StringBuffer();
@@ -321,169 +375,45 @@ $sbMaybeMapCase    }
     }
 
     sbExtendsClass.write('''
+@immutable
 class $nameClass extends ${model.nameClass} {
-  $nameClass($sbParam) : super.${l.nameUnion}($sbParamSuper);
-$sbParamFinal}
-
-''');
+  const $nameClass($sbParam) : super.${l.nameUnion}($sbParamSuper);
+$sbParamFinal}\n''');
   }
 
   /* ****************************** */
 
   final newContent = '''
-/* 
-$contentFile
-*/
+${model.contentToEnd}
 
 ${ConstConsole.GEN_MSG_START}
 // coverage:ignore-file
-// ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
-
+// ignore_for_file: avoid_unused_constructor_parameters, unused_element, avoid-non-null-assertion,  library_private_types_in_public_api,non_constant_identifier_names, always_put_required_named_parameters_first,  avoid_positional_boolean_parameters, strict_raw_type
+@immutable
 class ${model.nameClass} {
-
-
-$sbEquals
-
-
-$sbHash
-
-$sbMaybeMap
-
-$sbMap
-
 $sbUnionClass
-
+$sbMapOrNull
+$sbMap
+$sbMaybeMap
 $sbWhere
-
+$sbEquals
+$sbHash
 $sbToString
-
 $sbAllParams
-
 }
 
 enum _${model.nameClass}Tag {
 $sbUnionTag}
-$sbExtendsClass 
-''';
+$sbExtendsClass''';
 
-  // final _ = file.writeAsString(newContent);
-  final _ =
-      File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/resources/to_union.dart')
-          .writeAsString(newContent);
+  final _ = file.writeAsString(newContent);
+  // final _ =
+  //     File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/resources/to_union.dart')
+  //         .writeAsString(newContent);
 
-  logger
-    ..info('***')
-    ..info('✓ Successfully generated extra features for data class')
-    ..info('***');
+  logger.info(ConstConsole.GEN_MSG_END);
 }
 
 String _getNameExtendsClass(UnionCommonModel model, UnionItemModel l) {
   return '_${model.nameClass}${l.nameUnion.toCapitalized()}';
-}
-
-void _msgOnlyOne(
-  List<EnumValueSettingDataClass> onlySetting,
-  FLILogger logger,
-) {
-  if (onlySetting.length > 1) {
-    logger
-      ..info('\n')
-      ..info('\n(only:) - supports only one value')
-      ..info('\n');
-  }
-}
-
-String _getEquatable(List<String> listNameVar, bool isActive) {
-  return isActive
-      ? '''
-  @override
-  List<Object?> get props => $listNameVar;
-  
-  @override
-  bool get stringify => true;
-'''
-      : '';
-}
-
-String _getCopyWith(
-  String className,
-  StringBuffer copyWithStart,
-  StringBuffer copyWithEnd,
-  bool isActive,
-) {
-  return isActive
-      ? '''
-  $className copyWith({
-$copyWithStart  }) {
-    return $className(
-$copyWithEnd    );
-  }
-'''
-      : '';
-}
-
-String _getToMap(StringBuffer toMapSb, bool isActive) {
-  return isActive
-      ? '''
-Map<String, dynamic> toMap() {
-  return <String, dynamic>{
-$toMapSb    };
-  }
-'''
-      : '';
-}
-
-String _getFromMap_(String className, StringBuffer fromMapSb, bool isActive) {
-  return isActive
-      ? '''
-    factory $className.fromMap(Map<String, dynamic> map) {
-    return $className(
-$fromMapSb    );
-  }
-'''
-      : '';
-}
-
-String _getToString(String className, StringBuffer toString, bool isActive) {
-  return isActive
-      ? '''
-      @override
-  String toString() {
-    return '$className($toString)';
-    }'''
-      : '';
-}
-
-String _getHashAndEquals(
-  String className,
-  StringBuffer equals,
-  StringBuffer hashCode,
-  bool isActive,
-) {
-  return isActive
-      ? '''
-      
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is $className &&
-$equals  }
-  
-  @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-$hashCode]);'''
-      : '';
-}
-
-String _getToJson(bool isActive) {
-  return isActive ? '  String toJson() => json.encode(toMap());' : '';
-}
-
-String _getFromJson(String className, bool isActive) {
-  return isActive
-      ? 'factory $className.fromJson(String source) => $className.fromMap(json.decode(source) as Map<String, dynamic>,);'
-      : '';
 }

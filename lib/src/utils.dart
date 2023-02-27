@@ -1,12 +1,13 @@
 import 'dart:io';
 
-
-
 extension StringCasingExtension on String {
-  String toCapitalized() => length > 0 ?'${this[0].toUpperCase()}${substring(1).toLowerCase()}':'';
-  String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
+  String toCapitalized() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
+      .split(' ')
+      .map((str) => str.toCapitalized())
+      .join(' ');
 }
-
 
 abstract class ErrorMsg {
   static String generate(Exception e, String? error) {
@@ -49,9 +50,10 @@ abstract class UtilsString {
 }
 
 abstract class UtilsRegex {
-  static String getTextRegexLastMatch({
+  static String getTextRegexMatch({
     required String regex,
     required String content,
+    bool isLast = true,
   }) {
     final regexFindNameState = RegExp(regex, multiLine: true);
     final match = regexFindNameState.allMatches(content);
@@ -59,7 +61,7 @@ abstract class UtilsRegex {
       return '';
     }
 
-    return match.last[0] ?? '';
+    return isLast ? match.last[0] ?? '' : match.first[0] ?? '';
   }
 
   static List<String> getTextRegexListMatch({
@@ -71,7 +73,7 @@ abstract class UtilsRegex {
     if (matches.isEmpty) {}
     final list = <String>[];
     for (final Match m in matches) {
-      final match = m[0]!;
+      final match = m[0] ?? '';
       list.add(match);
     }
 

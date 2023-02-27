@@ -1,5 +1,3 @@
-
-
 import 'package:turn_gen/src/src.dart';
 
 // ignore: avoid_positional_boolean_parameters
@@ -65,6 +63,5 @@ String getEquals(EnumTypeVarable type, String nameVar, bool isLast) {
       return '            (identical(other.$nameVar, $nameVar) || other.$nameVar == $nameVar)$end';
     case EnumTypeVarable.list_other:
       return 'error _getEquals';
-
   }
 }

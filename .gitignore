@@ -17,4 +17,5 @@ doc/api/
 .DS_Store
 
 
+/resources/*
 
