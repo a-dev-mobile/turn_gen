@@ -1,3 +1,12 @@
+## 0.2.0
+
+- now, when generating `data class`, the type of the variable is automatically determined, and if this type is not in `TurnGen`, hints about this auto-detection appear
+- when generating a data class, you can now not specify an empty comment above each variable `/* */`
+- Updated README.md
+
+## 0.1.1
+
+- fixed output in json `List<data>`
 
 ## 0.1.0
 

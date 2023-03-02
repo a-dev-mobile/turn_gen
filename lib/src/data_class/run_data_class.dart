@@ -29,13 +29,11 @@ Future<void> runData({required String path, required FLILogger logger}) async {
     ),
   ];
 
-  final classContent = UtilsString.replaceToEmpty(
-    text: UtilsRegex.getTextRegexMatch(
-      content: contentFile,
-      regex: r'class[\s\S]+?(\/\/\s+end)',
-    ),
-    replaceable: [''],
+  final classContent = UtilsRegex.getTextRegexMatch(
+    content: contentFile,
+    regex: r'class[\s\S]+?(\/\/\s+end)',
   );
+
   final classHeader = UtilsRegex.getTextRegexMatch(
     content: classContent,
     regex: r'class[\s\S]+?{',
@@ -52,25 +50,21 @@ Future<void> runData({required String path, required FLILogger logger}) async {
     ],
   );
 
-  final listItemFinal = UtilsRegex.getTextRegexListMatch(
+  final listItemFinalRaw = UtilsRegex.getTextRegexListMatch(
     content: classBrackets,
-    regex: r'final.*$',
+    regex: r'final[\w\W]+?;',
   );
+  final listItemFinal = _getFormatFinalItem(listItemFinalRaw);
 
-  final listItemDef = UtilsRegex.getTextRegexListMatch(
-    content: classBrackets,
-    regex: r'\/\*[\s\S]+?\*\/',
-  );
-
-  if (listItemDef.length != listItemFinal.length) {
-    logger
-      ..info('')
-      ..info('***')
-      ..info('put a comment (/*   */) over each final variable')
-      ..info('***')
-      ..info('');
-    exit(0);
-  }
+  // if (listItemDef.length != listItemFinal.length) {
+  //   logger
+  //     ..info('')
+  //     ..info('***')
+  //     ..info('put a comment (/*   */) over each final variable')
+  //     ..info('***')
+  //     ..info('');
+  //   exit(0);
+  // }
 
   final listVarMain = <Varable>[];
   var listSplit = <String>[];
@@ -89,9 +83,33 @@ Future<void> runData({required String path, required FLILogger logger}) async {
 /* init: null type: enum */ /* 
 init: Map<t , v> 
 type: asda fromMap: asdasd*/
+  const emptySettingVar = '/*  */';
   for (var i = 0; i < listItemFinal.length; i++) {
     final finalVarable = _formatFinalVarablse(listItemFinal[i]);
-    final settingVarableMap = getMapSettingVarable(listItemDef[i]);
+
+    var settingVarable = emptySettingVar;
+    var betwen = '';
+
+    betwen = i == 0
+        ? UtilsRegex.getTextRegexMatch(
+            isLast: false,
+            content: classContent,
+            regex: '$className[\\s\\S]+?final',
+          )
+        : UtilsRegex.getTextRegexMatch(
+            isLast: false,
+            content: classContent,
+            regex: '${listVarMain[i - 1].nameVar}[\\s\\S]+?final',
+          );
+
+    settingVarable = UtilsRegex.getTextRegexMatch(
+      isLast: false,
+      content: betwen,
+      regex: r'\/\*[\s\S]+?\*\/',
+    );
+    if (settingVarable.isEmpty) settingVarable = emptySettingVar;
+
+    final settingVarableMap = getMapSettingVarable(settingVarable);
     isCanNull = false;
 
     listSplit = finalVarable.split(' ');
@@ -117,11 +135,15 @@ type: asda fromMap: asdasd*/
         settingVarableMap[EnumKeySetting.type],
         fallback: EnumTypeVarable.none,
       );
-
       nameObject = typeStr;
     }
-    //
 
+    if (type == EnumTypeVarable.none) {
+      type = autoUpdateType(type, typeStr, logger);
+      nameObject = typeStr;
+    }
+
+    //
     // toMap
     toMap = '';
     if (settingVarableMap.containsKey(EnumKeySetting.toMap)) {
@@ -372,4 +394,58 @@ String _getNameClass(String classHeader) {
   }
 
   return '';
+}
+
+List<String> _getFormatFinalItem(
+  List<String> content,
+) {
+  final formatList = <String>[];
+  for (final v in content) {
+    formatList.add(
+      v
+          .trim()
+          .replaceAll(':', ' : ')
+          .replaceAll('?', ' ? ')
+          .replaceAll(',', ' , ')
+          .replaceAll('>', ' > ')
+          .replaceAll('<', ' < ')
+          .replaceAll('(', ' ( ')
+          .replaceAll(')', ' ) ')
+          .replaceAll(']', ' ] ')
+          .replaceAll('[', ' [ ')
+          .replaceAll('}', ' } ')
+          .replaceAll('{', ' { ')
+          .replaceAll('=', ' = ')
+          .replaceAll(':', ' : ')
+          .replaceAll(',', ' , ')
+          .replaceAll(';', ' ; ')
+          .replaceAll('.', ' . ')
+          .replaceAll(',', ' , ')
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .replaceAll(' :', ':')
+          .replaceAll(' ? ', '? ')
+          .replaceAll(' >', '>')
+          .replaceAll(' <', '<')
+          .replaceAll('< ', '<')
+          .replaceAll('( ', '(')
+          .replaceAll(' )', ')')
+          .replaceAll(' ]', ']')
+          .replaceAll('] ', ']')
+          .replaceAll(' [', '[')
+          .replaceAll('[ ', '[')
+          .replaceAll(' }', '}')
+          .replaceAll('{ ', '{')
+          .replaceAll(' ;', ';')
+          .replaceAll(' .', '.')
+          .replaceAll('. ', '.')
+          .replaceAll(' :', ':')
+          .replaceAll(' ,', ',')
+          .replaceAll(',[', ', [')
+          .replaceAll(',{', ', {')
+          .replaceAll(RegExp('^const '), '')
+          .trim(),
+    );
+  }
+
+  return formatList;
 }

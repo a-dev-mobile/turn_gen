@@ -73,3 +73,45 @@ void msgIfNodEnd(String contentFile, FLILogger logger) {
     exit(0);
   }
 }
+
+EnumTypeVarable autoUpdateType(
+    EnumTypeVarable typeEnum, String typeVar, FLILogger logger,) {
+
+    if (typeVar.contains(RegExp(r'^List<.*\?>'))) {
+      // ignore: parameter_assignments
+      typeEnum = EnumTypeVarable.list_data_null;
+      msgAnotherType(logger, typeEnum, typeVar);
+    } else if (typeVar.contains(RegExp('^List<.*>'))) {
+      // ignore: parameter_assignments
+      typeEnum = EnumTypeVarable.list_data;
+      msgAnotherType(logger, typeEnum, typeVar);
+    } else if (typeVar.contains(RegExp(r'(|\w)(e|E)num\w'))) {
+      // ignore: parameter_assignments
+      typeEnum = EnumTypeVarable.enum_;
+      msgAnotherType(logger, typeEnum, typeVar);
+    } else {
+      // ignore: parameter_assignments
+      typeEnum = EnumTypeVarable.data;
+      msgAnotherType(logger, typeEnum, typeVar);
+    }
+
+
+  return typeEnum;
+}
+
+void msgAnotherType(
+  FLILogger logger,
+  EnumTypeVarable typeEnum,
+  String typeVar,
+) {
+  logger
+    ..info('')
+    ..info('-- INFO --')
+    ..info('TurnGen did not define a variable type for `$typeVar`')
+    ..info('Type was assigned: `${typeEnum.value}`')
+    ..info('')
+    ..info('To specify another, use a comment:')
+    ..info(
+      'Example: /* type: `enum` or `data` or `List<data>` or `List<data?>` */ >>> for the variable: `$typeVar`',
+    );
+}

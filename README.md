@@ -251,11 +251,8 @@ Most importantly, we use the standard `dart` class simply by adding comments to 
 ```dart
 @immutable
 class RegistrationState {
-  /* */  
   final bool isLoad;
-  /* */
   final String? name;
-  /* */
   final List<int> activitySelected;
 // end
 }
@@ -264,7 +261,6 @@ class RegistrationState {
 Now let's describe the basic conditions for using TurnGen:
 
 - All fields of the class must be - `final`
-- There should be a comment above each field - `/* */`
 - After declaring all the fields, put a comment at the end - `// end`
 
 And that's it!
@@ -312,7 +308,7 @@ The variable also has settings, we just write our keywords in the comments above
   final String name;
 ```
 
-- If the type of the variable is not defined, you can explicitly specify it with the keyword: `type:` and possible variants `enum` `data` `List<data>`
+- If the type of the variable is not defined, `TurnGen` will try to determine it and prompt you about it, but you can explicitly specify it with the keyword: `type:` and possible options `enum` `data` `List<data>`
 
 ```dart
 /*
@@ -366,11 +362,8 @@ After executing the script you get a typical `dart` class with new and overridde
 ```dart
 @immutable
 class RegistrationState {
-  /* */
   final bool isLoad;
-  /* */
   final String? name;
-  /* */
   final List<int> activitySelected;
 // end
 //          --TURN_GEN--
@@ -495,7 +488,6 @@ class _Union {
   _Union.init([String hello = 'Hello world']);
   _Union.error({String msg = ''});
 }
-
 // end
 
 //          --TURN_GEN--
@@ -606,7 +598,6 @@ class Union {
   @override
   bool operator ==(dynamic other) {
     switch (_tag) {
-
       case _UnionTag.success:
         return identical(this, other) ||
         (other.runtimeType == runtimeType &&
@@ -616,7 +607,6 @@ class Union {
         return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Union ); 
-
       case _UnionTag.init:
         return identical(this, other) ||
         (other.runtimeType == runtimeType &&
@@ -632,7 +622,6 @@ class Union {
   @override
   int get hashCode {
     switch (_tag) {
-
       case _UnionTag.success:
         return Object.hashAll([runtimeType, const DeepCollectionEquality().hash(_listUser_success)]);
       case _UnionTag.load:
@@ -646,7 +635,6 @@ class Union {
   @override
   String toString() {
     switch (_tag) {
-
       case _UnionTag.success:
         return 'Union.success(listUser: $_listUser_success)';
       case _UnionTag.load:

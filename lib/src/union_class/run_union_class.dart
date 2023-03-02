@@ -123,18 +123,8 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
           fallback: EnumTypeVarable.none,
         );
       }
-
       if (typeEnum == EnumTypeVarable.none) {
-        if (typeVar.contains(RegExp(r'^List<.*\?>'))) {
-          typeEnum = EnumTypeVarable.list_data_null;
-          _msgAnotherType(logger, typeEnum, typeVar);
-        } else if (typeVar.contains(RegExp('^List<.*>'))) {
-          typeEnum = EnumTypeVarable.list_data;
-          _msgAnotherType(logger, typeEnum, typeVar);
-        } else if (typeVar.contains(RegExp(r'(|\w)(e|E)num\w'))) {
-          typeEnum = EnumTypeVarable.enum_;
-          _msgAnotherType(logger, typeEnum, typeVar);
-        }
+        typeEnum = autoUpdateType(typeEnum, typeVar, logger);
       }
 
       final nameWithTag = '_${nameVar}_$unionName';
@@ -184,23 +174,6 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
 
   final file = File(path);
   unionWriteToFile(logger, file, newCommonModel, contentFile);
-}
-
-void _msgAnotherType(
-  FLILogger logger,
-  EnumTypeVarable typeEnum,
-  String typeVar,
-) {
-  logger
-    ..info('')
-    ..info('-- INFO --')
-    ..info('TurnGen did not define a variable type for `$typeVar`')
-    ..info('Type was assigned: `${typeEnum.value}`')
-    ..info('')
-    ..info('To specify another, use a comment:')
-    ..info(
-      'Example: /* type: `enum` or `data` or `List<data>` or `List<data?>` */ for: `$typeVar`',
-    );
 }
 
 String _cleanParam(String value) {

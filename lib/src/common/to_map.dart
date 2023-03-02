@@ -200,24 +200,24 @@ String getToMapVarable(Varable v) {
 
     case EnumTypeVarable.list_data:
       if (yes_null_default_yes) {
-        return '$name?.map((e) => e.toJson()).toList()  ?? $initComment';
+        return '$name?.map((e) => e.toMap()).toList()  ?? $initComment';
       } else if (yes_null_default_no) {
-        return '$name?.map((e) => e.toJson()).toList()';
+        return '$name?.map((e) => e.toMap()).toList()';
       } else if (no_null_default_yes) {
-        return '$name.map((e) => e.toJson()).toList()';
+        return '$name.map((e) => e.toMap()).toList()';
       } else if (no_null_default_no) {
-        return '$name.map((e) => e.toJson()).toList()';
+        return '$name.map((e) => e.toMap()).toList()';
       }
       return error;
     case EnumTypeVarable.list_data_null:
       if (yes_null_default_yes) {
-        return '$name?.map((e) => e?.toJson()).toList()  ?? $initComment';
+        return '$name?.map((e) => e?.toMap()).toList()  ?? $initComment';
       } else if (yes_null_default_no) {
-        return '$name?.map((e) => e?.toJson()).toList()';
+        return '$name?.map((e) => e?.toMap()).toList()';
       } else if (no_null_default_yes) {
-        return '$name.map((e) => e?.toJson()).toList()';
+        return '$name.map((e) => e?.toMap()).toList()';
       } else if (no_null_default_no) {
-        return '$name.map((e) => e?.toJson()).toList()';
+        return '$name.map((e) => e?.toMap()).toList()';
       }
       return error;
 
