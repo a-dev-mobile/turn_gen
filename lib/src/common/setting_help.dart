@@ -75,26 +75,28 @@ void msgIfNodEnd(String contentFile, FLILogger logger) {
 }
 
 EnumTypeVarable autoUpdateType(
-    EnumTypeVarable typeEnum, String typeVar, FLILogger logger,) {
-
-    if (typeVar.contains(RegExp(r'^List<.*\?>'))) {
-      // ignore: parameter_assignments
-      typeEnum = EnumTypeVarable.list_data_null;
-      msgAnotherType(logger, typeEnum, typeVar);
-    } else if (typeVar.contains(RegExp('^List<.*>'))) {
-      // ignore: parameter_assignments
-      typeEnum = EnumTypeVarable.list_data;
-      msgAnotherType(logger, typeEnum, typeVar);
-    } else if (typeVar.contains(RegExp(r'(|\w)(e|E)num\w'))) {
-      // ignore: parameter_assignments
-      typeEnum = EnumTypeVarable.enum_;
-      msgAnotherType(logger, typeEnum, typeVar);
-    } else {
-      // ignore: parameter_assignments
-      typeEnum = EnumTypeVarable.data;
-      msgAnotherType(logger, typeEnum, typeVar);
-    }
-
+  EnumTypeVarable typeEnum,
+  String typeVar,
+  FLILogger logger,
+) {
+  if (typeVar.contains(RegExp(r'^List<.*\?>'))) {
+    // ignore: parameter_assignments
+    typeEnum = EnumTypeVarable.list_data_null;
+    msgAnotherType(logger, typeEnum, typeVar);
+  } else if (typeVar.contains(RegExp('^List<.*>'))) {
+    // ignore: parameter_assignments
+    typeEnum = EnumTypeVarable.list_data;
+    msgAnotherType(logger, typeEnum, typeVar);
+  } else if (typeVar.contains(RegExp(r'(|\w)(e|E)num\w')) ||
+      typeVar.contains('ThemeMode')) {
+    // ignore: parameter_assignments
+    typeEnum = EnumTypeVarable.enum_;
+    msgAnotherType(logger, typeEnum, typeVar);
+  } else {
+    // ignore: parameter_assignments
+    typeEnum = EnumTypeVarable.data;
+    msgAnotherType(logger, typeEnum, typeVar);
+  }
 
   return typeEnum;
 }

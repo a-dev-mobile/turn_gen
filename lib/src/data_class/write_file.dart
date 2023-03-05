@@ -144,7 +144,7 @@ void writeToFile(
   //     }
   //   }
   // }
-  const add5 = '// ignore_for_file: sort_constructors_first';
+  const add5 = '// ignore_for_file: sort_constructors_first, avoid_bool_literals_in_conditional_expressions';
   if (!header.contains(add5)) {
     header = '$add5\n$header';
   }

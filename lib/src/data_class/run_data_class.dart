@@ -29,7 +29,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
     ),
   ];
 
-  final classContent = UtilsRegex.getTextRegexMatch(
+  var classContent = UtilsRegex.getTextRegexMatch(
     content: contentFile,
     regex: r'class[\s\S]+?(\/\/\s+end)',
   );
@@ -49,22 +49,14 @@ Future<void> runData({required String path, required FLILogger logger}) async {
       classHeader,
     ],
   );
+// delete all comments, for parsing purity 
+  classContent = classContent.replaceAll(RegExp('//.*'), '');
 
   final listItemFinalRaw = UtilsRegex.getTextRegexListMatch(
     content: classBrackets,
-    regex: r'final[\w\W]+?;',
+    regex: r'^[\s\s]+?final[\w\W]+?;',
   );
   final listItemFinal = _getFormatFinalItem(listItemFinalRaw);
-
-  // if (listItemDef.length != listItemFinal.length) {
-  //   logger
-  //     ..info('')
-  //     ..info('***')
-  //     ..info('put a comment (/*   */) over each final variable')
-  //     ..info('***')
-  //     ..info('');
-  //   exit(0);
-  // }
 
   final listVarMain = <Varable>[];
   var listSplit = <String>[];
@@ -99,7 +91,7 @@ type: asda fromMap: asdasd*/
         : UtilsRegex.getTextRegexMatch(
             isLast: false,
             content: classContent,
-            regex: '${listVarMain[i - 1].nameVar}[\\s\\S]+?final',
+            regex: '${listVarMain[i - 1].nameVar};[\\s\\S]+?final',
           );
 
     settingVarable = UtilsRegex.getTextRegexMatch(
@@ -118,6 +110,9 @@ type: asda fromMap: asdasd*/
     final _ = listSplit.removeLast();
 
     typeStr = listSplit.join(' ').trim();
+
+    if (typeStr.isEmpty) _msgErrorParsingVarable(listItemFinalRaw[i], logger);
+
 // determining whether null is a value or not
     if (typeStr.substring(typeStr.length - 1) == '?') {
       isCanNull = true;
@@ -318,6 +313,14 @@ void _msgIfNotNameClass(String className, FLILogger logger) {
       ..info('\n');
     exit(0);
   }
+}
+
+void _msgErrorParsingVarable(String varable, FLILogger logger) {
+  logger
+    ..info('\n')
+    ..error('check the variable - `$varable`')
+    ..info('\n');
+  exit(0);
 }
 
 String _formatFinalVarablse(String content) {

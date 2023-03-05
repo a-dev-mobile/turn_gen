@@ -27,69 +27,91 @@ String getFromMap(Varable v) {
 
   switch (type) {
 // конструктор у set double not const
-
+/*       bool1: map['bool1'] != null || true, 
+      bool2: map['bool2'] as bool?, 
+      bool3: map['bool3'] != null ||  false,  */
     case EnumTypeVarable.bool_:
       if (yes_null_default_yes) {
-        return '''map['$name'] as bool? ?? $initComment''';
+        return _getValueWithInit("map['$name'] as bool?", name, initComment);
       } else if (yes_null_default_no) {
-        return '''map['$name'] as bool?''';
+        return _getValueWithInit("map['$name'] as bool?", name, 'null');
       } else if (no_null_default_yes) {
-        return '''map['$name'] as bool? ?? $initComment''';
+        return _getValueWithInit("map['$name'] as bool", name, initComment);
       } else if (no_null_default_no) {
-        return '''map['$name'] as bool''';
+        return _getValueWithException("map['$name'] as bool", name);
       }
       return error;
 
     case EnumTypeVarable.double_:
       if (yes_null_default_yes) {
-        return '''(map['$name'] as num?)?.toDouble() ?? $initComment''';
+        return '''map['$name'] != null ? (map['$name'] as num).toDouble() : $initComment''';
       } else if (yes_null_default_no) {
         return '''(map['$name'] as num?)?.toDouble()''';
       } else if (no_null_default_yes) {
-        return '''(map['$name'] as num?)?.toDouble() ?? $initComment''';
+        return '''map['$name'] != null ? (map['$name'] as num).toDouble() : $initComment''';
       } else if (no_null_default_no) {
-        return '''(map['$name'] as num).toDouble()''';
+        return _getValueWithException("(map['$name'] as num).toDouble()", name);
       }
       return error;
 
     case EnumTypeVarable.enum_:
-      return isCanNull
-          ? initComment.isEmpty
-              ? "map['$name'] != null ? $nameObject.values[map['$name'] as int] : null"
-              : "map['$name'] != null ? $nameObject.values[map['$name'] as int] : $initComment"
-          : "$nameObject.values[map['$name'] as int]";
+      if (yes_null_default_yes) {
+        return "map['$name'] != null ? $nameObject.values[map['$name'] as int] : $initComment";
+      } else if (yes_null_default_no) {
+        return "map['$name'] != null ? $nameObject.values[map['$name'] as int] : null";
+      } else if (no_null_default_yes) {
+        return "map['$name'] != null ? $nameObject.values[map['$name'] as int] : $initComment";
+      } else if (no_null_default_no) {
+        return _getValueWithException(
+          "$nameObject.values[map['$name'] as int]",
+          name,
+        );
+      }
+      return error;
 
     case EnumTypeVarable.int_:
-      final base = '''map['$name'] as int''';
-      if (isCanNull && initComment.isEmpty) return '$base?';
-
-      if (initComment.isNotEmpty) return '$base? ?? $initComment';
-
-      return base;
+      if (yes_null_default_yes) {
+        return '''map['$name'] != null ? (map['$name'] as num).toInt() : $initComment''';
+      } else if (yes_null_default_no) {
+        return '''(map['$name'] as num?)?.toInt()''';
+      } else if (no_null_default_yes) {
+        return '''map['$name'] != null ? (map['$name'] as num).toInt() : $initComment''';
+      } else if (no_null_default_no) {
+        return _getValueWithException(
+          "(map['$name'] as num).toInt()",
+          name,
+        );
+      }
+      return error;
 
     case EnumTypeVarable.num_:
       if (yes_null_default_yes) {
-        return '''map['$name'] as num? ?? $initComment''';
+        return '''map['$name'] != null ? map['$name'] as num : $initComment''';
       } else if (yes_null_default_no) {
         return '''map['$name'] as num?''';
       } else if (no_null_default_yes) {
-        return '''map['$name'] as num? ?? $initComment''';
+        return '''map['$name'] != null ? map['$name'] as num : $initComment''';
       } else if (no_null_default_no) {
-        return '''map['$name'] as num''';
+        return _getValueWithException(
+          "map['$name'] as num",
+          name,
+        );
       }
       return error;
 
     case EnumTypeVarable.string_:
       if (yes_null_default_yes) {
-        return "map['$name'] as String? ?? $initComment ";
+        return "map['$name'] != null ? map['$name'] as String : $initComment";
       } else if (yes_null_default_no) {
-        return "map['$name'] as String?";
+        return "map['$name'] != null ? map['$name'] as String : null";
       } else if (no_null_default_yes) {
-        return "map['$name'] as String? ?? $initComment ";
+        return "map['$name'] != null ? map['$name'] as String : $initComment";
       } else if (no_null_default_no) {
-        return "map['$name'] as String";
+        return _getValueWithException(
+          "map['$name'] as String",
+          name,
+        );
       }
-
       return error;
 
     case EnumTypeVarable.set_:
@@ -100,7 +122,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as String).toSet() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).toSet()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).toSet()",
+          name,
+        );
       }
 
       return error;
@@ -113,7 +138,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as String).toSet() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => e as String).toSet()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => e as String).toSet()",
+          name,
+        );
       }
 
       return error;
@@ -126,7 +154,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as String?).toSet() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => e as String?).toSet()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => e as String?).toSet()",
+          name,
+        );
       }
 
       return error;
@@ -139,7 +170,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as int).toSet() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => e as int).toSet()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => e as int).toSet()",
+          name,
+        );
       }
 
       return error;
@@ -152,7 +186,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as int?).toSet() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => e as int?).toSet()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => e as int?).toSet()",
+          name,
+        );
       }
 
       return error;
@@ -165,7 +202,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as bool).toSet() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => e as bool).toSet()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => e as bool).toSet()",
+          name,
+        );
       }
 
       return error;
@@ -178,7 +218,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as bool?).toSet() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => e as bool?).toSet()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => e as bool?).toSet()",
+          name,
+        );
       }
       return error;
 
@@ -190,7 +233,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => (e as num).toDouble()).toSet() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => (e as num).toDouble()).toSet()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => (e as num).toDouble()).toSet()",
+          name,
+        );
       }
       return error;
 
@@ -213,7 +259,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as bool).toList() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => e as bool).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => e as bool).toList()",
+          name,
+        );
       }
       return error;
     case EnumTypeVarable.list_bool_null:
@@ -224,7 +273,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as bool?).toList() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => e as bool?).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => e as bool?).toList()",
+          name,
+        );
       }
       return error;
 
@@ -236,7 +288,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as int).toList() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => e as int).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => e as int).toList()",
+          name,
+        );
       }
       return error;
     case EnumTypeVarable.list_int_null:
@@ -247,7 +302,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as int).toList() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => e as int).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => e as int).toList()",
+          name,
+        );
       }
       return error;
 
@@ -259,7 +317,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as String).toList() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => e as String).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => e as String).toList()",
+          name,
+        );
       }
       return error;
 
@@ -271,7 +332,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => e as String).toList() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => e as String).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => e as String).toList()",
+          name,
+        );
       }
       return error;
     //
@@ -283,7 +347,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "DateTime.parse(map['$name'] as String)";
       } else if (no_null_default_no) {
-        return "DateTime.parse(map['$name'] as String)";
+        return _getValueWithException(
+          "DateTime.parse(map['$name'] as String)",
+          name,
+        );
       }
       return error;
 
@@ -295,7 +362,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "map['$name'] as List<dynamic>? ?? $initComment";
       } else if (no_null_default_no) {
-        return "map['$name'] as List<dynamic>";
+        return _getValueWithException(
+          "map['$name'] as List<dynamic>",
+          name,
+        );
       }
 
       return error;
@@ -308,7 +378,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => (e as num).toDouble()).toList() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => (e as num).toDouble()).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => (e as num).toDouble()).toList()",
+          name,
+        );
       }
 
       return error;
@@ -320,7 +393,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => (e as num?)?.toDouble()).toList() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => (e as num?)?.toDouble()).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => (e as num?)?.toDouble()).toList()",
+          name,
+        );
       }
       return error;
 
@@ -332,7 +408,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "map['$name'] as List<dynamic>? ?? $initComment";
       } else if (no_null_default_no) {
-        return "map['$name'] as List<dynamic>";
+        return _getValueWithException(
+          "map['$name'] as List<dynamic>",
+          name,
+        );
       }
       return error;
     case EnumTypeVarable.list_map_int_dynamic_:
@@ -343,10 +422,13 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => (e as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e))).toList() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => (e as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e))).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => (e as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e))).toList()",
+          name,
+        );
       }
       return error;
-          case EnumTypeVarable.list_map_string_dynamic_:
+    case EnumTypeVarable.list_map_string_dynamic_:
       if (yes_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => (e as Map<String, dynamic>).map(MapEntry.new)).toList() ?? $initComment";
       } else if (yes_null_default_no) {
@@ -354,7 +436,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => (e as Map<String, dynamic>).map(MapEntry.new)).toList() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => (e as Map<String, dynamic>).map(MapEntry.new)).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => (e as Map<String, dynamic>).map(MapEntry.new)).toList()",
+          name,
+        );
       }
       return error;
     case EnumTypeVarable.list_map_int_string_:
@@ -365,7 +450,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name']  as List<dynamic>?)?.map((e) => (e as Map<String, dynamic>).map( (k, e) => MapEntry(int.parse(k), e as String), )) .toList() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => (e as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e as String))).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => (e as Map<String, dynamic>).map( (k, e) => MapEntry(int.parse(k), e as String), )).toList()",
+          name,
+        );
       }
 
       return error;
@@ -377,7 +465,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>?)?.map((e) => (e as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e as String), )).toList() ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>) .map((e) => (e as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e as String))).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => (e as Map<String, dynamic>).map( (k, e) => MapEntry(int.parse(k), e as String), )).toList()",
+          name,
+        );
       }
 
       return '';
@@ -391,7 +482,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return " (map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(int.parse(k), e)) ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as Map<String, dynamic>).map( (k, e) => MapEntry(int.parse(k), e))";
+        return _getValueWithException(
+          "(map['$name'] as Map<String, dynamic>).map( (k, e) => MapEntry(int.parse(k), e))",
+          name,
+        );
       }
       return error;
 
@@ -403,7 +497,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(int.parse(k), (e as num).toDouble())) ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), (e as num).toDouble()))";
+        return _getValueWithException(
+          "(map['$name'] as Map<String, dynamic>).map( (k, e) => MapEntry(int.parse(k), (e as num).toDouble()))",
+          name,
+        );
       }
       return error;
 
@@ -415,7 +512,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(int.parse(k), (e as num?)?.toDouble())) ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), (e as num?)?.toDouble()))";
+        return _getValueWithException(
+          "(map['$name'] as Map<String, dynamic>).map( (k, e) => MapEntry(int.parse(k), (e as num?)?.toDouble()))",
+          name,
+        );
       }
       return error;
 
@@ -427,7 +527,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(k, e as bool)) ?? $initComment";
       } else if (no_null_default_no) {
-        return "Map<String, bool>.from(map['$name'] as Map)";
+        return _getValueWithException(
+          "(map['$name'] as Map<String, dynamic>).map( (k, e) => MapEntry(k, e as bool))",
+          name,
+        );
       }
       return error;
     case EnumTypeVarable.map_string_bool_null:
@@ -438,7 +541,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(k, e as bool?)) ?? $initComment";
       } else if (no_null_default_no) {
-        return "Map<String, bool>.from(map['$name'] as Map)";
+        return _getValueWithException(
+          "(map['$name'] as Map<String, dynamic>).map( (k, e) => MapEntry(k, e as bool))",
+          name,
+        );
       }
       return error;
 
@@ -450,7 +556,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "map['$name'] as Map<String, dynamic>? ?? $initComment";
       } else if (no_null_default_no) {
-        return "map['$name'] as Map<String, dynamic>";
+        return _getValueWithException(
+          "map['$name'] as Map<String, dynamic>",
+          name,
+        );
       }
       return error;
     case EnumTypeVarable.map_dynamic_dynamic_:
@@ -461,7 +570,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "map['$name'] as Map<String, dynamic>? ?? $initComment";
       } else if (no_null_default_no) {
-        return "map['$name'] as Map<String, dynamic>";
+        return _getValueWithException(
+          "map['$name'] as Map<String, dynamic>",
+          name,
+        );
       }
       return error;
     case EnumTypeVarable.map_string_dynamic_:
@@ -472,7 +584,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "map['$name'] as Map<String, dynamic>";
       } else if (no_null_default_no) {
-        return "map['$name'] as Map<String, dynamic>";
+        return _getValueWithException(
+          "map['$name'] as Map<String, dynamic>",
+          name,
+        );
       }
       return error;
 
@@ -484,7 +599,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(k, e as String)) ?? $initComment";
       } else if (no_null_default_no) {
-        return "Map<String, String>.from(map['$name'] as Map)";
+        return _getValueWithException(
+          "Map<String, String>.from(map['$name'] as Map)",
+          name,
+        );
       }
       return error;
 
@@ -508,7 +626,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map( (k, e) => MapEntry(k, e as int)) ?? $initComment";
       } else if (no_null_default_no) {
-        return " Map<String, int>.from(map['$name'] as Map)";
+        return _getValueWithException(
+          "Map<String, int>.from(map['$name'] as Map)",
+          name,
+        );
       }
       return error;
     case EnumTypeVarable.map_string_int_null:
@@ -519,7 +640,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map( (k, e) => MapEntry(k, e as int?)) ?? $initComment";
       } else if (no_null_default_no) {
-        return "Map<String, int>.from(map['$name'] as Map)";
+        return _getValueWithException(
+          "Map<String, int>.from(map['$name'] as Map)",
+          name,
+        );
       }
       return error;
 
@@ -531,7 +655,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map( (k, e) => MapEntry(k, (e as num).toDouble())) ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(k, (e as num).toDouble()))";
+        return _getValueWithException(
+          "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(k, (e as num).toDouble()))",
+          name,
+        );
       }
       return error;
 
@@ -543,7 +670,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(k, (e as num?)?.toDouble())) ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(k, (e as num?)?.toDouble()))";
+        return _getValueWithException(
+          "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(k, (e as num?)?.toDouble()))",
+          name,
+        );
       }
       return error;
 
@@ -555,7 +685,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(int.parse(k), e as bool)) ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e as bool))";
+        return _getValueWithException(
+          "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e as bool))",
+          name,
+        );
       }
       return error;
 
@@ -567,7 +700,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(int.parse(k), e as bool?)) ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e as bool?))";
+        return _getValueWithException(
+          "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e as bool?))",
+          name,
+        );
       }
       return error;
 
@@ -579,7 +715,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(int.parse(k), e as String)) ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e as String))";
+        return _getValueWithException(
+          "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e as String))",
+          name,
+        );
       }
       return error;
 
@@ -591,7 +730,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(int.parse(k), e as String)) ?? $initComment";
       } else if (no_null_default_no) {
-        return "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e as String?))";
+        return _getValueWithException(
+          "(map['$name'] as Map<String, dynamic>).map((k, e) => MapEntry(int.parse(k), e as String?))",
+          name,
+        );
       }
       return error;
 
@@ -626,7 +768,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "$nameObject.fromMap(map['$name'] as Map<String, dynamic>,)";
       } else if (no_null_default_no) {
-        return "$nameObject.fromMap(map['$name'] as Map<String, dynamic>,)";
+        return _getValueWithException(
+          "$nameObject.fromMap(map['$name'] as Map<String, dynamic>,)",
+          name,
+        );
         //   ValidNameFormz.fromMap(map['validNameFormz'] as Map<String, dynamic>),
       }
       return error;
@@ -638,7 +783,10 @@ String getFromMap(Varable v) {
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()";
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()",
+          name,
+        );
       }
       return error;
     case EnumTypeVarable.list_data_null:
@@ -650,11 +798,19 @@ String getFromMap(Varable v) {
         return "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()";
 //osition_type: sition_type'] as List<dynamic>).map((e) => DictionaryItem.fromMap(e as Map<String, dynamic>)).toList(),
       } else if (no_null_default_no) {
-        return "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()";
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()",
+          name,
+        );
       }
       return error;
-
   }
+}
 
+String _getValueWithException(String value, String name) {
+  return '''map['$name'] != null ? $value : throw Exception("map['$name']_type_'Null'")''';
+}
 
+String _getValueWithInit(String value, String name, String init) {
+  return '''map['$name'] != null ? $value : $init''';
 }

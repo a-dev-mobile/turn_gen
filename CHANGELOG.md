@@ -1,3 +1,14 @@
+## 0.2.6
+
+- added an error description and the name of the variable if the value is not initialized in the `fromMap` method
+- fixed a problem with reading `bool` in `frommap`
+
+## 0.2.5
+
+- added hints to fromMap if the value is empty for `bool` `num` `String` `int` `enum`
+- type `ThemeMode` is now automatically defined as `enum`
+- added a hint if a variable does not have a type or only has a type
+
 ## 0.2.0
 
 - now, when generating `data class`, the type of the variable is automatically determined, and if this type is not in `TurnGen`, hints about this auto-detection appear

@@ -40,7 +40,6 @@ String getToMapVarable(Varable v) {
       return error;
 
     case EnumTypeVarable.none:
-   
       return error;
 
     case EnumTypeVarable.enum_:
@@ -152,7 +151,7 @@ String getToMapVarable(Varable v) {
       }
 
       return error;
-        case EnumTypeVarable.list_map_string_dynamic_:
+    case EnumTypeVarable.list_map_string_dynamic_:
       if (yes_null_default_yes) {
         return '''$name?.map((e) => e.map(MapEntry.new)).toList()''';
       } else if (yes_null_default_no) {
@@ -220,9 +219,5 @@ String getToMapVarable(Varable v) {
         return '$name.map((e) => e?.toMap()).toList()';
       }
       return error;
-
-
   }
-
-
 }
