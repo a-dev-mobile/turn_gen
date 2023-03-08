@@ -1,3 +1,8 @@
+## 0.3.0
+
+- added hints to `fromMap` if value is empty - for all variables
+- `fromMap` method now allows null value if all fields of the class are initialized (comment added: for example `/* init: false */` above all fields)
+
 ## 0.2.6
 
 - added an error description and the name of the variable if the value is not initialized in the `fromMap` method
@@ -5,7 +10,7 @@
 
 ## 0.2.5
 
-- added hints to fromMap if the value is empty for `bool` `num` `String` `int` `enum`
+- added hints to `fromMap` if the value is empty for `bool` `num` `String` `int` `enum`
 - type `ThemeMode` is now automatically defined as `enum`
 - added a hint if a variable does not have a type or only has a type
 

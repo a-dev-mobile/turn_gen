@@ -293,7 +293,7 @@ class RegistrationState {
 ...
 ```
 
-In the examples above, you can combine different options from other methods or libraries (in the future)
+In the examples above, you can combine different options from other methods
 
 #### Additional variable settings
 

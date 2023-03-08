@@ -14,17 +14,19 @@ class ConstHelper {
   static const String replaceIfFirstLetterNumber = 'n';
 
   static const String configName = 'turn_gen';
+  static const String version = '0.3.0';
 }
 
 class ConstConsole {
-  static String introMessage(String currentVersion) => '''
+  static String introMessage() => '''
 }
   ════════════════════════════════════════════
-     TURN_GEN (v$currentVersion)                               
+     TURN_GEN (v${ConstHelper.version}})                               
   ════════════════════════════════════════════''';
 
   static const String GEN_MSG_START = '''
 //          --TURN_GEN--
+//             v${ConstHelper.version}
 //  *************************************
 //           GENERATED CODE 
 //  *************************************

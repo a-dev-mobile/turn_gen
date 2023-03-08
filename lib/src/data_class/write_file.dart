@@ -118,6 +118,8 @@ void writeToFile(
   }
 
   var header = contentFile.split(classHeader).first;
+  // are there any required fields
+  final isHaveRequired = constructor.toString().contains('required');
 
   // final add4 = "@immutable";
   // if (!header.contains(add4)) {
@@ -144,7 +146,8 @@ void writeToFile(
   //     }
   //   }
   // }
-  const add5 = '// ignore_for_file: sort_constructors_first, avoid_bool_literals_in_conditional_expressions';
+  const add5 =
+      '// ignore_for_file: sort_constructors_first, avoid_bool_literals_in_conditional_expressions';
   if (!header.contains(add5)) {
     header = '$add5\n$header';
   }
@@ -160,7 +163,7 @@ $constructor  });
 $factoryInit      ); 
   */
 ${_getToMap(toMapSb, isActiveToMap)}
-${_getFromMap_(className, fromMapSb, isActiveFromMap)}
+${_getFromMap_(className, fromMapSb, isActiveFromMap, isHaveRequired)}
 ${_getCopyWith(className, copyWithStart, copyWithEnd, isActiveCopyWith)}
 ${_getToJson(isActiveToJson)}  
 ${_getFromJson(className, isActiveFromJson)}  
@@ -226,10 +229,19 @@ $toMapSb    };
       : '';
 }
 
-String _getFromMap_(String className, StringBuffer fromMapSb, bool isActive) {
+String _getFromMap_(
+  String className,
+  StringBuffer fromMapSb,
+  bool isActive,
+  bool isHaveRequired,
+) {
+  final add1 = isHaveRequired ? '' : '?';
+  final add2 = isHaveRequired ? '' : 'if (map == null) return const $className();\n';
+
   return isActive
       ? '''
-    factory $className.fromMap(Map<String, dynamic> map) {
+  factory $className.fromMap(Map<String, dynamic>$add1 map) {
+    $add2
     return $className(
 $fromMapSb    );
   }
