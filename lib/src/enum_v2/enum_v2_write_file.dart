@@ -1,421 +1,341 @@
+// ignore_for_file: cascade_invocations
+
 part of 'run_enum_v2.dart';
 
 // ignore: prefer-static-class
-void unionWriteToFile(
+void enumV2WriteToFile(
   FLILogger logger,
   File file,
-  UnionCommonModel model,
-  String contentFile,
+  EnumV2CommonModel model,
 ) {
-  /* ****************************** */
-  final sbAllParams = StringBuffer();
-  for (final v in model.listParams) {
-    sbAllParams.write('''
-  $v
-''');
+  final newContent = StringBuffer();
+  final nameClass = model.nameClass;
+  final typeStr = model.typeEnum.value;
+  final nameValue = model.nameValue;
+/* ****************************** */
+  final paramSb = StringBuffer();
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    final value = e.valueEnum;
+    paramSb.write('  $name($value)');
+// Check if this is the last iteration
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ';\n';
+    paramSb.write(lastSymbol);
   }
-  /* ****************************** */
-  final sbUnionTag = StringBuffer();
-  for (final v in model.listUnion) {
-    sbUnionTag.write('''
-  ${v.nameUnion},
-''');
-  }
-  /* ****************************** */
+/* ******************************* */
 
-  final sbUnionClass = StringBuffer();
-  for (final l in model.listUnion) {
-    final unionName = '.${l.nameUnion}';
-    sbUnionClass.write('''
-${l.comment}
-  const ${model.nameClass}$unionName${l.paramStr}:
-''');
+/* ****************************** */
+  final fromValueStringSb = StringBuffer();
 
-    for (var i = 0; i < l.mapNameWithTag.length; i++) {
-      final isLast = l.mapNameWithTag.length - 1 == i;
-      final k = l.mapNameWithTag.keys.elementAt(i);
-      final v = l.mapNameWithTag.values.elementAt(i);
-      sbUnionClass.write('''
-        $k = $v${isLast ? ';' : ','}
-''');
-    }
-  }
-  /* ****************************** */
-
-  final sbWhere = StringBuffer();
   // ignore: cascade_invocations
-  sbWhere.write('''
-  T when<T>({
-''');
+  fromValueStringSb.write('''
+  static $nameClass fromValue(String? value, {$nameClass? fallback}) {
+    final valueMap = <String, $nameClass>{};
 
-  final sbCase = StringBuffer();
-  for (final l in model.listUnion) {
-    final sbParam = StringBuffer();
-    final sbReturn = StringBuffer();
-    for (var i = 0; i < l.listParameters.length; i++) {
-      final p = l.listParameters[i];
-      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
-
-      final letterNull = p.isCanNull ? '?' : '';
-      final letterNotNull = p.isCanNull ? '' : '!';
-      sbParam.write('${p.typeStr}$letterNull ${p.name}$lastText');
-      sbReturn.write('_${p.name}_${l.nameUnion}$letterNotNull$lastText');
+    for (final v in $nameClass.values) {
+      final _ = valueMap.putIfAbsent(v.toString().toLowerCase(), () => v);
     }
 
-    sbWhere.write('''
-    required T Function ($sbParam) ${l.nameUnion},
-''');
+    final lowercaseValue = value?.toLowerCase();
+    final result = valueMap[lowercaseValue];
 
-    sbCase.write('''
-      case _${model.nameClass}Tag.${l.nameUnion}:
-        return ${l.nameUnion}($sbReturn);
-''');
+    if (result == null && fallback == null) {
+      throw ArgumentError.value(
+          value, 'value', 'Value not found in $nameClass',);
+    }
+
+    return result ?? fallback!;
   }
-  sbWhere.write('''
-}) {
-    switch (_tag) {
-$sbCase    }
+
+''');
+/* ****************************** */
+/* ****************************** */
+
+/* ******************************* */
+
+/* ****************************** */
+  final fromValueCommonIntSb = StringBuffer();
+
+  final fromValue1IntSb = StringBuffer();
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    final value = e.valueEnum;
+    fromValue1IntSb.write('$value: $nameClass.$name');
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    fromValue1IntSb.write(lastSymbol);
+  }
+
+  fromValueCommonIntSb.write('''
+  static $nameClass fromValue(int value, {$nameClass? fallback}) {
+    final valueMap = <int, LocaleEnum>{
+      $fromValue1IntSb
+    };
+
+    if (valueMap.containsKey(value)) {
+      return valueMap[value]!;
+    } else if (fallback == null) {
+      throw ArgumentError.value(
+        value,
+        'value',
+        'Value not found in $nameClass',
+      );
+    } else {
+      return fallback;
+    }
   }
 ''');
+/* ****************************** */
+/* ****************************** */
 
-  /* ****************************** */
-  // toMap
-  /* ****************************** */
+  final mapCommonSb = StringBuffer();
+  final map1Sb = StringBuffer();
+  final map2Sb = StringBuffer();
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    map1Sb.write('    required T Function($nameClass value) $name');
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    map1Sb.write(lastSymbol);
+  }
 
-  final sbMap = StringBuffer();
-  // ignore: cascade_invocations
-  sbMap.write('''
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    map2Sb.write('      $nameClass.$name: $name');
+
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    map2Sb.write(lastSymbol);
+  }
+  mapCommonSb.write('''
   T map<T>({
-''');
-
-  final sbMapCase = StringBuffer();
-  for (final l in model.listUnion) {
-    final nameClassExtends = _getNameExtendsClass(model, l);
-
-    final sbReturn = StringBuffer();
-    for (var i = 0; i < l.listParameters.length; i++) {
-      final p = l.listParameters[i];
-      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
-
-      final letterNotNull = p.isCanNull ? '!' : '!';
-
-      sbReturn.write('_${p.name}_${l.nameUnion}$letterNotNull$lastText');
-    }
-
-    sbMap.write('''
-    required T Function($nameClassExtends v) ${l.nameUnion},
-''');
-    final constText = sbReturn.isEmpty ? 'const ' : '';
-    sbMapCase.write('''
-      case _${model.nameClass}Tag.${l.nameUnion}:
-        return ${l.nameUnion}($constText$nameClassExtends($sbReturn));
-''');
-  }
-  sbMap.write('''
+$map1Sb
   }) {
-    switch (_tag) {
-$sbMapCase    }
+    final valueMap = {
+$map2Sb
+    };
+
+    final result = valueMap[this];
+
+    return result != null
+        ? result(this)
+        : throw ArgumentError.value(
+            this,
+            'value',
+            'Value not found in $nameClass',
+          );
   }
 ''');
 
-  /* ****************************** */
-  // map or null
-  /* ****************************** */
-/* 
+/* ****************************** */
 
-  T? mapOrNull<T>({
-    T? Function(_SplashStateInit v)? init,
-    T? Function(_SplashStateSuccess v)? success,
-  }) {
-    switch (_tag) {
-      case _SplashStateTag.init:
-        return init?.call(const _SplashStateInit());
+/* ****************************** */
+/* ****************************** */
 
-      case _SplashStateTag.success:
-        return success?.call(const _SplashStateSuccess());
-    }
+  final maybeMapCommonSb = StringBuffer();
+  final maybeMap1Sb = StringBuffer();
+  final maybeMap2Sb = StringBuffer();
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    maybeMap1Sb.write('    T Function($nameClass value)? $name');
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    maybeMap1Sb.write(lastSymbol);
   }
- */
-  final sbMapOrNull = StringBuffer();
-  // ignore: cascade_invocations
-  sbMapOrNull.write('''
-  T? mapOrNull<T>({
-''');
 
-  final sbMapOrNullCase = StringBuffer();
-  for (final l in model.listUnion) {
-    final nameClassExtends = _getNameExtendsClass(model, l);
-
-    final sbReturn = StringBuffer();
-    for (var i = 0; i < l.listParameters.length; i++) {
-      final p = l.listParameters[i];
-      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
-
-      final letterNotNull = p.isCanNull ? '!' : '!';
-
-      sbReturn.write('_${p.name}_${l.nameUnion}$letterNotNull$lastText');
-    }
-
-    sbMapOrNull.write('''
-    T? Function($nameClassExtends v)? ${l.nameUnion},
-''');
-    final constText = sbReturn.isEmpty ? 'const ' : '';
-    sbMapOrNullCase.write('''
-      case _${model.nameClass}Tag.${l.nameUnion}:
-        return ${l.nameUnion}?.call($constText$nameClassExtends($sbReturn));
-''');
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    maybeMap2Sb.write('      $nameClass.$name: $name ?? orElse');
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    maybeMap2Sb.write(lastSymbol);
   }
-  sbMapOrNull.write('''
-  }) {
-    switch (_tag) {
-$sbMapOrNullCase    }
-  }
-''');
-  /* ****************************** */
-  // maybeMap
-  /* ****************************** */
-
-  final sbMaybeMap = StringBuffer();
-  // ignore: cascade_invocations
-  sbMaybeMap.write('''
+  maybeMapCommonSb.write('''
   T maybeMap<T>({
-''');
-
-  final sbMaybeMapCase = StringBuffer();
-  for (final l in model.listUnion) {
-    final nameClassExtends = _getNameExtendsClass(model, l);
-    final sbReturn = StringBuffer();
-    for (var i = 0; i < l.listParameters.length; i++) {
-      final p = l.listParameters[i];
-      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
-
-      final letterNotNull = p.isCanNull ? '!' : '!';
-
-      sbReturn.write('_${p.name}_${l.nameUnion}$letterNotNull$lastText');
-    }
-
-    sbMaybeMap.write('''
-    T Function($nameClassExtends v)? ${l.nameUnion},
-''');
-    final constText = sbReturn.isEmpty ? 'const ' : '';
-    sbMaybeMapCase.write('''
-      case _${model.nameClass}Tag.${l.nameUnion}:
-        if(${l.nameUnion} != null) return ${l.nameUnion}($constText$nameClassExtends($sbReturn));
-        return orElse();
-''');
-  }
-
-  sbMaybeMap.write('''
-      required T Function() orElse,
+    required T Function($nameClass value) orElse,
+$maybeMap1Sb
   }) {
-    switch (_tag) {
-$sbMaybeMapCase    }
+    final valueMap = <$nameClass, T Function($nameClass value)>{
+$maybeMap2Sb
+    };
+
+    final result = valueMap[this];
+
+    return result != null
+        ? result(this)
+        : throw ArgumentError.value(
+            this,
+            'value',
+            'Value not found in $nameClass',
+          );
   }
 ''');
 
-  /* ****************************** */
-  // toString
-  /* ****************************** */
-  final sbToString = StringBuffer();
-  // ignore: cascade_invocations
-  sbToString.write('''
+/* ****************************** */
+  final constructorSb = StringBuffer();
+
+  constructorSb.write('''
+  const $nameClass(this.$nameValue);
+  final $typeStr $nameValue;
+''');
+
+/* ****************************** */
+/* ****************************** */
+  final compareSToStringb = StringBuffer();
+
+  compareSToStringb.write('''
   @override
-  String toString() {
-    switch (_tag) {
-''');
+  int compareTo($nameClass other) => index.compareTo(other.index);
 
-  for (final l in model.listUnion) {
-    final unionName =  '.${l.nameUnion}';
-    sbToString.write('''
-
-      case _${model.nameClass}Tag.${l.nameUnion}:
-        return '${model.nameClass}$unionName(''');
-    final length = l.listParameters.length;
-
-    if (length == 0) sbToString.write(")';");
-
-    for (var i = 0; i < length; i++) {
-      final p = l.listParameters[i];
-      final lastText = i + 1 == length ? ")';" : ', ';
-
-      sbToString.write('${p.name}: \$_${p.name}_${l.nameUnion}$lastText');
-    }
-  }
-  sbToString.write('''
-  
-  }
-}''');
-
-  /* ****************************** */
-  //      Hash
-  /* ****************************** */
-  final sbHashTemp = StringBuffer();
-  // ignore: cascade_invocations
-  sbHashTemp.write('''
   @override
-  int get hashCode {
-    switch (_tag) {
+  String toString() => '$nameClass.\$name(\$${model.nameValue})';
 ''');
 
-  for (final l in model.listUnion) {
-    sbHashTemp.write('''
+/* ****************************** */
 
-      case _${model.nameClass}Tag.${l.nameUnion}:
-        return Object.hashAll([runtimeType,''');
-    final length = l.listParameters.length;
+  newContent.write('''
+// ignore_for_file: avoid-non-null-assertion
 
-    // if (length == 0) sbHash.write(']);');
-
-    for (var i = 0; i < length; i++) {
-      final p = l.listParameters[i];
-      sbHashTemp.write(
-        getHashCode(p.typeEnum, '_${p.name}_${l.nameUnion}')
-            .replaceAll(RegExp(r'\s+'), ' '),
-      );
-    }
-    sbHashTemp.write(''']);''');
-  }
-  sbHashTemp.write('''
-  
-  }
-}''');
-
-  final sbHash = StringBuffer(
-    sbHashTemp
-        .toString()
-        .replaceAll(',]);', ']);')
-        .replaceAll(', ]);', ']);')
-        .replaceAll(',)]);', ')]);'),
-  );
-
-  /* ****************************** */
-  //      Equals
-  /* ****************************** */
-  final sbEqualsTemp = StringBuffer();
-  // ignore: cascade_invocations
-  sbEqualsTemp.write('''
-  @override
-  bool operator ==(dynamic other) {
-    switch (_tag) {
-''');
-  for (final l in model.listUnion) {
-    final lastText = l.listParameters.isEmpty ? ');' : ' && ';
-    sbEqualsTemp.write('''
-
-      case _${model.nameClass}Tag.${l.nameUnion}:
-        return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is ${model.nameClass} $lastText 
-''');
-    final length = l.listParameters.length;
-
-    // if (length == 0) sbHash.write(']);');
-
-    // lastTextTemp = length == 0 ? ');' : '';
-    for (var i = 0; i < length; i++) {
-      final isLast = i + 1 == length;
-      final p = l.listParameters[i];
-      //  sbEqualsTemp.write(' && ');
-
-      sbEqualsTemp.write(
-        getEquals(p.typeEnum, '_${p.name}_${l.nameUnion}', isLast)
-            .replaceAll(RegExp(r'\s+'), ' '),
-      );
-    }
-  }
-  sbEqualsTemp.write('''
-  
-  }
-}''');
-
-  final sbEquals = StringBuffer(
-    sbEqualsTemp.toString(),
-    /* .replaceAll(',]);', ']);')
-      .replaceAll(', ]);', ']);')
-      .replaceAll(',)]);', ')]);') */
-  );
-
-  /* ****************************** */
-
-  final sbExtendsClass = StringBuffer();
-
-  for (final l in model.listUnion) {
-    final nameClass = _getNameExtendsClass(model, l);
-    final sbParam = StringBuffer();
-    final sbParamSuper = StringBuffer();
-    final sbParamFinal = StringBuffer();
-    for (var i = 0; i < l.listParameters.length; i++) {
-      final p = l.listParameters[i];
-      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
-
-      sbParam.write('this.${p.name}$lastText');
-
-      var addRequiest = '';
-
-      if (p.isRequired) {
-        addRequiest = '${p.name}:';
-      } else if (l.parameter == EnumParameter.defaultWithRequired &&
-          p.initValue.isEmpty) {
-        addRequiest = '';
-      } else if (l.parameter == EnumParameter.required &&
-              p.initValue.isNotEmpty ||
-          l.parameter == EnumParameter.defaultWithRequired &&
-              p.initValue.isNotEmpty) {
-        addRequiest = '${p.name}:';
-      } else if (l.parameter == EnumParameter.defaultWithRequired) {
-        addRequiest = '${p.name}:';
-      } else if (l.parameter == EnumParameter.optional ||
-          l.parameter == EnumParameter.defaultWithOptional ||
-          l.parameter == EnumParameter.default_) {
-        addRequiest = '';
-      }
-
-      sbParamSuper.write('$addRequiest ${p.name}$lastText');
-
-      sbParamFinal.write('  final ${p.typeStr} ${p.name};\n');
-    }
-
-    sbExtendsClass.write('''
-@immutable
-class $nameClass extends ${model.nameClass} {
-  const $nameClass($sbParam) : super.${l.nameUnion}($sbParamSuper);
-$sbParamFinal}\n''');
-  }
-
-  /* ****************************** */
-
-  final newContent = '''
-${model.contentToEnd}
+enum $nameClass with Comparable<$nameClass>  {
+$paramSb
+$constructorSb
+// end
 
 ${ConstConsole.GEN_MSG_START}
-// coverage:ignore-file
-// ignore_for_file: avoid_unused_constructor_parameters, unused_element, avoid-non-null-assertion,  library_private_types_in_public_api,non_constant_identifier_names, always_put_required_named_parameters_first,  avoid_positional_boolean_parameters, strict_raw_type, curly_braces_in_flow_control_structures
-@immutable
-${model.comments}
-${model.classHeader}
-$sbUnionClass
-$sbMapOrNull
-$sbMap
-$sbMaybeMap
-$sbWhere
-$sbEquals
-$sbHash
-$sbToString
-$sbAllParams
+${_getFromValue(fromValueInt: fromValueCommonIntSb, fromValueString: fromValueStringSb, model: model)}
+$mapCommonSb
+$maybeMapCommonSb
+$compareSToStringb
+
+
+
+
+
+
+
+}
+''');
+
+  // final _ = file.writeAsString(newContent.toString());
+  final _ = File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/test/enum_v2.dart')
+      .writeAsString(newContent.toString());
 }
 
-enum _${model.nameClass}Tag {
-$sbUnionTag}
-$sbExtendsClass''';
+String _getFromValue({
+  required EnumV2CommonModel model,
+  required StringBuffer fromValueString,
+  required StringBuffer fromValueInt,
+}) {
+  switch (model.typeEnum) {
+    case EnumTypeVarable.string_:
+      return fromValueString.toString();
+    case EnumTypeVarable.int_:
+      return fromValueInt.toString();
 
-  final _ = file.writeAsString(newContent);
-  // final _ =
-  //     File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/resources/to_union.dart')
-  //         .writeAsString(newContent);
+    case EnumTypeVarable.enum_:
 
-  logger.info(ConstConsole.GEN_MSG_END);
-}
+    case EnumTypeVarable.bool_:
 
-String _getNameExtendsClass(UnionCommonModel model, UnionItemModel l) {
-  return '_${model.nameClass}${l.nameUnion.toCapitalized()}';
+    case EnumTypeVarable.double_:
+
+    case EnumTypeVarable.num_:
+
+    case EnumTypeVarable.list_:
+
+    case EnumTypeVarable.list_bool_:
+
+    case EnumTypeVarable.list_other:
+
+    case EnumTypeVarable.list_int_:
+
+    case EnumTypeVarable.list_string_:
+
+    case EnumTypeVarable.list_double_:
+
+    case EnumTypeVarable.list_bool_null:
+
+    case EnumTypeVarable.list_int_null:
+
+    case EnumTypeVarable.list_string_null:
+
+    case EnumTypeVarable.list_double_null:
+
+    case EnumTypeVarable.list_dynamic_:
+
+    case EnumTypeVarable.list_map_int_string_:
+
+    case EnumTypeVarable.list_map_int_string_null:
+
+    case EnumTypeVarable.list_map_int_dynamic_:
+
+    case EnumTypeVarable.list_map_string_dynamic_:
+
+    case EnumTypeVarable.set_:
+
+    case EnumTypeVarable.set_string:
+
+    case EnumTypeVarable.set_string_null:
+
+    case EnumTypeVarable.set_int:
+
+    case EnumTypeVarable.set_int_null:
+
+    case EnumTypeVarable.set_bool:
+
+    case EnumTypeVarable.set_bool_null:
+
+    case EnumTypeVarable.set_double:
+
+    case EnumTypeVarable.set_double_null:
+
+    case EnumTypeVarable.map_:
+
+    case EnumTypeVarable.map_string_dynamic_:
+
+    case EnumTypeVarable.map_string_bool:
+
+    case EnumTypeVarable.map_string_int:
+
+    case EnumTypeVarable.map_string_string:
+
+    case EnumTypeVarable.map_string_double_:
+
+    case EnumTypeVarable.map_string_bool_null:
+
+    case EnumTypeVarable.map_string_int_null:
+
+    case EnumTypeVarable.map_string_string_null:
+
+    case EnumTypeVarable.map_string_double_null:
+
+    case EnumTypeVarable.map_int_string:
+
+    case EnumTypeVarable.map_int_string_null:
+
+    case EnumTypeVarable.map_int_double:
+
+    case EnumTypeVarable.map_int_double_null:
+
+    case EnumTypeVarable.map_int_bool:
+
+    case EnumTypeVarable.map_int_bool_null:
+
+    case EnumTypeVarable.map_int_dynamic_:
+
+    case EnumTypeVarable.date_time:
+
+    case EnumTypeVarable.map_dynamic_dynamic_:
+
+    case EnumTypeVarable.data:
+
+    case EnumTypeVarable.list_data:
+
+    case EnumTypeVarable.list_data_null:
+
+    case EnumTypeVarable.null_:
+
+    case EnumTypeVarable.none:
+      return '// ERROR: method fromValue for ${model.typeEnum.value} is not supported yet\n';
+  }
 }

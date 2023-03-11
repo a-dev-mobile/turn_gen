@@ -27,23 +27,23 @@ Future<void> runEnumV2({
 //
   msgIfNotNameClass(enumName, logger);
 
-  // msgIfNodEnd(contentFile, logger);
+  msgIfNodEnd(contentFile, logger);
 
-  // final contentToEnd = UtilsRegex.getTextRegexMatch(
-  //   content: contentFile,
-  //   regex: r'[\s\S]+?(\/\/\s+end)',
-  // );
+  final contentToEnd = UtilsRegex.getTextRegexMatch(
+    content: contentFile,
+    regex: r'[\s\S]+?(\/\/\s+end)',
+  );
 
   final enumToEnd = UtilsRegex.getTextRegexMatch(
     content: contentFile,
     regex: r'enum[\s\S]+?(\/\/\s+end)',
   );
   final enumBracketsRaw = UtilsRegex.getTextRegexMatch(
-    content: enumToEnd,
+    content: contentFile,
     regex: r'\{[\s\S]+\}',
   );
 
-  final isDefault = !enumBracketsRaw.contains('(');
+  final isDefault = !enumToEnd.contains('(');
 
   var regexEnumNameRaw = r'\w+';
 
@@ -71,32 +71,48 @@ Future<void> runEnumV2({
   );
 
   final listEnumValueFormat = _getFormatEnumRaw(listEnumValueRaw);
-  var nameVar = '';
-  var typeEnum = EnumTypeVarable.none;
+  // получаю значения
+  final listEnumTypeValueRaw = UtilsRegex.getTextRegexListMatch(
+    content: enumToEnd,
+    regex: r'final[\s\S]+?;',
+  );
 
+  var nameVar = 'value';
+  var typeEnum = EnumTypeVarable.string_;
   var isCanNull = false;
   if (!isDefault) {
-    nameVar = listEnumValueFormat.last.split(' ').last;
-    var typeVar = listEnumValueFormat.last.replaceAll(' $nameVar', '').trim();
-    if (typeVar[typeVar.length - 1] == '?') {
-      isCanNull = true;
-      typeVar = typeVar.replaceAll(RegExp(r'\?$'), '');
-    }
-    // удаляю значение
     final _ = listEnumValueFormat.removeLast();
+    //
+    final enumTypeValueFormat = _getFormatEnumRaw(listEnumTypeValueRaw).first;
 
-    typeEnum =
-        EnumTypeVarable.fromValue(typeVar, fallback: EnumTypeVarable.none);
-    if (typeEnum == EnumTypeVarable.none) {
-      typeEnum = autoUpdateType(typeEnum, typeVar, logger);
+    if (!isDefault) {
+      nameVar = enumTypeValueFormat.split(' ').last.replaceAll(';', '');
+      var typeVar = enumTypeValueFormat
+          .replaceAll(' $nameVar', '')
+          .replaceAll('final', '')
+          .replaceAll(';', '')
+          .trim();
+      if (typeVar[typeVar.length - 1] == '?') {
+        isCanNull = true;
+        typeVar = typeVar.replaceAll(RegExp(r'\?$'), '');
+      }
+
+      typeEnum =
+          EnumTypeVarable.fromValue(typeVar, fallback: EnumTypeVarable.none);
+      if (typeEnum == EnumTypeVarable.none) {
+        typeEnum = autoUpdateType(typeEnum, typeVar, logger);
+      }
     }
   }
   final enumItem = <EnumV2ItemModel>[];
   for (var i = 0; i < listEnumNameFormat.length; i++) {
-    enumItem.add(EnumV2ItemModel(
-      nameEnum: listEnumNameFormat[i],
-      valueEnum: isDefault ? '' : listEnumValueFormat[i],
-    ));
+    enumItem.add(
+      EnumV2ItemModel(
+        nameEnum: listEnumNameFormat[i],
+        valueEnum:
+            isDefault ? "'${listEnumNameFormat[i]}'" : listEnumValueFormat[i],
+      ),
+    );
   }
 
   final enumCommon = EnumV2CommonModel(
@@ -106,14 +122,13 @@ Future<void> runEnumV2({
     nameValue: nameVar,
     typeEnum: typeEnum,
     listItem: enumItem,
-    isDefault: isDefault,
-    isCanNull: isCanNull,
+    isDefault: isDefault, contentFile: contentFile,
+    isCanNull: isCanNull, contentToEnd: contentToEnd,
   );
 
   final file = File(path);
-  // unionWriteToFile(logger, file, newCommonModel, contentFile);
+  enumV2WriteToFile(logger, file, enumCommon);
 }
-
 
 List<String> _getFormatEnumRaw(
   List<String> content,
