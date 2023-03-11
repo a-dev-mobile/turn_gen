@@ -219,5 +219,7 @@ String getToMapVarable(Varable v) {
         return '$name.map((e) => e?.toMap()).toList()';
       }
       return error;
+    case EnumTypeVarable.null_:
+    return error;
   }
 }

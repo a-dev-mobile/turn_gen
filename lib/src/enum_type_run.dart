@@ -1,7 +1,9 @@
-// ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
-/*
+  // ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
+  /*
+  
   
   enum TypeRun {
+  enumV2('enum_v2'),
   enumDefault('enum_default'),
   enumInt('enum_int'),
   enumString('enum_string'),
@@ -11,14 +13,14 @@
   none('none'),
 }
 
- 
   */
+  
+  //  ******************************
+  // GENERATED CODE BELOW - DO NOT MODIFY
+  //  ******************************
 
-//  ******************************
-// GENERATED CODE BELOW - DO NOT MODIFY
-//  ******************************
-
-enum TypeRun with Comparable<TypeRun> {
+enum TypeRun with Comparable<TypeRun> { 
+  enumV2('enum_v2'),
   enumDefault('enum_default'),
   enumInt('enum_int'),
   enumString('enum_string'),
@@ -36,6 +38,8 @@ enum TypeRun with Comparable<TypeRun> {
     TypeRun? fallback,
   }) {
     switch (value) {
+      case 'enum_v2':
+        return enumV2;
       case 'enum_default':
         return enumDefault;
       case 'enum_int':
@@ -58,6 +62,7 @@ enum TypeRun with Comparable<TypeRun> {
 
   /// Pattern matching
   T map<T>({
+    required T Function() enumV2,
     required T Function() enumDefault,
     required T Function() enumInt,
     required T Function() enumString,
@@ -65,28 +70,33 @@ enum TypeRun with Comparable<TypeRun> {
     required T Function() assets,
     required T Function() union,
     required T Function() none,
+
   }) {
     switch (this) {
+      case TypeRun.enumV2:
+        return enumV2();     
       case TypeRun.enumDefault:
-        return enumDefault();
+        return enumDefault();     
       case TypeRun.enumInt:
-        return enumInt();
+        return enumInt();     
       case TypeRun.enumString:
-        return enumString();
+        return enumString();     
       case TypeRun.data:
-        return data();
+        return data();     
       case TypeRun.assets:
-        return assets();
+        return assets();     
       case TypeRun.union:
-        return union();
+        return union();     
       case TypeRun.none:
-        return none();
+        return none();     
+
     }
   }
-
+  
   /// Pattern matching
   T maybeMap<T>({
     required T Function() orElse,
+    T Function()? enumV2,
     T Function()? enumDefault,
     T Function()? enumInt,
     T Function()? enumString,
@@ -94,19 +104,23 @@ enum TypeRun with Comparable<TypeRun> {
     T Function()? assets,
     T Function()? union,
     T Function()? none,
+
   }) =>
       map<T>(
-        enumDefault: enumDefault ?? orElse,
-        enumInt: enumInt ?? orElse,
-        enumString: enumString ?? orElse,
-        data: data ?? orElse,
-        assets: assets ?? orElse,
-        union: union ?? orElse,
-        none: none ?? orElse,
+      enumV2: enumV2 ?? orElse,     
+      enumDefault: enumDefault ?? orElse,     
+      enumInt: enumInt ?? orElse,     
+      enumString: enumString ?? orElse,     
+      data: data ?? orElse,     
+      assets: assets ?? orElse,     
+      union: union ?? orElse,     
+      none: none ?? orElse,     
+
       );
 
   /// Pattern matching
   T? maybeMapOrNull<T>({
+    T Function()? enumV2,
     T Function()? enumDefault,
     T Function()? enumInt,
     T Function()? enumString,
@@ -114,16 +128,19 @@ enum TypeRun with Comparable<TypeRun> {
     T Function()? assets,
     T Function()? union,
     T Function()? none,
+
   }) =>
       maybeMap<T?>(
         orElse: () => null,
-        enumDefault: enumDefault,
-        enumInt: enumInt,
-        enumString: enumString,
-        data: data,
-        assets: assets,
-        union: union,
-        none: none,
+        enumV2: enumV2,  
+        enumDefault: enumDefault,  
+        enumInt: enumInt,  
+        enumString: enumString,  
+        data: data,  
+        assets: assets,  
+        union: union,  
+        none: none,  
+        
       );
 
   @override
@@ -131,4 +148,4 @@ enum TypeRun with Comparable<TypeRun> {
 
   @override
   String toString() => value;
-}
+   }

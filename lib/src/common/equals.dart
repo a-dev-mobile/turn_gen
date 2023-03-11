@@ -62,6 +62,8 @@ String getEquals(EnumTypeVarable type, String nameVar, bool isLast) {
     case EnumTypeVarable.data:
       return '            (identical(other.$nameVar, $nameVar) || other.$nameVar == $nameVar)$end';
     case EnumTypeVarable.list_other:
+    case EnumTypeVarable.null_:
       return 'error _getEquals';
+      
   }
 }

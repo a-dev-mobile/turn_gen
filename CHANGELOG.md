@@ -1,3 +1,9 @@
+## 0.3.2
+
+- now any `implements` of the fake `union class` are added to the main
+- move `union class` documentation comments of the fake class to the main class
+- Updated README.md
+
 ## 0.3.0
 
 - added hints to `fromMap` if value is empty - for all variables

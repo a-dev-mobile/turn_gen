@@ -1,4 +1,4 @@
-part of 'run_union_class.dart';
+part of 'run_enum_v2.dart';
 
 // ignore: prefer-static-class
 void unionWriteToFile(
@@ -25,7 +25,7 @@ void unionWriteToFile(
 
   final sbUnionClass = StringBuffer();
   for (final l in model.listUnion) {
-    final unionName = l.nameUnion == _emptyUnionName ? '' : '.${l.nameUnion}';
+    final unionName = '.${l.nameUnion}';
     sbUnionClass.write('''
 ${l.comment}
   const ${model.nameClass}$unionName${l.paramStr}:
@@ -225,7 +225,7 @@ $sbMaybeMapCase    }
 ''');
 
   for (final l in model.listUnion) {
-    final unionName = l.nameUnion == _emptyUnionName ? '' : '.${l.nameUnion}';
+    final unionName =  '.${l.nameUnion}';
     sbToString.write('''
 
       case _${model.nameClass}Tag.${l.nameUnion}:

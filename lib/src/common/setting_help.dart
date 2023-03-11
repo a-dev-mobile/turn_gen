@@ -60,7 +60,27 @@ Map<EnumKeySetting, String> getMapSettingVarable(String content) {
 
   return map;
 }
-
+String cleanParam(String value) {
+  return value
+      .trim()
+      .replaceAll('({', '')
+      .replaceAll('})', '')
+      .replaceAll('([', '')
+      .replaceAll('])', '')
+      .replaceAll(RegExp(r'^\['), '')
+      .replaceAll(RegExp(r'^\{'), '')
+      .replaceAll(RegExp(r'^\('), '')
+      .replaceAll(RegExp(r'\)$'), '');
+}
+void msgIfNotNameClass(String className, FLILogger logger) {
+  if (className.isEmpty) {
+    logger
+      ..info('\n')
+      ..error('TurnGen did not define the name of the class')
+      ..info('\n');
+    exit(0);
+  }
+}
 void msgIfNodEnd(String contentFile, FLILogger logger) {
   if (!contentFile.contains(RegExp(r'(\/\/\s+end)'))) {
     logger

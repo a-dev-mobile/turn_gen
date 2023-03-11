@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
+import 'package:turn_gen/src/enum_v2/enum_v2.dart';
 import 'package:turn_gen/src/src.dart';
 
 // ignore: prefer-static-class
@@ -88,6 +89,10 @@ data
         exit(0);
       case TypeRun.union:
         await runUnion(path: path, logger: logger);
+        break;
+      case TypeRun.enumV2:
+        await runEnumV2(path: path, logger: logger);
+
         break;
     }
   } catch (e) {

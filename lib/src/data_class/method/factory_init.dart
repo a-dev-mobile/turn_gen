@@ -1,3 +1,6 @@
+// ignore_for_file: no-equal-arguments
+
+
 part of '../run_data_class.dart';
 
 // добавляем ли const в factory init
@@ -99,6 +102,7 @@ String _getDefaultInitValue(EnumTypeVarable type, String init, bool isCanNull) {
     data: () => init,
     list_data: () => listDefault,
     list_data_null: () => listDefault,
+    null_: () => '',
   );
 
   // print(initValue.toString());

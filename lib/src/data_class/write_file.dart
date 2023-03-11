@@ -236,7 +236,8 @@ String _getFromMap_(
   bool isHaveRequired,
 ) {
   final add1 = isHaveRequired ? '' : '?';
-  final add2 = isHaveRequired ? '' : 'if (map == null) return const $className();\n';
+  final add2 =
+      isHaveRequired ? '' : 'if (map == null) return const $className();\n';
 
   return isActive
       ? '''

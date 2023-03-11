@@ -41,7 +41,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
 
   final className = _getNameClass(classHeader);
 
-  _msgIfNotNameClass(className, logger);
+  msgIfNotNameClass(className, logger);
 
   final classBrackets = UtilsString.replaceToEmpty(
     text: classContent,
@@ -49,7 +49,7 @@ Future<void> runData({required String path, required FLILogger logger}) async {
       classHeader,
     ],
   );
-// delete all comments, for parsing purity 
+// delete all comments, for parsing purity
   classContent = classContent.replaceAll(RegExp('//.*'), '');
 
   final listItemFinalRaw = UtilsRegex.getTextRegexListMatch(
@@ -305,15 +305,7 @@ type: asda fromMap: asdasd*/
   );
 }
 
-void _msgIfNotNameClass(String className, FLILogger logger) {
-  if (className.isEmpty) {
-    logger
-      ..info('\n')
-      ..error('TurnGen did not define the name of the class')
-      ..info('\n');
-    exit(0);
-  }
-}
+
 
 void _msgErrorParsingVarable(String varable, FLILogger logger) {
   logger

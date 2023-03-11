@@ -5,27 +5,36 @@ import 'package:turn_gen/src/src.dart';
 
 part 'union_write_file.dart';
 
-const String _emptyUnionName = 'default_';
+const String _emptyUnionName = '_';
 
 // ignore: prefer-static-class
 Future<void> runUnion({required String path, required FLILogger logger}) async {
   final contentFile = await UtilsString.readFile(path: path);
 
-  final classHeader = UtilsRegex.getTextRegexMatch(
+  var classHeader = UtilsRegex.getTextRegexMatch(
     content: contentFile,
     regex: r'class[\s\S]+?{',
     isLast: false,
   );
-
+// remove underscores
   final className = _getNameClass(classHeader).replaceAll(RegExp('^_'), '');
+  classHeader = classHeader.replaceAll('_$className', className);
+//
   _msgIfNotNameClass(className, logger);
-
   msgIfNodEnd(contentFile, logger);
 
   final contentToEnd = UtilsRegex.getTextRegexMatch(
     content: contentFile,
     regex: r'[\s\S]+?(\/\/\s+end)',
   );
+
+  final contentBeforeClass = UtilsRegex.getTextRegexMatch(
+    content: contentFile,
+    regex: r'[\s\S]+?class',
+    isLast: false,
+  );
+
+  final commentDocClass = _getCommentDoc(contentBeforeClass);
 
   final classToEnd = UtilsRegex.getTextRegexMatch(
     content: contentFile,
@@ -44,13 +53,7 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
   final listFormatUnionItem = _getFormatItemUnion(className, listUnionRawItem);
 
   final listUnionName = _getUnionName(listFormatUnionItem, className);
-  if (listUnionName.contains(_emptyUnionName)) {
-    logger
-      ..info('\n')
-      ..error('TurnGen does not support default constructor, add factory name')
-      ..info('\n');
-    exit(0);
-  }
+  _msgYesDefConstructor(listUnionName, logger);
 
   final listUnionItem = <UnionItemModel>[];
 
@@ -71,8 +74,19 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
     final listParamRaw = textBrackets.split(',');
     final listParamFormat = <String>[];
     final listParamModel = <UnionParameterModel>[];
+// get comment 
+    var regexRawDocCommentUnion = '';
+    regexRawDocCommentUnion = i == 0
+        ? '{[\\s\\S]*_$className(|[\\n\\r\\s]+)\\.(|[\\n\\r\\s]+)$unionName'
+        : '_$className(|[\\n\\r\\s]+)\\.(|[\\n\\r\\s]+)${listUnionName[i - 1]}[\\s\\S]*_$className(|[\\n\\r\\s]+)\\.(|[\\n\\r\\s]+)${listUnionName[i]}';
+    final rawDocCommentUnion = UtilsRegex.getTextRegexMatch(
+      content: classBrackets,
+      regex: regexRawDocCommentUnion,
+    );
+    final docCommentUnion = _getCommentDoc(rawDocCommentUnion);
+
     for (var i = 0; i < listParamRaw.length; i++) {
-      var v = _cleanParam(listParamRaw[i]);
+      var v = cleanParam(listParamRaw[i]);
       var isRequired = false;
       var initValue = '';
 
@@ -93,7 +107,7 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
 
       if (v.contains('<') && !v.contains('>') ||
           v.contains('[') && !v.contains(']')) {
-        v = '$v, ${_cleanParam(listParamRaw[i + 1])}';
+        v = '$v, ${cleanParam(listParamRaw[i + 1])}';
       } else if (v.contains('>') && !v.contains('<') ||
           v.contains(']') && !v.contains('[')) {
         continue;
@@ -146,6 +160,7 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
 
     listUnionItem.add(
       UnionItemModel(
+        comment: docCommentUnion,
         paramStr: textBrackets,
         nameUnion: listUnionName[i],
         parameter: enumParam,
@@ -160,7 +175,7 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
     listUnion: listUnionItem,
   );
 
-// пересобираю общую модель всех параметров с уникальным параметром каждого union
+// rebuild the general model of all parameters with a unique parameter for each union
   final newListUnion = <UnionItemModel>[];
   for (final u in commonModel.listUnion) {
     final newlistParamsForMap = Map<String, String>.from(listParamsForMap);
@@ -170,24 +185,38 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
     }
     newListUnion.add(u.copyWith(mapNameWithTag: newlistParamsForMap));
   }
-  final newCommonModel = commonModel.copyWith(listUnion: newListUnion);
+  final newCommonModel = commonModel.copyWith(
+    listUnion: newListUnion,
+    classHeader: classHeader,
+    comments: commentDocClass,
+  );
 
   final file = File(path);
   unionWriteToFile(logger, file, newCommonModel, contentFile);
 }
 
-String _cleanParam(String value) {
-  return value
-      .trim()
-      .replaceAll('({', '')
-      .replaceAll('})', '')
-      .replaceAll('([', '')
-      .replaceAll('])', '')
-      .replaceAll(RegExp(r'^\['), '')
-      .replaceAll(RegExp(r'^\{'), '')
-      .replaceAll(RegExp(r'^\('), '')
-      .replaceAll(RegExp(r'\)$'), '');
+String _getCommentDoc(String content) {
+  final commentDocClassList = UtilsRegex.getTextRegexListMatch(
+    regex: r'\/\/\/.*',
+    content: content,
+  );
+
+  return commentDocClassList.join('_-_').replaceAll('_-_', '\n');
 }
+
+void _msgYesDefConstructor(List<String> listUnionName, FLILogger logger) {
+  if (listUnionName.contains(_emptyUnionName)) {
+    logger
+      ..info('\n')
+      ..error(
+        'TurnGen does not support default constructor or privat constructor',
+      )
+      ..info('\n');
+    exit(0);
+  }
+}
+
+
 
 EnumParameter _getTypeParameter(String textBrackets) {
   var returnValue = EnumParameter.none;

@@ -54,8 +54,8 @@ Future<void> runEnumDefault({
   /// Pattern matching
   final mapStart = StringBuffer();
   final mapEnd = StringBuffer();
-  final mapConstStart = StringBuffer();
-  final mapConstEnd = StringBuffer();
+  final mapVarStart = StringBuffer();
+  final mapVarEnd = StringBuffer();
   final maybeMapStart = StringBuffer();
   final maybeMapEnd = StringBuffer();
   final maybeMapOrNullStart = StringBuffer();
@@ -85,11 +85,11 @@ Future<void> runEnumDefault({
       case $nameEnum.$v:
         return $v();     
 ''');
-    mapConstStart.write('''
+    mapVarStart.write('''
     required T $v,
 ''');
 
-    mapConstEnd.write('''
+    mapVarEnd.write('''
       case $nameEnum.$v:
         return $v;     
 ''');
@@ -147,11 +147,11 @@ $mapEnd
     }
   }
 
-  T mapConst<T>({
-$mapConstStart
+  T mapVar<T>({
+$mapVarStart
   }) {
     switch (this) {
-$mapConstEnd
+$mapVarEnd
     }
   }
 

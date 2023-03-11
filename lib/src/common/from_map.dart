@@ -791,13 +791,11 @@ String getFromMap(Varable v) {
       return error;
     case EnumTypeVarable.list_data:
       if (yes_null_default_yes) {
-
         return _getValueWithInit(
           "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()",
           name,
           initComment,
         );
-   
       } else if (yes_null_default_no) {
         return _getValueWithInit(
           "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()",
@@ -831,6 +829,8 @@ String getFromMap(Varable v) {
           name,
         );
       }
+      return error;
+    case EnumTypeVarable.null_:
       return error;
   }
 }

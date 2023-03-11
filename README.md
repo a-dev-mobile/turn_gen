@@ -433,7 +433,7 @@ Map<String, dynamic> toMap() {
 
 ### Union types
 
-TurnGen scripts can generate "union types" by creating a class with named constructors, but making it private. This class is not used anywhere, but it is convenient to use it to change the generated code. And add the `// end` comment at the end of the class, as in the example below:
+TurnGen scripts can generate "union types" by creating a class with named constructors, but this requires making a fake private class. This class is not used anywhere, but it is useful for modifying the generated code. And add a `// end` comment at the end of the class, like in the example below:
 
 ```dart
 class _Union {

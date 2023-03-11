@@ -61,5 +61,7 @@ String getHashCode(EnumTypeVarable type, String nameVar) {
     case EnumTypeVarable.date_time:
     case EnumTypeVarable.data:
       return '        $nameVar$end';
+    case EnumTypeVarable.null_:
+        return '';
   }
 }
