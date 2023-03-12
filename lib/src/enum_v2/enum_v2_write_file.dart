@@ -416,7 +416,7 @@ $compareSToStringb
 }
 ''');
 
-  var _ = file.writeAsString(newContent.toString());
-  _ = File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/test/enum_v2.dart')
-      .writeAsString(newContent.toString());
+  final _ = file.writeAsString(newContent.toString());
+  // _ = File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/test/enum_v2.dart')
+  //     .writeAsString(newContent.toString());
 }

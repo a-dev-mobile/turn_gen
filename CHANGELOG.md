@@ -1,3 +1,7 @@
+## 0.4.1
+
+- minor fixes
+
 ## 0.4.0
 
 - The script was completely redesigned to generate additional `enum` methods
