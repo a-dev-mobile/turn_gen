@@ -1,6 +1,5 @@
 // ignore_for_file: no-equal-arguments
 
-
 part of '../run_data_class.dart';
 
 // добавляем ли const в factory init

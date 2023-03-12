@@ -220,6 +220,6 @@ String getToMapVarable(Varable v) {
       }
       return error;
     case EnumTypeVarable.null_:
-    return error;
+      return error;
   }
 }

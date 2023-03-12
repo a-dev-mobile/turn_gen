@@ -1,8 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
-import 'dart:mirrors';
 
 import 'package:turn_gen/src/enum_v2/enum_v2.dart';
 import 'package:turn_gen/src/src.dart';
@@ -23,7 +20,7 @@ Future<void> runEnumV2({
   );
 // remove underscores
   final enumName = _getEnumName(enumHeader);
-    // final slash = Platform.isWindows ? r'\' : '/';
+  // final slash = Platform.isWindows ? r'\' : '/';
   // final nameFile = path.split(slash).last.split('.').first;
 //
   msgIfNotNameClass(enumName, logger);
@@ -34,16 +31,18 @@ Future<void> runEnumV2({
     content: contentFile,
     regex: r'[\s\S]+?(\/\/\s+end)',
   );
+  final contentToEndWithoutComment =
+      '${contentToEnd.replaceAll(RegExp(r'\/\/.*'), '')} \n\n// end';
 
   final enumToEndRaw = UtilsRegex.getTextRegexMatch(
-    content: contentFile,
+    content: contentToEndWithoutComment,
     regex: r'enum[\s\S]+?(\/\/\s+end)',
   );
 
   // final enumToEndFormat = enumToEndRaw.replaceAll(RegExp(r'\s+'), ' ').replaceAll('// end', '');
 
   final enumBracketsEnd = UtilsRegex.getTextRegexMatch(
-    content: contentFile,
+    content: contentToEndWithoutComment,
     regex: r'\{[\s\S]+(\/\/\s+end)',
   );
 
@@ -114,11 +113,12 @@ Future<void> runEnumV2({
   }
   final enumItem = <EnumV2ItemModel>[];
   for (var i = 0; i < listEnumNameFormat.length; i++) {
+    final name = listEnumNameFormat[i];
+    final value = isDefault ? "'$name'" : listEnumValueFormat[i];
     enumItem.add(
       EnumV2ItemModel(
-        nameEnum: listEnumNameFormat[i],
-        valueEnum:
-            isDefault ? "'${listEnumNameFormat[i]}'" : listEnumValueFormat[i],
+        nameEnum: name,
+        valueEnum: value,
       ),
     );
   }
@@ -128,10 +128,12 @@ Future<void> runEnumV2({
     nameClass: enumName,
     headerClass: enumHeader,
     nameValue: nameVar,
-    typeEnum: typeEnum, 
+    typeEnum: typeEnum,
     listItem: enumItem,
-    isDefault: isDefault, contentFile: contentFile,
-    isCanNull: isCanNull, contentToEnd: contentToEnd,
+    isDefault: isDefault,
+    contentFile: contentFile,
+    isCanNull: isCanNull,
+    contentToEnd: contentToEnd,
   );
 
   final file = File(path);
@@ -182,6 +184,7 @@ List<String> _getFormatEnumRaw(
           .replaceAll('. ', '.')
           .replaceAll(' :', ':')
           .replaceAll(' ,', ',')
+          .replaceAll(" '", "'")
           .replaceAll(',[', ', [')
           .replaceAll(',{', ', {')
           .trim()

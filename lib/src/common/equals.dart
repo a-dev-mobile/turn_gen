@@ -64,6 +64,5 @@ String getEquals(EnumTypeVarable type, String nameVar, bool isLast) {
     case EnumTypeVarable.list_other:
     case EnumTypeVarable.null_:
       return 'error _getEquals';
-      
   }
 }

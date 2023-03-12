@@ -1,90 +1,6 @@
-  // ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
-  /*
-  
-  enum EnumTypeVarable {
-  enum_('enum'),
+// ignore_for_file: avoid-non-null-assertion, non_constant_identifier_names, constant_identifier_names
 
-  string_(String),
-  bool_(bool),
-  int_(int),
-  double_(double),
-  num_(num),
-  list_(List),
-  list_bool_(List<bool>),
-  list_other(List<Object>),
-  list_int_(List<int>),
-  list_string_(List<String>),
-  list_double_(List<double>),
-
-  list_bool_null(List<bool?>),
-  list_int_null(List<int?>),
-  list_string_null(List<String?>),
-  list_double_null(List<double?>),
-
-  list_dynamic_(List<dynamic>),
-
-  list_map_int_string_(List<Map<int, String>>),
-  list_map_int_string_null(List<Map<int, String?>>),
-  list_map_int_dynamic_(List<Map<int, dynamic>>),
-  list_map_string_dynamic_(List<Map<String, dynamic>>),
-
-  set_(Set),
-  set_string(Set<String>),
-  set_string_null(Set<String?>),
-  set_int(Set<int>),
-  set_int_null(Set<int?>),
-  set_bool(Set<bool>),
-  set_bool_null(Set<bool?>),
-  set_double(Set<double>),
-  set_double_null(Set<double?>),
-  map_(Map),
-  map_string_dynamic_(Map<String, dynamic>),
-  map_string_bool(Map<String, bool>),
-  map_string_int(Map<String, int>),
-  map_string_string(Map<String, String>),
-  map_string_double_(Map<String, double>),
-
-  map_string_bool_null(Map<String, bool?>),
-  map_string_int_null(Map<String, int?>),
-  map_string_string_null(Map<String, String?>),
-  map_string_double_null(Map<String, double?>),
-
-  map_int_string(Map<int, String>),
-  map_int_string_null(Map<int, String?>),
-  map_int_double(Map<int, double>),
-  map_int_double_null(Map<int, double?>),
-  map_int_bool(Map<int, bool>),
-  map_int_bool_null(Map<int, bool?>),
-  map_int_dynamic_(Map<int, dynamic>),
-  date_time(DateTime),
-  map_dynamic_dynamic_(Map<dynamic, dynamic>),
-
-  data(data),
-
-  list_data(List<data>),
-
-  list_data_null(List<data?>),
-  null_('Null'),
-
-
-
-
-
-  none('none');
-
-
-
-
-}
-
-
-  */
-  
-  //  ******************************
-  // GENERATED CODE BELOW - DO NOT MODIFY
-  //  ******************************
-
-enum EnumTypeVarable with Comparable<EnumTypeVarable> { 
+enum EnumTypeVarable with Comparable<EnumTypeVarable> {
   enum_('enum'),
   string_('String'),
   bool_('bool'),
@@ -141,13 +57,32 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
   none('none');
 
   const EnumTypeVarable(this.value);
-
   final String value;
 
-  static EnumTypeVarable fromValue(
-    String? value, {
-    EnumTypeVarable? fallback,
-  }) {
+// end
+
+//          --TURN_GEN--
+//             v0.4.0
+//  *************************************
+//           GENERATED CODE
+//  *************************************
+
+  /// Creates a new instance of [EnumTypeVarable] from a given String value.
+  ///
+  /// If the given value matches one of the values defined in the [EnumTypeVarable] enumeration,
+  /// a corresponding instance of [EnumTypeVarable] is returned.
+  /// If the given value is null or does not match any of the enumeration values and a fallback
+  /// value is not provided, an [ArgumentError] is thrown.
+  ///
+  /// The `fallback` parameter is an optional [EnumTypeVarable] value that will be returned if the
+  /// given value does not match any of the enumeration values.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum locale = LocaleEnum.fromValue('en', fallback: LocaleEnum.ru);
+  /// print(locale); // Output: LocaleEnum.en(en)
+  /// ```
+  static EnumTypeVarable fromValue(String? value, {EnumTypeVarable? fallback}) {
     switch (value) {
       case 'enum':
         return enum_;
@@ -257,13 +192,29 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
         return null_;
       case 'none':
         return none;
-
       default:
-        return fallback ?? (throw ArgumentError.value(value));
+        return fallback ??
+            (throw ArgumentError.value(
+              value,
+              '',
+              'Value not found in EnumTypeVarable',
+            ));
     }
   }
 
-  /// Pattern matching
+  /// Calls the appropriate function based on the value of this [EnumTypeVarable] instance.
+  ///
+  /// This method returns the result of calling the appropriate function for the value of the current [EnumTypeVarable] instance.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum ru = LocaleEnum.ru;
+  /// String result = ru.map(
+  ///   ru: () => 'Привет!',
+  ///   en: () => 'Hello!',
+  /// );
+  /// print(result); // Output: 'Привет!'
+  /// ```
   T map<T>({
     required T Function() enum_,
     required T Function() string_,
@@ -319,122 +270,315 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
     required T Function() list_data_null,
     required T Function() null_,
     required T Function() none,
-
   }) {
     switch (this) {
       case EnumTypeVarable.enum_:
-        return enum_();     
+        return enum_();
       case EnumTypeVarable.string_:
-        return string_();     
+        return string_();
       case EnumTypeVarable.bool_:
-        return bool_();     
+        return bool_();
       case EnumTypeVarable.int_:
-        return int_();     
+        return int_();
       case EnumTypeVarable.double_:
-        return double_();     
+        return double_();
       case EnumTypeVarable.num_:
-        return num_();     
+        return num_();
       case EnumTypeVarable.list_:
-        return list_();     
+        return list_();
       case EnumTypeVarable.list_bool_:
-        return list_bool_();     
+        return list_bool_();
       case EnumTypeVarable.list_other:
-        return list_other();     
+        return list_other();
       case EnumTypeVarable.list_int_:
-        return list_int_();     
+        return list_int_();
       case EnumTypeVarable.list_string_:
-        return list_string_();     
+        return list_string_();
       case EnumTypeVarable.list_double_:
-        return list_double_();     
+        return list_double_();
       case EnumTypeVarable.list_bool_null:
-        return list_bool_null();     
+        return list_bool_null();
       case EnumTypeVarable.list_int_null:
-        return list_int_null();     
+        return list_int_null();
       case EnumTypeVarable.list_string_null:
-        return list_string_null();     
+        return list_string_null();
       case EnumTypeVarable.list_double_null:
-        return list_double_null();     
+        return list_double_null();
       case EnumTypeVarable.list_dynamic_:
-        return list_dynamic_();     
+        return list_dynamic_();
       case EnumTypeVarable.list_map_int_string_:
-        return list_map_int_string_();     
+        return list_map_int_string_();
       case EnumTypeVarable.list_map_int_string_null:
-        return list_map_int_string_null();     
+        return list_map_int_string_null();
       case EnumTypeVarable.list_map_int_dynamic_:
-        return list_map_int_dynamic_();     
+        return list_map_int_dynamic_();
       case EnumTypeVarable.list_map_string_dynamic_:
-        return list_map_string_dynamic_();     
+        return list_map_string_dynamic_();
       case EnumTypeVarable.set_:
-        return set_();     
+        return set_();
       case EnumTypeVarable.set_string:
-        return set_string();     
+        return set_string();
       case EnumTypeVarable.set_string_null:
-        return set_string_null();     
+        return set_string_null();
       case EnumTypeVarable.set_int:
-        return set_int();     
+        return set_int();
       case EnumTypeVarable.set_int_null:
-        return set_int_null();     
+        return set_int_null();
       case EnumTypeVarable.set_bool:
-        return set_bool();     
+        return set_bool();
       case EnumTypeVarable.set_bool_null:
-        return set_bool_null();     
+        return set_bool_null();
       case EnumTypeVarable.set_double:
-        return set_double();     
+        return set_double();
       case EnumTypeVarable.set_double_null:
-        return set_double_null();     
+        return set_double_null();
       case EnumTypeVarable.map_:
-        return map_();     
+        return map_();
       case EnumTypeVarable.map_string_dynamic_:
-        return map_string_dynamic_();     
+        return map_string_dynamic_();
       case EnumTypeVarable.map_string_bool:
-        return map_string_bool();     
+        return map_string_bool();
       case EnumTypeVarable.map_string_int:
-        return map_string_int();     
+        return map_string_int();
       case EnumTypeVarable.map_string_string:
-        return map_string_string();     
+        return map_string_string();
       case EnumTypeVarable.map_string_double_:
-        return map_string_double_();     
+        return map_string_double_();
       case EnumTypeVarable.map_string_bool_null:
-        return map_string_bool_null();     
+        return map_string_bool_null();
       case EnumTypeVarable.map_string_int_null:
-        return map_string_int_null();     
+        return map_string_int_null();
       case EnumTypeVarable.map_string_string_null:
-        return map_string_string_null();     
+        return map_string_string_null();
       case EnumTypeVarable.map_string_double_null:
-        return map_string_double_null();     
+        return map_string_double_null();
       case EnumTypeVarable.map_int_string:
-        return map_int_string();     
+        return map_int_string();
       case EnumTypeVarable.map_int_string_null:
-        return map_int_string_null();     
+        return map_int_string_null();
       case EnumTypeVarable.map_int_double:
-        return map_int_double();     
+        return map_int_double();
       case EnumTypeVarable.map_int_double_null:
-        return map_int_double_null();     
+        return map_int_double_null();
       case EnumTypeVarable.map_int_bool:
-        return map_int_bool();     
+        return map_int_bool();
       case EnumTypeVarable.map_int_bool_null:
-        return map_int_bool_null();     
+        return map_int_bool_null();
       case EnumTypeVarable.map_int_dynamic_:
-        return map_int_dynamic_();     
+        return map_int_dynamic_();
       case EnumTypeVarable.date_time:
-        return date_time();     
+        return date_time();
       case EnumTypeVarable.map_dynamic_dynamic_:
-        return map_dynamic_dynamic_();     
+        return map_dynamic_dynamic_();
       case EnumTypeVarable.data:
-        return data();     
+        return data();
       case EnumTypeVarable.list_data:
-        return list_data();     
+        return list_data();
       case EnumTypeVarable.list_data_null:
-        return list_data_null();     
+        return list_data_null();
       case EnumTypeVarable.null_:
-        return null_();     
+        return null_();
       case EnumTypeVarable.none:
-        return none();     
-
+        return none();
     }
   }
-  
-  /// Pattern matching
+
+  /// Calls the appropriate function based on the value of this [EnumTypeVarable] instance.
+  ///
+  /// This method returns the appropriate value for the value of the current [EnumTypeVarable] instance.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum en = LocaleEnum.en;
+  /// String result = en.mapValue(
+  ///   ru: 'Привет!',
+  ///   en: 'Hello!',
+  /// );
+  /// print(result); // Output: 'Hello!'
+  /// ```
+  T mapValue<T>({
+    required T enum_,
+    required T string_,
+    required T bool_,
+    required T int_,
+    required T double_,
+    required T num_,
+    required T list_,
+    required T list_bool_,
+    required T list_other,
+    required T list_int_,
+    required T list_string_,
+    required T list_double_,
+    required T list_bool_null,
+    required T list_int_null,
+    required T list_string_null,
+    required T list_double_null,
+    required T list_dynamic_,
+    required T list_map_int_string_,
+    required T list_map_int_string_null,
+    required T list_map_int_dynamic_,
+    required T list_map_string_dynamic_,
+    required T set_,
+    required T set_string,
+    required T set_string_null,
+    required T set_int,
+    required T set_int_null,
+    required T set_bool,
+    required T set_bool_null,
+    required T set_double,
+    required T set_double_null,
+    required T map_,
+    required T map_string_dynamic_,
+    required T map_string_bool,
+    required T map_string_int,
+    required T map_string_string,
+    required T map_string_double_,
+    required T map_string_bool_null,
+    required T map_string_int_null,
+    required T map_string_string_null,
+    required T map_string_double_null,
+    required T map_int_string,
+    required T map_int_string_null,
+    required T map_int_double,
+    required T map_int_double_null,
+    required T map_int_bool,
+    required T map_int_bool_null,
+    required T map_int_dynamic_,
+    required T date_time,
+    required T map_dynamic_dynamic_,
+    required T data,
+    required T list_data,
+    required T list_data_null,
+    required T null_,
+    required T none,
+  }) {
+    switch (this) {
+      case EnumTypeVarable.enum_:
+        return enum_;
+      case EnumTypeVarable.string_:
+        return string_;
+      case EnumTypeVarable.bool_:
+        return bool_;
+      case EnumTypeVarable.int_:
+        return int_;
+      case EnumTypeVarable.double_:
+        return double_;
+      case EnumTypeVarable.num_:
+        return num_;
+      case EnumTypeVarable.list_:
+        return list_;
+      case EnumTypeVarable.list_bool_:
+        return list_bool_;
+      case EnumTypeVarable.list_other:
+        return list_other;
+      case EnumTypeVarable.list_int_:
+        return list_int_;
+      case EnumTypeVarable.list_string_:
+        return list_string_;
+      case EnumTypeVarable.list_double_:
+        return list_double_;
+      case EnumTypeVarable.list_bool_null:
+        return list_bool_null;
+      case EnumTypeVarable.list_int_null:
+        return list_int_null;
+      case EnumTypeVarable.list_string_null:
+        return list_string_null;
+      case EnumTypeVarable.list_double_null:
+        return list_double_null;
+      case EnumTypeVarable.list_dynamic_:
+        return list_dynamic_;
+      case EnumTypeVarable.list_map_int_string_:
+        return list_map_int_string_;
+      case EnumTypeVarable.list_map_int_string_null:
+        return list_map_int_string_null;
+      case EnumTypeVarable.list_map_int_dynamic_:
+        return list_map_int_dynamic_;
+      case EnumTypeVarable.list_map_string_dynamic_:
+        return list_map_string_dynamic_;
+      case EnumTypeVarable.set_:
+        return set_;
+      case EnumTypeVarable.set_string:
+        return set_string;
+      case EnumTypeVarable.set_string_null:
+        return set_string_null;
+      case EnumTypeVarable.set_int:
+        return set_int;
+      case EnumTypeVarable.set_int_null:
+        return set_int_null;
+      case EnumTypeVarable.set_bool:
+        return set_bool;
+      case EnumTypeVarable.set_bool_null:
+        return set_bool_null;
+      case EnumTypeVarable.set_double:
+        return set_double;
+      case EnumTypeVarable.set_double_null:
+        return set_double_null;
+      case EnumTypeVarable.map_:
+        return map_;
+      case EnumTypeVarable.map_string_dynamic_:
+        return map_string_dynamic_;
+      case EnumTypeVarable.map_string_bool:
+        return map_string_bool;
+      case EnumTypeVarable.map_string_int:
+        return map_string_int;
+      case EnumTypeVarable.map_string_string:
+        return map_string_string;
+      case EnumTypeVarable.map_string_double_:
+        return map_string_double_;
+      case EnumTypeVarable.map_string_bool_null:
+        return map_string_bool_null;
+      case EnumTypeVarable.map_string_int_null:
+        return map_string_int_null;
+      case EnumTypeVarable.map_string_string_null:
+        return map_string_string_null;
+      case EnumTypeVarable.map_string_double_null:
+        return map_string_double_null;
+      case EnumTypeVarable.map_int_string:
+        return map_int_string;
+      case EnumTypeVarable.map_int_string_null:
+        return map_int_string_null;
+      case EnumTypeVarable.map_int_double:
+        return map_int_double;
+      case EnumTypeVarable.map_int_double_null:
+        return map_int_double_null;
+      case EnumTypeVarable.map_int_bool:
+        return map_int_bool;
+      case EnumTypeVarable.map_int_bool_null:
+        return map_int_bool_null;
+      case EnumTypeVarable.map_int_dynamic_:
+        return map_int_dynamic_;
+      case EnumTypeVarable.date_time:
+        return date_time;
+      case EnumTypeVarable.map_dynamic_dynamic_:
+        return map_dynamic_dynamic_;
+      case EnumTypeVarable.data:
+        return data;
+      case EnumTypeVarable.list_data:
+        return list_data;
+      case EnumTypeVarable.list_data_null:
+        return list_data_null;
+      case EnumTypeVarable.null_:
+        return null_;
+      case EnumTypeVarable.none:
+        return none;
+    }
+  }
+
+  /// Calls the appropriate function based on the value of this [EnumTypeVarable] instance.
+  ///
+  /// If the corresponding function for the value of this [EnumTypeVarable] instance is not provided,
+  /// the `orElse` function will be called instead.
+  /// This method returns the value returned by the appropriate function for the value of this [EnumTypeVarable] instance.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum ru = LocaleEnum.ru;
+  /// String result = ru.maybeMap<String>(
+  ///   orElse: () => 'Unknown',
+  ///   ru: () => 'Привет!',
+  /// );
+  /// print(result); // Output: 'Привет!'
+  /// ```
   T maybeMap<T>({
     required T Function() orElse,
     T Function()? enum_,
@@ -491,67 +635,213 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
     T Function()? list_data_null,
     T Function()? null_,
     T Function()? none,
-
   }) =>
       map<T>(
-      enum_: enum_ ?? orElse,     
-      string_: string_ ?? orElse,     
-      bool_: bool_ ?? orElse,     
-      int_: int_ ?? orElse,     
-      double_: double_ ?? orElse,     
-      num_: num_ ?? orElse,     
-      list_: list_ ?? orElse,     
-      list_bool_: list_bool_ ?? orElse,     
-      list_other: list_other ?? orElse,     
-      list_int_: list_int_ ?? orElse,     
-      list_string_: list_string_ ?? orElse,     
-      list_double_: list_double_ ?? orElse,     
-      list_bool_null: list_bool_null ?? orElse,     
-      list_int_null: list_int_null ?? orElse,     
-      list_string_null: list_string_null ?? orElse,     
-      list_double_null: list_double_null ?? orElse,     
-      list_dynamic_: list_dynamic_ ?? orElse,     
-      list_map_int_string_: list_map_int_string_ ?? orElse,     
-      list_map_int_string_null: list_map_int_string_null ?? orElse,     
-      list_map_int_dynamic_: list_map_int_dynamic_ ?? orElse,     
-      list_map_string_dynamic_: list_map_string_dynamic_ ?? orElse,     
-      set_: set_ ?? orElse,     
-      set_string: set_string ?? orElse,     
-      set_string_null: set_string_null ?? orElse,     
-      set_int: set_int ?? orElse,     
-      set_int_null: set_int_null ?? orElse,     
-      set_bool: set_bool ?? orElse,     
-      set_bool_null: set_bool_null ?? orElse,     
-      set_double: set_double ?? orElse,     
-      set_double_null: set_double_null ?? orElse,     
-      map_: map_ ?? orElse,     
-      map_string_dynamic_: map_string_dynamic_ ?? orElse,     
-      map_string_bool: map_string_bool ?? orElse,     
-      map_string_int: map_string_int ?? orElse,     
-      map_string_string: map_string_string ?? orElse,     
-      map_string_double_: map_string_double_ ?? orElse,     
-      map_string_bool_null: map_string_bool_null ?? orElse,     
-      map_string_int_null: map_string_int_null ?? orElse,     
-      map_string_string_null: map_string_string_null ?? orElse,     
-      map_string_double_null: map_string_double_null ?? orElse,     
-      map_int_string: map_int_string ?? orElse,     
-      map_int_string_null: map_int_string_null ?? orElse,     
-      map_int_double: map_int_double ?? orElse,     
-      map_int_double_null: map_int_double_null ?? orElse,     
-      map_int_bool: map_int_bool ?? orElse,     
-      map_int_bool_null: map_int_bool_null ?? orElse,     
-      map_int_dynamic_: map_int_dynamic_ ?? orElse,     
-      date_time: date_time ?? orElse,     
-      map_dynamic_dynamic_: map_dynamic_dynamic_ ?? orElse,     
-      data: data ?? orElse,     
-      list_data: list_data ?? orElse,     
-      list_data_null: list_data_null ?? orElse,     
-      null_: null_ ?? orElse,     
-      none: none ?? orElse,     
-
+        enum_: enum_ ?? orElse,
+        string_: string_ ?? orElse,
+        bool_: bool_ ?? orElse,
+        int_: int_ ?? orElse,
+        double_: double_ ?? orElse,
+        num_: num_ ?? orElse,
+        list_: list_ ?? orElse,
+        list_bool_: list_bool_ ?? orElse,
+        list_other: list_other ?? orElse,
+        list_int_: list_int_ ?? orElse,
+        list_string_: list_string_ ?? orElse,
+        list_double_: list_double_ ?? orElse,
+        list_bool_null: list_bool_null ?? orElse,
+        list_int_null: list_int_null ?? orElse,
+        list_string_null: list_string_null ?? orElse,
+        list_double_null: list_double_null ?? orElse,
+        list_dynamic_: list_dynamic_ ?? orElse,
+        list_map_int_string_: list_map_int_string_ ?? orElse,
+        list_map_int_string_null: list_map_int_string_null ?? orElse,
+        list_map_int_dynamic_: list_map_int_dynamic_ ?? orElse,
+        list_map_string_dynamic_: list_map_string_dynamic_ ?? orElse,
+        set_: set_ ?? orElse,
+        set_string: set_string ?? orElse,
+        set_string_null: set_string_null ?? orElse,
+        set_int: set_int ?? orElse,
+        set_int_null: set_int_null ?? orElse,
+        set_bool: set_bool ?? orElse,
+        set_bool_null: set_bool_null ?? orElse,
+        set_double: set_double ?? orElse,
+        set_double_null: set_double_null ?? orElse,
+        map_: map_ ?? orElse,
+        map_string_dynamic_: map_string_dynamic_ ?? orElse,
+        map_string_bool: map_string_bool ?? orElse,
+        map_string_int: map_string_int ?? orElse,
+        map_string_string: map_string_string ?? orElse,
+        map_string_double_: map_string_double_ ?? orElse,
+        map_string_bool_null: map_string_bool_null ?? orElse,
+        map_string_int_null: map_string_int_null ?? orElse,
+        map_string_string_null: map_string_string_null ?? orElse,
+        map_string_double_null: map_string_double_null ?? orElse,
+        map_int_string: map_int_string ?? orElse,
+        map_int_string_null: map_int_string_null ?? orElse,
+        map_int_double: map_int_double ?? orElse,
+        map_int_double_null: map_int_double_null ?? orElse,
+        map_int_bool: map_int_bool ?? orElse,
+        map_int_bool_null: map_int_bool_null ?? orElse,
+        map_int_dynamic_: map_int_dynamic_ ?? orElse,
+        date_time: date_time ?? orElse,
+        map_dynamic_dynamic_: map_dynamic_dynamic_ ?? orElse,
+        data: data ?? orElse,
+        list_data: list_data ?? orElse,
+        list_data_null: list_data_null ?? orElse,
+        null_: null_ ?? orElse,
+        none: none ?? orElse,
       );
 
-  /// Pattern matching
+  /// Maps the value of this [EnumTypeVarable] to a new value of type [T], using the given
+  /// values to replace each possible value of the enumeration.
+  ///
+  /// The value that corresponds to the value of this [EnumTypeVarable] is returned from this method.
+  ///
+  /// If no corresponding value is provided for the value of this [EnumTypeVarable], the
+  /// `orElse` parameter is returned from this method.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum locale = LocaleEnum.en;
+  /// String message = locale.maybeMapValue<String>(
+  ///   orElse: 'Unknown locale',
+  ///   ru: 'Привет!',
+  ///   en: 'Hello!',
+  /// );
+  /// print(message); // Output: 'Hello!'
+  /// ```
+  T maybeMapValue<T>({
+    required T orElse,
+    T? enum_,
+    T? string_,
+    T? bool_,
+    T? int_,
+    T? double_,
+    T? num_,
+    T? list_,
+    T? list_bool_,
+    T? list_other,
+    T? list_int_,
+    T? list_string_,
+    T? list_double_,
+    T? list_bool_null,
+    T? list_int_null,
+    T? list_string_null,
+    T? list_double_null,
+    T? list_dynamic_,
+    T? list_map_int_string_,
+    T? list_map_int_string_null,
+    T? list_map_int_dynamic_,
+    T? list_map_string_dynamic_,
+    T? set_,
+    T? set_string,
+    T? set_string_null,
+    T? set_int,
+    T? set_int_null,
+    T? set_bool,
+    T? set_bool_null,
+    T? set_double,
+    T? set_double_null,
+    T? map_,
+    T? map_string_dynamic_,
+    T? map_string_bool,
+    T? map_string_int,
+    T? map_string_string,
+    T? map_string_double_,
+    T? map_string_bool_null,
+    T? map_string_int_null,
+    T? map_string_string_null,
+    T? map_string_double_null,
+    T? map_int_string,
+    T? map_int_string_null,
+    T? map_int_double,
+    T? map_int_double_null,
+    T? map_int_bool,
+    T? map_int_bool_null,
+    T? map_int_dynamic_,
+    T? date_time,
+    T? map_dynamic_dynamic_,
+    T? data,
+    T? list_data,
+    T? list_data_null,
+    T? null_,
+    T? none,
+  }) =>
+      mapValue<T>(
+        enum_: enum_ ?? orElse,
+        string_: string_ ?? orElse,
+        bool_: bool_ ?? orElse,
+        int_: int_ ?? orElse,
+        double_: double_ ?? orElse,
+        num_: num_ ?? orElse,
+        list_: list_ ?? orElse,
+        list_bool_: list_bool_ ?? orElse,
+        list_other: list_other ?? orElse,
+        list_int_: list_int_ ?? orElse,
+        list_string_: list_string_ ?? orElse,
+        list_double_: list_double_ ?? orElse,
+        list_bool_null: list_bool_null ?? orElse,
+        list_int_null: list_int_null ?? orElse,
+        list_string_null: list_string_null ?? orElse,
+        list_double_null: list_double_null ?? orElse,
+        list_dynamic_: list_dynamic_ ?? orElse,
+        list_map_int_string_: list_map_int_string_ ?? orElse,
+        list_map_int_string_null: list_map_int_string_null ?? orElse,
+        list_map_int_dynamic_: list_map_int_dynamic_ ?? orElse,
+        list_map_string_dynamic_: list_map_string_dynamic_ ?? orElse,
+        set_: set_ ?? orElse,
+        set_string: set_string ?? orElse,
+        set_string_null: set_string_null ?? orElse,
+        set_int: set_int ?? orElse,
+        set_int_null: set_int_null ?? orElse,
+        set_bool: set_bool ?? orElse,
+        set_bool_null: set_bool_null ?? orElse,
+        set_double: set_double ?? orElse,
+        set_double_null: set_double_null ?? orElse,
+        map_: map_ ?? orElse,
+        map_string_dynamic_: map_string_dynamic_ ?? orElse,
+        map_string_bool: map_string_bool ?? orElse,
+        map_string_int: map_string_int ?? orElse,
+        map_string_string: map_string_string ?? orElse,
+        map_string_double_: map_string_double_ ?? orElse,
+        map_string_bool_null: map_string_bool_null ?? orElse,
+        map_string_int_null: map_string_int_null ?? orElse,
+        map_string_string_null: map_string_string_null ?? orElse,
+        map_string_double_null: map_string_double_null ?? orElse,
+        map_int_string: map_int_string ?? orElse,
+        map_int_string_null: map_int_string_null ?? orElse,
+        map_int_double: map_int_double ?? orElse,
+        map_int_double_null: map_int_double_null ?? orElse,
+        map_int_bool: map_int_bool ?? orElse,
+        map_int_bool_null: map_int_bool_null ?? orElse,
+        map_int_dynamic_: map_int_dynamic_ ?? orElse,
+        date_time: date_time ?? orElse,
+        map_dynamic_dynamic_: map_dynamic_dynamic_ ?? orElse,
+        data: data ?? orElse,
+        list_data: list_data ?? orElse,
+        list_data_null: list_data_null ?? orElse,
+        null_: null_ ?? orElse,
+        none: none ?? orElse,
+      );
+
+  /// Maps the value of this [EnumTypeVarable] to a new value of type [T], using the given
+  /// functions to replace each possible value of the enumeration.
+  ///
+  /// The function that corresponds to the value of this
+  /// [EnumTypeVarable] is called and its result is returned from this method.
+  ///
+  /// If no corresponding function is provided for the value of this [EnumTypeVarable], `null`
+  /// is returned from this method.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum locale = LocaleEnum.en;
+  /// String? message = locale.maybeMapOrNull<String>(
+  ///   en: () => 'Hello!',
+  /// );
+  /// print(message); // Output: 'Hello!'
+  /// ```
   T? maybeMapOrNull<T>({
     T Function()? enum_,
     T Function()? string_,
@@ -607,70 +897,211 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
     T Function()? list_data_null,
     T Function()? null_,
     T Function()? none,
-
   }) =>
       maybeMap<T?>(
         orElse: () => null,
-        enum_: enum_,  
-        string_: string_,  
-        bool_: bool_,  
-        int_: int_,  
-        double_: double_,  
-        num_: num_,  
-        list_: list_,  
-        list_bool_: list_bool_,  
-        list_other: list_other,  
-        list_int_: list_int_,  
-        list_string_: list_string_,  
-        list_double_: list_double_,  
-        list_bool_null: list_bool_null,  
-        list_int_null: list_int_null,  
-        list_string_null: list_string_null,  
-        list_double_null: list_double_null,  
-        list_dynamic_: list_dynamic_,  
-        list_map_int_string_: list_map_int_string_,  
-        list_map_int_string_null: list_map_int_string_null,  
-        list_map_int_dynamic_: list_map_int_dynamic_,  
-        list_map_string_dynamic_: list_map_string_dynamic_,  
-        set_: set_,  
-        set_string: set_string,  
-        set_string_null: set_string_null,  
-        set_int: set_int,  
-        set_int_null: set_int_null,  
-        set_bool: set_bool,  
-        set_bool_null: set_bool_null,  
-        set_double: set_double,  
-        set_double_null: set_double_null,  
-        map_: map_,  
-        map_string_dynamic_: map_string_dynamic_,  
-        map_string_bool: map_string_bool,  
-        map_string_int: map_string_int,  
-        map_string_string: map_string_string,  
-        map_string_double_: map_string_double_,  
-        map_string_bool_null: map_string_bool_null,  
-        map_string_int_null: map_string_int_null,  
-        map_string_string_null: map_string_string_null,  
-        map_string_double_null: map_string_double_null,  
-        map_int_string: map_int_string,  
-        map_int_string_null: map_int_string_null,  
-        map_int_double: map_int_double,  
-        map_int_double_null: map_int_double_null,  
-        map_int_bool: map_int_bool,  
-        map_int_bool_null: map_int_bool_null,  
-        map_int_dynamic_: map_int_dynamic_,  
-        date_time: date_time,  
-        map_dynamic_dynamic_: map_dynamic_dynamic_,  
-        data: data,  
-        list_data: list_data,  
-        list_data_null: list_data_null,  
-        null_: null_,  
-        none: none,  
-        
+        enum_: enum_,
+        string_: string_,
+        bool_: bool_,
+        int_: int_,
+        double_: double_,
+        num_: num_,
+        list_: list_,
+        list_bool_: list_bool_,
+        list_other: list_other,
+        list_int_: list_int_,
+        list_string_: list_string_,
+        list_double_: list_double_,
+        list_bool_null: list_bool_null,
+        list_int_null: list_int_null,
+        list_string_null: list_string_null,
+        list_double_null: list_double_null,
+        list_dynamic_: list_dynamic_,
+        list_map_int_string_: list_map_int_string_,
+        list_map_int_string_null: list_map_int_string_null,
+        list_map_int_dynamic_: list_map_int_dynamic_,
+        list_map_string_dynamic_: list_map_string_dynamic_,
+        set_: set_,
+        set_string: set_string,
+        set_string_null: set_string_null,
+        set_int: set_int,
+        set_int_null: set_int_null,
+        set_bool: set_bool,
+        set_bool_null: set_bool_null,
+        set_double: set_double,
+        set_double_null: set_double_null,
+        map_: map_,
+        map_string_dynamic_: map_string_dynamic_,
+        map_string_bool: map_string_bool,
+        map_string_int: map_string_int,
+        map_string_string: map_string_string,
+        map_string_double_: map_string_double_,
+        map_string_bool_null: map_string_bool_null,
+        map_string_int_null: map_string_int_null,
+        map_string_string_null: map_string_string_null,
+        map_string_double_null: map_string_double_null,
+        map_int_string: map_int_string,
+        map_int_string_null: map_int_string_null,
+        map_int_double: map_int_double,
+        map_int_double_null: map_int_double_null,
+        map_int_bool: map_int_bool,
+        map_int_bool_null: map_int_bool_null,
+        map_int_dynamic_: map_int_dynamic_,
+        date_time: date_time,
+        map_dynamic_dynamic_: map_dynamic_dynamic_,
+        data: data,
+        list_data: list_data,
+        list_data_null: list_data_null,
+        null_: null_,
+        none: none,
       );
+
+  /// Maps the value of this [EnumTypeVarable] to a new value of type [T], using the given
+  /// values to replace each possible value of the enumeration.
+  ///
+  /// The value that corresponds to the value of this [EnumTypeVarable] is returned from this method.
+  ///
+  /// If no corresponding value is provided for the value of this [EnumTypeVarable], `null`
+  /// is returned from this method.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum locale = LocaleEnum.en;
+  /// String? message = locale.maybeMapOrNullValue<String>(
+  ///   en: 'Hello!',
+  /// );
+  /// print(message); // Output: 'Hello!'
+  /// ```
+  T? maybeMapOrNullValue<T>({
+    T? enum_,
+    T? string_,
+    T? bool_,
+    T? int_,
+    T? double_,
+    T? num_,
+    T? list_,
+    T? list_bool_,
+    T? list_other,
+    T? list_int_,
+    T? list_string_,
+    T? list_double_,
+    T? list_bool_null,
+    T? list_int_null,
+    T? list_string_null,
+    T? list_double_null,
+    T? list_dynamic_,
+    T? list_map_int_string_,
+    T? list_map_int_string_null,
+    T? list_map_int_dynamic_,
+    T? list_map_string_dynamic_,
+    T? set_,
+    T? set_string,
+    T? set_string_null,
+    T? set_int,
+    T? set_int_null,
+    T? set_bool,
+    T? set_bool_null,
+    T? set_double,
+    T? set_double_null,
+    T? map_,
+    T? map_string_dynamic_,
+    T? map_string_bool,
+    T? map_string_int,
+    T? map_string_string,
+    T? map_string_double_,
+    T? map_string_bool_null,
+    T? map_string_int_null,
+    T? map_string_string_null,
+    T? map_string_double_null,
+    T? map_int_string,
+    T? map_int_string_null,
+    T? map_int_double,
+    T? map_int_double_null,
+    T? map_int_bool,
+    T? map_int_bool_null,
+    T? map_int_dynamic_,
+    T? date_time,
+    T? map_dynamic_dynamic_,
+    T? data,
+    T? list_data,
+    T? list_data_null,
+    T? null_,
+    T? none,
+  }) =>
+      maybeMapValue<T?>(
+        orElse: null,
+        enum_: enum_,
+        string_: string_,
+        bool_: bool_,
+        int_: int_,
+        double_: double_,
+        num_: num_,
+        list_: list_,
+        list_bool_: list_bool_,
+        list_other: list_other,
+        list_int_: list_int_,
+        list_string_: list_string_,
+        list_double_: list_double_,
+        list_bool_null: list_bool_null,
+        list_int_null: list_int_null,
+        list_string_null: list_string_null,
+        list_double_null: list_double_null,
+        list_dynamic_: list_dynamic_,
+        list_map_int_string_: list_map_int_string_,
+        list_map_int_string_null: list_map_int_string_null,
+        list_map_int_dynamic_: list_map_int_dynamic_,
+        list_map_string_dynamic_: list_map_string_dynamic_,
+        set_: set_,
+        set_string: set_string,
+        set_string_null: set_string_null,
+        set_int: set_int,
+        set_int_null: set_int_null,
+        set_bool: set_bool,
+        set_bool_null: set_bool_null,
+        set_double: set_double,
+        set_double_null: set_double_null,
+        map_: map_,
+        map_string_dynamic_: map_string_dynamic_,
+        map_string_bool: map_string_bool,
+        map_string_int: map_string_int,
+        map_string_string: map_string_string,
+        map_string_double_: map_string_double_,
+        map_string_bool_null: map_string_bool_null,
+        map_string_int_null: map_string_int_null,
+        map_string_string_null: map_string_string_null,
+        map_string_double_null: map_string_double_null,
+        map_int_string: map_int_string,
+        map_int_string_null: map_int_string_null,
+        map_int_double: map_int_double,
+        map_int_double_null: map_int_double_null,
+        map_int_bool: map_int_bool,
+        map_int_bool_null: map_int_bool_null,
+        map_int_dynamic_: map_int_dynamic_,
+        date_time: date_time,
+        map_dynamic_dynamic_: map_dynamic_dynamic_,
+        data: data,
+        list_data: list_data,
+        list_data_null: list_data_null,
+        null_: null_,
+        none: none,
+      );
+
+  /// Returns a list of all possible values of this enumeration.
+  ///
+  /// The values are returned as a list of strings, representing the value of each
+  /// enumeration value in the same order as they were declared in the enumeration.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// List<String> values = LocaleEnum.getValues();
+  /// print(values); // Output: ['ru', 'en']
+  /// ```
+  static List<String> getValues() =>
+      EnumTypeVarable.values.map((e) => e.value).toList();
 
   @override
   int compareTo(EnumTypeVarable other) => index.compareTo(other.index);
 
   @override
-  String toString() => value;
-   }
+  String toString() => 'EnumTypeVarable.$name($value)';
+}

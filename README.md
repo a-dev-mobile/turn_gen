@@ -1,9 +1,9 @@
 # TurnGen
 
-TurnGen is a set of scripts combined into a command line tool, all scripts are written in dart language and run instantly, they are designed to minimize coding and simplify various tasks such as:
+TurnGen is a set of scripts combined into a command line tool, all scripts are written in dart language and run instantly without using build_runner, they are designed to minimize coding and simplify various tasks such as:
 
 - Working with Enum classes
-- Creating different methods in the Data class without using build_runner
+- Creating different methods in the Data class
 - Generating links to all files in the assets folder
 - Create union types from standard constructors
 
@@ -38,40 +38,24 @@ Then run `flutter pub get` or `dart pub get` to install the package.
 
 ![enum_type](https://github.com/a-dev-mobile/turn_gen/blob/master/resources/enum_type.png)
 
-The figure above shows 3 ways to use enumeration classes.
-And for each variant you run a different script, to define the enum variant, you need to add to the argument `-t` the value of the script name and to the argument `-f` the path to the file
+На рисунке выше показаны некоторые способы использования классов `enum`.
+Turngen добавляет дополнительные методы для удобной работы с `enum`. При чем неважно какой тип переменной в конструкторе. Главное, добавить комментарий `// end` перед закрывающей скобкой, чтобы понять, откуда начинается генерация.
+Ниже приведена команда для запуска скрипта.
 
 ```shell
-# 1
-dart run turn_gen -t enum_int -f <path to your file>
-# 2
-dart run turn_gen -t enum_string -f <path to your file>
-# 3
-dart run turn_gen -t enum_default -f <path to your file>
-
+dart run turn_gen -t enum -f <path to your file>
 ```
 
 If you use `VSCode`, you can add the task to your `tasks.json`
 
 ```json
     {
-      "label": "turn_gen enum_default",
+      "label": "turn_gen enum",
       "type": "dart",
       "command": "dart",
-      "args": ["run", "turn_gen", "-t", "enum_default", "-f", "${file}"],
+      "args": ["run", "turn_gen", "-t", "enum", "-f", "${file}"],
     },
-    {
-      "label": "turn_gen enum_int",
-      "type": "dart",
-      "command": "dart",
-      "args": ["run", "turn_gen", "-t", "enum_int", "-f", "${file}"],
-    },
-    {
-      "label": "turn_gen enum_string",
-      "type": "dart",
-      "command": "dart",
-      "args": ["run", "turn_gen", "-t", "enum_string", "-f", "${file}"],
-    },
+   
 ```
 
 After running the script, you will get additional methods and override the standard ones:
@@ -79,82 +63,269 @@ After running the script, you will get additional methods and override the stand
 - `fromValue`
 - `map`
 - `maybeMap`
+- `maybeMapOrNull`
+- `mapValue`
+- `maybeMapValue`
+- `maybeMapOrNullValue`
+- `getValues`
 - `compareTo`
 - `toString`
 
 #### Example
   
 ```dart
-// ignore_for_file: constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
-/*
-  enum Locale {
-  en('en_US'),
-  ru('ru_RU'),
-}*/
+enum Speed with Comparable<Speed>  {
+  stop(0),
+  slow(5),
+  normal(10),
+  fast(20);
+
+  const Speed(this.value);
+
+  final int value;
+  // end
 
 //          --TURN_GEN--
+//             v0.4.0
 //  *************************************
-//           GENERATED CODE
+//           GENERATED CODE 
 //  *************************************
-
-enum Locale with Comparable<Locale> {
-  en('en_US'),
-  ru('ru_RU');
-
-  const Locale(this.value);
-
-  final String value;
-
-  static Locale fromValue(
-    String? value, {
-    Locale? fallback,
-  }) {
+  
+  /// Creates a new instance of [Speed] from a given int value.
+  ///
+  /// If the given value matches one of the values defined in the [Speed] enumeration,
+  /// a corresponding instance of [Speed] is returned.
+  /// If the given value is null or does not match any of the enumeration values and a fallback
+  /// value is not provided, an [ArgumentError] is thrown.
+  ///
+  /// The `fallback` parameter is an optional [Speed] value that will be returned if the
+  /// given value does not match any of the enumeration values.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum locale = LocaleEnum.fromValue('en', fallback: LocaleEnum.ru);
+  /// print(locale); // Output: LocaleEnum.en(en)
+  /// ```
+  static Speed fromValue(int? value, {Speed? fallback}) {
     switch (value) {
-      case 'en_US':
-        return en;
-      case 'ru_RU':
-        return ru;
-
+      case 0:
+        return stop;
+      case 5:
+        return slow;
+      case 10:
+        return normal;
+      case 20:
+        return fast;
       default:
-        return fallback ?? (throw ArgumentError.value(value));
+        return fallback ?? (throw ArgumentError.value(
+          value, '', 'Value not found in Speed',));
     }
   }
+
+
+  /// Calls the appropriate function based on the value of this [Speed] instance.
+  ///
+  /// This method returns the result of calling the appropriate function for the value of the current [Speed] instance.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum ru = LocaleEnum.ru;
+  /// String result = ru.map(
+  ///   ru: () => 'Привет!',
+  ///   en: () => 'Hello!',
+  /// );
+  /// print(result); // Output: 'Привет!'
+  /// ```
   T map<T>({
-    required T Function() en,
-    required T Function() ru,
+    required T Function() stop,
+    required T Function() slow,
+    required T Function() normal,
+    required T Function() fast,
   }) {
     switch (this) {
-      case Locale.en:
-        return en();
-      case Locale.ru:
-        return ru();
+      case Speed.stop:
+        return stop();
+      case Speed.slow:
+        return slow();
+      case Speed.normal:
+        return normal();
+      case Speed.fast:
+        return fast();
     }
   }
+
+  /// Calls the appropriate function based on the value of this [Speed] instance.
+  ///
+  /// This method returns the appropriate value for the value of the current [Speed] instance.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum en = LocaleEnum.en;
+  /// String result = en.mapValue(
+  ///   ru: 'Привет!',
+  ///   en: 'Hello!',
+  /// );
+  /// print(result); // Output: 'Hello!'
+  /// ```
+  T mapValue<T>({
+    required T stop,
+    required T slow,
+    required T normal,
+    required T fast,
+  }) {
+    switch (this) {
+      case Speed.stop:
+        return stop;
+      case Speed.slow:
+        return slow;
+      case Speed.normal:
+        return normal;
+      case Speed.fast:
+        return fast;
+    }
+  }
+
+  /// Calls the appropriate function based on the value of this [Speed] instance.
+  ///
+  /// If the corresponding function for the value of this [Speed] instance is not provided,
+  /// the `orElse` function will be called instead.
+  /// This method returns the value returned by the appropriate function for the value of this [Speed] instance.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum ru = LocaleEnum.ru;
+  /// String result = ru.maybeMap<String>(
+  ///   orElse: () => 'Unknown',
+  ///   ru: () => 'Привет!',
+  /// );
+  /// print(result); // Output: 'Привет!'
+  /// ```
   T maybeMap<T>({
     required T Function() orElse,
-    T Function()? en,
-    T Function()? ru,
+    T Function()? stop,
+    T Function()? slow,
+    T Function()? normal,
+    T Function()? fast,
   }) =>
       map<T>(
-        en: en ?? orElse,
-        ru: ru ?? orElse,
+      stop: stop ?? orElse,
+      slow: slow ?? orElse,
+      normal: normal ?? orElse,
+      fast: fast ?? orElse,
       );
+
+  /// Maps the value of this [Speed] to a new value of type [T], using the given
+  /// values to replace each possible value of the enumeration.
+  ///
+  /// The value that corresponds to the value of this [Speed] is returned from this method.
+  ///
+  /// If no corresponding value is provided for the value of this [Speed], the
+  /// `orElse` parameter is returned from this method.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum locale = LocaleEnum.en;
+  /// String message = locale.maybeMapValue<String>(
+  ///   orElse: 'Unknown locale',
+  ///   ru: 'Привет!',
+  ///   en: 'Hello!',
+  /// );
+  /// print(message); // Output: 'Hello!'
+  /// ```
+  T maybeMapValue<T>({
+    required T orElse,
+    T? stop,
+    T? slow,
+    T? normal,
+    T? fast,
+  }) =>
+      mapValue<T>(
+      stop: stop ?? orElse,
+      slow: slow ?? orElse,
+      normal: normal ?? orElse,
+      fast: fast ?? orElse,
+      );
+
+ /// Maps the value of this [Speed] to a new value of type [T], using the given
+  /// functions to replace each possible value of the enumeration.
+  /// 
+  /// The function that corresponds to the value of this
+  /// [Speed] is called and its result is returned from this method.
+  ///
+  /// If no corresponding function is provided for the value of this [Speed], `null`
+  /// is returned from this method.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum locale = LocaleEnum.en;
+  /// String? message = locale.maybeMapOrNull<String>(
+  ///   en: () => 'Hello!',
+  /// );
+  /// print(message); // Output: 'Hello!'
+  /// ```
   T? maybeMapOrNull<T>({
-    T Function()? en,
-    T Function()? ru,
+    T Function()? stop,
+    T Function()? slow,
+    T Function()? normal,
+    T Function()? fast,
   }) =>
       maybeMap<T?>(
         orElse: () => null,
-        en: en,
-        ru: ru,
+        stop: stop,
+        slow: slow,
+        normal: normal,
+        fast: fast,
       );
-  @override
-  int compareTo(Locale other) => index.compareTo(other.index);
+
+  /// Maps the value of this [Speed] to a new value of type [T], using the given
+  /// values to replace each possible value of the enumeration.
+  ///
+  /// The value that corresponds to the value of this [Speed] is returned from this method.
+  ///
+  /// If no corresponding value is provided for the value of this [Speed], `null`
+  /// is returned from this method.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum locale = LocaleEnum.en;
+  /// String? message = locale.maybeMapOrNullValue<String>(
+  ///   en: 'Hello!',
+  /// );
+  /// print(message); // Output: 'Hello!'
+  /// ```
+  T? maybeMapOrNullValue<T>({
+    T? stop,
+    T? slow,
+    T? normal,
+    T? fast,
+  }) =>
+      maybeMapValue<T?>(
+        orElse: null,
+        stop: stop,
+        slow: slow,
+        normal: normal,
+        fast: fast,
+      );
+
+  /// Returns a list of all possible values of this enumeration.
+  ///
+  /// The values are returned as a list of strings, representing the value of each
+  /// enumeration value in the same order as they were declared in the enumeration.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// List<String> values = LocaleEnum.getValues();
+  /// print(values); // Output: ['ru', 'en']
+  /// ```
+  static List<int> getValues() => Speed.values.map((e) => e.value).toList();
 
   @override
-  String toString() => value;
+  int compareTo(Speed other) => index.compareTo(other.index);
+
+  @override
+  String toString() => 'Speed.$name($value)';
+
 }
-
 
 
 ```

@@ -74,7 +74,7 @@ Future<void> runUnion({required String path, required FLILogger logger}) async {
     final listParamRaw = textBrackets.split(',');
     final listParamFormat = <String>[];
     final listParamModel = <UnionParameterModel>[];
-// get comment 
+// get comment
     var regexRawDocCommentUnion = '';
     regexRawDocCommentUnion = i == 0
         ? '{[\\s\\S]*_$className(|[\\n\\r\\s]+)\\.(|[\\n\\r\\s]+)$unionName'
@@ -215,8 +215,6 @@ void _msgYesDefConstructor(List<String> listUnionName, FLILogger logger) {
     exit(0);
   }
 }
-
-
 
 EnumParameter _getTypeParameter(String textBrackets) {
   var returnValue = EnumParameter.none;

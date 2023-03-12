@@ -1,3 +1,9 @@
+## 0.4.0
+
+- The script was completely redesigned to generate additional `enum` methods
+- Removed scripts for a certain type of variable in the `enum` constructor, now only one script is used.
+- Updated README.md
+
 ## 0.3.2
 
 - now any `implements` of the fake `union class` are added to the main

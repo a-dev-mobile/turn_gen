@@ -305,8 +305,6 @@ type: asda fromMap: asdasd*/
   );
 }
 
-
-
 void _msgErrorParsingVarable(String varable, FLILogger logger) {
   logger
     ..info('\n')

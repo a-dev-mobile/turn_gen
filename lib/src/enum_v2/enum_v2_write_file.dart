@@ -10,7 +10,7 @@ void enumV2WriteToFile(
 ) {
   final newContent = StringBuffer();
   final nameClass = model.nameClass;
-  final nameFile = model.nameFile;
+  // final nameFile = model.nameFile;
   final typeStr = model.typeEnum.value;
   final nameValue = model.nameValue;
 /* ****************************** */
@@ -24,7 +24,6 @@ void enumV2WriteToFile(
     if (e == model.listItem.last) lastSymbol = ';\n';
     paramSb.write(lastSymbol);
   }
-/* ******************************* */
 
 /* ****************************** */
 /* ****************************** */
@@ -67,8 +66,8 @@ $fromValueSb1
   }
 
   for (final e in model.listItem) {
-   final name = e.nameEnum;
-    final value = e.valueEnum;
+    final name = e.nameEnum;
+    // final value = e.valueEnum;
     map2Sb.write('      case $nameClass.$name:\n');
     map2Sb.write('        return $name()');
     var lastSymbol = ';\n';
@@ -100,8 +99,8 @@ $map2Sb
   }
 
   for (final e in model.listItem) {
-   final name = e.nameEnum;
-    final value = e.valueEnum;
+    final name = e.nameEnum;
+    // final value = e.valueEnum;
     mapValues2Sb.write('      case $nameClass.$name:\n');
     mapValues2Sb.write('        return $name');
     var lastSymbol = ';\n';
@@ -243,7 +242,6 @@ $maybeMapNullValueSb2
   final constructorSb = StringBuffer();
 
   constructorSb.write('''
-  /// {@macro $nameFile}
   const $nameClass(this.$nameValue);
   final $typeStr $nameValue;
 ''');
@@ -253,7 +251,7 @@ $maybeMapNullValueSb2
   final getValuesSb = StringBuffer();
 
   getValuesSb.write('''
-  static List<$typeStr> getValues() => LocaleEnum.values.map((e) => e.value).toList();
+  static List<$typeStr> getValues() => $nameClass.values.map((e) => e.value).toList();
 ''');
 
 /* ****************************** */
@@ -269,14 +267,21 @@ $maybeMapNullValueSb2
 ''');
 
 /* ****************************** */
+/* ******************************* */
 
-  newContent.write('''
-// ignore_for_file: avoid-non-null-assertion
+  final newHeader = 'enum $nameClass with Comparable<$nameClass>  {';
+  var updateContentToEnd = '''
+$newHeader
 
-enum $nameClass with Comparable<$nameClass>  {
 $paramSb
 $constructorSb
-// end
+// end''';
+  if (!model.isDefault) {
+    updateContentToEnd =
+        model.contentToEnd.replaceAll(model.headerClass, newHeader);
+  }
+  newContent.write('''
+$updateContentToEnd
 
 ${ConstConsole.GEN_MSG_START}
   /// Creates a new instance of [$nameClass] from a given $typeStr value.
@@ -340,9 +345,70 @@ $mapValuesCommonSb
   /// print(result); // Output: 'Привет!'
   /// ```
 $maybeMapCommonSb
+  /// Maps the value of this [$nameClass] to a new value of type [T], using the given
+  /// values to replace each possible value of the enumeration.
+  ///
+  /// The value that corresponds to the value of this [$nameClass] is returned from this method.
+  ///
+  /// If no corresponding value is provided for the value of this [$nameClass], the
+  /// `orElse` parameter is returned from this method.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum locale = LocaleEnum.en;
+  /// String message = locale.maybeMapValue<String>(
+  ///   orElse: 'Unknown locale',
+  ///   ru: 'Привет!',
+  ///   en: 'Hello!',
+  /// );
+  /// print(message); // Output: 'Hello!'
+  /// ```
 $maybeMapValueCommonSb
+ /// Maps the value of this [$nameClass] to a new value of type [T], using the given
+  /// functions to replace each possible value of the enumeration.
+  /// 
+  /// The function that corresponds to the value of this
+  /// [$nameClass] is called and its result is returned from this method.
+  ///
+  /// If no corresponding function is provided for the value of this [$nameClass], `null`
+  /// is returned from this method.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum locale = LocaleEnum.en;
+  /// String? message = locale.maybeMapOrNull<String>(
+  ///   en: () => 'Hello!',
+  /// );
+  /// print(message); // Output: 'Hello!'
+  /// ```
 $maybeMapNullCommonSb
+  /// Maps the value of this [$nameClass] to a new value of type [T], using the given
+  /// values to replace each possible value of the enumeration.
+  ///
+  /// The value that corresponds to the value of this [$nameClass] is returned from this method.
+  ///
+  /// If no corresponding value is provided for the value of this [$nameClass], `null`
+  /// is returned from this method.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum locale = LocaleEnum.en;
+  /// String? message = locale.maybeMapOrNullValue<String>(
+  ///   en: 'Hello!',
+  /// );
+  /// print(message); // Output: 'Hello!'
+  /// ```
 $maybeMapNullValueCommonSb
+  /// Returns a list of all possible values of this enumeration.
+  ///
+  /// The values are returned as a list of strings, representing the value of each
+  /// enumeration value in the same order as they were declared in the enumeration.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// List<String> values = LocaleEnum.getValues();
+  /// print(values); // Output: ['ru', 'en']
+  /// ```
 $getValuesSb
 $compareSToStringb
 
@@ -350,208 +416,7 @@ $compareSToStringb
 }
 ''');
 
-  // final _ = file.writeAsString(newContent.toString());
-  final _ = File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/test/enum_v2.dart')
+  var _ = file.writeAsString(newContent.toString());
+  _ = File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/test/enum_v2.dart')
       .writeAsString(newContent.toString());
-}
-
-String _getFromValue({
-  required EnumV2CommonModel model,
-  required StringBuffer fromValueString,
-  required StringBuffer fromValueInt,
-  required StringBuffer fromValueDouble,
-}) {
-  switch (model.typeEnum) {
-    case EnumTypeVarable.string_:
-      return fromValueString.toString();
-    case EnumTypeVarable.int_:
-      return fromValueInt.toString();
-    case EnumTypeVarable.double_:
-      return fromValueDouble.toString();
-
-    case EnumTypeVarable.enum_:
-
-    case EnumTypeVarable.bool_:
-
-    case EnumTypeVarable.num_:
-
-    case EnumTypeVarable.list_:
-
-    case EnumTypeVarable.list_bool_:
-
-    case EnumTypeVarable.list_other:
-
-    case EnumTypeVarable.list_int_:
-
-    case EnumTypeVarable.list_string_:
-
-    case EnumTypeVarable.list_double_:
-
-    case EnumTypeVarable.list_bool_null:
-
-    case EnumTypeVarable.list_int_null:
-
-    case EnumTypeVarable.list_string_null:
-
-    case EnumTypeVarable.list_double_null:
-
-    case EnumTypeVarable.list_dynamic_:
-
-    case EnumTypeVarable.list_map_int_string_:
-
-    case EnumTypeVarable.list_map_int_string_null:
-
-    case EnumTypeVarable.list_map_int_dynamic_:
-
-    case EnumTypeVarable.list_map_string_dynamic_:
-
-    case EnumTypeVarable.set_:
-
-    case EnumTypeVarable.set_string:
-
-    case EnumTypeVarable.set_string_null:
-
-    case EnumTypeVarable.set_int:
-
-    case EnumTypeVarable.set_int_null:
-
-    case EnumTypeVarable.set_bool:
-
-    case EnumTypeVarable.set_bool_null:
-
-    case EnumTypeVarable.set_double:
-
-    case EnumTypeVarable.set_double_null:
-
-    case EnumTypeVarable.map_:
-
-    case EnumTypeVarable.map_string_dynamic_:
-
-    case EnumTypeVarable.map_string_bool:
-
-    case EnumTypeVarable.map_string_int:
-
-    case EnumTypeVarable.map_string_string:
-
-    case EnumTypeVarable.map_string_double_:
-
-    case EnumTypeVarable.map_string_bool_null:
-
-    case EnumTypeVarable.map_string_int_null:
-
-    case EnumTypeVarable.map_string_string_null:
-
-    case EnumTypeVarable.map_string_double_null:
-
-    case EnumTypeVarable.map_int_string:
-
-    case EnumTypeVarable.map_int_string_null:
-
-    case EnumTypeVarable.map_int_double:
-
-    case EnumTypeVarable.map_int_double_null:
-
-    case EnumTypeVarable.map_int_bool:
-
-    case EnumTypeVarable.map_int_bool_null:
-
-    case EnumTypeVarable.map_int_dynamic_:
-
-    case EnumTypeVarable.date_time:
-
-    case EnumTypeVarable.map_dynamic_dynamic_:
-
-    case EnumTypeVarable.data:
-
-    case EnumTypeVarable.list_data:
-
-    case EnumTypeVarable.list_data_null:
-
-    case EnumTypeVarable.null_:
-
-    case EnumTypeVarable.none:
-      return '// INFO: method fromValue for ${model.typeEnum.value} is not supported yet\n';
-  }
-}
-
-/// {@template enum_v2_write_file}
-/// EnumV2WriteFile enumeration
-/// {@endtemplate}
-enum EnumV2WriteFile with Comparable<EnumV2WriteFile> {
-  /// a
-  a('a'),
-
-  /// b
-  b('b'),
-
-  /// c
-  c('c');
-
-  /// {@macro enum_v2_write_file}
-  const EnumV2WriteFile(this.value);
-
-  /// Creates a new instance of [EnumV2WriteFile] from a given string.
-  static EnumV2WriteFile fromValue(String? value, {EnumV2WriteFile? fallback}) {
-    switch (value) {
-      case 'a':
-        return a;
-      case 'b':
-        return b;
-      case 'c':
-        return c;
-      default:
-        return fallback ?? (throw ArgumentError.value(value));
-    }
-  }
-
-  /// Value of the enum
-  final String value;
-
-  /// Pattern matching
-  T map<T>({
-    required T Function() a,
-    required T Function() b,
-    required T Function() c,
-  }) {
-    switch (this) {
-      case EnumV2WriteFile.a:
-        return a();
-      case EnumV2WriteFile.b:
-        return b();
-      case EnumV2WriteFile.c:
-        return c();
-    }
-  }
-
-  /// Pattern matching
-  T maybeMap<T>({
-    required T Function() orElse,
-    T Function()? a,
-    T Function()? b,
-    T Function()? c,
-  }) =>
-      map<T>(
-        a: a ?? orElse,
-        b: b ?? orElse,
-        c: c ?? orElse,
-      );
-
-  /// Pattern matching
-  T? maybeMapOrNull<T>({
-    T Function()? a,
-    T Function()? b,
-    T Function()? c,
-  }) =>
-      maybeMap<T?>(
-        orElse: () => null,
-        a: a,
-        b: b,
-        c: c,
-      );
-
-  @override
-  int compareTo(EnumV2WriteFile other) => index.compareTo(other.index);
-
-  @override
-  String toString() => value;
 }
