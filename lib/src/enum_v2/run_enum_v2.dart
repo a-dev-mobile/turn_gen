@@ -34,16 +34,19 @@ Future<void> runEnumV2({
     regex: r'[\s\S]+?(\/\/\s+end)',
   );
 
-  final enumToEnd = UtilsRegex.getTextRegexMatch(
+  final enumToEndRaw = UtilsRegex.getTextRegexMatch(
     content: contentFile,
     regex: r'enum[\s\S]+?(\/\/\s+end)',
   );
-  final enumBracketsRaw = UtilsRegex.getTextRegexMatch(
+
+  // final enumToEndFormat = enumToEndRaw.replaceAll(RegExp(r'\s+'), ' ').replaceAll('// end', '');
+
+  final enumBracketsEnd = UtilsRegex.getTextRegexMatch(
     content: contentFile,
-    regex: r'\{[\s\S]+\}',
+    regex: r'\{[\s\S]+(\/\/\s+end)',
   );
 
-  final isDefault = !enumToEnd.contains('(');
+  final isDefault = !enumToEndRaw.contains('(');
 
   var regexEnumNameRaw = r'\w+';
 
@@ -53,35 +56,41 @@ Future<void> runEnumV2({
 
 // получаю название  enum item
   final listEnumNameRaw = UtilsRegex.getTextRegexListMatch(
-    content: enumBracketsRaw,
+    content: enumBracketsEnd,
     regex: regexEnumNameRaw,
   );
   final listEnumNameFormat =
       listEnumNameRaw.map((e) => e.replaceAll('(', '').trim()).toList();
-
-  if (!isDefault) {
-    // удаляю название enum
+  
+  
+  
+    // удаляю лишнее поле
+   
+  if (listEnumNameFormat.isNotEmpty) {
     final _ = listEnumNameFormat.removeLast();
   }
+
 // ******************************
 // получаю значения
   final listEnumValueRaw = UtilsRegex.getTextRegexListMatch(
-    content: enumToEnd,
+    content: enumToEndRaw,
     regex: r'\(([\w\W]+?)\)',
   );
 
   final listEnumValueFormat = _getFormatEnumRaw(listEnumValueRaw);
   // получаю значения
   final listEnumTypeValueRaw = UtilsRegex.getTextRegexListMatch(
-    content: enumToEnd,
+    content: enumToEndRaw,
     regex: r'final[\s\S]+?;',
   );
 
   var nameVar = 'value';
   var typeEnum = EnumTypeVarable.string_;
   var isCanNull = false;
-  if (!isDefault) {
+  if (listEnumValueFormat.isNotEmpty) {
     final _ = listEnumValueFormat.removeLast();
+  }
+  if (!isDefault) {
     //
     final enumTypeValueFormat = _getFormatEnumRaw(listEnumTypeValueRaw).first;
 

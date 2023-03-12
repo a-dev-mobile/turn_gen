@@ -61,16 +61,49 @@ void enumV2WriteToFile(
   for (final e in model.listItem) {
     final name = e.nameEnum;
     final value = e.valueEnum;
-    fromValue1IntSb.write('$value: $nameClass.$name');
+    fromValue1IntSb.write('      $value: $nameClass.$name');
     var lastSymbol = ',\n';
     if (e == model.listItem.last) lastSymbol = ',';
     fromValue1IntSb.write(lastSymbol);
   }
 
   fromValueCommonIntSb.write('''
-  static $nameClass fromValue(int value, {$nameClass? fallback}) {
+  static $nameClass fromValue(int? value, {$nameClass? fallback}) {
     final valueMap = <int, LocaleEnum>{
-      $fromValue1IntSb
+$fromValue1IntSb
+    };
+
+    if (valueMap.containsKey(value)) {
+      return valueMap[value]!;
+    } else if (fallback == null) {
+      throw ArgumentError.value(
+        value,
+        'value',
+        'Value not found in $nameClass',
+      );
+    } else {
+      return fallback;
+    }
+  }
+''');
+/* ****************************** */
+/* ****************************** */
+  final fromValueCommonDoubleSb = StringBuffer();
+
+  final fromValue1DoubleSb = StringBuffer();
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    final value = e.valueEnum;
+    fromValue1DoubleSb.write('      $value: $nameClass.$name');
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    fromValue1DoubleSb.write(lastSymbol);
+  }
+
+  fromValueCommonDoubleSb.write('''
+  static $nameClass fromValue(double? value, {$nameClass? fallback}) {
+    final valueMap = <double, LocaleEnum>{
+$fromValue1DoubleSb
     };
 
     if (valueMap.containsKey(value)) {
@@ -182,6 +215,14 @@ $maybeMap2Sb
 
 /* ****************************** */
 /* ****************************** */
+  final getValuesSb = StringBuffer();
+
+  getValuesSb.write('''
+  static List<$typeStr> getValues() => LocaleEnum.values.map((e) => e.value).toList();
+''');
+
+/* ****************************** */
+/* ****************************** */
   final compareSToStringb = StringBuffer();
 
   compareSToStringb.write('''
@@ -203,15 +244,11 @@ $constructorSb
 // end
 
 ${ConstConsole.GEN_MSG_START}
-${_getFromValue(fromValueInt: fromValueCommonIntSb, fromValueString: fromValueStringSb, model: model)}
+${_getFromValue(fromValueInt: fromValueCommonIntSb, fromValueString: fromValueStringSb, fromValueDouble: fromValueCommonDoubleSb, model: model)}
 $mapCommonSb
 $maybeMapCommonSb
+$getValuesSb
 $compareSToStringb
-
-
-
-
-
 
 
 }
@@ -226,18 +263,20 @@ String _getFromValue({
   required EnumV2CommonModel model,
   required StringBuffer fromValueString,
   required StringBuffer fromValueInt,
+  required StringBuffer fromValueDouble,
 }) {
   switch (model.typeEnum) {
     case EnumTypeVarable.string_:
       return fromValueString.toString();
     case EnumTypeVarable.int_:
       return fromValueInt.toString();
+    case EnumTypeVarable.double_:
+      return fromValueDouble.toString();
 
     case EnumTypeVarable.enum_:
 
     case EnumTypeVarable.bool_:
 
-    case EnumTypeVarable.double_:
 
     case EnumTypeVarable.num_:
 

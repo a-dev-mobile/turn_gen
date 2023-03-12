@@ -90,7 +90,7 @@ data
       case TypeRun.union:
         await runUnion(path: path, logger: logger);
         break;
-      case TypeRun.enumV2:
+      case TypeRun.enum_:
         await runEnumV2(path: path, logger: logger);
 
         break;

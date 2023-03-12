@@ -3,7 +3,7 @@
   
   
   enum TypeRun {
-  enumV2('enum_v2'),
+  enum_('enum'),
   enumDefault('enum_default'),
   enumInt('enum_int'),
   enumString('enum_string'),
@@ -20,7 +20,7 @@
   //  ******************************
 
 enum TypeRun with Comparable<TypeRun> { 
-  enumV2('enum_v2'),
+  enum_('enum'),
   enumDefault('enum_default'),
   enumInt('enum_int'),
   enumString('enum_string'),
@@ -38,8 +38,8 @@ enum TypeRun with Comparable<TypeRun> {
     TypeRun? fallback,
   }) {
     switch (value) {
-      case 'enum_v2':
-        return enumV2;
+      case 'enum':
+        return enum_;
       case 'enum_default':
         return enumDefault;
       case 'enum_int':
@@ -62,7 +62,7 @@ enum TypeRun with Comparable<TypeRun> {
 
   /// Pattern matching
   T map<T>({
-    required T Function() enumV2,
+    required T Function() enum_,
     required T Function() enumDefault,
     required T Function() enumInt,
     required T Function() enumString,
@@ -73,8 +73,8 @@ enum TypeRun with Comparable<TypeRun> {
 
   }) {
     switch (this) {
-      case TypeRun.enumV2:
-        return enumV2();     
+      case TypeRun.enum_:
+        return enum_();     
       case TypeRun.enumDefault:
         return enumDefault();     
       case TypeRun.enumInt:
@@ -96,7 +96,7 @@ enum TypeRun with Comparable<TypeRun> {
   /// Pattern matching
   T maybeMap<T>({
     required T Function() orElse,
-    T Function()? enumV2,
+    T Function()? enum_,
     T Function()? enumDefault,
     T Function()? enumInt,
     T Function()? enumString,
@@ -107,7 +107,7 @@ enum TypeRun with Comparable<TypeRun> {
 
   }) =>
       map<T>(
-      enumV2: enumV2 ?? orElse,     
+      enum_: enum_ ?? orElse,     
       enumDefault: enumDefault ?? orElse,     
       enumInt: enumInt ?? orElse,     
       enumString: enumString ?? orElse,     
@@ -120,7 +120,7 @@ enum TypeRun with Comparable<TypeRun> {
 
   /// Pattern matching
   T? maybeMapOrNull<T>({
-    T Function()? enumV2,
+    T Function()? enum_,
     T Function()? enumDefault,
     T Function()? enumInt,
     T Function()? enumString,
@@ -132,7 +132,7 @@ enum TypeRun with Comparable<TypeRun> {
   }) =>
       maybeMap<T?>(
         orElse: () => null,
-        enumV2: enumV2,  
+        enum_: enum_,  
         enumDefault: enumDefault,  
         enumInt: enumInt,  
         enumString: enumString,  
