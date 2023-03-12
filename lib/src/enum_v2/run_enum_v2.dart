@@ -23,7 +23,8 @@ Future<void> runEnumV2({
   );
 // remove underscores
   final enumName = _getEnumName(enumHeader);
-
+    // final slash = Platform.isWindows ? r'\' : '/';
+  // final nameFile = path.split(slash).last.split('.').first;
 //
   msgIfNotNameClass(enumName, logger);
 
@@ -61,11 +62,9 @@ Future<void> runEnumV2({
   );
   final listEnumNameFormat =
       listEnumNameRaw.map((e) => e.replaceAll('(', '').trim()).toList();
-  
-  
-  
-    // удаляю лишнее поле
-   
+
+  // удаляю лишнее поле
+
   if (listEnumNameFormat.isNotEmpty) {
     final _ = listEnumNameFormat.removeLast();
   }
@@ -129,7 +128,7 @@ Future<void> runEnumV2({
     nameClass: enumName,
     headerClass: enumHeader,
     nameValue: nameVar,
-    typeEnum: typeEnum,
+    typeEnum: typeEnum, 
     listItem: enumItem,
     isDefault: isDefault, contentFile: contentFile,
     isCanNull: isCanNull, contentToEnd: contentToEnd,

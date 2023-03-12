@@ -10,6 +10,7 @@ void enumV2WriteToFile(
 ) {
   final newContent = StringBuffer();
   final nameClass = model.nameClass;
+  final nameFile = model.nameFile;
   final typeStr = model.typeEnum.value;
   final nameValue = model.nameValue;
 /* ****************************** */
@@ -26,100 +27,32 @@ void enumV2WriteToFile(
 /* ******************************* */
 
 /* ****************************** */
-  final fromValueStringSb = StringBuffer();
+/* ****************************** */
+  final fromValueSb = StringBuffer();
 
-  // ignore: cascade_invocations
-  fromValueStringSb.write('''
-  static $nameClass fromValue(String? value, {$nameClass? fallback}) {
-    final valueMap = <String, $nameClass>{};
-
-    for (final v in $nameClass.values) {
-      final _ = valueMap.putIfAbsent(v.toString().toLowerCase(), () => v);
-    }
-
-    final lowercaseValue = value?.toLowerCase();
-    final result = valueMap[lowercaseValue];
-
-    if (result == null && fallback == null) {
-      throw ArgumentError.value(
-          value, 'value', 'Value not found in $nameClass',);
-    }
-
-    return result ?? fallback!;
+/* ****************************** */
+  final fromValueSb1 = StringBuffer();
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    final value = e.valueEnum;
+    fromValueSb1.write('      case $value:\n');
+    fromValueSb1.write('        return $name');
+    var lastSymbol = ';\n';
+    if (e == model.listItem.last) lastSymbol = ';';
+    fromValueSb1.write(lastSymbol);
   }
-
-''');
-/* ****************************** */
-/* ****************************** */
-
 /* ******************************* */
 
-/* ****************************** */
-  final fromValueCommonIntSb = StringBuffer();
-
-  final fromValue1IntSb = StringBuffer();
-  for (final e in model.listItem) {
-    final name = e.nameEnum;
-    final value = e.valueEnum;
-    fromValue1IntSb.write('      $value: $nameClass.$name');
-    var lastSymbol = ',\n';
-    if (e == model.listItem.last) lastSymbol = ',';
-    fromValue1IntSb.write(lastSymbol);
-  }
-
-  fromValueCommonIntSb.write('''
-  static $nameClass fromValue(int? value, {$nameClass? fallback}) {
-    final valueMap = <int, LocaleEnum>{
-$fromValue1IntSb
-    };
-
-    if (valueMap.containsKey(value)) {
-      return valueMap[value]!;
-    } else if (fallback == null) {
-      throw ArgumentError.value(
-        value,
-        'value',
-        'Value not found in $nameClass',
-      );
-    } else {
-      return fallback;
+  fromValueSb.write('''
+  static $nameClass fromValue($typeStr? value, {$nameClass? fallback}) {
+    switch (value) {
+$fromValueSb1
+      default:
+        return fallback ?? (throw ArgumentError.value(
+          value, '', 'Value not found in $nameClass',));
     }
   }
 ''');
-/* ****************************** */
-/* ****************************** */
-  final fromValueCommonDoubleSb = StringBuffer();
-
-  final fromValue1DoubleSb = StringBuffer();
-  for (final e in model.listItem) {
-    final name = e.nameEnum;
-    final value = e.valueEnum;
-    fromValue1DoubleSb.write('      $value: $nameClass.$name');
-    var lastSymbol = ',\n';
-    if (e == model.listItem.last) lastSymbol = ',';
-    fromValue1DoubleSb.write(lastSymbol);
-  }
-
-  fromValueCommonDoubleSb.write('''
-  static $nameClass fromValue(double? value, {$nameClass? fallback}) {
-    final valueMap = <double, LocaleEnum>{
-$fromValue1DoubleSb
-    };
-
-    if (valueMap.containsKey(value)) {
-      return valueMap[value]!;
-    } else if (fallback == null) {
-      throw ArgumentError.value(
-        value,
-        'value',
-        'Value not found in $nameClass',
-      );
-    } else {
-      return fallback;
-    }
-  }
-''');
-/* ****************************** */
 /* ****************************** */
 
   final mapCommonSb = StringBuffer();
@@ -127,42 +60,65 @@ $fromValue1DoubleSb
   final map2Sb = StringBuffer();
   for (final e in model.listItem) {
     final name = e.nameEnum;
-    map1Sb.write('    required T Function($nameClass value) $name');
+    map1Sb.write('    required T Function() $name');
     var lastSymbol = ',\n';
     if (e == model.listItem.last) lastSymbol = ',';
     map1Sb.write(lastSymbol);
   }
 
   for (final e in model.listItem) {
-    final name = e.nameEnum;
-    map2Sb.write('      $nameClass.$name: $name');
-
-    var lastSymbol = ',\n';
-    if (e == model.listItem.last) lastSymbol = ',';
+   final name = e.nameEnum;
+    final value = e.valueEnum;
+    map2Sb.write('      case $nameClass.$name:\n');
+    map2Sb.write('        return $name()');
+    var lastSymbol = ';\n';
+    if (e == model.listItem.last) lastSymbol = ';';
     map2Sb.write(lastSymbol);
   }
   mapCommonSb.write('''
   T map<T>({
 $map1Sb
   }) {
-    final valueMap = {
+    switch (this) {
 $map2Sb
-    };
-
-    final result = valueMap[this];
-
-    return result != null
-        ? result(this)
-        : throw ArgumentError.value(
-            this,
-            'value',
-            'Value not found in $nameClass',
-          );
+    }
   }
 ''');
 
 /* ****************************** */
+/* ****************************** */
 
+  final mapValuesCommonSb = StringBuffer();
+  final mapValues1Sb = StringBuffer();
+  final mapValues2Sb = StringBuffer();
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    mapValues1Sb.write('    required T $name');
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    mapValues1Sb.write(lastSymbol);
+  }
+
+  for (final e in model.listItem) {
+   final name = e.nameEnum;
+    final value = e.valueEnum;
+    mapValues2Sb.write('      case $nameClass.$name:\n');
+    mapValues2Sb.write('        return $name');
+    var lastSymbol = ';\n';
+    if (e == model.listItem.last) lastSymbol = ';';
+    mapValues2Sb.write(lastSymbol);
+  }
+  mapValuesCommonSb.write('''
+  T mapValue<T>({
+$mapValues1Sb
+  }) {
+    switch (this) {
+$mapValues2Sb
+    }
+  }
+''');
+
+/* ****************************** */
 /* ****************************** */
 /* ****************************** */
 
@@ -171,7 +127,7 @@ $map2Sb
   final maybeMap2Sb = StringBuffer();
   for (final e in model.listItem) {
     final name = e.nameEnum;
-    maybeMap1Sb.write('    T Function($nameClass value)? $name');
+    maybeMap1Sb.write('    T Function()? $name');
     var lastSymbol = ',\n';
     if (e == model.listItem.last) lastSymbol = ',';
     maybeMap1Sb.write(lastSymbol);
@@ -179,36 +135,115 @@ $map2Sb
 
   for (final e in model.listItem) {
     final name = e.nameEnum;
-    maybeMap2Sb.write('      $nameClass.$name: $name ?? orElse');
+    maybeMap2Sb.write('      $name: $name ?? orElse');
     var lastSymbol = ',\n';
     if (e == model.listItem.last) lastSymbol = ',';
     maybeMap2Sb.write(lastSymbol);
   }
   maybeMapCommonSb.write('''
   T maybeMap<T>({
-    required T Function($nameClass value) orElse,
+    required T Function() orElse,
 $maybeMap1Sb
-  }) {
-    final valueMap = <$nameClass, T Function($nameClass value)>{
+  }) =>
+      map<T>(
 $maybeMap2Sb
-    };
+      );
+''');
+/* ****************************** */
+/* ****************************** */
 
-    final result = valueMap[this];
-
-    return result != null
-        ? result(this)
-        : throw ArgumentError.value(
-            this,
-            'value',
-            'Value not found in $nameClass',
-          );
+  final maybeMapValueCommonSb = StringBuffer();
+  final maybeMapValueSb1 = StringBuffer();
+  final maybeMapValueSb2 = StringBuffer();
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    maybeMapValueSb1.write('    T? $name');
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    maybeMapValueSb1.write(lastSymbol);
   }
+
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    maybeMapValueSb2.write('      $name: $name ?? orElse');
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    maybeMapValueSb2.write(lastSymbol);
+  }
+  maybeMapValueCommonSb.write('''
+  T maybeMapValue<T>({
+    required T orElse,
+$maybeMapValueSb1
+  }) =>
+      mapValue<T>(
+$maybeMapValueSb2
+      );
+''');
+/* ****************************** */
+  final maybeMapNullCommonSb = StringBuffer();
+  final maybeMapNullSb1 = StringBuffer();
+  final maybeMapNullSb2 = StringBuffer();
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    maybeMapNullSb1.write('    T Function()? $name');
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    maybeMapNullSb1.write(lastSymbol);
+  }
+
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    maybeMapNullSb2.write('        $name: $name');
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    maybeMapNullSb2.write(lastSymbol);
+  }
+  maybeMapNullCommonSb.write('''
+  T? maybeMapOrNull<T>({
+$maybeMapNullSb1
+  }) =>
+      maybeMap<T?>(
+        orElse: () => null,
+$maybeMapNullSb2
+      );
 ''');
 
+/* ****************************** */
+/* ****************************** */
+  final maybeMapNullValueCommonSb = StringBuffer();
+  final maybeMapNullValueSb1 = StringBuffer();
+  final maybeMapNullValueSb2 = StringBuffer();
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    maybeMapNullValueSb1.write('    T? $name');
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    maybeMapNullValueSb1.write(lastSymbol);
+  }
+
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    maybeMapNullValueSb2.write('        $name: $name');
+    var lastSymbol = ',\n';
+    if (e == model.listItem.last) lastSymbol = ',';
+    maybeMapNullValueSb2.write(lastSymbol);
+  }
+  maybeMapNullValueCommonSb.write('''
+  T? maybeMapOrNullValue<T>({
+$maybeMapNullValueSb1
+  }) =>
+      maybeMapValue<T?>(
+        orElse: null,
+$maybeMapNullValueSb2
+      );
+''');
+
+/* ****************************** */
 /* ****************************** */
   final constructorSb = StringBuffer();
 
   constructorSb.write('''
+  /// {@macro $nameFile}
   const $nameClass(this.$nameValue);
   final $typeStr $nameValue;
 ''');
@@ -244,9 +279,70 @@ $constructorSb
 // end
 
 ${ConstConsole.GEN_MSG_START}
-${_getFromValue(fromValueInt: fromValueCommonIntSb, fromValueString: fromValueStringSb, fromValueDouble: fromValueCommonDoubleSb, model: model)}
+  /// Creates a new instance of [$nameClass] from a given $typeStr value.
+  ///
+  /// If the given value matches one of the values defined in the [$nameClass] enumeration,
+  /// a corresponding instance of [$nameClass] is returned.
+  /// If the given value is null or does not match any of the enumeration values and a fallback
+  /// value is not provided, an [ArgumentError] is thrown.
+  ///
+  /// The `fallback` parameter is an optional [$nameClass] value that will be returned if the
+  /// given value does not match any of the enumeration values.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum locale = LocaleEnum.fromValue('en', fallback: LocaleEnum.ru);
+  /// print(locale); // Output: LocaleEnum.en(en)
+  /// ```
+$fromValueSb
+
+  /// Calls the appropriate function based on the value of this [$nameClass] instance.
+  ///
+  /// This method returns the result of calling the appropriate function for the value of the current [$nameClass] instance.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum ru = LocaleEnum.ru;
+  /// String result = ru.map(
+  ///   ru: () => 'Привет!',
+  ///   en: () => 'Hello!',
+  /// );
+  /// print(result); // Output: 'Привет!'
+  /// ```
 $mapCommonSb
+  /// Calls the appropriate function based on the value of this [$nameClass] instance.
+  ///
+  /// This method returns the appropriate value for the value of the current [$nameClass] instance.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum en = LocaleEnum.en;
+  /// String result = en.mapValue(
+  ///   ru: 'Привет!',
+  ///   en: 'Hello!',
+  /// );
+  /// print(result); // Output: 'Hello!'
+  /// ```
+$mapValuesCommonSb
+  /// Calls the appropriate function based on the value of this [$nameClass] instance.
+  ///
+  /// If the corresponding function for the value of this [$nameClass] instance is not provided,
+  /// the `orElse` function will be called instead.
+  /// This method returns the value returned by the appropriate function for the value of this [$nameClass] instance.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// LocaleEnum ru = LocaleEnum.ru;
+  /// String result = ru.maybeMap<String>(
+  ///   orElse: () => 'Unknown',
+  ///   ru: () => 'Привет!',
+  /// );
+  /// print(result); // Output: 'Привет!'
+  /// ```
 $maybeMapCommonSb
+$maybeMapValueCommonSb
+$maybeMapNullCommonSb
+$maybeMapNullValueCommonSb
 $getValuesSb
 $compareSToStringb
 
@@ -276,7 +372,6 @@ String _getFromValue({
     case EnumTypeVarable.enum_:
 
     case EnumTypeVarable.bool_:
-
 
     case EnumTypeVarable.num_:
 
@@ -375,6 +470,88 @@ String _getFromValue({
     case EnumTypeVarable.null_:
 
     case EnumTypeVarable.none:
-      return '// ERROR: method fromValue for ${model.typeEnum.value} is not supported yet\n';
+      return '// INFO: method fromValue for ${model.typeEnum.value} is not supported yet\n';
   }
+}
+
+/// {@template enum_v2_write_file}
+/// EnumV2WriteFile enumeration
+/// {@endtemplate}
+enum EnumV2WriteFile with Comparable<EnumV2WriteFile> {
+  /// a
+  a('a'),
+
+  /// b
+  b('b'),
+
+  /// c
+  c('c');
+
+  /// {@macro enum_v2_write_file}
+  const EnumV2WriteFile(this.value);
+
+  /// Creates a new instance of [EnumV2WriteFile] from a given string.
+  static EnumV2WriteFile fromValue(String? value, {EnumV2WriteFile? fallback}) {
+    switch (value) {
+      case 'a':
+        return a;
+      case 'b':
+        return b;
+      case 'c':
+        return c;
+      default:
+        return fallback ?? (throw ArgumentError.value(value));
+    }
+  }
+
+  /// Value of the enum
+  final String value;
+
+  /// Pattern matching
+  T map<T>({
+    required T Function() a,
+    required T Function() b,
+    required T Function() c,
+  }) {
+    switch (this) {
+      case EnumV2WriteFile.a:
+        return a();
+      case EnumV2WriteFile.b:
+        return b();
+      case EnumV2WriteFile.c:
+        return c();
+    }
+  }
+
+  /// Pattern matching
+  T maybeMap<T>({
+    required T Function() orElse,
+    T Function()? a,
+    T Function()? b,
+    T Function()? c,
+  }) =>
+      map<T>(
+        a: a ?? orElse,
+        b: b ?? orElse,
+        c: c ?? orElse,
+      );
+
+  /// Pattern matching
+  T? maybeMapOrNull<T>({
+    T Function()? a,
+    T Function()? b,
+    T Function()? c,
+  }) =>
+      maybeMap<T?>(
+        orElse: () => null,
+        a: a,
+        b: b,
+        c: c,
+      );
+
+  @override
+  int compareTo(EnumV2WriteFile other) => index.compareTo(other.index);
+
+  @override
+  String toString() => value;
 }

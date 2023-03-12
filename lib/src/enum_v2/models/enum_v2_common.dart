@@ -4,7 +4,9 @@ import 'package:turn_gen/src/common/common.dart';
 import 'package:turn_gen/src/enum_v2/enum_v2.dart';
 
 /* no: hash tojson fromjson*/
-class EnumV2CommonModel {  
+class EnumV2CommonModel {   
+    /* init: '' */
+  final String nameFile;
   /* init: '' */
   final String nameClass;
   /* init: EnumTypeVarable.none*/
@@ -33,6 +35,7 @@ class EnumV2CommonModel {
 //  *************************************
   
   const EnumV2CommonModel({
+    this.nameFile = '',
     this.nameClass = '',
     this.typeEnum = EnumTypeVarable.none,
     this.nameValue = '',
@@ -50,6 +53,7 @@ class EnumV2CommonModel {
 
 
   EnumV2CommonModel copyWith({
+    String? nameFile,
     String? nameClass,
     EnumTypeVarable? typeEnum,
     String? nameValue,
@@ -61,6 +65,7 @@ class EnumV2CommonModel {
     List<EnumV2ItemModel>? listItem,
   }) {
     return EnumV2CommonModel(
+      nameFile: nameFile ?? this.nameFile, 
       nameClass: nameClass ?? this.nameClass, 
       typeEnum: typeEnum ?? this.typeEnum, 
       nameValue: nameValue ?? this.nameValue, 
@@ -78,7 +83,7 @@ class EnumV2CommonModel {
 
       @override
   String toString() {
-    return 'EnumV2CommonModel(nameClass: $nameClass, typeEnum: $typeEnum, nameValue: $nameValue, headerClass: $headerClass, contentFile: $contentFile, contentToEnd: $contentToEnd, isDefault: $isDefault, isCanNull: $isCanNull, listItem: $listItem, )';
+    return 'EnumV2CommonModel(nameFile: $nameFile, nameClass: $nameClass, typeEnum: $typeEnum, nameValue: $nameValue, headerClass: $headerClass, contentFile: $contentFile, contentToEnd: $contentToEnd, isDefault: $isDefault, isCanNull: $isCanNull, listItem: $listItem, )';
     }
 
 }
