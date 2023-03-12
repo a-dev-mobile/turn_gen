@@ -38,9 +38,9 @@ Then run `flutter pub get` or `dart pub get` to install the package.
 
 ![enum_type](https://github.com/a-dev-mobile/turn_gen/blob/master/resources/enum_type.png)
 
-На рисунке выше показаны некоторые способы использования классов `enum`.
-Turngen добавляет дополнительные методы для удобной работы с `enum`. При чем неважно какой тип переменной в конструкторе. Главное, добавить комментарий `// end` перед закрывающей скобкой, чтобы понять, откуда начинается генерация.
-Ниже приведена команда для запуска скрипта.
+The figure above shows some of the ways in which the `enum` classes can be used.
+Turngen adds additional methods for convenient work with `enum`. At what it is unimportant what type of a variable in the constructor. The main thing is to add the comment `// end` before the closing brace to understand where the generation starts from.
+Following is the command to run the script.
 
 ```shell
 dart run turn_gen -t enum -f <path to your file>
@@ -86,7 +86,6 @@ enum Speed with Comparable<Speed>  {
   // end
 
 //          --TURN_GEN--
-//             v0.4.0
 //  *************************************
 //           GENERATED CODE 
 //  *************************************
