@@ -411,7 +411,7 @@ class AppAssetsPNG {
 
 TurnGen scripts can generate and override additional methods to `dart` classes, such as
 
-- `toMap`/`fromJson` and `fromMap`/`fromJson` for Map/Json serialization and deserialization
+- `toMap`/`fromJson` and `fromMap`/`fromJson`/`fromDynamicMap` for Map/Json serialization and deserialization
 - `copyWith` - to clone an object with different properties
 - `operator ==` and override `hashCode` (since TurnGet only works with immutable classes)
 - `toString` -  to display a list of all object properties

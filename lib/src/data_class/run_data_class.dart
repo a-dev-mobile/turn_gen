@@ -185,6 +185,7 @@ type: asda fromMap: asdasd*/
   final copyWithEnd = StringBuffer();
   final toMapSb = StringBuffer();
   final fromMapSb = StringBuffer();
+  final fromMapDynamic = StringBuffer();
   final toString = StringBuffer();
   final equals = StringBuffer();
   final hashCode = StringBuffer();
@@ -271,7 +272,9 @@ type: asda fromMap: asdasd*/
     fromMapSb.write('''
       ${v.nameVar}: ${getFromMap(v)}, 
 ''');
-
+    fromMapDynamic.write('''
+      ${v.nameVar}: ${getFromDynamicMap(v)}, 
+''');
     toString.write('${v.nameVar}: \$${v.nameVar}, ');
 
     equals.write(getEquals(v.type, v.nameVar, i == listVarSort.length - 1));
@@ -298,6 +301,7 @@ type: asda fromMap: asdasd*/
     copyWithEnd,
     toMapSb,
     fromMapSb,
+    fromMapDynamic,
     toString,
     equals,
     hashCode,

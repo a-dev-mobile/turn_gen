@@ -1,3 +1,10 @@
+## 0.4.5
+
+- Added `fromDynamicMap` method to `data` class, which works well where you need to convert `Map<dynamic, dynamic>` to `Map<String, dynamic>`. For example nested JSON from Firebase DataSnapshot
+- almost all places added doc comments
+- Updated README.md
+
+
 ## 0.4.1
 
 - minor fixes

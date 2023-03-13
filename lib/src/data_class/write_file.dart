@@ -15,6 +15,7 @@ void writeToFile(
   StringBuffer copyWithEnd,
   StringBuffer toMapSb,
   StringBuffer fromMapSb,
+  StringBuffer fromMapDynamicSb,
   StringBuffer toString,
   StringBuffer equals,
   StringBuffer hashCode,
@@ -158,14 +159,12 @@ $header$classHeader $classBrackets
 ${ConstConsole.GEN_MSG_START}
   const $className({
 $constructor  });
-  /*
-   factory $className.init() => $className(
-$factoryInit      ); 
-  */
-${_getToMap(toMapSb, isActiveToMap)}
+
+${_getToMap(toMapSb, isActiveToMap, className)}
 ${_getFromMap_(className, fromMapSb, isActiveFromMap, isHaveRequired)}
+${_getFromMapDynamic_(className, fromMapDynamicSb, isActiveFromMap&&fromMapSb.length!=fromMapDynamicSb.length, isHaveRequired)}
 ${_getCopyWith(className, copyWithStart, copyWithEnd, isActiveCopyWith)}
-${_getToJson(isActiveToJson)}  
+${_getToJson(isActiveToJson, className)}  
 ${_getFromJson(className, isActiveFromJson)}  
 ${_getHashAndEquals(className, equals, hashCode, isActiveHashAndEquals)}
 ${_getToString(className, toString, isActiveToString)}
@@ -209,6 +208,19 @@ String _getCopyWith(
 ) {
   return isActive
       ? '''
+  /// Returns a new [$className] instance with updated properties.
+  ///
+  /// The arguments may be null. If they are null, the
+  /// corresponding properties in the returned instance will be the same
+  /// as in the original instance.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final user = UserModel(url: 'https://example.com', name: 'John');
+  /// final newUser = user.copyWith(name: 'Jane');
+  /// print(newUser); // Output: UserModel(url: https://example.com, name: Jane)
+  /// ```
   $className copyWith({
 $copyWithStart  }) {
     return $className(
@@ -218,11 +230,26 @@ $copyWithEnd    );
       : '';
 }
 
-String _getToMap(StringBuffer toMapSb, bool isActive) {
+String _getToMap(StringBuffer toMapSb, bool isActive, String nameClass) {
   return isActive
       ? '''
-Map<String, dynamic> toMap() {
-  return <String, dynamic>{
+  /// Converts the [$nameClass] object to a map of key-value pairs.
+  ///
+  /// Returns a new [Map] instance containing the non-null properties of this
+  /// [$nameClass] instance. The keys are [String]s corresponding to the property
+  /// names, and the values are their respective values.
+  ///
+  /// If a property is `null`, it will not be included in the resulting map.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final user = UserModel(url: 'https://example.com', name: 'John');
+  /// final userMap = user.toMap();
+  /// print(userMap); // Output: {'url': 'https://example.com', 'name': 'John'}
+  /// ```
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
 $toMapSb    };
   }
 '''
@@ -241,6 +268,18 @@ String _getFromMap_(
 
   return isActive
       ? '''
+  /// Creates a new [$className] instance from a map of key-value pairs.
+  ///
+  /// The [map] argument may be null. If a value in the map is null or
+  /// of an invalid type, it will be treated as an empty string.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final userMap = {'url': 'https://example.com', 'name': 'John'};
+  /// final user = UserModel.fromMap(userMap);
+  /// print(user); // Output: UserModel(url: https://example.com, name: John)
+  /// ```
   factory $className.fromMap(Map<String, dynamic>$add1 map) {
     $add2
     return $className(
@@ -250,10 +289,58 @@ $fromMapSb    );
       : '';
 }
 
+String _getFromMapDynamic_(
+  String className,
+  StringBuffer fromMapDynamicSb,
+  bool isActive,
+  bool isHaveRequired,
+) {
+  final add1 = isHaveRequired ? '' : '?';
+  final add2 =
+      isHaveRequired ? '' : 'if (map == null) return const $className();\n';
+
+  return isActive
+      ? '''
+  /// Creates a [$className] instance from a Map with dynamic keys and values.
+  ///
+  /// If the [map] argument is null, returns a const [$className] instance.
+  /// 
+  /// If the [map] argument is not null, creates a [$className] instance using the values of keys 
+  /// in the map. If these keys are not null, it extracts their corresponding values and assigns 
+  /// them to the corresponding properties in the [$className] instance.
+  /// 
+  /// If the keys maps is not null, it converts its value to a Map<String, dynamic> using 
+  /// `Map<String, dynamic>.from` and passes it to the other model constructor to create a model instance.
+  ///
+  /// If a value in the map is null or of an invalid type, it will be treated as an empty string.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final map = {'value': 'Jon', 'unrestricted_value': 'John Smith', 'data': {'name': 'Jon', 'surname': 'Smith'}};
+  /// final suggestion = SuggestionsModel.fromDynamicMap(map);
+  /// print(suggestion); // Output: SuggestionsModel(value: Jon, unrestricted_value: Jon, data: DataFio(name: Jon, surname: Smith))
+  /// ``` 
+  factory $className.fromDynamicMap(Map<dynamic, dynamic>$add1 map) {
+    $add2
+    return $className(
+$fromMapDynamicSb    );
+  }
+'''
+      : '';
+}
 String _getToString(String className, StringBuffer toString, bool isActive) {
   return isActive
       ? '''
-      @override
+
+  /// Returns a string representation of this model [$className].
+  /// The string representation includes the fields class.
+  /// Example of returned string: 
+  /// ``` dart 
+  /// UserModel(url: https://example.com, name: John Doe) 
+  /// ```  
+  /// Returns: A string representation of this user model object.
+  @override
   String toString() {
     return '$className($toString)';
     }'''
@@ -268,14 +355,42 @@ String _getHashAndEquals(
 ) {
   return isActive
       ? '''
-      
+  /// Determines whether this [$className] instance is equal to another object.
+  ///
+  /// Returns `true` if the other object is also a [$className] instance and has
+  /// the same values property as this instance.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final user1 = UserModel(url: 'https://example.com', name: 'John');
+  /// final user2 = UserModel(url: 'https://example.com', name: 'John');
+  /// final user3 = UserModel(url: 'https://example.com', name: 'Jane');
+  ///
+  /// print(user1 == user2); // Output: true
+  /// print(user1 == user3); // Output: false
+  /// ```      
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is $className &&
 $equals  }
-  
+
+  /// Returns a hash code for this [$className] instance.
+  ///
+  /// The hash code is based on the properties class. If 
+  /// instances have the same values for these properties, they will have
+  /// the same hash code.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final user1 = UserModel(url: 'https://example.com', name: 'John');
+  /// final user2 = UserModel(url: 'https://example.com', name: 'John');
+  /// print(user1.hashCode); // Output: 1796192025
+  /// print(user2.hashCode); // Output: 1796192025
+  /// ```  
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -283,12 +398,32 @@ $hashCode]);'''
       : '';
 }
 
-String _getToJson(bool isActive) {
-  return isActive ? '  String toJson() => json.encode(toMap());' : '';
+String _getToJson(bool isActive,  String className) {
+  return isActive ? '''
+
+  /// Returns a JSON-encoded string representing this [$className] instance.
+  ///
+  /// The JSON string has the following format:
+  ///
+  /// ```json
+  /// {
+  ///   "url": "https://example.com",
+  ///   "name": "John"
+  /// }
+  /// ```
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final user = UserModel(url: 'https://example.com', name: 'John');
+  /// final jsonString = user.toJson();
+  /// print(jsonString); // Output: {"url":"https://example.com","name":"John"}
+  /// ```
+  String toJson() => json.encode(toMap());''' : '';
 }
 
 String _getFromJson(String className, bool isActive) {
   return isActive
-      ? 'factory $className.fromJson(String source) => $className.fromMap(json.decode(source) as Map<String, dynamic>,);'
+      ? '  factory $className.fromJson(String source) => $className.fromMap(json.decode(source) as Map<String, dynamic>,);'
       : '';
 }
