@@ -1,5 +1,7 @@
 part of 'run_data_class.dart';
 
+bool _isShowComment = false;
+
 // ignore: prefer-static-class
 void writeToFile(
   FLILogger logger,
@@ -19,8 +21,12 @@ void writeToFile(
   StringBuffer toString,
   StringBuffer equals,
   StringBuffer hashCode,
+  // ignore: avoid_positional_boolean_parameters
+  bool isShowComment,
   File file,
 ) {
+  _isShowComment = isShowComment;
+
   final noSetting = listFirstSetting
       .firstWhere(
         (v) => v.keySetting == EnumKeySetting.no,
@@ -147,12 +153,14 @@ void writeToFile(
   //     }
   //   }
   // }
-  const add5 =
-      '// ignore_for_file: sort_constructors_first, avoid_bool_literals_in_conditional_expressions';
+  const add5 = 'sort_constructors_first';
   if (!header.contains(add5)) {
-    header = '$add5\n$header';
+    header = '// ignore_for_file: $add5\n$header';
   }
-
+  const add6 = 'avoid_bool_literals_in_conditional_expressions';
+  if (!header.contains(add6)) {
+    header = '// ignore_for_file: $add6\n$header';
+  }
   final newContent = '''
 $header$classHeader $classBrackets
    
@@ -162,7 +170,6 @@ $constructor  });
 
 ${_getToMap(toMapSb, isActiveToMap, className)}
 ${_getFromMap_(className, fromMapSb, isActiveFromMap, isHaveRequired)}
-${_getFromMapDynamic_(className, fromMapDynamicSb, isActiveFromMap&&fromMapSb.length!=fromMapDynamicSb.length, isHaveRequired)}
 ${_getCopyWith(className, copyWithStart, copyWithEnd, isActiveCopyWith)}
 ${_getToJson(isActiveToJson, className)}  
 ${_getFromJson(className, isActiveFromJson)}  
@@ -206,7 +213,7 @@ String _getCopyWith(
   StringBuffer copyWithEnd,
   bool isActive,
 ) {
-  return isActive
+  final doc = _isShowComment
       ? '''
   /// Returns a new [$className] instance with updated properties.
   ///
@@ -220,18 +227,22 @@ String _getCopyWith(
   /// final user = UserModel(url: 'https://example.com', name: 'John');
   /// final newUser = user.copyWith(name: 'Jane');
   /// print(newUser); // Output: UserModel(url: https://example.com, name: Jane)
-  /// ```
+  /// ```'''
+      : '';
+
+  return isActive
+      ? '''
+$doc
   $className copyWith({
 $copyWithStart  }) {
     return $className(
 $copyWithEnd    );
-  }
-'''
+  }'''
       : '';
 }
 
 String _getToMap(StringBuffer toMapSb, bool isActive, String nameClass) {
-  return isActive
+  final doc = _isShowComment
       ? '''
   /// Converts the [$nameClass] object to a map of key-value pairs.
   ///
@@ -247,7 +258,12 @@ String _getToMap(StringBuffer toMapSb, bool isActive, String nameClass) {
   /// final user = UserModel(url: 'https://example.com', name: 'John');
   /// final userMap = user.toMap();
   /// print(userMap); // Output: {'url': 'https://example.com', 'name': 'John'}
-  /// ```
+  /// ```'''
+      : '';
+
+  return isActive
+      ? '''
+$doc
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
 $toMapSb    };
@@ -265,43 +281,9 @@ String _getFromMap_(
   final add1 = isHaveRequired ? '' : '?';
   final add2 =
       isHaveRequired ? '' : 'if (map == null) return const $className();\n';
-
-  return isActive
+  final doc = _isShowComment
       ? '''
-  /// Creates a new [$className] instance from a map of key-value pairs.
-  ///
-  /// The [map] argument may be null. If a value in the map is null or
-  /// of an invalid type, it will be treated as an empty string.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final userMap = {'url': 'https://example.com', 'name': 'John'};
-  /// final user = UserModel.fromMap(userMap);
-  /// print(user); // Output: UserModel(url: https://example.com, name: John)
-  /// ```
-  factory $className.fromMap(Map<String, dynamic>$add1 map) {
-    $add2
-    return $className(
-$fromMapSb    );
-  }
-'''
-      : '';
-}
-
-String _getFromMapDynamic_(
-  String className,
-  StringBuffer fromMapDynamicSb,
-  bool isActive,
-  bool isHaveRequired,
-) {
-  final add1 = isHaveRequired ? '' : '?';
-  final add2 =
-      isHaveRequired ? '' : 'if (map == null) return const $className();\n';
-
-  return isActive
-      ? '''
-  /// Creates a [$className] instance from a Map with dynamic keys and values.
+/// Creates a [$className] instance from a Map with dynamic keys and values.
   ///
   /// If the [map] argument is null, returns a const [$className] instance.
   /// 
@@ -321,18 +303,64 @@ String _getFromMapDynamic_(
   /// final suggestion = SuggestionsModel.fromDynamicMap(map);
   /// print(suggestion); // Output: SuggestionsModel(value: Jon, unrestricted_value: Jon, data: DataFio(name: Jon, surname: Smith))
   /// ``` 
-  factory $className.fromDynamicMap(Map<dynamic, dynamic>$add1 map) {
-    $add2
-    return $className(
-$fromMapDynamicSb    );
-  }
 '''
       : '';
-}
-String _getToString(String className, StringBuffer toString, bool isActive) {
+
   return isActive
       ? '''
+$doc
+  factory $className.fromMap(Map<dynamic, dynamic>$add1 map) {
+    $add2
+    return $className(
+$fromMapSb    );
+  }'''
+      : '';
+}
+// @Deprecated('use fromMap')
+// String _getFromMapDynamic_(
+//   String className,
+//   StringBuffer fromMapDynamicSb,
+//   bool isActive,
+//   bool isHaveRequired,
+// ) {
+//   final add1 = isHaveRequired ? '' : '?';
+//   final add2 =
+//       isHaveRequired ? '' : 'if (map == null) return const $className();\n';
 
+//   return isActive
+//       ? '''
+//   /// Creates a [$className] instance from a Map with dynamic keys and values.
+//   ///
+//   /// If the [map] argument is null, returns a const [$className] instance.
+//   /// 
+//   /// If the [map] argument is not null, creates a [$className] instance using the values of keys 
+//   /// in the map. If these keys are not null, it extracts their corresponding values and assigns 
+//   /// them to the corresponding properties in the [$className] instance.
+//   /// 
+//   /// If the keys maps is not null, it converts its value to a Map<String, dynamic> using 
+//   /// `Map<String, dynamic>.from` and passes it to the other model constructor to create a model instance.
+//   ///
+//   /// If a value in the map is null or of an invalid type, it will be treated as an empty string.
+//   ///
+//   /// Example usage:
+//   ///
+//   /// ```dart
+//   /// final map = {'value': 'Jon', 'unrestricted_value': 'John Smith', 'data': {'name': 'Jon', 'surname': 'Smith'}};
+//   /// final suggestion = SuggestionsModel.fromDynamicMap(map);
+//   /// print(suggestion); // Output: SuggestionsModel(value: Jon, unrestricted_value: Jon, data: DataFio(name: Jon, surname: Smith))
+//   /// ``` 
+//   factory $className.fromDynamicMap(Map<dynamic, dynamic>$add1 map) {
+//     $add2
+//     return $className(
+// $fromMapDynamicSb    );
+//   }
+// '''
+//       : '';
+// }
+
+String _getToString(String className, StringBuffer toString, bool isActive) {
+  final doc = _isShowComment
+      ? '''
   /// Returns a string representation of this model [$className].
   /// The string representation includes the fields class.
   /// Example of returned string: 
@@ -340,6 +368,12 @@ String _getToString(String className, StringBuffer toString, bool isActive) {
   /// UserModel(url: https://example.com, name: John Doe) 
   /// ```  
   /// Returns: A string representation of this user model object.
+'''
+      : '';
+
+  return isActive
+      ? '''
+$doc
   @override
   String toString() {
     return '$className($toString)';
@@ -353,7 +387,7 @@ String _getHashAndEquals(
   StringBuffer hashCode,
   bool isActive,
 ) {
-  return isActive
+  final doc1 = _isShowComment
       ? '''
   /// Determines whether this [$className] instance is equal to another object.
   ///
@@ -369,14 +403,12 @@ String _getHashAndEquals(
   ///
   /// print(user1 == user2); // Output: true
   /// print(user1 == user3); // Output: false
-  /// ```      
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is $className &&
-$equals  }
+  /// ```   
+'''
+      : '';
 
+  final doc2 = _isShowComment
+      ? '''
   /// Returns a hash code for this [$className] instance.
   ///
   /// The hash code is based on the properties class. If 
@@ -390,7 +422,20 @@ $equals  }
   /// final user2 = UserModel(url: 'https://example.com', name: 'John');
   /// print(user1.hashCode); // Output: 1796192025
   /// print(user2.hashCode); // Output: 1796192025
-  /// ```  
+  /// ```    
+'''
+      : '';
+
+  return isActive
+      ? '''
+$doc1   
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is $className &&
+$equals  }
+$doc2
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -398,9 +443,9 @@ $hashCode]);'''
       : '';
 }
 
-String _getToJson(bool isActive,  String className) {
-  return isActive ? '''
-
+String _getToJson(bool isActive, String className) {
+  final doc = _isShowComment
+      ? '''
   /// Returns a JSON-encoded string representing this [$className] instance.
   ///
   /// The JSON string has the following format:
@@ -419,7 +464,14 @@ String _getToJson(bool isActive,  String className) {
   /// final jsonString = user.toJson();
   /// print(jsonString); // Output: {"url":"https://example.com","name":"John"}
   /// ```
-  String toJson() => json.encode(toMap());''' : '';
+'''
+      : '';
+
+  return isActive
+      ? '''
+$doc
+  String toJson() => json.encode(toMap());'''
+      : '';
 }
 
 String _getFromJson(String className, bool isActive) {

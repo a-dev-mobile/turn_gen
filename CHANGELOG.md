@@ -1,9 +1,13 @@
+## 0.4.7
+
+- I  improved the code by removing the `fromDynamicMap` method, and in the `fromMap` method you changed the variable type to `Map<dynamic, dynamic>` instead of `Map<String, dynamic>`. This method can now be used to convert nested JSON from Firebase - `DataSnapshot`.
+- Comments for `data class` are disabled by default, but you can enable them by writing in `pubspec.yaml` the value `show_method_comments: true`.
+
 ## 0.4.5
 
 - Added `fromDynamicMap` method to `data` class, which works well where you need to convert `Map<dynamic, dynamic>` to `Map<String, dynamic>`. For example nested JSON from Firebase DataSnapshot
 - almost all places added doc comments
 - Updated README.md
-
 
 ## 0.4.1
 

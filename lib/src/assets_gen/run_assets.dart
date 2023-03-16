@@ -1,10 +1,7 @@
 import 'dart:io';
 import 'dart:math';
-
 import 'package:path/path.dart' as p;
 import 'package:turn_gen/src/src.dart';
-
-import 'package:yaml/yaml.dart';
 
 Future<void> runAssets({
   required String pathBase,
@@ -126,7 +123,10 @@ Future<void> runAssets({
 
   _foundFilesWithoutExtension(assetsList, logger);
 
-  final pathGenFolder = _getPathAssetsOutput(pathBase, logger);
+  final pathGenFolder = YamlRead().getPathAssetsSetting(
+    basePath: pathBase,
+    logger: logger,
+  );
 
   _sendErrorIfNotConfigInPubspec(pathGenFolder);
 
@@ -330,42 +330,6 @@ String _formatFileName(String s) {
   }
   // reserved word
   return text == 'values' ? 'vValues' : text;
-}
-
-/// Loads turn gen_extra_config from `pubspec.yaml` file
-String _getPathAssetsOutput(String basePath, FLILogger logger) {
-  logger
-    ..progress('\nFinding a path to generate in pubspec')
-    ..info('');
-
-  final pubspecFile = File(p.join(basePath, ConstHelper.pubspecFilePath));
-  if (!pubspecFile.existsSync()) {
-    return '';
-  }
-  final content = pubspecFile.readAsStringSync();
-  final map = loadYaml(content);
-
-  if (map == null) return '';
-
-  try {
-    // ignore: avoid_dynamic_calls
-    final configName = map[ConstHelper.namePackage];
-    if (configName == null) return '';
-    // ignore: avoid_dynamic_calls
-    final configValue = configName[ConstHelper.nameConfigAssetsOutput];
-    if (configValue == null) return '';
-
-    final relPath = configValue.toString();
-    final path = p.join(basePath, relPath);
-
-    logger
-      ..info('Path found: ${path.replaceAll(r'\', '/')}')
-      ..info('');
-
-    return path;
-  } on Exception {
-    return '';
-  }
 }
 
 String _incrNameFile(String text) {

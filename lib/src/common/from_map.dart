@@ -763,19 +763,19 @@ String getFromMap(Varable v) {
     case EnumTypeVarable.data:
       if (yes_null_default_yes) {
         return _getValueWithInit(
-          "$nameObject.fromMap(map['$name'] as Map<String, dynamic>)",
+          "$nameObject.fromMap(Map<String, dynamic>.from(map['$name'] as Map))",
           name,
           initComment,
         );
       } else if (yes_null_default_no) {
         return _getValueWithInit(
-          "$nameObject.fromMap(map['$name'] as Map<String, dynamic>)",
+          "$nameObject.fromMap(Map<String, dynamic>.from(map['$name'] as Map))",
           name,
           'null',
         );
       } else if (no_null_default_yes) {
         return _getValueWithInit(
-          "$nameObject.fromMap(map['$name'] as Map<String, dynamic>)",
+          "$nameObject.fromMap(Map<String, dynamic>.from(map['$name'] as Map))",
           name,
           initComment,
         );

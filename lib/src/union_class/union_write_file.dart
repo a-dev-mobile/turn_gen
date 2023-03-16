@@ -209,7 +209,7 @@ $sbMaybeMapCase    }
 ''');
 
   final sbMaybeMapOrNull1 = StringBuffer();
-  final sbMaybeMapOrNull2 = StringBuffer();
+  // final sbMaybeMapOrNull2 = StringBuffer();
   for (final l in model.listUnion) {
     final nameClassExtends = _getNameExtendsClass(model, l);
     final sbReturn = StringBuffer();

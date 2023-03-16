@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:turn_gen/src/enum_v2/enum_v2.dart';
 import 'package:turn_gen/src/src.dart';
 
 // ignore: prefer-static-class

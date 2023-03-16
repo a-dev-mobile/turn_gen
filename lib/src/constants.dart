@@ -8,13 +8,14 @@ class ConstHelper {
   /// pubspec.yaml
   static const String namePackage = 'turn_gen';
   static const String nameConfigAssetsOutput = 'assets_output';
+  static const String showMethodComments = 'show_method_comments';
 
   ///
   static const String noExtension = 'noExtension';
   static const String replaceIfFirstLetterNumber = 'n';
 
   static const String configName = 'turn_gen';
-  static const String version = '0.4.5';
+  static const String version = '0.4.7';
 }
 
 class ConstConsole {

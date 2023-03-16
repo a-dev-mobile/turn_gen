@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
-import 'package:turn_gen/src/enum_v2/enum_v2.dart';
 import 'package:turn_gen/src/src.dart';
 
 part 'enum_v2_write_file.dart';

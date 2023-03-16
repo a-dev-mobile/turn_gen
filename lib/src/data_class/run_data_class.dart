@@ -10,6 +10,9 @@ part 'write_file.dart';
 Future<void> runData({required String path, required FLILogger logger}) async {
   final contentFile = await UtilsString.readFile(path: path);
 
+  final isShowComment =
+      YamlRead().isShowComment(filePath: path, logger: logger);
+
   msgIfNodEnd(contentFile, logger);
 // prepare settings for splitting
 
@@ -305,6 +308,7 @@ type: asda fromMap: asdasd*/
     toString,
     equals,
     hashCode,
+    isShowComment,
     file,
   );
 }
