@@ -1,3 +1,11 @@
+## 0.5.0
+
+- убрал дополнительные коментарии в enum и assets генераторах, данные коментарии включаются при `show_method_comments: true`
+- добавил дополнительне подсказки в консоле о настройке show_method_comments
+- Updated README.md
+
+
+
 ## 0.4.7
 
 - I  improved the code by removing the `fromDynamicMap` method, and in the `fromMap` method you changed the variable type to `Map<dynamic, dynamic>` instead of `Map<String, dynamic>`. This method can now be used to convert nested JSON from Firebase - `DataSnapshot`.

@@ -30,6 +30,12 @@ turn_gen:
   assets_output: "lib/gen/" 
 ```
 
+If you set `show_method_comments` to `true` in `pubspec.yaml`, this means that comments on methods and variables will be displayed in your code, which greatly improves its readability and helps you understand what is going on. By default, this setting is disabled.
+
+```yaml
+turn_gen:
+  show_method_comments: true
+```
 Then run `flutter pub get` or `dart pub get` to install the package.
 
 ## Use
