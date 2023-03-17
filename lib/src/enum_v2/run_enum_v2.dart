@@ -124,7 +124,6 @@ Future<void> runEnumV2({
   }
 
   final enumCommon = EnumV2CommonModel(
-    
     nameClass: enumName,
     headerClass: enumHeader,
     nameValue: nameVar,

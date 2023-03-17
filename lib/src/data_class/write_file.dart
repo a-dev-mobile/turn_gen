@@ -332,12 +332,12 @@ $fromMapSb    );
 //   /// Creates a [$className] instance from a Map with dynamic keys and values.
 //   ///
 //   /// If the [map] argument is null, returns a const [$className] instance.
-//   /// 
-//   /// If the [map] argument is not null, creates a [$className] instance using the values of keys 
-//   /// in the map. If these keys are not null, it extracts their corresponding values and assigns 
+//   ///
+//   /// If the [map] argument is not null, creates a [$className] instance using the values of keys
+//   /// in the map. If these keys are not null, it extracts their corresponding values and assigns
 //   /// them to the corresponding properties in the [$className] instance.
-//   /// 
-//   /// If the keys maps is not null, it converts its value to a Map<String, dynamic> using 
+//   ///
+//   /// If the keys maps is not null, it converts its value to a Map<String, dynamic> using
 //   /// `Map<String, dynamic>.from` and passes it to the other model constructor to create a model instance.
 //   ///
 //   /// If a value in the map is null or of an invalid type, it will be treated as an empty string.
@@ -348,7 +348,7 @@ $fromMapSb    );
 //   /// final map = {'value': 'Jon', 'unrestricted_value': 'John Smith', 'data': {'name': 'Jon', 'surname': 'Smith'}};
 //   /// final suggestion = SuggestionsModel.fromDynamicMap(map);
 //   /// print(suggestion); // Output: SuggestionsModel(value: Jon, unrestricted_value: Jon, data: DataFio(name: Jon, surname: Smith))
-//   /// ``` 
+//   /// ```
 //   factory $className.fromDynamicMap(Map<dynamic, dynamic>$add1 map) {
 //     $add2
 //     return $className(

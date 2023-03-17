@@ -1,8 +1,13 @@
+## 0.5.1
+
+- Updated CHANGELOG.md.
+
+
 ## 0.5.0
 
-- убрал дополнительные коментарии в enum и assets генераторах, данные коментарии включаются при `show_method_comments: true`
-- добавил дополнительне подсказки в консоле о настройке show_method_comments
-- Updated README.md
+- Improved - Removed additional comments in enum and asset generators. These comments are included when show_method_comments: true.
+- Added additional console hints about setting show_method_comments.
+- Updated README.md.
 
 
 

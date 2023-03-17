@@ -4,7 +4,7 @@ import 'package:turn_gen/src/common/common.dart';
 import 'package:turn_gen/src/enum_v2/enum_v2.dart';
 
 /* no: hash tojson fromjson*/
-class EnumV2CommonModel { 
+class EnumV2CommonModel {
   /* init: '' */
   final String nameFile;
   /* init: '' */
@@ -24,19 +24,19 @@ class EnumV2CommonModel {
   final bool isDefault;
   /* init: false */
   final bool isCanNull;
-    /* init: false */
+  /* init: false */
   final bool isShowComment;
   /* init: const []*/
   final List<EnumV2ItemModel> listItem;
 
   // end
-   
+
 //          --TURN_GEN--
 //             v0.4.7
 //  *************************************
-//           GENERATED CODE 
+//           GENERATED CODE
 //  *************************************
-  
+
   const EnumV2CommonModel({
     this.nameFile = '',
     this.nameClass = '',
@@ -50,9 +50,6 @@ class EnumV2CommonModel {
     this.isShowComment = false,
     this.listItem = const [],
   });
-
-
-
 
   EnumV2CommonModel copyWith({
     String? nameFile,
@@ -68,26 +65,22 @@ class EnumV2CommonModel {
     List<EnumV2ItemModel>? listItem,
   }) {
     return EnumV2CommonModel(
-      nameFile: nameFile ?? this.nameFile, 
-      nameClass: nameClass ?? this.nameClass, 
-      typeEnum: typeEnum ?? this.typeEnum, 
-      nameValue: nameValue ?? this.nameValue, 
-      headerClass: headerClass ?? this.headerClass, 
-      contentFile: contentFile ?? this.contentFile, 
-      contentToEnd: contentToEnd ?? this.contentToEnd, 
-      isDefault: isDefault ?? this.isDefault, 
-      isCanNull: isCanNull ?? this.isCanNull, 
-      isShowComment: isShowComment ?? this.isShowComment, 
-      listItem: listItem ?? this.listItem, 
+      nameFile: nameFile ?? this.nameFile,
+      nameClass: nameClass ?? this.nameClass,
+      typeEnum: typeEnum ?? this.typeEnum,
+      nameValue: nameValue ?? this.nameValue,
+      headerClass: headerClass ?? this.headerClass,
+      contentFile: contentFile ?? this.contentFile,
+      contentToEnd: contentToEnd ?? this.contentToEnd,
+      isDefault: isDefault ?? this.isDefault,
+      isCanNull: isCanNull ?? this.isCanNull,
+      isShowComment: isShowComment ?? this.isShowComment,
+      listItem: listItem ?? this.listItem,
     );
   }
-  
-  
-
 
   @override
   String toString() {
     return 'EnumV2CommonModel(nameFile: $nameFile, nameClass: $nameClass, typeEnum: $typeEnum, nameValue: $nameValue, headerClass: $headerClass, contentFile: $contentFile, contentToEnd: $contentToEnd, isDefault: $isDefault, isCanNull: $isCanNull, isShowComment: $isShowComment, listItem: $listItem, )';
-    }
-
+  }
 }

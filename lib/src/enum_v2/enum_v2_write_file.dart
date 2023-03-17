@@ -1,7 +1,8 @@
 // ignore_for_file: cascade_invocations
 
 part of 'run_enum_v2.dart';
- bool _isShowComment = false;
+
+bool _isShowComment = false;
 // ignore: prefer-static-class
 void enumV2WriteToFile(
   FLILogger logger,
@@ -286,7 +287,7 @@ $constructorSb
 $updateContentToEnd
 
 ${ConstConsole.GEN_MSG_START}
-${_getComment( '''
+${_getComment('''
   /// Creates a new instance of [$nameClass] from a given $typeStr value.
   ///
   /// If the given value matches one of the values defined in the [$nameClass] enumeration,
@@ -303,7 +304,7 @@ ${_getComment( '''
   /// print(locale); // Output: LocaleEnum.en(en)
   /// ```''')}
 $fromValueSb
-${_getComment( '''
+${_getComment('''
   /// Calls the appropriate function based on the value of this [$nameClass] instance.
   ///
   /// This method returns the result of calling the appropriate function for the value of the current [$nameClass] instance.
@@ -318,7 +319,7 @@ ${_getComment( '''
   /// print(result); // Output: 'Привет!'
   /// ```''')}
 $mapCommonSb
-${_getComment( '''
+${_getComment('''
   /// Calls the appropriate function based on the value of this [$nameClass] instance.
   ///
   /// This method returns the appropriate value for the value of the current [$nameClass] instance.
@@ -333,7 +334,7 @@ ${_getComment( '''
   /// print(result); // Output: 'Hello!'
   /// ```''')}
 $mapValuesCommonSb
-${_getComment( '''
+${_getComment('''
   /// Calls the appropriate function based on the value of this [$nameClass] instance.
   ///
   /// If the corresponding function for the value of this [$nameClass] instance is not provided,
@@ -350,7 +351,7 @@ ${_getComment( '''
   /// print(result); // Output: 'Привет!'
   /// ```''')}
 $maybeMapCommonSb
-${_getComment( '''
+${_getComment('''
   /// Maps the value of this [$nameClass] to a new value of type [T], using the given
   /// values to replace each possible value of the enumeration.
   ///
@@ -370,7 +371,7 @@ ${_getComment( '''
   /// print(message); // Output: 'Hello!'
   /// ```''')}
 $maybeMapValueCommonSb
-${_getComment( '''
+${_getComment('''
   /// Maps the value of this [$nameClass] to a new value of type [T], using the given
   /// functions to replace each possible value of the enumeration.
   /// 
@@ -389,7 +390,7 @@ ${_getComment( '''
   /// print(message); // Output: 'Hello!'
   /// ```''')}
 $maybeMapNullCommonSb
-${_getComment( '''
+${_getComment('''
   /// Maps the value of this [$nameClass] to a new value of type [T], using the given
   /// values to replace each possible value of the enumeration.
   ///
@@ -407,7 +408,7 @@ ${_getComment( '''
   /// print(message); // Output: 'Hello!'
   /// ```''')}
 $maybeMapNullValueCommonSb
-${_getComment( '''
+${_getComment('''
   /// Returns a list of all possible values of this enumeration.
   ///
   /// The values are returned as a list of strings, representing the value of each
@@ -431,6 +432,6 @@ $compareSToStringb
   logger.info(ConstConsole.GEN_MSG_END);
 }
 
-String _getComment( String comment) {
+String _getComment(String comment) {
   return _isShowComment ? comment : '';
 }
