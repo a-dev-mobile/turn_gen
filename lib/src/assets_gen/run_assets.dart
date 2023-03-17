@@ -8,6 +8,8 @@ Future<void> runAssets({
   required FLILogger logger,
 }) async {
   logger.progress('\nLooking for the assets folder');
+  final isShowComment =
+      YamlRead().isShowComment(filePath: pathBase, logger: logger);
   final slash = Platform.isWindows ? r'\' : '/';
   final pathAssets = await _searchFolderAssets(pathBase, logger);
 
@@ -152,15 +154,21 @@ class AppAssets$vFormat {''');
       } else {
         symbol = '';
       }
+
+      final comment = isShowComment
+          ? '''
+  
+  ///     * Accessed: ${l.dateAccessed}
+  ///     * Changed:  ${l.dateChanged}
+  ///     * Modified: ${l.dateModified}'''
+          : '';
+
       //  I fill it out to display the complete list
       listStrNameFile.add(l.fileOnlyNameFormat);
       sb.write('''
  
   /// * Size:\t${l.size}
-  /// * File path: _${l.fileFromAssetsPath}
-  ///     * Accessed: ${l.dateAccessed}
-  ///     * Changed:  ${l.dateChanged}
-  ///     * Modified: ${l.dateModified}
+  /// * File path: _${l.fileFromAssetsPath}$comment
   static const String ${l.fileOnlyNameFormat} = $symbol'${l.fileFromAssetsPath}';
 ''');
     }

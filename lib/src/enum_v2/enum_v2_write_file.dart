@@ -1,7 +1,7 @@
 // ignore_for_file: cascade_invocations
 
 part of 'run_enum_v2.dart';
-
+ bool _isShowComment = false;
 // ignore: prefer-static-class
 void enumV2WriteToFile(
   FLILogger logger,
@@ -13,6 +13,7 @@ void enumV2WriteToFile(
   // final nameFile = model.nameFile;
   final typeStr = model.typeEnum.value;
   final nameValue = model.nameValue;
+  _isShowComment = model.isShowComment;
 /* ****************************** */
   final paramSb = StringBuffer();
   for (final e in model.listItem) {
@@ -280,10 +281,12 @@ $constructorSb
     updateContentToEnd =
         model.contentToEnd.replaceAll(model.headerClass, newHeader);
   }
+
   newContent.write('''
 $updateContentToEnd
 
 ${ConstConsole.GEN_MSG_START}
+${_getComment( '''
   /// Creates a new instance of [$nameClass] from a given $typeStr value.
   ///
   /// If the given value matches one of the values defined in the [$nameClass] enumeration,
@@ -298,9 +301,9 @@ ${ConstConsole.GEN_MSG_START}
   /// ```dart
   /// LocaleEnum locale = LocaleEnum.fromValue('en', fallback: LocaleEnum.ru);
   /// print(locale); // Output: LocaleEnum.en(en)
-  /// ```
+  /// ```''')}
 $fromValueSb
-
+${_getComment( '''
   /// Calls the appropriate function based on the value of this [$nameClass] instance.
   ///
   /// This method returns the result of calling the appropriate function for the value of the current [$nameClass] instance.
@@ -313,8 +316,9 @@ $fromValueSb
   ///   en: () => 'Hello!',
   /// );
   /// print(result); // Output: 'Привет!'
-  /// ```
+  /// ```''')}
 $mapCommonSb
+${_getComment( '''
   /// Calls the appropriate function based on the value of this [$nameClass] instance.
   ///
   /// This method returns the appropriate value for the value of the current [$nameClass] instance.
@@ -327,8 +331,9 @@ $mapCommonSb
   ///   en: 'Hello!',
   /// );
   /// print(result); // Output: 'Hello!'
-  /// ```
+  /// ```''')}
 $mapValuesCommonSb
+${_getComment( '''
   /// Calls the appropriate function based on the value of this [$nameClass] instance.
   ///
   /// If the corresponding function for the value of this [$nameClass] instance is not provided,
@@ -343,8 +348,9 @@ $mapValuesCommonSb
   ///   ru: () => 'Привет!',
   /// );
   /// print(result); // Output: 'Привет!'
-  /// ```
+  /// ```''')}
 $maybeMapCommonSb
+${_getComment( '''
   /// Maps the value of this [$nameClass] to a new value of type [T], using the given
   /// values to replace each possible value of the enumeration.
   ///
@@ -362,9 +368,10 @@ $maybeMapCommonSb
   ///   en: 'Hello!',
   /// );
   /// print(message); // Output: 'Hello!'
-  /// ```
+  /// ```''')}
 $maybeMapValueCommonSb
- /// Maps the value of this [$nameClass] to a new value of type [T], using the given
+${_getComment( '''
+  /// Maps the value of this [$nameClass] to a new value of type [T], using the given
   /// functions to replace each possible value of the enumeration.
   /// 
   /// The function that corresponds to the value of this
@@ -380,8 +387,9 @@ $maybeMapValueCommonSb
   ///   en: () => 'Hello!',
   /// );
   /// print(message); // Output: 'Hello!'
-  /// ```
+  /// ```''')}
 $maybeMapNullCommonSb
+${_getComment( '''
   /// Maps the value of this [$nameClass] to a new value of type [T], using the given
   /// values to replace each possible value of the enumeration.
   ///
@@ -397,8 +405,9 @@ $maybeMapNullCommonSb
   ///   en: 'Hello!',
   /// );
   /// print(message); // Output: 'Hello!'
-  /// ```
+  /// ```''')}
 $maybeMapNullValueCommonSb
+${_getComment( '''
   /// Returns a list of all possible values of this enumeration.
   ///
   /// The values are returned as a list of strings, representing the value of each
@@ -408,7 +417,7 @@ $maybeMapNullValueCommonSb
   /// ```dart
   /// List<String> values = LocaleEnum.getValues();
   /// print(values); // Output: ['ru', 'en']
-  /// ```
+  /// ```''')}
 $getValuesSb
 $compareSToStringb
 
@@ -419,4 +428,9 @@ $compareSToStringb
   final _ = file.writeAsString(newContent.toString());
   // _ = File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/test/enum_v2.dart')
   //     .writeAsString(newContent.toString());
+  logger.info(ConstConsole.GEN_MSG_END);
+}
+
+String _getComment( String comment) {
+  return _isShowComment ? comment : '';
 }

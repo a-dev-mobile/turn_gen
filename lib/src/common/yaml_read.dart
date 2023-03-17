@@ -55,9 +55,8 @@ class YamlRead {
     required String filePath,
     required FLILogger logger,
   }) {
-    logger
-      ..progress('\nSearch settings TurnGen in pubspec.yaml')
-      ..info('');
+    final _ = logger.progress('\nSearch settings TurnGen in pubspec.yaml');
+
     final basePath = filePath
         .replaceAll(r'\', '/')
         .replaceAll(RegExp('/lib.*'), '')
@@ -85,9 +84,18 @@ class YamlRead {
       if (configName == null) return false;
       // ignore: avoid_dynamic_calls
       final configValue = configName[ConstHelper.showMethodComments];
-      if (configValue == null) return false;
+      if (configValue == null) {
+        logger
+          ..info(
+            'Setting - show_method_comments, not found - set by default - false',
+          )
+          ..info('');
+
+        return false;
+      }
+
       logger
-        ..info('Setting found: show_method_comments - $configValue')
+        ..info('Setting - show_method_comments, found - set $configValue')
         ..info('');
 
       return configValue as bool;

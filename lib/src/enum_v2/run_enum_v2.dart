@@ -11,7 +11,8 @@ Future<void> runEnumV2({
   required FLILogger logger,
 }) async {
   final contentFile = await UtilsString.readFile(path: path);
-
+  final isShowComment =
+      YamlRead().isShowComment(filePath: path, logger: logger);
   final enumHeader = UtilsRegex.getTextRegexMatch(
     content: contentFile,
     regex: r'enum[\s\S]+?{',
@@ -123,7 +124,7 @@ Future<void> runEnumV2({
   }
 
   final enumCommon = EnumV2CommonModel(
-    // contentToEnd: contentToEnd,
+    
     nameClass: enumName,
     headerClass: enumHeader,
     nameValue: nameVar,
@@ -133,6 +134,7 @@ Future<void> runEnumV2({
     contentFile: contentFile,
     isCanNull: isCanNull,
     contentToEnd: contentToEnd,
+    isShowComment: isShowComment,
   );
 
   final file = File(path);
