@@ -183,7 +183,7 @@ class AppAssets$vFormat {''');
   }
 
   await File(pathGenFile).writeAsString('''
-${ConstConsole.GEN_MSG_START}
+${ConstConsole.GEN_MSG_START(TypeRun.assets)}
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use

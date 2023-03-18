@@ -1,15 +1,17 @@
+## 0.6.0
+
+- To simplify the process of generating `assets files`, you no longer need to specify the path when starting the generator. Simply run `dart run turn_gen assets` to initiate the generator.
+- Updated README.md
+
 ## 0.5.1
 
 - Updated CHANGELOG.md.
-
 
 ## 0.5.0
 
 - Improved - Removed additional comments in enum and asset generators. These comments are included when show_method_comments: true.
 - Added additional console hints about setting show_method_comments.
-- Updated README.md.
-
-
+- Updated README.md
 
 ## 0.4.7
 

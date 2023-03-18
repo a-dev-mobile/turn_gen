@@ -13,13 +13,13 @@ To use TurnGen, simply add TurnGen to the `pubspec.yaml` file as `dev_dependenci
 
 For a Flutter project:
 
-```shell
+```sh
 flutter pub add --dev turn_gen
 ```
 
 For a Dart project:
 
-```shell
+```sh
 dart pub add --dev turn_gen
 ```
 
@@ -349,7 +349,7 @@ turn_gen:
 And to start, we use the command:
 
 ```shell
-dart run turn_gen -t assets -f <path to your workspace folder>
+dart run turn_gen assets
 ```
 
 If you are using `VSCode`, you can add the task to your `tasks.json`.
@@ -357,15 +357,15 @@ If you are using `VSCode`, you can add the task to your `tasks.json`.
 ```json
     {
       "label": "turn_gen assets",
-      "type": "dart",
-      "command": "dart",
-      "args": ["run", "turn_gen", "-t", "assets", "-f", "${workspaceFolder}"]
+      "type": "shell",
+      "command": "dart run turn_gen assets",
+      "problemMatcher": []
     },
 ```
 
 After running the script, you will get all the file paths in one class:
 
-#### Example
+#### Example Assets generator
 
 ```dart
 //          --TURN_GEN--

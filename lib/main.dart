@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
+
 import 'package:turn_gen/src/src.dart';
 
 // ignore: prefer-static-class
@@ -22,7 +23,7 @@ Future<void> runFromArguments(List<String> arguments) async {
     ..addOption(
       ConstArgOptionFlag.typeOption,
       abbr: 't',
-      defaultsTo: 'data',
+      defaultsTo: '',
       help: '''
 What to generate additional features for? - 
 enum_default
@@ -49,19 +50,26 @@ data
   final logger = FLILogger(argResults[ConstArgOptionFlag.verboseFlag] as bool)
     ..progress('Start generate');
 
-  if (argResults[ConstArgOptionFlag.fileOption] == null) {
-    throw const NoPathFoundException(
-      'No path found in arguments'
-      ' use -f and add path to dart file',
-    );
-  }
-
   try {
-    final path = argResults[ConstArgOptionFlag.fileOption].toString();
+    var path = argResults[ConstArgOptionFlag.fileOption].toString();
+
+    if (path == 'null') {
+// get path without arg
+      path = Platform.script
+          .toFilePath(windows: Platform.isWindows)
+          .replaceAll(RegExp(r'\.dart_tool.*'), '');
+    }
 
     logger.info('Path used: $path');
 
-    final typeString = argResults[ConstArgOptionFlag.typeOption].toString();
+    var typeString = argResults[ConstArgOptionFlag.typeOption].toString();
+
+// if we only pass assets
+    if (typeString.isEmpty && arguments.first == TypeRun.assets.value) {
+      typeString = arguments.first;
+    }
+    if (path.isEmpty) logger.info('Path used: $path');
+
     final typeRun = TypeRun.fromValue(typeString, fallback: TypeRun.none);
     logger
       ..info('Type of generator used: `${typeRun.value}`')
@@ -85,6 +93,14 @@ data
         break;
       case TypeRun.none:
         logger.error('Generator type not defined');
+
+        if (argResults[ConstArgOptionFlag.fileOption] == null) {
+          throw const NoPathFoundException(
+            'No path found in arguments'
+            ' use -f and add path to dart file',
+          );
+        }
+
         exit(0);
       case TypeRun.union:
         await runUnion(path: path, logger: logger);

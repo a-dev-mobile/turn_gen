@@ -1,5 +1,6 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
 import 'package:path/path.dart' as path;
+import 'package:turn_gen/src/src.dart';
 
 class ConstHelper {
   /// Relative pubspec.yaml path
@@ -15,30 +16,33 @@ class ConstHelper {
   static const String replaceIfFirstLetterNumber = 'n';
 
   static const String configName = 'turn_gen';
-  static const String version = '0.5.1';
+  static const String version = '0.6.0';
 }
 
 class ConstConsole {
   static String introMessage() => '''
-}
-  ════════════════════════════════════════════
-     TURN_GEN (v${ConstHelper.version}})                               
-  ════════════════════════════════════════════''';
 
-  static const String GEN_MSG_START = '''
+         --TURN_GEN--
+            v${ConstHelper.version}
+  ******************************
+             START 
+  ******************************
+  ''';
+
+  static String GEN_MSG_START(TypeRun type) => '''
 //          --TURN_GEN--
-//             v${ConstHelper.version}
+//           v${ConstHelper.version} (${type.value})
 //  *************************************
-//           GENERATED CODE 
+//         GENERATED CODE 
 //  *************************************
   ''';
 
   static const String GEN_MSG_END = '''
 
            --TURN_GEN--
-  *************************************
+  ******************************
          ✓ Successfully 
-  *************************************
+  ******************************
   ''';
 }
 

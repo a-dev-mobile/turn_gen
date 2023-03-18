@@ -164,7 +164,7 @@ void writeToFile(
   final newContent = '''
 $header$classHeader $classBrackets
    
-${ConstConsole.GEN_MSG_START}
+${ConstConsole.GEN_MSG_START(TypeRun.data)}
   const $className({
 $constructor  });
 

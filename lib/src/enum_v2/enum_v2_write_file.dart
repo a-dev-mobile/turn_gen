@@ -286,7 +286,7 @@ $constructorSb
   newContent.write('''
 $updateContentToEnd
 
-${ConstConsole.GEN_MSG_START}
+${ConstConsole.GEN_MSG_START(TypeRun.enum_)}
 ${_getComment('''
   /// Creates a new instance of [$nameClass] from a given $typeStr value.
   ///
