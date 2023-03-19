@@ -1,6 +1,6 @@
 name: turn_gen
 description: TurnGen is a set of scripts combined into a command line tool to minimize coding and simplify various tasks
-version: 0.6.1
+version: 0.6.2
 maintainer: Dmitriy Trofimov
 homepage: https://github.com/a-dev-mobile/turn_gen
 repository: https://github.com/a-dev-mobile/turn_gen/
@@ -23,4 +23,4 @@ dev_dependencies:
 
 turn_gen:
   assets_output: "lib/gen/"
-  show_method_comments: true
+  # show_method_comments: true

@@ -1,9 +1,12 @@
+## 0.6.2
+
+- fix path when generating assets
+
 ## 0.6.1
 
 - updated hints in the console when generating
 - added the ability to auto-detect the types `List<enum>` and `List<enum?>`
 - Updated README.md
-
 
 ## 0.6.0
 
