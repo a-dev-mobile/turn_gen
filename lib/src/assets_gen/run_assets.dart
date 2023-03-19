@@ -87,8 +87,7 @@ Future<void> runAssets({
     final stat = FileStat.statSync(fileFullPatch);
     fileFromAssetsPath = fileFullPatch
         .replaceAll(pathBase, '')
-        .replaceAll(r'\', '/')
-        .substring(1);
+        .replaceAll(r'\', '/');
     // .replaceAll('/asset', 'asset');
     assetsList.add(
       AssetItem(
