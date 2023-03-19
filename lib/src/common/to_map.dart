@@ -53,6 +53,32 @@ String getToMapVarable(Varable v) {
         return '$name.index';
       }
       return error;
+
+    case EnumTypeVarable.list_enum:
+      if (yes_null_default_yes) {
+        return '$name?.map((e) => e.index).toList()';
+      } else if (yes_null_default_no) {
+        return '$name?.map((e) => e.index).toList()';
+      } else if (no_null_default_yes) {
+        return '$name.map((e) => e.index).toList()';
+      } else if (no_null_default_no) {
+        return '$name.map((e) => e.index).toList()';
+      }
+      return error;
+      
+    case EnumTypeVarable.list_enum_null:
+      if (yes_null_default_yes) {
+        return '$name?.map((e) => e?.index).toList()';
+      } else if (yes_null_default_no) {
+        return '$name?.map((e) => e?.index).toList()';
+      } else if (no_null_default_yes) {
+        return '$name.map((e) => e?.index).toList()';
+      } else if (no_null_default_no) {
+        return '$name.map((e) => e?.index).toList()';
+      }
+      return error;
+
+      
 // SET
     case EnumTypeVarable.set_double:
     case EnumTypeVarable.set_double_null:
@@ -221,5 +247,7 @@ String getToMapVarable(Varable v) {
       return error;
     case EnumTypeVarable.null_:
       return error;
+
+
   }
 }

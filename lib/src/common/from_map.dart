@@ -7,6 +7,7 @@ String getFromMap(Varable v) {
   final type = v.type;
   final name = v.nameVar;
   var nameObject = v.nameData;
+  final typeInList = v.typeInList;
 
   final fromMap = v.fromMap_;
   final isCanNull = v.isCanNull;
@@ -822,7 +823,7 @@ String getFromMap(Varable v) {
         return "map['$name'] != null ? (map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList() : null";
       } else if (no_null_default_yes) {
         return "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()";
-//osition_type: sition_type'] as List<dynamic>).map((e) => DictionaryItem.fromMap(e as Map<String, dynamic>)).toList(),
+
       } else if (no_null_default_no) {
         return _getValueWithException(
           "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()",
@@ -832,6 +833,34 @@ String getFromMap(Varable v) {
       return error;
     case EnumTypeVarable.null_:
       return error;
+    case EnumTypeVarable.list_enum_null:
+    case EnumTypeVarable.list_enum:
+   if (yes_null_default_yes) {
+        return _getValueWithInit(
+          "(map['$name'] as List<dynamic>).map((e) => $typeInList.values[e as int]).toList()",
+          name,
+          initComment,
+        );
+      } else if (yes_null_default_no) {
+        return _getValueWithInit(
+          "(map['$name'] as List<dynamic>).map((e) => $typeInList.values[e as int]).toList()",
+          name,
+          'null',
+        );
+      } else if (no_null_default_yes) {
+        return _getValueWithInit(
+          "(map['$name'] as List<dynamic>).map((e) => $typeInList.values[e as int]).toList()",
+          name,
+          initComment,
+        );
+      } else if (no_null_default_no) {
+        return _getValueWithException(
+          "(map['$name'] as List<dynamic>).map((e) => $typeInList.values[e as int]).toList()",
+          name,
+        );
+      }
+      return error;
+    
   }
 }
 

@@ -50,6 +50,8 @@ String getHashCode(EnumTypeVarable type, String nameVar) {
     case EnumTypeVarable.list_other:
     case EnumTypeVarable.list_data:
     case EnumTypeVarable.list_data_null:
+    case EnumTypeVarable.list_enum_null:
+    case EnumTypeVarable.list_enum:
       return '        const DeepCollectionEquality().hash($nameVar,)$end';
     case EnumTypeVarable.bool_:
     case EnumTypeVarable.double_:
@@ -63,5 +65,6 @@ String getHashCode(EnumTypeVarable type, String nameVar) {
       return '        $nameVar$end';
     case EnumTypeVarable.null_:
       return '';
+      
   }
 }

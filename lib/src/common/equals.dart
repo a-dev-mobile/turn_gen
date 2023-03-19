@@ -50,6 +50,9 @@ String getEquals(EnumTypeVarable type, String nameVar, bool isLast) {
     case EnumTypeVarable.list_data:
     case EnumTypeVarable.list_data_null:
     case EnumTypeVarable.list_map_string_dynamic_:
+    case EnumTypeVarable.list_enum:
+    case EnumTypeVarable.list_other:
+    case EnumTypeVarable.list_enum_null:
       return '            const DeepCollectionEquality().equals(other.$nameVar, $nameVar,)$end';
     case EnumTypeVarable.bool_:
     case EnumTypeVarable.double_:
@@ -61,8 +64,8 @@ String getEquals(EnumTypeVarable type, String nameVar, bool isLast) {
     case EnumTypeVarable.date_time:
     case EnumTypeVarable.data:
       return '            (identical(other.$nameVar, $nameVar) || other.$nameVar == $nameVar)$end';
-    case EnumTypeVarable.list_other:
     case EnumTypeVarable.null_:
       return 'error _getEquals';
+  
   }
 }

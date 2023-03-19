@@ -102,6 +102,8 @@ String _getDefaultInitValue(EnumTypeVarable type, String init, bool isCanNull) {
     list_data: () => listDefault,
     list_data_null: () => listDefault,
     null_: () => '',
+    list_enum: () => listDefault,
+    list_enum_null: () => listDefault,
   );
 
   // print(initValue.toString());

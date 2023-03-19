@@ -1,3 +1,10 @@
+## 0.6.1
+
+- updated hints in the console when generating
+- added the ability to auto-detect the types `List<enum>` and `List<enum?>`
+- Updated README.md
+
+
 ## 0.6.0
 
 - To simplify the process of generating `assets files`, you no longer need to specify the path when starting the generator. Simply run `dart run turn_gen assets` to initiate the generator.

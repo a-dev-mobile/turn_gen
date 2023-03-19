@@ -10,7 +10,7 @@ export 'common/enum/enum.dart';
 export 'common/enum/enum_key_setting.dart';
 export 'common/enum/enum_type_variable.dart';
 export 'common/equals.dart';
-export 'common/from_dynamic_map.dart';
+
 export 'common/from_map.dart';
 export 'common/hash_code.dart';
 export 'common/setting_help.dart';

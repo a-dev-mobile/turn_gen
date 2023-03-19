@@ -168,6 +168,14 @@ type: asda fromMap: asdasd*/
     if (type == EnumTypeVarable.none) {
       logger.error('($finalVarable) - type is not defined');
     }
+
+    var typeInList = '';
+    // define the type in the List
+    if (typeStr.contains(RegExp('^List'))) {
+      typeInList =
+          UtilsRegex.getTextRegexMatch(regex: r'<\w+', content: typeStr).replaceAll('<', '');
+    }
+
     listVarMain.add(
       Varable(
         isCanNull: isCanNull,
@@ -176,6 +184,7 @@ type: asda fromMap: asdasd*/
         type: type,
         toMap_: toMap,
         fromMap_: fromMap,
+        typeInList: typeInList,
         initValueComment: initValueComment,
         initValueDefault: initValueDefault,
       ),
@@ -275,9 +284,7 @@ type: asda fromMap: asdasd*/
     fromMapSb.write('''
       ${v.nameVar}: ${getFromMap(v)}, 
 ''');
-    fromMapDynamic.write('''
-      ${v.nameVar}: ${getFromDynamicMap(v)}, 
-''');
+
     toString.write('${v.nameVar}: \$${v.nameVar}, ');
 
     equals.write(getEquals(v.type, v.nameVar, i == listVarSort.length - 1));

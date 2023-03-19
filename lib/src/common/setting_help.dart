@@ -102,11 +102,19 @@ EnumTypeVarable autoUpdateType(
   String typeVar,
   FLILogger logger,
 ) {
-  if (typeVar.contains(RegExp(r'^List<.*\?>'))) {
+  if (typeVar.contains(RegExp(r'List<.*(e|E)num.*\?>'))) {
+    // ignore: parameter_assignments
+    typeEnum = EnumTypeVarable.list_enum_null;
+    msgAnotherType(logger, typeEnum, typeVar);
+  } else if (typeVar.contains(RegExp(r'List<.*(e|E)num(\w+|)>'))) {
+    // ignore: parameter_assignments
+    typeEnum = EnumTypeVarable.list_enum;
+    msgAnotherType(logger, typeEnum, typeVar);
+  } else if (typeVar.contains(RegExp(r'List<.*\?>'))) {
     // ignore: parameter_assignments
     typeEnum = EnumTypeVarable.list_data_null;
     msgAnotherType(logger, typeEnum, typeVar);
-  } else if (typeVar.contains(RegExp('^List<.*>'))) {
+  } else if (typeVar.contains(RegExp('List<.*>'))) {
     // ignore: parameter_assignments
     typeEnum = EnumTypeVarable.list_data;
     msgAnotherType(logger, typeEnum, typeVar);
@@ -137,6 +145,6 @@ void msgAnotherType(
     ..info('')
     ..info('To specify another, use a comment:')
     ..info(
-      'Example: /* type: `enum` or `data` or `List<data>` or `List<data?>` */ >>> for the variable: `$typeVar`',
+      'Example: /* type: `enum` | `data` | `List<data>` | `List<data?>` | `List<enum>` | `List<enum?>` */ >>> for the variable: `$typeVar`',
     );
 }
