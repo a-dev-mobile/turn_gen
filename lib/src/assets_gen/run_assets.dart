@@ -3,11 +3,12 @@ import 'dart:math';
 import 'package:path/path.dart' as p;
 import 'package:turn_gen/src/src.dart';
 
+// ignore: prefer-static-class
 Future<void> runAssets({
   required String pathBase,
   required FLILogger logger,
 }) async {
-  logger.progress('\nLooking for the assets folder');
+  final _ = logger.progress('\nLooking for the assets folder');
   final isShowComment =
       YamlRead().isShowComment(filePath: pathBase, logger: logger);
   final slash = Platform.isWindows ? r'\' : '/';
@@ -80,17 +81,19 @@ Future<void> runAssets({
 
     final folders = <String>[];
 
+    // ignore: cascade_invocations
+    folders.add(fileOnlyNameFormat.toNotTitle());
+
     for (var i = 0; i < foldersRaw.length; i++) {
       final folder = foldersRaw[i];
       if (i == 0) {
         folders.add(
-          _formatFileName(folder).toNotTitle(),
+          _formatFileName(folder).toTitleCase(),
         ); // do not use toTitleCase() for the first element
       } else {
         folders.add(_formatFileName(folder).toCapitalized());
       }
     }
-    folders.add(fileOnlyNameFormat.toCapitalized());
     final formatPathWithNameFile = folders.join();
     // loop because the names of files in different folders can be the same
     // for (var i = 0; i < 2000; i++) {
@@ -161,20 +164,13 @@ Future<void> runAssets({
 
   sb.write('''
 
-class AppAssets {
-  factory AppAssets() => _internalSingleton;
-  AppAssets._internal();
-
-  static final AppAssets _internalSingleton = AppAssets._internal();  
+class AssetPaths {
+  const AssetPaths._();
 ''');
 
   for (final l in assetsList) {
     // line screening
-    if (l.fileFromAssetsPath.contains(RegExp(r'[&$]+'))) {
-      symbol = 'r';
-    } else {
-      symbol = '';
-    }
+    symbol = l.fileFromAssetsPath.contains(RegExp(r'[&$]+')) ? 'r' : '';
 
     final comment = isShowComment
         ? '''
@@ -214,13 +210,8 @@ class AppAssets {
 ''');
   listStrNameFile.clear();
 
-  await File(pathGenFile).writeAsString('''
-${ConstConsole.GEN_MSG_START(TypeRun.assets)}
-// coverage:ignore-file
-// ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
-$sb
-
+await File(pathGenFile).writeAsString('''
+${ConstConsole.GEN_MSG_START(TypeRun.assets)}$sb
 ''');
 
   logger.info(ConstConsole.GEN_MSG_END);
@@ -239,6 +230,7 @@ List<String> _getListFolder(String fileFullPatch) {
       ) // convert all folders to lowercase
       .toList(); // convert the iterable to a list
   final _ = folders.removeLast(); // remove the last element (the file name)
+  
   return folders;
 }
 

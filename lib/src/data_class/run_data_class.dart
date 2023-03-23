@@ -173,7 +173,8 @@ type: asda fromMap: asdasd*/
     // define the type in the List
     if (typeStr.contains(RegExp('^List'))) {
       typeInList =
-          UtilsRegex.getTextRegexMatch(regex: r'<\w+', content: typeStr).replaceAll('<', '');
+          UtilsRegex.getTextRegexMatch(regex: r'<\w+', content: typeStr)
+              .replaceAll('<', '');
     }
 
     listVarMain.add(

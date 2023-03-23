@@ -65,6 +65,5 @@ String getHashCode(EnumTypeVarable type, String nameVar) {
       return '        $nameVar$end';
     case EnumTypeVarable.null_:
       return '';
-      
   }
 }

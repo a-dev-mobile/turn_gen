@@ -65,7 +65,7 @@ String getToMapVarable(Varable v) {
         return '$name.map((e) => e.index).toList()';
       }
       return error;
-      
+
     case EnumTypeVarable.list_enum_null:
       if (yes_null_default_yes) {
         return '$name?.map((e) => e?.index).toList()';
@@ -78,7 +78,6 @@ String getToMapVarable(Varable v) {
       }
       return error;
 
-      
 // SET
     case EnumTypeVarable.set_double:
     case EnumTypeVarable.set_double_null:
@@ -247,7 +246,5 @@ String getToMapVarable(Varable v) {
       return error;
     case EnumTypeVarable.null_:
       return error;
-
-
   }
 }

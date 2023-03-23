@@ -1,6 +1,6 @@
 // ignore_for_file: avoid-non-null-assertion, non_constant_identifier_names, constant_identifier_names
 
-enum EnumTypeVarable with Comparable<EnumTypeVarable>  {
+enum EnumTypeVarable with Comparable<EnumTypeVarable> {
   enum_('enum'),
   string_('String'),
   bool_('bool'),
@@ -66,9 +66,8 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable>  {
 //          --TURN_GEN--
 //           v0.6.0 (enum)
 //  *************************************
-//         GENERATED CODE 
+//         GENERATED CODE
 //  *************************************
-  
 
   static EnumTypeVarable fromValue(String? value, {EnumTypeVarable? fallback}) {
     switch (value) {
@@ -185,11 +184,14 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable>  {
       case 'none':
         return none;
       default:
-        return fallback ?? (throw ArgumentError.value(
-          value, '', 'Value not found in EnumTypeVarable',));
+        return fallback ??
+            (throw ArgumentError.value(
+              value,
+              '',
+              'Value not found in EnumTypeVarable',
+            ));
     }
   }
-
 
   T map<T>({
     required T Function() enum_,
@@ -365,7 +367,6 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable>  {
     }
   }
 
-
   T mapValue<T>({
     required T enum_,
     required T string_,
@@ -540,7 +541,6 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable>  {
     }
   }
 
-
   T maybeMap<T>({
     required T Function() orElse,
     T Function()? enum_,
@@ -601,64 +601,63 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable>  {
     T Function()? none,
   }) =>
       map<T>(
-      enum_: enum_ ?? orElse,
-      string_: string_ ?? orElse,
-      bool_: bool_ ?? orElse,
-      int_: int_ ?? orElse,
-      double_: double_ ?? orElse,
-      num_: num_ ?? orElse,
-      list_: list_ ?? orElse,
-      list_bool_: list_bool_ ?? orElse,
-      list_other: list_other ?? orElse,
-      list_int_: list_int_ ?? orElse,
-      list_string_: list_string_ ?? orElse,
-      list_double_: list_double_ ?? orElse,
-      list_bool_null: list_bool_null ?? orElse,
-      list_int_null: list_int_null ?? orElse,
-      list_string_null: list_string_null ?? orElse,
-      list_double_null: list_double_null ?? orElse,
-      list_dynamic_: list_dynamic_ ?? orElse,
-      list_map_int_string_: list_map_int_string_ ?? orElse,
-      list_map_int_string_null: list_map_int_string_null ?? orElse,
-      list_map_int_dynamic_: list_map_int_dynamic_ ?? orElse,
-      list_map_string_dynamic_: list_map_string_dynamic_ ?? orElse,
-      set_: set_ ?? orElse,
-      set_string: set_string ?? orElse,
-      set_string_null: set_string_null ?? orElse,
-      set_int: set_int ?? orElse,
-      set_int_null: set_int_null ?? orElse,
-      set_bool: set_bool ?? orElse,
-      set_bool_null: set_bool_null ?? orElse,
-      set_double: set_double ?? orElse,
-      set_double_null: set_double_null ?? orElse,
-      map_: map_ ?? orElse,
-      map_string_dynamic_: map_string_dynamic_ ?? orElse,
-      map_string_bool: map_string_bool ?? orElse,
-      map_string_int: map_string_int ?? orElse,
-      map_string_string: map_string_string ?? orElse,
-      map_string_double_: map_string_double_ ?? orElse,
-      map_string_bool_null: map_string_bool_null ?? orElse,
-      map_string_int_null: map_string_int_null ?? orElse,
-      map_string_string_null: map_string_string_null ?? orElse,
-      map_string_double_null: map_string_double_null ?? orElse,
-      map_int_string: map_int_string ?? orElse,
-      map_int_string_null: map_int_string_null ?? orElse,
-      map_int_double: map_int_double ?? orElse,
-      map_int_double_null: map_int_double_null ?? orElse,
-      map_int_bool: map_int_bool ?? orElse,
-      map_int_bool_null: map_int_bool_null ?? orElse,
-      map_int_dynamic_: map_int_dynamic_ ?? orElse,
-      date_time: date_time ?? orElse,
-      map_dynamic_dynamic_: map_dynamic_dynamic_ ?? orElse,
-      data: data ?? orElse,
-      list_data: list_data ?? orElse,
-      list_enum: list_enum ?? orElse,
-      list_enum_null: list_enum_null ?? orElse,
-      list_data_null: list_data_null ?? orElse,
-      null_: null_ ?? orElse,
-      none: none ?? orElse,
+        enum_: enum_ ?? orElse,
+        string_: string_ ?? orElse,
+        bool_: bool_ ?? orElse,
+        int_: int_ ?? orElse,
+        double_: double_ ?? orElse,
+        num_: num_ ?? orElse,
+        list_: list_ ?? orElse,
+        list_bool_: list_bool_ ?? orElse,
+        list_other: list_other ?? orElse,
+        list_int_: list_int_ ?? orElse,
+        list_string_: list_string_ ?? orElse,
+        list_double_: list_double_ ?? orElse,
+        list_bool_null: list_bool_null ?? orElse,
+        list_int_null: list_int_null ?? orElse,
+        list_string_null: list_string_null ?? orElse,
+        list_double_null: list_double_null ?? orElse,
+        list_dynamic_: list_dynamic_ ?? orElse,
+        list_map_int_string_: list_map_int_string_ ?? orElse,
+        list_map_int_string_null: list_map_int_string_null ?? orElse,
+        list_map_int_dynamic_: list_map_int_dynamic_ ?? orElse,
+        list_map_string_dynamic_: list_map_string_dynamic_ ?? orElse,
+        set_: set_ ?? orElse,
+        set_string: set_string ?? orElse,
+        set_string_null: set_string_null ?? orElse,
+        set_int: set_int ?? orElse,
+        set_int_null: set_int_null ?? orElse,
+        set_bool: set_bool ?? orElse,
+        set_bool_null: set_bool_null ?? orElse,
+        set_double: set_double ?? orElse,
+        set_double_null: set_double_null ?? orElse,
+        map_: map_ ?? orElse,
+        map_string_dynamic_: map_string_dynamic_ ?? orElse,
+        map_string_bool: map_string_bool ?? orElse,
+        map_string_int: map_string_int ?? orElse,
+        map_string_string: map_string_string ?? orElse,
+        map_string_double_: map_string_double_ ?? orElse,
+        map_string_bool_null: map_string_bool_null ?? orElse,
+        map_string_int_null: map_string_int_null ?? orElse,
+        map_string_string_null: map_string_string_null ?? orElse,
+        map_string_double_null: map_string_double_null ?? orElse,
+        map_int_string: map_int_string ?? orElse,
+        map_int_string_null: map_int_string_null ?? orElse,
+        map_int_double: map_int_double ?? orElse,
+        map_int_double_null: map_int_double_null ?? orElse,
+        map_int_bool: map_int_bool ?? orElse,
+        map_int_bool_null: map_int_bool_null ?? orElse,
+        map_int_dynamic_: map_int_dynamic_ ?? orElse,
+        date_time: date_time ?? orElse,
+        map_dynamic_dynamic_: map_dynamic_dynamic_ ?? orElse,
+        data: data ?? orElse,
+        list_data: list_data ?? orElse,
+        list_enum: list_enum ?? orElse,
+        list_enum_null: list_enum_null ?? orElse,
+        list_data_null: list_data_null ?? orElse,
+        null_: null_ ?? orElse,
+        none: none ?? orElse,
       );
-
 
   T maybeMapValue<T>({
     required T orElse,
@@ -720,64 +719,63 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable>  {
     T? none,
   }) =>
       mapValue<T>(
-      enum_: enum_ ?? orElse,
-      string_: string_ ?? orElse,
-      bool_: bool_ ?? orElse,
-      int_: int_ ?? orElse,
-      double_: double_ ?? orElse,
-      num_: num_ ?? orElse,
-      list_: list_ ?? orElse,
-      list_bool_: list_bool_ ?? orElse,
-      list_other: list_other ?? orElse,
-      list_int_: list_int_ ?? orElse,
-      list_string_: list_string_ ?? orElse,
-      list_double_: list_double_ ?? orElse,
-      list_bool_null: list_bool_null ?? orElse,
-      list_int_null: list_int_null ?? orElse,
-      list_string_null: list_string_null ?? orElse,
-      list_double_null: list_double_null ?? orElse,
-      list_dynamic_: list_dynamic_ ?? orElse,
-      list_map_int_string_: list_map_int_string_ ?? orElse,
-      list_map_int_string_null: list_map_int_string_null ?? orElse,
-      list_map_int_dynamic_: list_map_int_dynamic_ ?? orElse,
-      list_map_string_dynamic_: list_map_string_dynamic_ ?? orElse,
-      set_: set_ ?? orElse,
-      set_string: set_string ?? orElse,
-      set_string_null: set_string_null ?? orElse,
-      set_int: set_int ?? orElse,
-      set_int_null: set_int_null ?? orElse,
-      set_bool: set_bool ?? orElse,
-      set_bool_null: set_bool_null ?? orElse,
-      set_double: set_double ?? orElse,
-      set_double_null: set_double_null ?? orElse,
-      map_: map_ ?? orElse,
-      map_string_dynamic_: map_string_dynamic_ ?? orElse,
-      map_string_bool: map_string_bool ?? orElse,
-      map_string_int: map_string_int ?? orElse,
-      map_string_string: map_string_string ?? orElse,
-      map_string_double_: map_string_double_ ?? orElse,
-      map_string_bool_null: map_string_bool_null ?? orElse,
-      map_string_int_null: map_string_int_null ?? orElse,
-      map_string_string_null: map_string_string_null ?? orElse,
-      map_string_double_null: map_string_double_null ?? orElse,
-      map_int_string: map_int_string ?? orElse,
-      map_int_string_null: map_int_string_null ?? orElse,
-      map_int_double: map_int_double ?? orElse,
-      map_int_double_null: map_int_double_null ?? orElse,
-      map_int_bool: map_int_bool ?? orElse,
-      map_int_bool_null: map_int_bool_null ?? orElse,
-      map_int_dynamic_: map_int_dynamic_ ?? orElse,
-      date_time: date_time ?? orElse,
-      map_dynamic_dynamic_: map_dynamic_dynamic_ ?? orElse,
-      data: data ?? orElse,
-      list_data: list_data ?? orElse,
-      list_enum: list_enum ?? orElse,
-      list_enum_null: list_enum_null ?? orElse,
-      list_data_null: list_data_null ?? orElse,
-      null_: null_ ?? orElse,
-      none: none ?? orElse,
+        enum_: enum_ ?? orElse,
+        string_: string_ ?? orElse,
+        bool_: bool_ ?? orElse,
+        int_: int_ ?? orElse,
+        double_: double_ ?? orElse,
+        num_: num_ ?? orElse,
+        list_: list_ ?? orElse,
+        list_bool_: list_bool_ ?? orElse,
+        list_other: list_other ?? orElse,
+        list_int_: list_int_ ?? orElse,
+        list_string_: list_string_ ?? orElse,
+        list_double_: list_double_ ?? orElse,
+        list_bool_null: list_bool_null ?? orElse,
+        list_int_null: list_int_null ?? orElse,
+        list_string_null: list_string_null ?? orElse,
+        list_double_null: list_double_null ?? orElse,
+        list_dynamic_: list_dynamic_ ?? orElse,
+        list_map_int_string_: list_map_int_string_ ?? orElse,
+        list_map_int_string_null: list_map_int_string_null ?? orElse,
+        list_map_int_dynamic_: list_map_int_dynamic_ ?? orElse,
+        list_map_string_dynamic_: list_map_string_dynamic_ ?? orElse,
+        set_: set_ ?? orElse,
+        set_string: set_string ?? orElse,
+        set_string_null: set_string_null ?? orElse,
+        set_int: set_int ?? orElse,
+        set_int_null: set_int_null ?? orElse,
+        set_bool: set_bool ?? orElse,
+        set_bool_null: set_bool_null ?? orElse,
+        set_double: set_double ?? orElse,
+        set_double_null: set_double_null ?? orElse,
+        map_: map_ ?? orElse,
+        map_string_dynamic_: map_string_dynamic_ ?? orElse,
+        map_string_bool: map_string_bool ?? orElse,
+        map_string_int: map_string_int ?? orElse,
+        map_string_string: map_string_string ?? orElse,
+        map_string_double_: map_string_double_ ?? orElse,
+        map_string_bool_null: map_string_bool_null ?? orElse,
+        map_string_int_null: map_string_int_null ?? orElse,
+        map_string_string_null: map_string_string_null ?? orElse,
+        map_string_double_null: map_string_double_null ?? orElse,
+        map_int_string: map_int_string ?? orElse,
+        map_int_string_null: map_int_string_null ?? orElse,
+        map_int_double: map_int_double ?? orElse,
+        map_int_double_null: map_int_double_null ?? orElse,
+        map_int_bool: map_int_bool ?? orElse,
+        map_int_bool_null: map_int_bool_null ?? orElse,
+        map_int_dynamic_: map_int_dynamic_ ?? orElse,
+        date_time: date_time ?? orElse,
+        map_dynamic_dynamic_: map_dynamic_dynamic_ ?? orElse,
+        data: data ?? orElse,
+        list_data: list_data ?? orElse,
+        list_enum: list_enum ?? orElse,
+        list_enum_null: list_enum_null ?? orElse,
+        list_data_null: list_data_null ?? orElse,
+        null_: null_ ?? orElse,
+        none: none ?? orElse,
       );
-
 
   T? maybeMapOrNull<T>({
     T Function()? enum_,
@@ -897,7 +895,6 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable>  {
         none: none,
       );
 
-
   T? maybeMapOrNullValue<T>({
     T? enum_,
     T? string_,
@@ -1016,15 +1013,12 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable>  {
         none: none,
       );
 
-
-  static List<String> getValues() => EnumTypeVarable.values.map((e) => e.value).toList();
+  static List<String> getValues() =>
+      EnumTypeVarable.values.map((e) => e.value).toList();
 
   @override
   int compareTo(EnumTypeVarable other) => index.compareTo(other.index);
 
   @override
   String toString() => 'EnumTypeVarable.$name($value)';
-
-
-
 }

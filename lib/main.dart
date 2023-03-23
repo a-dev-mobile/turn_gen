@@ -4,6 +4,7 @@ import 'package:args/args.dart';
 
 import 'package:turn_gen/src/src.dart';
 
+
 // ignore: prefer-static-class
 Future<void> runFromArguments(List<String> arguments) async {
   // ignore: cascade_invocations
@@ -57,7 +58,8 @@ data
 // get path without arg
       path = Platform.script
           .toFilePath(windows: Platform.isWindows)
-          .replaceAll(RegExp(r'\.dart_tool.*'), '');
+          .replaceAll(RegExp(r'\.dart_tool.*'), '')
+          .replaceAll(RegExp(r'\\bin.*'), '');
     }
 
     logger.info('Path used: $path');
@@ -108,6 +110,9 @@ data
       case TypeRun.enum_:
         await runEnumV2(path: path, logger: logger);
 
+        break;
+      case TypeRun.update:
+        // await runUpdate(pathBase: path, logger: logger);
         break;
     }
   } catch (e) {

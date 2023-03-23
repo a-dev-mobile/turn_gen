@@ -1,8 +1,12 @@
+## 0.6.6
+
+- improved `assets` generator
+- renamed file `AppAssets` to `AssetPaths`
+
 ## 0.6.5
 
 - Now you can not set the path for the generated `assets` file. Default is: `lib/gen/`
 - Updated README.md
-
 
 ## 0.6.4
 
