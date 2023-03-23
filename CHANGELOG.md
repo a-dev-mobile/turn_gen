@@ -1,3 +1,9 @@
+## 0.6.5
+
+- Now you can not set the path for the generated `assets` file. Default is: `lib/gen/`
+- Updated README.md
+
+
 ## 0.6.4
 
 - fix assets generator

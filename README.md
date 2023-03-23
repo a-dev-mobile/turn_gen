@@ -23,11 +23,11 @@ For a Dart project:
 dart pub add --dev turn_gen
 ```
 
-If you are going to use the link generator for files in the asset folder, don't forget to add the output file path to `pubspec.yami`:
+If you are going to use a link generator for files in the resources folder, you can add the path to the output file in `pubspec.yami`, by default the file is generated in `lib/gen/`:
 
 ```yaml
 turn_gen:
-  assets_output: "lib/gen/" 
+  assets_output: "lib/app_gen/" 
 ```
 
 If you set `show_method_comments` to `true` in `pubspec.yaml`, this means that comments on methods and variables will be displayed in your code, which greatly improves its readability and helps you understand what is going on. By default, this setting is disabled.
@@ -36,6 +36,7 @@ If you set `show_method_comments` to `true` in `pubspec.yaml`, this means that c
 turn_gen:
   show_method_comments: true
 ```
+
 Then run `flutter pub get` or `dart pub get` to install the package.
 
 ## Use
@@ -370,41 +371,41 @@ After running the script, you will get all the file paths in one class:
 ```dart
 class AppAssets {
  
-  /// * Size:	113.2 KB
+  /// * Size: 113.2 KB
   /// * File path: _/assets/fonts/TTCommons-SemiBold.ttf
   static const String fontsTTCommonsSemiBold =
       '/assets/fonts/TTCommons-SemiBold.ttf';
 
-  /// * Size:	59.1 KB
+  /// * Size: 59.1 KB
   /// * File path: _/assets/image/logo.png
   static const String imageLogo = '/assets/image/logo.png';
 
-  /// * Size:	12.9 KB
+  /// * Size: 12.9 KB
   /// * File path: _/assets/image/logo_card_1.png
   static const String imageLogoCard1 = '/assets/image/logo_card_1.png';
 
  ...
 
-  /// * Size:	26.0 KB
+  /// * Size: 26.0 KB
   /// * File path: _/assets/lottie/load_page.json
   static const String lottieLoadPage = '/assets/lottie/load_page.json';
 
  ...
 
-  /// * Size:	12.4 KB
+  /// * Size: 12.4 KB
   /// * File path: _/assets/svg/card_photo.svg
   static const String svgCardPhoto = '/assets/svg/card_photo.svg';
 
-  /// * Size:	6.8 KB
+  /// * Size: 6.8 KB
   /// * File path: _/assets/svg/connectivity_problem.svg
   static const String svgConnectivityProblem =
       '/assets/svg/connectivity_problem.svg';
 
-  /// * Size:	1.7 KB
+  /// * Size: 1.7 KB
   /// * File path: _/assets/svg/doc.svg
   static const String svgDoc = '/assets/svg/doc.svg';
 
-  /// * Size:	744.0 B
+  /// * Size: 744.0 B
   /// * File path: _/assets/svg/valid_error.svg
   static const String svgValidError = '/assets/svg/valid_error.svg';
 

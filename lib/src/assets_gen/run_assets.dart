@@ -143,12 +143,12 @@ Future<void> runAssets({
 
   _foundFilesWithoutExtension(assetsList, logger);
 
-  final pathGenFolder = YamlRead().getPathAssetsSetting(
+  var pathGenFolder = YamlRead().getPathAssetsSetting(
     basePath: pathBase,
     logger: logger,
   );
 
-  _sendErrorIfNotConfigInPubspec(pathGenFolder);
+  pathGenFolder = _sendInfoIfNotConfigInPubspec(pathGenFolder, logger);
 
   final pathGenFile = '${pathGenFolder}assets.gen.dart';
   await _createFolderAndFile(pathGenFolder, pathGenFile);
@@ -290,17 +290,26 @@ Future<String> _getFileSize(String filepath, int decimals) async {
 //   }
 // }
 
-void _sendErrorIfNotConfigInPubspec(String pathGenFolder) {
+String _sendInfoIfNotConfigInPubspec(
+  String pathGenFolder,
+  FLILogger logger,
+) {
   if (pathGenFolder.isEmpty) {
-    throw NoConfigFoundException(
-      '''
+    logger.info('''
+
   No configuration found in ${ConstHelper.pubspecFilePath}. 
   # example:
   
   turn_gen:
   assets_output: "lib/gen/"
-  ''',
-    );
+
+  Default path lib/gen/ is used
+
+  ''');
+
+    return 'lib/gen/';
+  } else {
+    return pathGenFolder;
   }
 }
 
