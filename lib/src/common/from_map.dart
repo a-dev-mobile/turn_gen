@@ -793,40 +793,40 @@ String getFromMap(Varable v) {
     case EnumTypeVarable.list_data:
       if (yes_null_default_yes) {
         return _getValueWithInit(
-          "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()",
+          "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<dynamic, dynamic>)).toList()",
           name,
           initComment,
         );
       } else if (yes_null_default_no) {
         return _getValueWithInit(
-          "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()",
+          "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<dynamic, dynamic>)).toList()",
           name,
           'null',
         );
       } else if (no_null_default_yes) {
         return _getValueWithInit(
-          "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()",
+          "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<dynamic, dynamic>)).toList()",
           name,
           initComment,
         );
       } else if (no_null_default_no) {
         return _getValueWithException(
-          "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()",
+          "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<dynamic, dynamic>)).toList()",
           name,
         );
       }
       return error;
     case EnumTypeVarable.list_data_null:
       if (yes_null_default_yes) {
-        return "map['$name'] != null ? (map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList() : $initComment";
+        return "map['$name'] != null ? (map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<dynamic, dynamic>)).toList() : $initComment";
       } else if (yes_null_default_no) {
-        return "map['$name'] != null ? (map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList() : null";
+        return "map['$name'] != null ? (map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<dynamic, dynamic>)).toList() : null";
       } else if (no_null_default_yes) {
-        return "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()";
+        return "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<dynamic, dynamic>)).toList()";
 
       } else if (no_null_default_no) {
         return _getValueWithException(
-          "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<String, dynamic>)).toList()",
+          "(map['$name'] as List<dynamic>).map((e) => $nameObject.fromMap(e as Map<dynamic, dynamic>)).toList()",
           name,
         );
       }

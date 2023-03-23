@@ -1,3 +1,12 @@
+## 0.6.4
+
+- fix assets generator
+- Updated README.md
+
+## 0.6.3
+
+- changed the fromMap method for some types
+
 ## 0.6.2
 
 - fix path when generating assets

@@ -1,7 +1,9 @@
+// ignore_for_file: avoid_bool_literals_in_conditional_expressions
 // ignore_for_file: sort_constructors_first
 
 import 'package:turn_gen/src/src.dart';
 
+/* only: copywith */
 class AssetItem {
   /* 
   type: enum
@@ -12,6 +14,8 @@ class AssetItem {
   final String fileFullPath;
   /*  init: '' */
   final String fileFromAssetsPath;
+  /*  init: const [] */
+  final List<String> folders;
   /*  init: '' */
   final String fileOnlyName;
   /*  init: '' */
@@ -30,14 +34,17 @@ class AssetItem {
   final String dateChanged;
   // end
 
-  //  ******************************
-  // GENERATED CODE BELOW - DO NOT MODIFY
-  //  ******************************
+//          --TURN_GEN--
+//           v0.6.3 (data)
+//  *************************************
+//         GENERATED CODE
+//  *************************************
 
   const AssetItem({
     this.type = TypeNameFile.init,
     this.fileFullPath = '',
     this.fileFromAssetsPath = '',
+    this.folders = const [],
     this.fileOnlyName = '',
     this.fileOnlyNameFormat = '',
     this.fileOnlyExtension = '',
@@ -52,6 +59,7 @@ class AssetItem {
     TypeNameFile? type,
     String? fileFullPath,
     String? fileFromAssetsPath,
+    List<String>? folderName,
     String? fileOnlyName,
     String? fileOnlyNameFormat,
     String? fileOnlyExtension,
@@ -65,6 +73,7 @@ class AssetItem {
       type: type ?? this.type,
       fileFullPath: fileFullPath ?? this.fileFullPath,
       fileFromAssetsPath: fileFromAssetsPath ?? this.fileFromAssetsPath,
+      folders: folderName ?? folders,
       fileOnlyName: fileOnlyName ?? this.fileOnlyName,
       fileOnlyNameFormat: fileOnlyNameFormat ?? this.fileOnlyNameFormat,
       fileOnlyExtension: fileOnlyExtension ?? this.fileOnlyExtension,

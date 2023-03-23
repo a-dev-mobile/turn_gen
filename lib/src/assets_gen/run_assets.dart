@@ -39,6 +39,7 @@ Future<void> runAssets({
     fileFullPatch = v.path;
 
     fileNameWithExtension = fileFullPatch.split(slash).last;
+
     final fileNameWithExtensionSplit = fileNameWithExtension.split('.');
     // если есть больше одной точки в имени файла
     if (fileNameWithExtensionSplit.length >= 3) {
@@ -74,23 +75,40 @@ Future<void> runAssets({
 
     /// rename if the file names are the same
     fileOnlyNameFormat = _formatFileName(fileName);
-    // loop because the names of files in different folders can be the same
-    for (var i = 0; i < 2000; i++) {
-      if (nameFormatList.contains(fileOnlyNameFormat)) {
-        type = TypeNameFile.identical;
-        fileOnlyNameFormat = _incrNameFile(fileOnlyNameFormat);
+
+    final foldersRaw = _getListFolder(fileFullPatch);
+
+    final folders = <String>[];
+
+    for (var i = 0; i < foldersRaw.length; i++) {
+      final folder = foldersRaw[i];
+      if (i == 0) {
+        folders.add(
+          _formatFileName(folder).toNotTitle(),
+        ); // do not use toTitleCase() for the first element
       } else {
-        break;
+        folders.add(_formatFileName(folder).toCapitalized());
       }
     }
+    folders.add(fileOnlyNameFormat.toCapitalized());
+    final formatPathWithNameFile = folders.join();
+    // loop because the names of files in different folders can be the same
+    // for (var i = 0; i < 2000; i++) {
+    //   if (nameFormatList.contains(fileOnlyNameFormat)) {
+    //     type = TypeNameFile.identical;
+    //     fileOnlyNameFormat = _incrNameFile(fileOnlyNameFormat);
+    //   } else {
+    //     break;
+    //   }
+    // }
     nameFormatList.add(fileOnlyNameFormat);
     final stat = FileStat.statSync(fileFullPatch);
-    fileFromAssetsPath = fileFullPatch
-        .replaceAll(pathBase, '')
-        .replaceAll(r'\', '/');
+    fileFromAssetsPath =
+        fileFullPatch.replaceAll(pathBase, '').replaceAll(r'\', '/');
     // .replaceAll('/asset', 'asset');
     assetsList.add(
       AssetItem(
+        folders: folders,
         fileOnlyName: fileName,
         fileOnlyExtension: fileExtension,
         fileFullPath: fileFullPatch,
@@ -101,7 +119,8 @@ Future<void> runAssets({
         dateAccessed: _getDateFormat(stat.accessed),
         dateModified: _getDateFormat(stat.modified),
         dateChanged: _getDateFormat(stat.changed),
-        fileOnlyNameFormat: fileOnlyNameFormat,
+        fileOnlyNameFormat: formatPathWithNameFile,
+        // fileOnlyNameFormat: fileOnlyNameFormat,
       ),
     );
     type = TypeNameFile.init;
@@ -139,47 +158,61 @@ Future<void> runAssets({
   var listAssets = <AssetItem>[];
   final listStrNameFile = <String>[];
   var symbol = '';
-  for (final v in extensionUniq) {
-    vFormat = _extensionFormat(v);
-    sb.write('''
 
-class AppAssets$vFormat {''');
+  sb.write('''
 
-    listAssets = assetsList.where((e) => e.fileOnlyExtension == v).toList();
-    for (final l in listAssets) {
-      // line screening
-      if (l.fileFromAssetsPath.contains(RegExp(r'[&$]+'))) {
-        symbol = 'r';
-      } else {
-        symbol = '';
-      }
+class AppAssets {
+  factory AppAssets() => _internalSingleton;
+  AppAssets._internal();
 
-      final comment = isShowComment
-          ? '''
+  static final AppAssets _internalSingleton = AppAssets._internal();  
+''');
+
+  for (final l in assetsList) {
+    // line screening
+    if (l.fileFromAssetsPath.contains(RegExp(r'[&$]+'))) {
+      symbol = 'r';
+    } else {
+      symbol = '';
+    }
+
+    final comment = isShowComment
+        ? '''
   
   ///     * Accessed: ${l.dateAccessed}
   ///     * Changed:  ${l.dateChanged}
   ///     * Modified: ${l.dateModified}'''
-          : '';
+        : '';
 
-      //  I fill it out to display the complete list
-      listStrNameFile.add(l.fileOnlyNameFormat);
-      sb.write('''
+    //  I fill it out to display the complete list
+    listStrNameFile.add(l.fileOnlyNameFormat);
+    sb.write('''
  
   /// * Size:\t${l.size}
   /// * File path: _${l.fileFromAssetsPath}$comment
   static const String ${l.fileOnlyNameFormat} = $symbol'${l.fileFromAssetsPath}';
 ''');
-    }
+  }
+
+  for (final v in extensionUniq) {
+    vFormat = _extensionFormat(v);
+    listAssets = assetsList.where((e) => e.fileOnlyExtension == v).toList();
 
     sb.write('''
 
+  /// List of $vFormat assets
+  static const List<String> values$vFormat = ${listAssets.map((e) => e.fileOnlyNameFormat).toList()};
+''');
+  }
+
+  sb.write('''
+
   /// List of all assets
-  static const List<String> values = $listStrNameFile;
+  static const List<String> valuesAll = $listStrNameFile;
+
 }
 ''');
-    listStrNameFile.clear();
-  }
+  listStrNameFile.clear();
 
   await File(pathGenFile).writeAsString('''
 ${ConstConsole.GEN_MSG_START(TypeRun.assets)}
@@ -191,6 +224,22 @@ $sb
 ''');
 
   logger.info(ConstConsole.GEN_MSG_END);
+}
+
+List<String> _getListFolder(String fileFullPatch) {
+  final folders = fileFullPatch
+      .replaceAll(r'\', '/') // replace backslashes with forward slashes
+      .split('/') // split the path into an array of folders
+      .skipWhile(
+        (folder) => folder != 'assets',
+      ) // skip all folders until we reach the 'assets' folder
+      .skip(1) // skip the 'assets' folder itself
+      .map(
+        (folder) => folder.toLowerCase(),
+      ) // convert all folders to lowercase
+      .toList(); // convert the iterable to a list
+  final _ = folders.removeLast(); // remove the last element (the file name)
+  return folders;
 }
 
 void _errorIfNotFiles(List<AssetItem> assetsList, FLILogger logger) {
@@ -285,7 +334,8 @@ Future<String> _searchFolderAssets(String pathBase, FLILogger logger) async {
   if (_isExistFolder(pathAssetsFolderExamp1)) {
     return pathAssetsFolderExamp1;
   } else if (_isExistFolder(pathAssetsFolderExamp2)) {
-    return pathAssetsFolderExamp2;
+    logger.error('Rename the asset folder to assets');
+    exit(0);
   } else {
     logger.error('Assets folder not found');
     exit(0);
@@ -321,9 +371,9 @@ String _formatFileName(String s) {
   for (final word in separatedWords) {
     if (word.isEmpty) continue;
     // ignore: use_string_buffers
-    newString += word[0].toUpperCase() + word.substring(1).toLowerCase();
+    newString += word[0].toCapitalized() + word.substring(1);
   }
-  var text = '${newString[0].toLowerCase()}${newString.substring(1)}';
+  var text = '${newString[0]}${newString.substring(1)}';
 
   var letter = '';
 
@@ -339,21 +389,21 @@ String _formatFileName(String s) {
   return text == 'values' ? 'vValues' : text;
 }
 
-String _incrNameFile(String text) {
-  final intInStr = RegExp(r'\d+$');
-  final listMath = intInStr.allMatches(text).map((m) => m.group(0));
-  final defValue = '${text}1';
-  if (listMath.isEmpty) return defValue;
+// String _incrNameFile(String text) {
+//   final intInStr = RegExp(r'\d+$');
+//   final listMath = intInStr.allMatches(text).map((m) => m.group(0));
+//   final defValue = '${text}1';
+//   if (listMath.isEmpty) return defValue;
 
-  var i = int.tryParse(listMath.first ?? '');
+//   var i = int.tryParse(listMath.first ?? '');
 
-  if (i == null) return defValue;
+//   if (i == null) return defValue;
 
-  i = i + 1;
-  final updateText = text.replaceAll(intInStr, '');
+//   i = i + 1;
+//   final updateText = text.replaceAll(intInStr, '');
 
-  return '$updateText$i';
-}
+//   return '$updateText$i';
+// }
 
 String _replaceCharAt(String oldString, int index, String newChar) {
   return oldString.substring(0, index) +

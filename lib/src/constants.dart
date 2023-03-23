@@ -16,7 +16,7 @@ class ConstHelper {
   static const String replaceIfFirstLetterNumber = 'n';
 
   static const String configName = 'turn_gen';
-  static const String version = '0.6.2';
+  static const String version = '0.6.4';
 }
 
 class ConstConsole {

@@ -1,7 +1,7 @@
 export 'assets_gen/assets_gen.dart';
 export 'assets_gen/enum_type_assets.dart';
 export 'assets_gen/model/asset_item.dart';
-export 'assets_gen/model/model.dart';
+
 export 'assets_gen/ru_to_lat/alpabet.dart';
 export 'assets_gen/ru_to_lat/ru_to_lat.dart';
 export 'assets_gen/run_assets.dart';
