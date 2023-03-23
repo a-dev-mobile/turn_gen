@@ -106,9 +106,10 @@ Future<void> runAssets({
     // }
     nameFormatList.add(fileOnlyNameFormat);
     final stat = FileStat.statSync(fileFullPatch);
-    fileFromAssetsPath =
-        fileFullPatch.replaceAll(pathBase, '').replaceAll(r'\', '/');
-    // .replaceAll('/asset', 'asset');
+    fileFromAssetsPath = fileFullPatch
+        .replaceAll(pathBase, '')
+        .replaceAll(r'\', '/')
+        .replaceAll(RegExp(r'^\/'), '');
     assetsList.add(
       AssetItem(
         folders: folders,
@@ -210,7 +211,7 @@ class AssetPaths {
 ''');
   listStrNameFile.clear();
 
-await File(pathGenFile).writeAsString('''
+  await File(pathGenFile).writeAsString('''
 ${ConstConsole.GEN_MSG_START(TypeRun.assets)}$sb
 ''');
 
@@ -230,7 +231,7 @@ List<String> _getListFolder(String fileFullPatch) {
       ) // convert all folders to lowercase
       .toList(); // convert the iterable to a list
   final _ = folders.removeLast(); // remove the last element (the file name)
-  
+
   return folders;
 }
 

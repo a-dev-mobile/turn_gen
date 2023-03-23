@@ -1,3 +1,7 @@
+## 0.6.7
+
+- improved `assets` generator
+
 ## 0.6.6
 
 - improved `assets` generator
