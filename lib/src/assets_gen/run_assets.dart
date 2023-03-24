@@ -112,7 +112,7 @@ Future<void> runAssets({
         .replaceAll(RegExp(r'^\/'), '');
     assetsList.add(
       AssetItem(
-        folders: folders,
+        foldersName: folders,
         fileOnlyName: fileName,
         fileOnlyExtension: fileExtension,
         fileFullPath: fileFullPatch,
@@ -237,8 +237,10 @@ List<String> _getListFolder(String fileFullPatch) {
 
 void _errorIfNotFiles(List<AssetItem> assetsList, FLILogger logger) {
   if (assetsList.isEmpty) {
-    logger.error('Files in assets not found');
-    exit(0);
+    logger
+      ..error('Files in assets not found')
+      ..info('');
+    // exit(0);
   }
 }
 

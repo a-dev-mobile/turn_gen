@@ -29,8 +29,11 @@ class ConstConsole {
   ******************************
   ''';
 
+
+static final BASE_TITLE = '//          --TURN_GEN--';
+
   static String GEN_MSG_START(TypeRun type) => '''
-//          --TURN_GEN--
+$BASE_TITLE
 //           v${ConstHelper.version} (${type.value})
 //  *************************************
 //         GENERATED CODE 

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:args/args.dart';
 
 import 'package:turn_gen/src/src.dart';
+import 'package:turn_gen/src/update_gen/update_gen.dart';
 
 
 // ignore: prefer-static-class
@@ -67,7 +68,7 @@ data
     var typeString = argResults[ConstArgOptionFlag.typeOption].toString();
 
 // if we only pass assets
-    if (typeString.isEmpty && arguments.first == TypeRun.assets.value) {
+    if (typeString.isEmpty && (arguments.first == TypeRun.assets.value||arguments.first == TypeRun.build.value)) {
       typeString = arguments.first;
     }
     if (path.isEmpty) logger.info('Path used: $path');
@@ -111,8 +112,8 @@ data
         await runEnumV2(path: path, logger: logger);
 
         break;
-      case TypeRun.update:
-        // await runUpdate(pathBase: path, logger: logger);
+      case TypeRun.build:
+        await runUpdate(pathBase: path, logger: logger);
         break;
     }
   } catch (e) {

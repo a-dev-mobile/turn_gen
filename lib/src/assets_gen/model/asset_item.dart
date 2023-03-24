@@ -4,7 +4,7 @@
 import 'package:turn_gen/src/src.dart';
 
 /* only: copywith */
-class AssetItem {
+class AssetItem {  
   /* 
   type: enum
   init: TypeNameFile.init
@@ -15,7 +15,7 @@ class AssetItem {
   /*  init: '' */
   final String fileFromAssetsPath;
   /*  init: const [] */
-  final List<String> folders;
+  final List<String> foldersName;
   /*  init: '' */
   final String fileOnlyName;
   /*  init: '' */
@@ -33,18 +33,18 @@ class AssetItem {
   /*  init: '' */
   final String dateChanged;
   // end
-
+   
 //          --TURN_GEN--
-//           v0.6.3 (data)
+//           v0.6.7 (data)
 //  *************************************
-//         GENERATED CODE
+//         GENERATED CODE 
 //  *************************************
-
+  
   const AssetItem({
     this.type = TypeNameFile.init,
     this.fileFullPath = '',
     this.fileFromAssetsPath = '',
-    this.folders = const [],
+    this.foldersName = const [],
     this.fileOnlyName = '',
     this.fileOnlyNameFormat = '',
     this.fileOnlyExtension = '',
@@ -55,11 +55,14 @@ class AssetItem {
     this.dateChanged = '',
   });
 
+
+
+
   AssetItem copyWith({
     TypeNameFile? type,
     String? fileFullPath,
     String? fileFromAssetsPath,
-    List<String>? folderName,
+    List<String>? foldersName,
     String? fileOnlyName,
     String? fileOnlyNameFormat,
     String? fileOnlyExtension,
@@ -70,19 +73,23 @@ class AssetItem {
     String? dateChanged,
   }) {
     return AssetItem(
-      type: type ?? this.type,
-      fileFullPath: fileFullPath ?? this.fileFullPath,
-      fileFromAssetsPath: fileFromAssetsPath ?? this.fileFromAssetsPath,
-      folders: folderName ?? folders,
-      fileOnlyName: fileOnlyName ?? this.fileOnlyName,
-      fileOnlyNameFormat: fileOnlyNameFormat ?? this.fileOnlyNameFormat,
-      fileOnlyExtension: fileOnlyExtension ?? this.fileOnlyExtension,
-      fileNameWithExtension:
-          fileNameWithExtension ?? this.fileNameWithExtension,
-      size: size ?? this.size,
-      dateAccessed: dateAccessed ?? this.dateAccessed,
-      dateModified: dateModified ?? this.dateModified,
-      dateChanged: dateChanged ?? this.dateChanged,
+      type: type ?? this.type, 
+      fileFullPath: fileFullPath ?? this.fileFullPath, 
+      fileFromAssetsPath: fileFromAssetsPath ?? this.fileFromAssetsPath, 
+      foldersName: foldersName ?? this.foldersName, 
+      fileOnlyName: fileOnlyName ?? this.fileOnlyName, 
+      fileOnlyNameFormat: fileOnlyNameFormat ?? this.fileOnlyNameFormat, 
+      fileOnlyExtension: fileOnlyExtension ?? this.fileOnlyExtension, 
+      fileNameWithExtension: fileNameWithExtension ?? this.fileNameWithExtension, 
+      size: size ?? this.size, 
+      dateAccessed: dateAccessed ?? this.dateAccessed, 
+      dateModified: dateModified ?? this.dateModified, 
+      dateChanged: dateChanged ?? this.dateChanged, 
     );
   }
+  
+  
+
+
+
 }

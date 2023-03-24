@@ -265,13 +265,12 @@ $maybeMapNullValueSb2
   int compareTo($nameClass other) => index.compareTo(other.index);
 
   @override
-  String toString() => '$nameClass.\$name(\$${model.nameValue})';
-''');
+  String toString() => '$nameClass.\$name(\$${model.nameValue})';''');
 
 /* ****************************** */
 /* ******************************* */
 
-  final newHeader = 'enum $nameClass with Comparable<$nameClass>  {';
+  final newHeader = 'enum $nameClass with Comparable<$nameClass> {';
   var updateContentToEnd = '''
 $newHeader
 
