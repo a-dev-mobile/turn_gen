@@ -1,3 +1,8 @@
+## 0.7.0
+
+- added `build` command that looks through all files with text `--TURN_GEN--` and updates them to the latest version. Full command `dart run turn_gen build`
+- Updated README.md
+
 ## 0.6.7
 
 - improved `assets` generator

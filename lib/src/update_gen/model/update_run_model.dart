@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_bool_literals_in_conditional_expressions
 // ignore_for_file: sort_constructors_first
-import 'dart:convert';
 
 import 'package:turn_gen/src/enum_type_run.dart';
 /* only: copyWith */

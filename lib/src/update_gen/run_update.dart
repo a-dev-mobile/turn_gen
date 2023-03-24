@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:math';
-import 'package:path/path.dart' as p;
 import 'package:turn_gen/main.dart';
 import 'package:turn_gen/src/src.dart';
 import 'package:turn_gen/src/update_gen/update_gen.dart';
@@ -83,7 +81,7 @@ Future<void> runUpdate({
 // ignore: prefer-static-class
 List<String> findPathsWithTextTurnGen(List<File> paths) {
   final matchingPaths = <String>[];
-  final baseTitle = ConstConsole.BASE_TITLE;
+  const baseTitle = ConstConsole.BASE_TITLE;
 
   for (final path in paths) {
     final fileContents = path.readAsStringSync();

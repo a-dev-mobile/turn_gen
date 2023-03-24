@@ -340,7 +340,7 @@ enum Speed with Comparable<Speed>  {
 
 TurnGen also allows you to generate string constants of all files in the assets folder, with the ability to use different characters and letters in the file name, and, if identical file names are found, to add to the constant name a number
 
-You need to add the path where to generate the file:
+If you need a different path in which to generate the file, use the setting below in `pubspec.yaml`:
 
 ```yaml
 turn_gen:
@@ -369,80 +369,42 @@ After running the script, you will get all the file paths in one class:
 #### Example Assets generator
 
 ```dart
-class AppAssets {
+class AssetPaths {
+  const AssetPaths._();
  
-  /// * Size: 113.2 KB
-  /// * File path: _/assets/fonts/TTCommons-SemiBold.ttf
-  static const String fontsTTCommonsSemiBold =
-      '/assets/fonts/TTCommons-SemiBold.ttf';
-
-  /// * Size: 59.1 KB
-  /// * File path: _/assets/image/logo.png
-  static const String imageLogo = '/assets/image/logo.png';
-
-  /// * Size: 12.9 KB
-  /// * File path: _/assets/image/logo_card_1.png
-  static const String imageLogoCard1 = '/assets/image/logo_card_1.png';
-
- ...
-
-  /// * Size: 26.0 KB
-  /// * File path: _/assets/lottie/load_page.json
-  static const String lottieLoadPage = '/assets/lottie/load_page.json';
-
- ...
-
-  /// * Size: 12.4 KB
-  /// * File path: _/assets/svg/card_photo.svg
-  static const String svgCardPhoto = '/assets/svg/card_photo.svg';
-
-  /// * Size: 6.8 KB
-  /// * File path: _/assets/svg/connectivity_problem.svg
-  static const String svgConnectivityProblem =
-      '/assets/svg/connectivity_problem.svg';
-
-  /// * Size: 1.7 KB
-  /// * File path: _/assets/svg/doc.svg
-  static const String svgDoc = '/assets/svg/doc.svg';
-
-  /// * Size: 744.0 B
-  /// * File path: _/assets/svg/valid_error.svg
-  static const String svgValidError = '/assets/svg/valid_error.svg';
-
-  /// List of PNG assets
-  static const List<String> valuesPNG = [
-    imageLogo,
-    imageLogoCard1,
+  /// * Size: 8.8 KB
+  /// * File path: _assets/icons/app_icons.ttf
+  static const String appIconsIcons = 'assets/icons/app_icons.ttf';
+ 
+  /// * Size: 24.6 KB
+  /// * File path: _assets/image/onboarding_remind_you.svg
+  static const String onboardingRemindYouImage = 'assets/image/onboarding_remind_you.svg';
+ 
+  /// * Size: 60.8 KB
+  /// * File path: _assets/image/splash.png
+  static const String splashImage = 'assets/image/splash.png';
+ 
+  /// * Size: 4.8 KB
+  /// * File path: _assets/lottie/load_btn.json
+  static const String loadBtnLottie = 'assets/lottie/load_btn.json';
   
-  ];
-
-  /// List of TTF assets
-  static const List<String> valuesTTF = [
-    fontsTTCommonsSemiBold
-  ];
-
-  /// List of JSON assets
-  static const List<String> valuesJSON = [lottieLoadBtn, lottieLoadPage];
+  ...
+  
+    /// List of TTF assets
+  static const List<String> valuesTTF = [appIconsIcons];
 
   /// List of SVG assets
-  static const List<String> valuesSVG = [
-    svgCardPhoto,
-    svgConnectivityProblem,
-    svgDoc,
-    svgValidError
-  ];
+  static const List<String> valuesSVG = [onboardingRemindYouImage, icErrorSvg, icErrorCloseSvg, icInfoSvg, icInfoCloseSvg, icSuccessSvg, icSuccessCloseSvg, icWarningSvg, icWarningCloseSvg, logoSvg, onb1Svg, onb2Svg, onb3Svg, onb4Svg, sortAscSvg, sortDescSvg];
+
+  /// List of PNG assets
+  static const List<String> valuesPNG = [splashImage];
+
+  /// List of JSON assets
+  static const List<String> valuesJSON = [loadBtnLottie, loadPageLottie, waterDownLottie, waterUpLottie];
 
   /// List of all assets
-  static const List<String> valuesAll = [
-    fontsTTCommonsSemiBold,
-    imageLogo,
-    imageLogoCard1,
-    lottieLoadPage,
-    svgCardPhoto,
-    svgConnectivityProblem,
-    svgDoc,
-    svgValidError
-  ];
+  static const List<String> valuesAll = [appIconsIcons, onboardingRemindYouImage, splashImage, loadBtnLottie, loadPageLottie, waterDownLottie, waterUpLottie, icErrorSvg, icErrorCloseSvg, icInfoSvg, icInfoCloseSvg, icSuccessSvg, icSuccessCloseSvg, icWarningSvg, icWarningCloseSvg, logoSvg, onb1Svg, onb2Svg, onb3Svg, onb4Svg, sortAscSvg, sortDescSvg];
+
 }
 
 
@@ -889,6 +851,27 @@ class _UnionError extends Union {
   final String msg;
 }
 ```
+
+### Update all files
+
+In case it is necessary to update all files where `TurnGen` was used, and these are files with text:
+
+```dart
+//          --TURN_GEN--
+//           v*.*.* (data)
+//  *************************************
+//         GENERATED CODE 
+//  *************************************
+```
+
+It is enough to run the command:
+
+```sh
+dart run turn_gen build
+```
+
+And TurnGen will find all the files and update them, this command is similar to the command
+`...build_runner build...` but relatively faster
 
 ## Help
 

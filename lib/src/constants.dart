@@ -30,7 +30,7 @@ class ConstConsole {
   ''';
 
 
-static final BASE_TITLE = '//          --TURN_GEN--';
+static const BASE_TITLE = '//          --TURN_GEN--';
 
   static String GEN_MSG_START(TypeRun type) => '''
 $BASE_TITLE
