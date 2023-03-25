@@ -64,7 +64,7 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
 // end
 
 //          --TURN_GEN--
-//           v0.6.7 (enum)
+//          v0.7.1 (enum)
 //  *************************************
 //         GENERATED CODE 
 //  *************************************

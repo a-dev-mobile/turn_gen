@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:args/args.dart';
 
 import 'package:turn_gen/src/src.dart';
-import 'package:turn_gen/src/update_gen/update_gen.dart';
-
 
 // ignore: prefer-static-class
 Future<void> runFromArguments(List<String> arguments) async {
@@ -68,33 +66,27 @@ data
     var typeString = argResults[ConstArgOptionFlag.typeOption].toString();
 
 // if we only pass assets
-    if (typeString.isEmpty && (arguments.first == TypeRun.assets.value||arguments.first == TypeRun.build.value)) {
+    if (typeString.isEmpty &&
+        (arguments.first == EnumTypeRun.assets.value ||
+            arguments.first == EnumTypeRun.build.value||
+            arguments.first == EnumTypeRun.run.value)) {
       typeString = arguments.first;
     }
     if (path.isEmpty) logger.info('Path used: $path');
 
-    final typeRun = TypeRun.fromValue(typeString, fallback: TypeRun.none);
+    final typeRun =
+        EnumTypeRun.fromValue(typeString, fallback: EnumTypeRun.none);
     logger
       ..info('Type of generator used: `${typeRun.value}`')
       ..progress('load');
     switch (typeRun) {
-      case TypeRun.enumDefault:
-        await runEnumDefault(path: path, logger: logger);
+      case EnumTypeRun.data:
+        await dataStart(path: path, logger: logger);
         break;
-      case TypeRun.enumInt:
-        await runEnumInt(path: path, logger: logger);
+      case EnumTypeRun.assets:
+        await assetsStart(pathBase: path, logger: logger);
         break;
-      case TypeRun.enumString:
-        await runEnumString(path: path, logger: logger);
-        break;
-
-      case TypeRun.data:
-        await runData(path: path, logger: logger);
-        break;
-      case TypeRun.assets:
-        await runAssets(pathBase: path, logger: logger);
-        break;
-      case TypeRun.none:
+      case EnumTypeRun.none:
         logger.error('Generator type not defined');
 
         if (argResults[ConstArgOptionFlag.fileOption] == null) {
@@ -105,20 +97,24 @@ data
         }
 
         exit(0);
-      case TypeRun.union:
-        await runUnion(path: path, logger: logger);
+      case EnumTypeRun.union:
+        await unionStart(path: path, logger: logger);
         break;
-      case TypeRun.enum_:
-        await runEnumV2(path: path, logger: logger);
+      case EnumTypeRun.enum_:
+        await enumStart(path: path, logger: logger);
 
         break;
-      case TypeRun.build:
-        await runUpdate(pathBase: path, logger: logger);
+      case EnumTypeRun.build:
+        await buildStart(pathBase: path, logger: logger);
+        break;
+      case EnumTypeRun.run:
+        await runStart(pathBase: path, logger: logger);
+        
         break;
     }
   } catch (e) {
     stderr
-      ..writeln('\n✕ Could not generated extra features')
+      ..writeln('\n✕ Failed to use TurnGen')
       ..writeln(e);
     exit(0);
   }

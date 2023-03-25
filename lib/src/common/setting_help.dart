@@ -85,7 +85,7 @@ void msgIfNotNameClass(String className, FLILogger logger) {
 }
 
 void msgIfNodEnd(String contentFile, FLILogger logger) {
-  if (!contentFile.contains(RegExp(r'(\/\/\s+end)'))) {
+  if (!contentFile.contains(RegExp(r'\/\/\s+end'))) {
     logger
       ..info('')
       ..info('***')

@@ -10,22 +10,12 @@ linter:
     # constant_identifier_names: false
 
 analyzer:
-  # errors:
-  # argument_type_not_assignable: ignore
-  # invalid_assignment: ignore
   plugins:
     - dart_code_metrics
-  # strong-mode:
-  # implicit-dynamic: true
-  # implicit-casts: true
-
   exclude:
     # Generated code
-
-
     - "lib/**.gen.dart"
     - "lib/generated_plugin_registrant.dart"
-
     # Tests
     - "test/**"
     # - "test/*.dart"
@@ -55,6 +45,7 @@ dart_code_metrics:
         allowed-duplicated-chains: 3
     - arguments-ordering: false
     - avoid-late-keyword: false
+    - no-magic-number: false
 
     - avoid-nested-conditional-expressions: false
     - prefer-static-class:

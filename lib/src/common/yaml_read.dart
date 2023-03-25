@@ -32,7 +32,7 @@ class YamlRead {
 
     try {
       // ignore: avoid_dynamic_calls
-      final configName = map[ConstHelper.namePackage];
+      final configName = map[ConstHelper.configName];
       if (configName == null) return '';
       // ignore: avoid_dynamic_calls
       final configValue = configName[ConstHelper.nameConfigAssetsOutput];
@@ -80,14 +80,14 @@ class YamlRead {
 
     try {
       // ignore: avoid_dynamic_calls
-      final configName = map[ConstHelper.namePackage];
+      final configName = map[ConstHelper.configName];
       if (configName == null) return false;
       // ignore: avoid_dynamic_calls
-      final configValue = configName[ConstHelper.showMethodComments];
+      final configValue = configName[ConstHelper.showComments];
       if (configValue == null) {
         logger
           ..info(
-            'Setting - show_method_comments, not found - set by default - false',
+            'Setting - ${ConstHelper.showComments}, not found - set by default - false',
           )
           ..info('');
 
@@ -95,7 +95,8 @@ class YamlRead {
       }
 
       logger
-        ..info('Setting - show_method_comments, found - set $configValue')
+        ..info(
+            'Setting - ${ConstHelper.showComments}, found - set $configValue')
         ..info('');
 
       return configValue as bool;

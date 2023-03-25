@@ -1,7 +1,12 @@
+## 0.7.2
+
+- In the `fromValue` method of the `enum` generator a correction was made to handle values of type `double`
+- removed `@deprecated` methods from the `enum` generator
+- renamed the `show_method_comments` setting to `show_comments` in `pubspec.yaml
+
 ## 0.7.1
 
 - fix: name version
-
 
 ## 0.7.0
 
