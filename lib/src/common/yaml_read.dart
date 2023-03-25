@@ -96,7 +96,8 @@ class YamlRead {
 
       logger
         ..info(
-            'Setting - ${ConstHelper.showComments}, found - set $configValue')
+          'Setting - ${ConstHelper.showComments}, found - set $configValue',
+        )
         ..info('');
 
       return configValue as bool;

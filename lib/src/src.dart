@@ -19,8 +19,6 @@ export 'command/enum/enum_start.dart';
 export 'command/enum/enum_write_file.dart';
 export 'command/enum/models/enum_common.dart';
 export 'command/enum/models/enum_item.dart';
-export 'command/run/model/main_run_model.dart';
-export 'command/run/model/update_run_model.dart';
 export 'command/run/run_start.dart';
 export 'command/union/enum/enum.dart';
 export 'command/union/enum/enum_key_setting.dart';

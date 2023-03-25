@@ -1,7 +1,5 @@
 // ignore_for_file: sort_constructors_first, avoid_bool_literals_in_conditional_expressions
 
-
-
 /* no: hash tojson fromjson*/
 import 'package:turn_gen/src/src.dart';
 

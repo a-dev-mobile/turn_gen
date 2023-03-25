@@ -1,7 +1,5 @@
 // ignore_for_file: no-equal-arguments, avoid_positional_boolean_parameters
 
-
-
 // добавляем ли const в factory init
 import 'package:turn_gen/src/src.dart';
 

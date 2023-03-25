@@ -67,13 +67,18 @@ data
 
 // if we only pass assets
     if (typeString.isEmpty &&
+        arguments.isNotEmpty &&
         (arguments.first == EnumTypeRun.assets.value ||
-            arguments.first == EnumTypeRun.build.value||
+            arguments.first == EnumTypeRun.build.value ||
             arguments.first == EnumTypeRun.run.value)) {
       typeString = arguments.first;
     }
     if (path.isEmpty) logger.info('Path used: $path');
 
+    // если запуск вообще без аргументов
+    if (typeString.isEmpty && arguments.isEmpty) {
+      typeString = EnumTypeRun.run.value;
+    }
     final typeRun =
         EnumTypeRun.fromValue(typeString, fallback: EnumTypeRun.none);
     logger
@@ -109,7 +114,7 @@ data
         break;
       case EnumTypeRun.run:
         await runStart(pathBase: path, logger: logger);
-        
+
         break;
     }
   } catch (e) {

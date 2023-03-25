@@ -17,61 +17,56 @@ Future<void> runStart({
       .listSync(recursive: true)
       .whereType<File>()
       .where((v) => v.path.contains(RegExp(r'.*.dart$')))
-      .toList();
-
+      .toList()
+    ..removeWhere((v) => v.path.contains(RegExp(r'.*.freezed.dart$')));
   final pathsWithTurnGen =
       _readFileAndGetListPathWithTextTurnGen(fileDartPaths);
-  // final pathsWithTurnGen = findPathsWithText(filePaths, r'\/\/.*--TURN_GEN--');
 
-  final listUpdate = <BuildItemModel>[];
+  // final pathsWithTurnGen = findPathsWithText(filePaths, r'\/\/.*--TURN_GEN--');
 
   for (final path in pathsWithTurnGen) {
     final contentFile = await UtilsString.readFile(path: path);
+    var enumTypeRun = EnumTypeRun.none;
 
-    final textTitle = UtilsRegex.getTextRegexMatch(
+    if (UtilsRegex.getTextRegexMatch(
       content: contentFile,
-      regex: r'v\d.\d.\d \([a-z]*\)',
-    );
-
-    final typeRun = EnumTypeRun.fromValue(
-      textTitle.split('(').last.replaceAll(')', ''),
-      fallback: EnumTypeRun.none,
-    );
-    if (typeRun != EnumTypeRun.none) {
-      listUpdate.add(BuildItemModel(enumTypeRun: typeRun, path: path));
+      regex: r'^[\s]*class[\s]+_',
+    ).isNotEmpty) {
+      enumTypeRun = EnumTypeRun.union;
+    } else if (UtilsRegex.getTextRegexMatch(
+      content: contentFile,
+      regex: r'^[\s]*class[\s]+',
+    ).isNotEmpty) {
+      enumTypeRun = EnumTypeRun.data;
+    } else if (UtilsRegex.getTextRegexMatch(
+      content: contentFile,
+      regex: r'^[\s]*enum[\s]+',
+    ).isNotEmpty) {
+      enumTypeRun = EnumTypeRun.enum_;
     }
-  }
-  final mainRunModel = BuildMainModel(basePath: pathBase, listRun: listUpdate);
-// запуск генератора на список всех файлов
-  for (final v in mainRunModel.listRun) {
-    final _ = logger
-        .progress('\nUpdate ${v.enumTypeRun.value} on the path ${v.path}\n');
 
-    switch (v.enumTypeRun) {
-      case EnumTypeRun.assets:
-        await runFromArguments(
-          ['-t', v.enumTypeRun.value, '-f', mainRunModel.basePath],
-        );
-        break;
+    final _ =
+        logger.progress('\nUpdate ${enumTypeRun.value} on the path $path\n');
+
+    switch (enumTypeRun) {
       case EnumTypeRun.data:
       case EnumTypeRun.enum_:
       case EnumTypeRun.union:
-        await runFromArguments(['-t', v.enumTypeRun.value, '-f', v.path]);
+        await runFromArguments(['-t', enumTypeRun.value, '-f', path]);
         break;
 
+      case EnumTypeRun.assets:
       case EnumTypeRun.build:
       case EnumTypeRun.none:
       case EnumTypeRun.run:
         break;
     }
-
-    // logger.info(ConstConsole.GEN_MSG_END);
   }
 
-  if (mainRunModel.listRun.isEmpty) {
+  if (pathsWithTurnGen.isEmpty) {
     logger
       ..info('')
-      ..error('  Files marked --TURN_GEN-- were not found');
+      ..error('  Files marked // turnGen were not found');
 
     exit(0);
   }

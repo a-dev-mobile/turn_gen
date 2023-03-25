@@ -7,7 +7,8 @@ Future<void> buildStart({
   required String pathBase,
   required FLILogger logger,
 }) async {
-  final _ = logger.progress('\nSearch for all files with the text: `--TURN_GEN--`');
+  final _ =
+      logger.progress('\nSearch for all files with the text: `--TURN_GEN--`');
 
   // final slash = Platform.isWindows ? r'\' : '/';
   // final pathAssets = await _searchFolderAssets(pathBase, logger);
@@ -61,7 +62,7 @@ Future<void> buildStart({
       case EnumTypeRun.none:
         break;
       case EnumTypeRun.run:
-        // TODO: Handle this case.
+   
         break;
     }
 

@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:turn_gen/src/src.dart';
 
 // ignore: prefer-static-class
-Future<void> unionStart(
-    {required String path, required FLILogger logger,}) async {
+Future<void> unionStart({
+  required String path,
+  required FLILogger logger,
+}) async {
   final contentFile = await UtilsString.readFile(path: path);
 
   var classHeader = UtilsRegex.getTextRegexMatch(

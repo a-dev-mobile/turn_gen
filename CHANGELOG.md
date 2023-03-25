@@ -1,8 +1,10 @@
-## 0.7.2
+## 0.8.0
 
-- In the `fromValue` method of the `enum` generator a correction was made to handle values of type `double`
+- added a command to automatically start the desired generator `dart run turn_gen`
+- in the `fromValue` method of the `enum` generator a correction was made to handle values of type `double`
 - removed `@deprecated` methods from the `enum` generator
 - renamed the `show_method_comments` setting to `show_comments` in `pubspec.yaml
+- Updated README.md
 
 ## 0.7.1
 

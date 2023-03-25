@@ -579,11 +579,23 @@ String getFromMap(Varable v) {
       return error;
     case EnumTypeVarable.map_string_dynamic_:
       if (yes_null_default_yes) {
-        return "map['$name'] as Map<String, dynamic>?";
+        return _getValueWithInit(
+          "map['$name'] as Map<String, dynamic>",
+          name,
+          initComment,
+        );
       } else if (yes_null_default_no) {
-        return "map['$name'] as Map<String, dynamic>?";
+        return _getValueWithInit(
+          "map['$name'] as Map<String, dynamic>",
+          name,
+          'null',
+        );
       } else if (no_null_default_yes) {
-        return "map['$name'] as Map<String, dynamic>";
+        return _getValueWithInit(
+          "map['$name'] as Map<String, dynamic>",
+          name,
+          initComment,
+        );
       } else if (no_null_default_no) {
         return _getValueWithException(
           "map['$name'] as Map<String, dynamic>",

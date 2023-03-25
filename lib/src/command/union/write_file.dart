@@ -101,7 +101,7 @@ $sbCase    }
       final p = l.listParameters[i];
       final lastText = l.listParameters.length - 1 == i ? '' : ', ';
 
-      const letterNotNull =  '!';
+      const letterNotNull = '!';
 
       sbReturn.write('_${p.name}_${l.nameUnion}$letterNotNull$lastText');
     }
@@ -141,7 +141,7 @@ $sbMapCase    }
       final p = l.listParameters[i];
       final lastText = l.listParameters.length - 1 == i ? '' : ', ';
 
-      const letterNotNull =  '!';
+      const letterNotNull = '!';
 
       sbReturn.write('_${p.name}_${l.nameUnion}$letterNotNull$lastText');
     }
@@ -424,66 +424,9 @@ ${ConstConsole.GEN_MSG_START(EnumTypeRun.union)}
 ${model.comments}
 ${model.classHeader}
 $sbUnionClass
- /// Maps this `${model.nameClass}` instance to a value of type `T`,
-  /// depending on its underlying tag.
-  ///
-  /// Returns the result of the appropriate function, depending on the tag
-  /// of this instance.
-  ///
-  /// Throws an exception if one of the functions is null, or if this
-  /// instance has an unknown tag.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// ${model.nameClass} state = ${model.nameClass}.success(text: 'Hello');
-  ///
-  /// String result = state.map<String>(
-  ///   error: (error) => 'Oops: \${error.msg}',
-  ///   load: () => 'Loading...',
-  ///   success: (success) => 'Success: \${success.text}',
-  /// );
-  ///
-  /// print(result); // 'Success: Hello'
-  /// ```
 $sbMap
-/// Returns the result of invoking the appropriate callback function based on the
-/// [${model.nameClass}] instance's tag.
-/// If the appropriate callback function is null, this method invokes the [orElse]
-/// callback function instead.
-///
-/// The generic type parameter [T] represents the return type of the callback functions.
-///
-/// Example:
-/// ```
-/// final state = OnboardingState.success(text: 'Hello, World!');
-///
-/// final message = state.maybeMap<String>(
-///   success: (s) => s.text,
-///   orElse: () => 'Default message',
-/// );
-///
-/// print(message); // Output: 'Hello, World!'
-/// ```
 $sbMaybeMap
 $sbMapOrNull
-  /// Returns the result of invoking the appropriate callback function based on the
-  /// [${model.nameClass}] instance's tag, or `null` if the callback function is null.
-  ///
-  /// The generic type parameter [T] represents the return type of the callback functions.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final state = OnboardingState.success(text: 'Hello, World!');
-  ///
-  /// final message = state.maybeMapOrNull<String>(
-  ///   success: (s) => s.text,
-  ///   orElse: () => null,
-  /// );
-  ///
-  /// print(message); // Output: 'Hello, World!'
-  /// ```
 $sbCommonMaybeMapOrNull
 $sbWhere
 $sbEquals

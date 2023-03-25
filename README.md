@@ -41,7 +41,82 @@ Then run `flutter pub get` or `dart pub get` to install the package.
 
 ## Use
 
-### Enum
+### Automatic detection of the running script
+
+TurnGen can be run with a single command that searches for files that have a comment:
+
+```dart
+// turngen
+```
+
+For example, when using the `union` script:
+
+```dart
+import 'package:meta/meta.dart';
+// turngen
+/* no: tojson fromJson */
+@immutable
+class _ConnectivityState {
+  const _ConnectivityState.isDisonnected();
+  const _ConnectivityState.isConnected();
+  const _ConnectivityState.notDetermined();
+}
+// end
+```
+
+For example, when using the `data` script:
+
+```dart
+import 'package:meta/meta.dart';
+// turngen
+@immutable
+class DataFio {
+  /* init:'' */
+  final String surname;
+  /* init:'' */
+  final String name;
+  /* init:'' */
+  final String patronymic;
+  // end
+}
+
+```
+
+For example, when using the `enum` script :
+
+```dart
+// turngen
+enum EnumLang  {
+  ru,
+  en;
+// end
+}
+```
+
+Or:
+
+```dart
+// turngen
+enum EnumActivity  {
+  normal(10),
+  light(5),
+  none(0);
+
+  const EnumActivity(this.value);
+  final int value;
+// end
+}
+```
+
+We use the command to start it:
+
+```shell
+dart run turn_gen
+```
+
+But it takes a bit longer to run this command than to directly call the desired script, which are described below.
+
+### Enum Script
 
 ![enum_type](https://github.com/a-dev-mobile/turn_gen/blob/master/resources/enum_type.png)
 
@@ -336,7 +411,7 @@ enum Speed with Comparable<Speed>  {
 
 ```
 
-### Assets
+### Assets Script
 
 TurnGen also allows you to generate string constants of all files in the assets folder, with the ability to use different characters and letters in the file name, and, if identical file names are found, to add to the constant name a number
 
@@ -410,7 +485,7 @@ class AssetPaths {
 
 ```
 
-### Data class
+### Data Script
 
 TurnGen scripts can generate and override additional methods to `dart` classes, such as
 
@@ -604,7 +679,7 @@ Map<String, dynamic> toMap() {
 }
 ```
 
-### Union types
+### Union Script
 
 TurnGen scripts can generate "union types" by creating a class with named constructors, but this requires making a fake private class. This class is not used anywhere, but it is useful for modifying the generated code. And add a `// end` comment at the end of the class, like in the example below:
 
@@ -870,8 +945,11 @@ It is enough to run the command:
 dart run turn_gen build
 ```
 
-And TurnGen will find all the files and update them, this command is similar to the command
-`...build_runner build...` but relatively faster
+And TurnGen will find all the files and update them, this command is similar to the command below, but relatively faster:
+
+```shell
+flutter pub run build_runner build --delete-conflicting-outputs
+```
 
 ## Help
 

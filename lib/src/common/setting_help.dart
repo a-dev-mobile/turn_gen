@@ -44,10 +44,14 @@ Map<EnumKeySetting, String> getMapSettingVarable(String content) {
     enumKey = EnumKeySetting.none;
 
     if (split[i].isEmpty || !split[i].contains(':')) continue;
+
     splitTemp = split[i].split(':');
 
     strKey = '${splitTemp.first.toLowerCase()}:';
-    strValue = splitTemp.last.trim();
+
+    final _ = splitTemp.removeAt(0);
+
+    strValue = splitTemp.join(':').trim();
     enumKey = EnumKeySetting.fromValue(
       strKey,
       fallback: EnumKeySetting.none,

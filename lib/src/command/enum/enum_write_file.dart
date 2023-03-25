@@ -1,7 +1,5 @@
 // ignore_for_file: cascade_invocations
 
-
-
 import 'dart:io';
 
 import 'package:turn_gen/src/src.dart';
@@ -37,9 +35,9 @@ void enumV2WriteToFile(
 
 /* ****************************** */
   final fromValueSb1 = StringBuffer();
-    // for double other value
-    final switchVar = model.typeEnum
-        .maybeMapValue(orElse: 'value', double_: 'value?.toString()');
+  // for double other value
+  final switchVar = model.typeEnum
+      .maybeMapValue(orElse: 'value', double_: 'value?.toString()');
   for (final e in model.listItem) {
     final name = e.nameEnum;
     // for double other value
@@ -282,6 +280,7 @@ $maybeMapNullValueSb2
 
   final newHeader = 'enum $nameClass with Comparable<$nameClass> {';
   var updateContentToEnd = '''
+// turnGen
 $newHeader
 
 $paramSb

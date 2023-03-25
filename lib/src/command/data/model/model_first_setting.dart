@@ -1,7 +1,5 @@
 // ignore_for_file: sort_constructors_first
 
-
-
 import 'package:turn_gen/src/src.dart';
 
 class FirstSetting {
