@@ -7,8 +7,8 @@ TurnGen is a set of scripts combined into a command line tool, all scripts are w
 - Generating links to all files in the assets folder
 - Create union types from standard constructors
 
-![Alt Text](https://github.com/a-dev-mobile/turn_gen/blob/2ed840838ea2bfa2069d47d36e0e438f4d3ea63c/demo/dart_run_turn_gen.gif)
-
+![Alt Text](demo/dart_run_turn_gen.gif)
+![Alt Text](demo/enum_dart_run_turn_gen.gif)
 ## Install
 
 To use TurnGen, simply add TurnGen to the `pubspec.yaml` file as `dev_dependencies`:
