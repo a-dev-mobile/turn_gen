@@ -45,8 +45,8 @@ Future<void> runStart({
       enumTypeRun = EnumTypeRun.enum_;
     }
 
-    final _ =
-        logger.progress('\nUpdate ${enumTypeRun.value} on the path $path\n');
+    // final _ =
+    //     logger.progress('\nUpdate ${enumTypeRun.value} on the path $path\n');
 
     switch (enumTypeRun) {
       case EnumTypeRun.data:

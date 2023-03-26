@@ -444,7 +444,7 @@ $sbExtendsClass''';
   //     File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/resources/to_union.dart')
   //         .writeAsString(newContent);
 
-  logger.info(ConstConsole.GEN_MSG_END);
+  logger.info(ConstConsole.GEN_MSG_END(file.path));
 }
 
 String _getNameExtendsClass(UnionCommonModel model, UnionItemModel l) {

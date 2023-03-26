@@ -182,7 +182,7 @@ ${_getEquatable(listNameNoSortVar, isUseEquatable)}
 
   final _ = file.writeAsString(newContent);
 
-  logger.info(ConstConsole.GEN_MSG_END);
+  logger.info(ConstConsole.GEN_MSG_END(file.path));
 }
 
 void _msgOnlyOne(

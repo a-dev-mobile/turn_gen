@@ -122,7 +122,7 @@ EnumTypeVarable autoUpdateType(
     // ignore: parameter_assignments
     typeEnum = EnumTypeVarable.list_data;
     msgAnotherType(logger, typeEnum, typeVar);
-  } else if (typeVar.contains(RegExp(r'(|\w)(e|E)num\w')) ||
+  } else if (typeVar.contains(RegExp('[eE][nN][uU][mM]')) ||
       typeVar.contains('ThemeMode')) {
     // ignore: parameter_assignments
     typeEnum = EnumTypeVarable.enum_;
@@ -145,10 +145,19 @@ void msgAnotherType(
     ..info('')
     ..info('-- INFO --')
     ..info('TurnGen did not define a variable type for `$typeVar`')
-    ..info('Type was assigned: `${typeEnum.value}`')
+    ..info('Type was assigned: `${typeEnum.value}`');
+}
+
+void msgTitleAnotherType(
+  FLILogger logger,
+) {
+  logger
     ..info('')
-    ..info('To specify another, use a comment:')
+    ..info('TurnGen will try to determine the type of variable')
     ..info(
-      'Example: /* type: `enum` | `data` | `List<data>` | `List<data?>` | `List<enum>` | `List<enum?>` */ >>> for the variable: `$typeVar`',
+      'If the type is not defined correctly, specify it this way:',
+    )
+    ..info(
+      'Example: /* type: `enum` | `data` | `List<data>` | `List<data?>` | `List<enum>` | `List<enum?>` */',
     );
 }

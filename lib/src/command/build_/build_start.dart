@@ -43,8 +43,8 @@ Future<void> buildStart({
   final mainRunModel = BuildMainModel(basePath: pathBase, listRun: listUpdate);
 // запуск генератора на список всех файлов
   for (final v in mainRunModel.listRun) {
-    final _ = logger
-        .progress('\nUpdate ${v.enumTypeRun.value} on the path ${v.path}\n');
+    // final _ = logger
+    //     .progress('\nUpdate ${v.enumTypeRun.value} on the path ${v.path}\n');
 
     switch (v.enumTypeRun) {
       case EnumTypeRun.assets:
@@ -62,7 +62,6 @@ Future<void> buildStart({
       case EnumTypeRun.none:
         break;
       case EnumTypeRun.run:
-   
         break;
     }
 

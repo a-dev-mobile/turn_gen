@@ -55,7 +55,7 @@ class YamlRead {
     required String filePath,
     required FLILogger logger,
   }) {
-    final _ = logger.progress('\nSearch settings TurnGen in pubspec.yaml');
+    // final _ = logger.progress('\nSearch settings TurnGen in pubspec.yaml');
 
     final basePath = filePath
         .replaceAll(r'\', '/')
@@ -85,11 +85,11 @@ class YamlRead {
       // ignore: avoid_dynamic_calls
       final configValue = configName[ConstHelper.showComments];
       if (configValue == null) {
-        logger
-          ..info(
-            'Setting - ${ConstHelper.showComments}, not found - set by default - false',
-          )
-          ..info('');
+        // logger
+        //   ..info(
+        //     'Setting - ${ConstHelper.showComments}, not found - set by default - false',
+        //   )
+        //   ..info('');
 
         return false;
       }

@@ -105,6 +105,7 @@ Future<void> enumStart({
       typeEnum =
           EnumTypeVarable.fromValue(typeVar, fallback: EnumTypeVarable.none);
       if (typeEnum == EnumTypeVarable.none) {
+        msgTitleAnotherType(logger);
         typeEnum = autoUpdateType(typeEnum, typeVar, logger);
       }
     }

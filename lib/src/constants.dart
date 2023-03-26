@@ -17,7 +17,7 @@ class ConstHelper {
 
   static const String configName = 'turn_gen';
   static const String packageOnlyLetter = 'turngen';
-  static const String version = '0.8.0';
+  static const String version = '0.8.1';
 }
 
 class ConstConsole {
@@ -40,13 +40,11 @@ $BASE_TITLE
 //  *************************************
   ''';
 
-  static const String GEN_MSG_END = '''
+  static String GEN_MSG_END(String path) => '''
 
-           --TURN_GEN--
-  ******************************
-         ✓ Successfully 
-  ******************************
-  ''';
+Congratulations! You have successfully completed the task
+File: $path
+''';
 }
 
 class ConstArgOptionFlag {

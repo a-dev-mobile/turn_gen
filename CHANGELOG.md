@@ -1,3 +1,7 @@
+## 0.8.1
+
+- removed redundant logs
+
 ## 0.8.0
 
 - added a command to automatically start the desired generator `dart run turn_gen`

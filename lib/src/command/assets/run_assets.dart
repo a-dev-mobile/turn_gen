@@ -215,7 +215,7 @@ class AssetPaths {
 ${ConstConsole.GEN_MSG_START(EnumTypeRun.assets)}$sb
 ''');
 
-  logger.info(ConstConsole.GEN_MSG_END);
+  logger.info(ConstConsole.GEN_MSG_END(pathGenFile));
 }
 
 List<String> _getListFolder(String fileFullPatch) {

@@ -48,7 +48,7 @@ data
   }
   // creating logger based on -v flag
   final logger = FLILogger(argResults[ConstArgOptionFlag.verboseFlag] as bool)
-    ..progress('Start generate');
+    ..info('*** Run TurnGen Script ***');
 
   try {
     var path = argResults[ConstArgOptionFlag.fileOption].toString();
@@ -81,9 +81,7 @@ data
     }
     final typeRun =
         EnumTypeRun.fromValue(typeString, fallback: EnumTypeRun.none);
-    logger
-      ..info('Type of generator used: `${typeRun.value}`')
-      ..progress('load');
+    logger.info('The ${typeRun.value.toUpperCase()} script is used');
     switch (typeRun) {
       case EnumTypeRun.data:
         await dataStart(path: path, logger: logger);

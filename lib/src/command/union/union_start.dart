@@ -58,7 +58,7 @@ Future<void> unionStart({
 
   final listStartWriteParams = <String>['final _${className}Tag _tag;'];
   final listParamsForMap = <String, String>{'_tag': 'null'};
-
+  msgTitleAnotherType(logger);
   for (var i = 0; i < listFormatUnionItem.length; i++) {
     final v = listFormatUnionItem[i];
     final unionName = listUnionName[i];

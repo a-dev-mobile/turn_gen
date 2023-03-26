@@ -75,31 +75,26 @@ Future<void> dataStart({
   var initValueComment = '';
   var toMap = '';
   var fromMap = '';
-/* init: null type: enum */ /* 
-init: Map<t , v> 
-type: asda fromMap: asdasd*/
+
   const emptySettingVar = '/*  */';
+  msgTitleAnotherType(logger);
   for (var i = 0; i < listItemFinal.length; i++) {
     final finalVarable = _formatFinalVarablse(listItemFinal[i]);
 
     var settingVarable = emptySettingVar;
-    var betwen = '';
 
-    betwen = i == 0
-        ? UtilsRegex.getTextRegexMatch(
-            isLast: false,
-            content: classContent,
-            regex: '$className[\\s\\S]+?final',
-          )
-        : UtilsRegex.getTextRegexMatch(
-            isLast: false,
-            content: classContent,
-            regex: '${listVarMain[i - 1].nameVar};[\\s\\S]+?final',
-          );
+    final regexBetwen = i == 0
+        ? '$className[\\s\\S]+?final'
+        : '[\\s]${listVarMain[i - 1].nameVar};[\\s\\S]+?final';
 
+    final betwenText = UtilsRegex.getTextRegexMatch(
+      isLast: false,
+      content: classContent,
+      regex: regexBetwen,
+    );
     settingVarable = UtilsRegex.getTextRegexMatch(
       isLast: false,
-      content: betwen,
+      content: betwenText,
       regex: r'\/\*[\s\S]+?\*\/',
     );
     if (settingVarable.isEmpty) settingVarable = emptySettingVar;
@@ -162,6 +157,11 @@ type: asda fromMap: asdasd*/
 
       initValueTemp = temp;
       initValueComment = temp;
+
+      // добавляю const если его нет
+      if (initValueComment.contains(RegExp('(^{.*}|^[.*])'))) {
+        initValueComment = 'const $initValueComment';
+      }
     }
     initValueDefault = getDefaultInitValue(type, initValueTemp, isCanNull);
 
@@ -250,14 +250,14 @@ type: asda fromMap: asdasd*/
   // Showing warning is null var, but init value have
   for (var i = 0; i < listVarMain.length; i++) {
     v = listVarMain[i];
-    if (v.isCanNull && v.initValueDefault.isNotEmpty) {
-      logger
-        ..info('')
-        ..info('-- INFO --')
-        ..info(
-          '(${v.type}? ${v.nameVar}) is null, but init value > ${v.initValueDefault}',
-        );
-    }
+    // if (v.isCanNull && v.initValueDefault.isNotEmpty) {
+    //   logger
+    //     ..info('')
+    //     ..info('-- INFO --')
+    //     ..info(
+    //       '(${v.type}? ${v.nameVar}) is null, but init value > ${v.initValueDefault}',
+    //     );
+    // }
 
     if (v.initValueDefault.isNotEmpty && getWordConst(v).isNotEmpty) {
       factoryInit.write('''

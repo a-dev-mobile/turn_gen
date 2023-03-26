@@ -437,7 +437,7 @@ $compareSToStringb
   final _ = file.writeAsString(newContent.toString());
   // _ = File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/test/enum_v2.dart')
   //     .writeAsString(newContent.toString());
-  logger.info(ConstConsole.GEN_MSG_END);
+  logger.info(ConstConsole.GEN_MSG_END(file.path));
 }
 
 String _getComment(String comment) {
