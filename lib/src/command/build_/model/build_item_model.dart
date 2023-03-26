@@ -5,32 +5,40 @@ import 'package:turn_gen/src/enum_type_run.dart';
 
 // turngen
 /* only: copyWith */
-class BuildItemModel {
+class BuildItemModel {   
   /* init: EnumTypeRun.none type: enum*/
   final EnumTypeRun enumTypeRun;
   /* init: '' */
   final String path;
 
   // end
-
+   
 //          --TURN_GEN--
-//          v0.7.1 (data)
+//          v0.8.1 (data)
 //  *************************************
-//         GENERATED CODE
+//         GENERATED CODE 
 //  *************************************
-
+  
   const BuildItemModel({
     this.enumTypeRun = EnumTypeRun.none,
     this.path = '',
   });
+
+
+
 
   BuildItemModel copyWith({
     EnumTypeRun? enumTypeRun,
     String? path,
   }) {
     return BuildItemModel(
-      enumTypeRun: enumTypeRun ?? this.enumTypeRun,
-      path: path ?? this.path,
+      enumTypeRun: enumTypeRun ?? this.enumTypeRun, 
+      path: path ?? this.path, 
     );
   }
+  
+  
+
+
+
 }

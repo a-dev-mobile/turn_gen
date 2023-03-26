@@ -70,6 +70,9 @@ Future<void> runStart({
 
     exit(0);
   }
+
+await Future<void>.delayed(const Duration(milliseconds: 100));
+  exit(0);
 }
 
 // ignore: prefer-static-class
