@@ -23,7 +23,8 @@ Future<void> main() async {
     Set_double_yes_null_default_yes: {123.333},
     Set_double_no_null_default_no: {123, 123.123},
     Set_double_no_null_default_yes: {123, 123.33},
-    List_bool_no_null_default_no: [false, true, false], List_bool_null_no_null_default_no: [false, true, false,null],
+    List_bool_no_null_default_no: [false, true, false],
+    List_bool_null_no_null_default_no: [false, true, false, null],
   );
 
   final fileDataModel = File(r'test\json\data.json');

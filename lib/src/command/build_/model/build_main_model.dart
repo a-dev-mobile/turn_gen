@@ -4,40 +4,32 @@
 import 'package:turn_gen/src/src.dart';
 
 /* only:copyWith */
-class BuildMainModel { 
+class BuildMainModel {
   /* init: const []*/
   final List<BuildItemModel> listRun;
   /* init: '' */
   final String basePath;
 
   // end
-   
+
 //          --TURN_GEN--
 //          v0.8.1 (data)
 //  *************************************
-//         GENERATED CODE 
+//         GENERATED CODE
 //  *************************************
-  
+
   const BuildMainModel({
     this.listRun = const [],
     this.basePath = '',
   });
-
-
-
 
   BuildMainModel copyWith({
     List<BuildItemModel>? listRun,
     String? basePath,
   }) {
     return BuildMainModel(
-      listRun: listRun ?? this.listRun, 
-      basePath: basePath ?? this.basePath, 
+      listRun: listRun ?? this.listRun,
+      basePath: basePath ?? this.basePath,
     );
   }
-  
-  
-
-
-
 }

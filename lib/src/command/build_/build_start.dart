@@ -73,13 +73,11 @@ Future<void> buildStart({
       ..info('')
       ..error('  Files marked --TURN_GEN-- were not found');
 
-  exit(0);
-    
+    exit(0);
   }
 
-    await Future<void>.delayed(const Duration(milliseconds: 100));
+  await Future<void>.delayed(const Duration(milliseconds: 100));
   exit(0);
-
 }
 
 // ignore: prefer-static-class

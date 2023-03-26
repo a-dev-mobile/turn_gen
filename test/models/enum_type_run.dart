@@ -1,6 +1,3 @@
-
-
-
 // turngen
 enum EnumTest with Comparable<EnumTest> {
   enum_('enum'),
@@ -20,9 +17,8 @@ enum EnumTest with Comparable<EnumTest> {
 //          --TURN_GEN--
 //          v0.8.1 (enum)
 //  *************************************
-//         GENERATED CODE 
+//         GENERATED CODE
 //  *************************************
-  
 
   static EnumTest fromValue(String? value, {EnumTest? fallback}) {
     switch (value) {
@@ -41,11 +37,14 @@ enum EnumTest with Comparable<EnumTest> {
       case 'none':
         return none;
       default:
-        return fallback ?? (throw ArgumentError.value(
-          value, '', 'Value not found in EnumTest',));
+        return fallback ??
+            (throw ArgumentError.value(
+              value,
+              '',
+              'Value not found in EnumTest',
+            ));
     }
   }
-
 
   T map<T>({
     required T Function() enum_,
@@ -74,7 +73,6 @@ enum EnumTest with Comparable<EnumTest> {
     }
   }
 
-
   T mapValue<T>({
     required T enum_,
     required T data,
@@ -102,7 +100,6 @@ enum EnumTest with Comparable<EnumTest> {
     }
   }
 
-
   T maybeMap<T>({
     required T Function() orElse,
     T Function()? enum_,
@@ -114,15 +111,14 @@ enum EnumTest with Comparable<EnumTest> {
     T Function()? none,
   }) =>
       map<T>(
-      enum_: enum_ ?? orElse,
-      data: data ?? orElse,
-      assets: assets ?? orElse,
-      build: build ?? orElse,
-      union: union ?? orElse,
-      run: run ?? orElse,
-      none: none ?? orElse,
+        enum_: enum_ ?? orElse,
+        data: data ?? orElse,
+        assets: assets ?? orElse,
+        build: build ?? orElse,
+        union: union ?? orElse,
+        run: run ?? orElse,
+        none: none ?? orElse,
       );
-
 
   T maybeMapValue<T>({
     required T orElse,
@@ -135,15 +131,14 @@ enum EnumTest with Comparable<EnumTest> {
     T? none,
   }) =>
       mapValue<T>(
-      enum_: enum_ ?? orElse,
-      data: data ?? orElse,
-      assets: assets ?? orElse,
-      build: build ?? orElse,
-      union: union ?? orElse,
-      run: run ?? orElse,
-      none: none ?? orElse,
+        enum_: enum_ ?? orElse,
+        data: data ?? orElse,
+        assets: assets ?? orElse,
+        build: build ?? orElse,
+        union: union ?? orElse,
+        run: run ?? orElse,
+        none: none ?? orElse,
       );
-
 
   T? maybeMapOrNull<T>({
     T Function()? enum_,
@@ -165,7 +160,6 @@ enum EnumTest with Comparable<EnumTest> {
         none: none,
       );
 
-
   T? maybeMapOrNullValue<T>({
     T? enum_,
     T? data,
@@ -186,14 +180,12 @@ enum EnumTest with Comparable<EnumTest> {
         none: none,
       );
 
-
-  static List<String> getValues() => EnumTest.values.map((e) => e.value).toList();
+  static List<String> getValues() =>
+      EnumTest.values.map((e) => e.value).toList();
 
   @override
   int compareTo(EnumTest other) => index.compareTo(other.index);
 
   @override
   String toString() => 'EnumTest.$name($value)';
-
-
 }

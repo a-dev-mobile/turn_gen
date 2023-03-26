@@ -4,7 +4,7 @@
 import 'package:turn_gen/src/src.dart';
 
 /* only: copywith */
-class AssetItem { 
+class AssetItem {
   /* 
   type: enum
   init: TypeNameFile.init
@@ -33,13 +33,13 @@ class AssetItem {
   /*  init: '' */
   final String dateChanged;
   // end
-   
+
 //          --TURN_GEN--
 //          v0.8.1 (data)
 //  *************************************
-//         GENERATED CODE 
+//         GENERATED CODE
 //  *************************************
-  
+
   const AssetItem({
     this.type = TypeNameFile.init,
     this.fileFullPath = '',
@@ -54,9 +54,6 @@ class AssetItem {
     this.dateModified = '',
     this.dateChanged = '',
   });
-
-
-
 
   AssetItem copyWith({
     TypeNameFile? type,
@@ -73,23 +70,19 @@ class AssetItem {
     String? dateChanged,
   }) {
     return AssetItem(
-      type: type ?? this.type, 
-      fileFullPath: fileFullPath ?? this.fileFullPath, 
-      fileFromAssetsPath: fileFromAssetsPath ?? this.fileFromAssetsPath, 
-      foldersName: foldersName ?? this.foldersName, 
-      fileOnlyName: fileOnlyName ?? this.fileOnlyName, 
-      fileOnlyNameFormat: fileOnlyNameFormat ?? this.fileOnlyNameFormat, 
-      fileOnlyExtension: fileOnlyExtension ?? this.fileOnlyExtension, 
-      fileNameWithExtension: fileNameWithExtension ?? this.fileNameWithExtension, 
-      size: size ?? this.size, 
-      dateAccessed: dateAccessed ?? this.dateAccessed, 
-      dateModified: dateModified ?? this.dateModified, 
-      dateChanged: dateChanged ?? this.dateChanged, 
+      type: type ?? this.type,
+      fileFullPath: fileFullPath ?? this.fileFullPath,
+      fileFromAssetsPath: fileFromAssetsPath ?? this.fileFromAssetsPath,
+      foldersName: foldersName ?? this.foldersName,
+      fileOnlyName: fileOnlyName ?? this.fileOnlyName,
+      fileOnlyNameFormat: fileOnlyNameFormat ?? this.fileOnlyNameFormat,
+      fileOnlyExtension: fileOnlyExtension ?? this.fileOnlyExtension,
+      fileNameWithExtension:
+          fileNameWithExtension ?? this.fileNameWithExtension,
+      size: size ?? this.size,
+      dateAccessed: dateAccessed ?? this.dateAccessed,
+      dateModified: dateModified ?? this.dateModified,
+      dateChanged: dateChanged ?? this.dateChanged,
     );
   }
-  
-  
-
-
-
 }
