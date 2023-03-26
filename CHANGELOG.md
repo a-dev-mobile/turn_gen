@@ -1,3 +1,9 @@
+## 0.8.2
+
+- added json test
+- fixed exit from terminal on mac
+- Updated README.md
+
 ## 0.8.1
 
 - removed redundant logs

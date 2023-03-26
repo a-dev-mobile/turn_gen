@@ -159,7 +159,7 @@ Future<void> dataStart({
       initValueComment = temp;
 
       // добавляю const если его нет
-      if (initValueComment.contains(RegExp('(^{.*}|^[.*])'))) {
+      if (initValueComment.contains(RegExp(r'(^{.*}|^\[.*\])'))) {
         initValueComment = 'const $initValueComment';
       }
     }

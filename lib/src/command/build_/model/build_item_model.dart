@@ -5,7 +5,7 @@ import 'package:turn_gen/src/enum_type_run.dart';
 
 // turngen
 /* only: copyWith */
-class BuildItemModel {   
+class BuildItemModel {                                           
   /* init: EnumTypeRun.none type: enum*/
   final EnumTypeRun enumTypeRun;
   /* init: '' */

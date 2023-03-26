@@ -17,7 +17,7 @@ analyzer:
     - "lib/**.gen.dart"
     - "lib/generated_plugin_registrant.dart"
     # Tests
-    - "test/**"
+    # - "test/**"
     # - "test/*.dart"
     - ".test_coverage.dart"
     # Web
@@ -46,6 +46,7 @@ dart_code_metrics:
     - arguments-ordering: false
     - avoid-late-keyword: false
     - no-magic-number: false
+    - avoid-top-level-members-in-tests: false
 
     - avoid-nested-conditional-expressions: false
     - prefer-static-class:

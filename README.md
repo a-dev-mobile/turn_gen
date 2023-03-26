@@ -7,7 +7,7 @@ TurnGen is a set of scripts combined into a command line tool, all scripts are w
 - Generating links to all files in the assets folder
 - Create union types from standard constructors
 
-![Alt Text](demo/dart_run_turn_gen.gif)
+![Alt Text](demo/data_dart_run_turn_gen.gif)
 ![Alt Text](demo/enum_dart_run_turn_gen.gif)
 ## Install
 

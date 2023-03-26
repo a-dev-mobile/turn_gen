@@ -17,7 +17,7 @@ class ConstHelper {
 
   static const String configName = 'turn_gen';
   static const String packageOnlyLetter = 'turngen';
-  static const String version = '0.8.1';
+  static const String version = '0.8.2';
 }
 
 class ConstConsole {
