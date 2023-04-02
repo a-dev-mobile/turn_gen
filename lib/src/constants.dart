@@ -17,7 +17,7 @@ class ConstHelper {
 
   static const String configName = 'turn_gen';
   static const String packageOnlyLetter = 'turngen';
-  static const String version = '0.8.2';
+  static const String version = '0.8.3';
 }
 
 class ConstConsole {
@@ -36,9 +36,8 @@ class ConstConsole {
 $BASE_TITLE
 //          v${ConstHelper.version} (${type.value})
 //  *************************************
-//         GENERATED CODE 
-//  *************************************
-  ''';
+//         GENERATED CODE
+//  *************************************''';
 
   static String GEN_MSG_END(String path) => '''
 

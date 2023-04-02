@@ -261,7 +261,7 @@ $maybeMapNullValueSb2
   final getValuesSb = StringBuffer();
 
   getValuesSb.write('''
-  static List<$typeStr> getValues() => $nameClass.values.map((e) => e.value).toList();
+  static List<$typeStr> getValues() => $nameClass.values.map((e) => e.${model.nameValue}).toList();
 ''');
 
 /* ****************************** */

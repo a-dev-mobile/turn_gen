@@ -164,7 +164,7 @@ void writeToFileData(
     header = '// ignore_for_file: $add6\n$header';
   }
   final newContent = '''
-$header$classHeader $classBrackets
+$header$classHeader$classBrackets
    
 ${ConstConsole.GEN_MSG_START(EnumTypeRun.data)}
   const $className({

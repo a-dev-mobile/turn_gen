@@ -1,3 +1,9 @@
+
+## 0.8.3
+
+- fixed name variable in enum script
+- Updated README.md
+
 ## 0.8.2
 
 - added json test

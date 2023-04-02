@@ -7,8 +7,8 @@ TurnGen is a set of scripts combined into a command line tool, all scripts are w
 - Generating links to all files in the assets folder
 - Create union types from standard constructors
 
-![Alt Text](demo/data_dart_run_turn_gen.gif)
-![Alt Text](demo/enum_dart_run_turn_gen.gif)
+![Alt Text](demo/turngen_run.gif)
+
 ## Install
 
 To use TurnGen, simply add TurnGen to the `pubspec.yaml` file as `dev_dependencies`:
@@ -120,8 +120,7 @@ But it takes a bit longer to run this command than to directly call the desired 
 
 ### Enum Script
 
-![enum_type](https://github.com/a-dev-mobile/turn_gen/blob/master/resources/enum_type.png)
-
+![enum_type Text](demo/enum_type.png)
 The figure above shows some of the ways in which the `enum` classes can be used.
 Turngen adds additional methods for convenient work with `enum`. At what it is unimportant what type of a variable in the constructor. The main thing is to add the comment `// end` before the closing brace to understand where the generation starts from.
 Following is the command to run the script.
@@ -949,9 +948,7 @@ dart run turn_gen build
 
 And TurnGen will find all the files and update them, this command is similar to the command below, but relatively faster:
 
-```shell
-flutter pub run build_runner build --delete-conflicting-outputs
-```
+~~flutter pub run build_runner build --delete-conflicting-outputs~~
 
 ## Help
 
