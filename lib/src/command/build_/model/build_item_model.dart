@@ -12,9 +12,9 @@ class BuildItemModel {
   final String path;
 
   // end
-
+   
 //          --TURN_GEN--
-//          v0.8.3 (data)
+//          v0.8.4 (data)
 //  *************************************
 //         GENERATED CODE
 //  *************************************
@@ -23,13 +23,21 @@ class BuildItemModel {
     this.path = '',
   });
 
+
+
+
   BuildItemModel copyWith({
     EnumTypeRun? enumTypeRun,
     String? path,
   }) {
     return BuildItemModel(
-      enumTypeRun: enumTypeRun ?? this.enumTypeRun,
-      path: path ?? this.path,
+      enumTypeRun: enumTypeRun ?? this.enumTypeRun, 
+      path: path ?? this.path, 
     );
   }
+  
+  
+
+
+
 }
