@@ -1,4 +1,8 @@
 
+## 0.8.4
+
+- Updated README.md
+
 ## 0.8.3
 
 - fixed name variable in enum script

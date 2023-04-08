@@ -1,6 +1,10 @@
+
 # TurnGen
 
-TurnGen is a set of scripts combined into a command line tool, all scripts are written in dart language and run instantly without using build_runner, they are designed to minimize coding and simplify various tasks such as:
+
+[![pub package](https://img.shields.io/badge/pub-0.8.4-blue)](https://pub.dev/packages/turn_gen)
+
+Welcome to [TurnGen]!. This project is a set of scripts combined into a command line tool, all scripts are written in dart language and run instantly without using build_runner, they are designed to minimize coding and simplify various tasks such as:
 
 - Working with Enum classes
 - Creating different methods in the Data class
@@ -969,3 +973,5 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+[turngen]: https://github.com/a-dev-mobile/turn_gen/
