@@ -1,9 +1,5 @@
 
-## 0.8.4
-
-- Updated README.md
-
-## 0.8.3
+## 0.8.3-0.8.5
 
 - fixed name variable in enum script
 - Updated README.md

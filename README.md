@@ -1,7 +1,7 @@
 
 # TurnGen
 
-[![pub package](https://img.shields.io/badge/pub-0.8.4-blue)](https://pub.dev/packages/turn_gen)
+[![pub package](https://img.shields.io/badge/pub-0.8.5-blue)](https://pub.dev/packages/turn_gen)
 
 Welcome to [TurnGen]!. This project is a set of scripts combined into a command line tool, all scripts are written in dart language and run instantly without using build_runner, they are designed to minimize coding and simplify various tasks such as:
 
@@ -963,7 +963,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-<http://www.apache.org/licenses/LICENSE-2.0>
+    http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
