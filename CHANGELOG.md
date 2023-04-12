@@ -1,4 +1,9 @@
 
+## 0.8.6-0.8.7
+
+- fixed formatting
+- added example
+
 ## 0.8.3-0.8.5
 
 - fixed name variable in enum script

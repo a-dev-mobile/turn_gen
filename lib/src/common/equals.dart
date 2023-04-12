@@ -63,7 +63,7 @@ String getEquals(EnumTypeVarable type, String nameVar, bool isLast) {
     case EnumTypeVarable.none:
     case EnumTypeVarable.date_time:
     case EnumTypeVarable.data:
-      return '            (identical(other.$nameVar, $nameVar) || other.$nameVar == $nameVar)$end';
+      return '            (identical(other.$nameVar, $nameVar,) || other.$nameVar == $nameVar)$end';
     case EnumTypeVarable.null_:
       return 'error _getEquals';
   }

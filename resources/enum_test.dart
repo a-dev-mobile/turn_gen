@@ -24,8 +24,10 @@ enum EnumWeightStatus with Comparable<EnumWeightStatus> {
 //         GENERATED CODE
 //  *************************************
 
-  static EnumWeightStatus fromValue(double? value,
-      {EnumWeightStatus? fallback}) {
+  static EnumWeightStatus fromValue(
+    double? value, {
+    EnumWeightStatus? fallback,
+  }) {
     switch (value?.toString()) {
       case '0':
         return severe_thinness;

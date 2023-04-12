@@ -360,7 +360,8 @@ class DataTestModel {
                   .map((e) => e as int?)
                   .toSet()
               : throw Exception(
-                  "map['Set_int_null_no_null_default_no']_type_'Null'"),
+                  "map['Set_int_null_no_null_default_no']_type_'Null'",
+                ),
       Set_bool_yes_null_default_yes:
           (map['Set_bool_yes_null_default_yes'] as List<dynamic>?)
                   ?.map((e) => e as bool)
@@ -403,7 +404,8 @@ class DataTestModel {
                   .map((e) => e as bool?)
                   .toSet()
               : throw Exception(
-                  "map['Set_bool_null_no_null_default_no']_type_'Null'"),
+                  "map['Set_bool_null_no_null_default_no']_type_'Null'",
+                ),
       Set_double_yes_null_default_yes:
           (map['Set_double_yes_null_default_yes'] as List<dynamic>?)
               ?.map((e) => (e as num).toDouble())
@@ -418,7 +420,8 @@ class DataTestModel {
                   .map((e) => (e as num).toDouble())
                   .toSet()
               : throw Exception(
-                  "map['Set_double_no_null_default_yes']_type_'Null'"),
+                  "map['Set_double_no_null_default_yes']_type_'Null'",
+                ),
       Set_double_no_null_default_no: map['Set_double_no_null_default_no'] !=
               null
           ? (map['Set_double_no_null_default_no'] as List<dynamic>)
@@ -467,7 +470,8 @@ class DataTestModel {
                   .map((e) => e as bool?)
                   .toList()
               : throw Exception(
-                  "map['List_bool_null_no_null_default_no']_type_'Null'"),
+                  "map['List_bool_null_no_null_default_no']_type_'Null'",
+                ),
     );
   }
 
@@ -644,42 +648,63 @@ class DataTestModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is DataTestModel &&
-            (identical(other.enum_yes_null_default_yes, enum_yes_null_default_yes) ||
+            (identical(other.enum_yes_null_default_yes,
+                    enum_yes_null_default_yes,) ||
                 other.enum_yes_null_default_yes == enum_yes_null_default_yes) &&
-            (identical(other.enum_yes_null_default_no, enum_yes_null_default_no) ||
+            (identical(
+                    other.enum_yes_null_default_no, enum_yes_null_default_no,) ||
                 other.enum_yes_null_default_no == enum_yes_null_default_no) &&
-            (identical(other.enum_no_null_default_yes, enum_no_null_default_yes) ||
+            (identical(
+                    other.enum_no_null_default_yes, enum_no_null_default_yes,) ||
                 other.enum_no_null_default_yes == enum_no_null_default_yes) &&
             (identical(other.enum_no_null_default_no, enum_no_null_default_no) ||
                 other.enum_no_null_default_no == enum_no_null_default_no) &&
-            (identical(other.int_yes_null_default_yes, int_yes_null_default_yes) ||
+            (identical(
+                    other.int_yes_null_default_yes, int_yes_null_default_yes,) ||
                 other.int_yes_null_default_yes == int_yes_null_default_yes) &&
-            (identical(other.int_yes_null_default_no, int_yes_null_default_no) ||
+            (identical(
+                    other.int_yes_null_default_no, int_yes_null_default_no,) ||
                 other.int_yes_null_default_no == int_yes_null_default_no) &&
-            (identical(other.int_no_null_default_yes, int_no_null_default_yes) ||
+            (identical(
+                    other.int_no_null_default_yes, int_no_null_default_yes,) ||
                 other.int_no_null_default_yes == int_no_null_default_yes) &&
             (identical(other.int_no_null_default_no, int_no_null_default_no) ||
                 other.int_no_null_default_no == int_no_null_default_no) &&
-            (identical(other.num_yes_null_default_yes, num_yes_null_default_yes) ||
+            (identical(
+                  other.num_yes_null_default_yes,
+                  num_yes_null_default_yes,
+                ) ||
                 other.num_yes_null_default_yes == num_yes_null_default_yes) &&
-            (identical(other.num_yes_null_default_no, num_yes_null_default_no) ||
+            (identical(
+                    other.num_yes_null_default_no, num_yes_null_default_no,) ||
                 other.num_yes_null_default_no == num_yes_null_default_no) &&
-            (identical(other.num_no_null_default_yes, num_no_null_default_yes) ||
+            (identical(
+                    other.num_no_null_default_yes, num_no_null_default_yes,) ||
                 other.num_no_null_default_yes == num_no_null_default_yes) &&
             (identical(other.num_no_null_default_no, num_no_null_default_no) ||
                 other.num_no_null_default_no == num_no_null_default_no) &&
-            (identical(other.String_yes_null_default_yes,
-                    String_yes_null_default_yes) ||
+            (identical(
+                  other.String_yes_null_default_yes,
+                  String_yes_null_default_yes,
+                ) ||
                 other.String_yes_null_default_yes ==
                     String_yes_null_default_yes) &&
-            (identical(other.String_yes_null_default_no, String_yes_null_default_no) ||
+            (identical(
+                  other.String_yes_null_default_no,
+                  String_yes_null_default_no,
+                ) ||
                 other.String_yes_null_default_no ==
                     String_yes_null_default_no) &&
-            (identical(other.String_no_null_default_yes, String_no_null_default_yes) ||
+            (identical(
+                  other.String_no_null_default_yes,
+                  String_no_null_default_yes,
+                ) ||
                 other.String_no_null_default_yes ==
                     String_no_null_default_yes) &&
             (identical(
-                    other.String_no_null_default_no, String_no_null_default_no) ||
+                  other.String_no_null_default_no,
+                  String_no_null_default_no,
+                ) ||
                 other.String_no_null_default_no == String_no_null_default_no) &&
             const DeepCollectionEquality().equals(
               other.Set_yes_null_default_yes,
