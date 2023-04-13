@@ -173,12 +173,11 @@ $constructor  });
 ${_getToMap(toMapSb, isActiveToMap, className)}
 ${_getFromMap_(className, fromMapSb, isActiveFromMap, isHaveRequired)}
 ${_getCopyWith(className, copyWithStart, copyWithEnd, isActiveCopyWith)}
-${_getToJson(isActiveToJson, className)}  
-${_getFromJson(className, isActiveFromJson)}  
+${_getToJson(isActiveToJson, className)}
+${_getFromJson(className, isActiveFromJson)}
 ${_getHashAndEquals(className, equals, hashCode, isActiveHashAndEquals)}
 ${_getToString(className, toString, isActiveToString)}
-${_getEquatable(listNameNoSortVar, isUseEquatable)}
-}\n''';
+${_getEquatable(listNameNoSortVar, isUseEquatable)}}\n''';
 
   final _ = file.writeAsString(newContent);
 
@@ -379,7 +378,7 @@ $doc
   @override
   String toString() {
     return '$className($toString)';
-    }'''
+  }'''
       : '';
 }
 

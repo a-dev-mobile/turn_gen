@@ -1,4 +1,9 @@
 
+## 0.8.8
+
+- removed version number in generated files to make git cleaner
+- fixed formatting
+
 ## 0.8.6-0.8.7
 
 - fixed formatting

@@ -648,25 +648,38 @@ class DataTestModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is DataTestModel &&
-            (identical(other.enum_yes_null_default_yes,
-                    enum_yes_null_default_yes,) ||
+            (identical(
+                  other.enum_yes_null_default_yes,
+                  enum_yes_null_default_yes,
+                ) ||
                 other.enum_yes_null_default_yes == enum_yes_null_default_yes) &&
             (identical(
-                    other.enum_yes_null_default_no, enum_yes_null_default_no,) ||
+                  other.enum_yes_null_default_no,
+                  enum_yes_null_default_no,
+                ) ||
                 other.enum_yes_null_default_no == enum_yes_null_default_no) &&
             (identical(
-                    other.enum_no_null_default_yes, enum_no_null_default_yes,) ||
+                  other.enum_no_null_default_yes,
+                  enum_no_null_default_yes,
+                ) ||
                 other.enum_no_null_default_yes == enum_no_null_default_yes) &&
-            (identical(other.enum_no_null_default_no, enum_no_null_default_no) ||
+            (identical(
+                    other.enum_no_null_default_no, enum_no_null_default_no) ||
                 other.enum_no_null_default_no == enum_no_null_default_no) &&
             (identical(
-                    other.int_yes_null_default_yes, int_yes_null_default_yes,) ||
+                  other.int_yes_null_default_yes,
+                  int_yes_null_default_yes,
+                ) ||
                 other.int_yes_null_default_yes == int_yes_null_default_yes) &&
             (identical(
-                    other.int_yes_null_default_no, int_yes_null_default_no,) ||
+                  other.int_yes_null_default_no,
+                  int_yes_null_default_no,
+                ) ||
                 other.int_yes_null_default_no == int_yes_null_default_no) &&
             (identical(
-                    other.int_no_null_default_yes, int_no_null_default_yes,) ||
+                  other.int_no_null_default_yes,
+                  int_no_null_default_yes,
+                ) ||
                 other.int_no_null_default_yes == int_no_null_default_yes) &&
             (identical(other.int_no_null_default_no, int_no_null_default_no) ||
                 other.int_no_null_default_no == int_no_null_default_no) &&
@@ -676,10 +689,14 @@ class DataTestModel {
                 ) ||
                 other.num_yes_null_default_yes == num_yes_null_default_yes) &&
             (identical(
-                    other.num_yes_null_default_no, num_yes_null_default_no,) ||
+                  other.num_yes_null_default_no,
+                  num_yes_null_default_no,
+                ) ||
                 other.num_yes_null_default_no == num_yes_null_default_no) &&
             (identical(
-                    other.num_no_null_default_yes, num_no_null_default_yes,) ||
+                  other.num_no_null_default_yes,
+                  num_no_null_default_yes,
+                ) ||
                 other.num_no_null_default_yes == num_no_null_default_yes) &&
             (identical(other.num_no_null_default_no, num_no_null_default_no) ||
                 other.num_no_null_default_no == num_no_null_default_no) &&

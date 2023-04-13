@@ -3,7 +3,7 @@ import 'package:turn_gen/src/src.dart';
 // ignore: avoid_positional_boolean_parameters
 // ignore: prefer-static-class, avoid_positional_boolean_parameters
 String getEquals(EnumTypeVarable type, String nameVar, bool isLast) {
-  final end = isLast ? ');\n' : ' && \n';
+  final end = isLast ? ');\n' : ' &&\n';
   switch (type) {
     case EnumTypeVarable.list_:
     case EnumTypeVarable.list_bool_:

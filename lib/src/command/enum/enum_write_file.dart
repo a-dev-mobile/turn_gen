@@ -53,7 +53,7 @@ void enumV2WriteToFile(
 /* ******************************* */
 
   fromValueSb.write('''
-  static $nameClass fromValue($typeStr? value, {$nameClass? fallback}) {
+  static $nameClass fromValue($typeStr? value, {$nameClass? fallback,}) {
     switch ($switchVar) {
 $fromValueSb1
       default:

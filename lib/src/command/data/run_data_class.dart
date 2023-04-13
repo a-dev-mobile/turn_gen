@@ -275,15 +275,15 @@ Future<void> dataStart({
 ''');
 
     copyWithEnd.write('''
-      ${v.nameVar}: ${v.nameVar} ?? this.${v.nameVar}, 
+      ${v.nameVar}: ${v.nameVar} ?? this.${v.nameVar},
 ''');
 
     toMapSb.write('''
-      '${v.nameVar}': ${getToMapVarable(v)}, 
+      '${v.nameVar}': ${getToMapVarable(v)},
 ''');
 
     fromMapSb.write('''
-      ${v.nameVar}: ${getFromMap(v)}, 
+      ${v.nameVar}: ${getFromMap(v)},
 ''');
 
     toString.write('${v.nameVar}: \$${v.nameVar}, ');

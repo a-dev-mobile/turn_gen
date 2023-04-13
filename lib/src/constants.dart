@@ -17,14 +17,13 @@ class ConstHelper {
 
   static const String configName = 'turn_gen';
   static const String packageOnlyLetter = 'turngen';
-  static const String version = '0.8.7';
+  // static const String version = '0.8.7';
 }
 
 class ConstConsole {
   static String introMessage() => '''
 
          --TURN_GEN--
-            v${ConstHelper.version}
   ******************************
              START 
   ******************************
@@ -34,7 +33,7 @@ class ConstConsole {
 
   static String GEN_MSG_START(EnumTypeRun type) => '''
 $BASE_TITLE
-//          v${ConstHelper.version} (${type.value})
+//             (${type.value})
 //  *************************************
 //         GENERATED CODE
 //  *************************************''';

@@ -29,7 +29,8 @@ Future<void> buildStart({
 
     final textTitle = UtilsRegex.getTextRegexMatch(
       content: contentFile,
-      regex: r'v\d.\d.\d \([a-z]*\)',
+      regex: r'--TURN_GEN--\s+\/\/\s+\([a-z]*\)',
+      // regex: r'v\d.\d.\d \([a-z]*\)',
     );
 
     final typeRun = EnumTypeRun.fromValue(
