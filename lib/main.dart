@@ -4,6 +4,8 @@ import 'package:args/args.dart';
 
 import 'package:turn_gen/src/src.dart';
 
+import 'src/command/import/run_import.dart';
+
 // ignore: prefer-static-class
 Future<void> runFromArguments(List<String> arguments) async {
   // ignore: cascade_invocations
@@ -70,7 +72,8 @@ data
         arguments.isNotEmpty &&
         (arguments.first == EnumTypeRun.assets.value ||
             arguments.first == EnumTypeRun.build.value ||
-            arguments.first == EnumTypeRun.run.value)) {
+            arguments.first == EnumTypeRun.run.value ||
+            arguments.first == EnumTypeRun.import.value)) {
       typeString = arguments.first;
     }
     if (path.isEmpty) logger.info('Path used: $path');
@@ -113,6 +116,10 @@ data
       case EnumTypeRun.run:
         await runStart(pathBase: path, logger: logger);
 
+        break;
+      case EnumTypeRun.import:
+        await runImport(pathBase: path, logger: logger);
+       
         break;
     }
   } catch (e) {

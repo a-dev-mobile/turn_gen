@@ -55,19 +55,11 @@ class YamlRead {
     required String filePath,
     required FLILogger logger,
   }) {
-    // final _ = logger.progress('\nSearch settings TurnGen in pubspec.yaml');
-
     final basePath = filePath
         .replaceAll(r'\', '/')
         .replaceAll(RegExp('/lib.*'), '')
         .replaceAll(RegExp('/test.*'), '');
 
-    // if(!basePath.contains('lib')){
-    // logger
-    //     ..info('pubspec.yaml not found')
-    //     ..info('');
-
-    // }
     final pubspecFile = File(p.join(basePath, ConstHelper.pubspecFilePath));
 
     if (!pubspecFile.existsSync()) {
@@ -103,6 +95,52 @@ class YamlRead {
       return configValue as bool;
     } on Exception {
       return false;
+    }
+  }
+
+  List<String> getFolderNameForImport({
+    required String filePath,
+    required FLILogger logger,
+  }) {
+    final basePath = filePath
+        .replaceAll(r'\', '/')
+        .replaceAll(RegExp('/lib.*'), '')
+        .replaceAll(RegExp('/test.*'), '');
+
+    final pubspecFile = File(p.join(basePath, ConstHelper.pubspecFilePath));
+
+    if (!pubspecFile.existsSync()) {
+      return [];
+    }
+    final content = pubspecFile.readAsStringSync();
+    final map = loadYaml(content);
+
+    if (map == null) return [];
+
+    try {
+      // ignore: avoid_dynamic_calls
+      final configName = map[ConstHelper.configName];
+      if (configName == null) return [];
+      // ignore: avoid_dynamic_calls
+      final configValue = configName[ConstHelper.folderBarrel];
+      if (configValue == null) {
+        return [];
+      }
+
+      logger
+        ..info(
+          'Setting - ${ConstHelper.folderBarrel}, found - $configValue',
+        )
+        ..info('');
+
+
+      final listRaw = configValue.toString().split(',');
+      // ignore: prefer-immediate-return
+      final listUpdate = listRaw.map((e) => e.trim()).toList();
+    
+      return listUpdate;
+    } on Exception {
+      return [];
     }
   }
 }

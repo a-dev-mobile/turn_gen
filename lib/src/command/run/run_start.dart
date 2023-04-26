@@ -59,7 +59,10 @@ Future<void> runStart({
       case EnumTypeRun.build:
       case EnumTypeRun.none:
       case EnumTypeRun.run:
+      case EnumTypeRun.import:
         break;
+        
+        
     }
   }
 

@@ -7,13 +7,13 @@ repository: https://github.com/a-dev-mobile/turn_gen/
 issue_tracker: https://github.com/a-dev-mobile/turn_gen/issues
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
   path: ^1.8.0
   args: ^2.4.0
   cli_util: ^0.4.0
-  yaml: ^3.1.1 
+  yaml: ^3.1.1
 
 dev_dependencies:
   # Analyzer extensions
@@ -21,7 +21,7 @@ dev_dependencies:
   test: ^1.24.0
   very_good_analysis: ^4.0.0+1
 
-
 turn_gen:
-  assets_output: "lib/gen/"
+  # assets_output: "lib/gen/"
   # show_method_comments: true
+  folder_barrel: lib\steps, lib\core

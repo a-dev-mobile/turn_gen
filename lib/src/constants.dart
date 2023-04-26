@@ -9,6 +9,7 @@ class ConstHelper {
   /// pubspec.yaml
   static const String nameConfigAssetsOutput = 'assets_output';
   static const String showComments = 'show_comments';
+  static const String folderBarrel = 'folder_barrel';
 
   ///
   static const String noExtension = 'noExtension';
