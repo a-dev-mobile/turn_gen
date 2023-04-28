@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-
+import 'package:turn_gen/src/command/import/run_import.dart';
 import 'package:turn_gen/src/src.dart';
-
-import 'src/command/import/run_import.dart';
 
 // ignore: prefer-static-class
 Future<void> runFromArguments(List<String> arguments) async {
@@ -119,7 +117,7 @@ data
         break;
       case EnumTypeRun.import:
         await runImport(pathBase: path, logger: logger);
-       
+
         break;
     }
   } catch (e) {

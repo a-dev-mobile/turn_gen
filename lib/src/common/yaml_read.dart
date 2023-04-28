@@ -133,11 +133,10 @@ class YamlRead {
         )
         ..info('');
 
-
       final listRaw = configValue.toString().split(',');
       // ignore: prefer-immediate-return
       final listUpdate = listRaw.map((e) => e.trim()).toList();
-    
+
       return listUpdate;
     } on Exception {
       return [];

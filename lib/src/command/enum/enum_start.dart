@@ -30,7 +30,7 @@ Future<void> enumStart({
     regex: r'[\s\S]+?(\/\/\s+end)',
   );
   final contentToEndWithoutComment =
-      '${contentToEnd.replaceAll(RegExp(r'\/\/.*'), '')} \n\n// end';
+      '${contentToEnd.replaceAll(RegExp(r'[\s]//.*'), '')} \n\n// end';
 
   final enumToEndRaw = UtilsRegex.getTextRegexMatch(
     content: contentToEndWithoutComment,
@@ -189,6 +189,7 @@ List<String> _getFormatEnumRaw(
           .trim()
           .replaceAll(RegExp(r'^\('), '')
           .replaceAll(RegExp(r'\)$'), '')
+          .replaceAll('https: ', 'https:')
           .trim(),
     );
   }

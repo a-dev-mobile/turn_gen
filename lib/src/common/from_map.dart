@@ -877,7 +877,7 @@ String getFromMap(Varable v) {
 }
 
 String _getValueWithException(String value, String name) {
-  return '''map['$name'] != null ? $value : throw Exception("map['$name']_type_'Null'")''';
+  return '''map['$name'] != null ? $value : throw Exception("map['$name']_type_'Null'",)''';
 }
 
 String _getValueWithInit(String value, String name, String init) {

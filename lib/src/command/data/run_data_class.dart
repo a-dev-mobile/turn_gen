@@ -53,7 +53,7 @@ Future<void> dataStart({
     ],
   );
 // delete all comments, for parsing purity
-  classContent = classContent.replaceAll(RegExp('//.*'), '');
+  classContent = classContent.replaceAll(RegExp(r'[\s]//.*'), '');
 
   final listItemFinalRaw = UtilsRegex.getTextRegexListMatch(
     content: classBrackets,

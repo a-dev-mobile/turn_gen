@@ -12,7 +12,7 @@ class BuildItemModel {
   final String path;
 
   // end
-   
+
 //          --TURN_GEN--
 //             (data)
 //  *************************************
@@ -23,9 +23,6 @@ class BuildItemModel {
     this.path = '',
   });
 
-
-
-
   BuildItemModel copyWith({
     EnumTypeRun? enumTypeRun,
     String? path,
@@ -35,8 +32,4 @@ class BuildItemModel {
       path: path ?? this.path,
     );
   }
-
-
-
-
 }

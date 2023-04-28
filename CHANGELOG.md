@@ -1,4 +1,9 @@
 
+## 0.8.9
+
+- in data and enum script you can now initialize values with different characters
+- updated README.md
+
 ## 0.8.8
 
 - removed version number in generated files to make git cleaner

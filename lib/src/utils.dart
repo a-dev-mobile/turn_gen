@@ -31,9 +31,7 @@ abstract class UtilsString {
 
     try {
       // Read the file
-      final contents = await file.readAsString();
-
-      return contents;
+      return await file.readAsString();
     } catch (e) {
       return 'ERROR $e';
     }
@@ -47,6 +45,7 @@ abstract class UtilsString {
     for (final i in replaceable) {
       result = result.replaceAll(i, '');
     }
+
     return result;
   }
 }

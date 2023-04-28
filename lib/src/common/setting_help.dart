@@ -11,7 +11,8 @@ Map<EnumKeySetting, String> getMapSettingVarable(String content) {
       .replaceAll('*/', '')
       .replaceAll(RegExp(r'\s+'), ' ')
       .replaceAll(' ,', ',')
-      .replaceAll(' :', ':');
+      .replaceAll(' :', ':')
+      .replaceAll('https: ', 'https:');
 
   final setting = [
     'init:',

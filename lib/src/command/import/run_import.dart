@@ -2,11 +2,9 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
+
 import 'package:path/path.dart';
-import 'package:turn_gen/main.dart';
 import 'package:turn_gen/src/src.dart';
-import 'package:path/path.dart' as p;
 
 final _slash = Platform.isWindows ? r'\' : '/';
 // ignore_for_file: prefer-static-class, avoid-ignoring-return-values
@@ -54,7 +52,7 @@ Future<void> runImport({
 
       final path = e.path.replaceAll(i, '');
       if (path.isEmpty) continue;
-      final lengthSplit = path.split('\\').length;
+      final lengthSplit = path.split(r'\').length;
 
       if (lengthSplit == 2) listUpdatePath.add(e);
     }
@@ -116,15 +114,8 @@ void _getFiles(Directory dir, List<FileSystemEntity> files) {
 }
 
 bool _isContains(Directory path, List<String> findList) {
-  // var pathStr = '';
-
-  // pathStr = '${path.path.substring(path.path.length + 1)};\n';
-  // pathStr = '${path.path};\n';
-
   for (final i in findList) {
     final iUpdate = i.replaceAll(r'\', _slash).replaceAll('/', _slash);
-
-    final RegExp nameExp = new RegExp(iUpdate + r'\w+$');
 
     if (path.path.contains(iUpdate)) {
       return true;

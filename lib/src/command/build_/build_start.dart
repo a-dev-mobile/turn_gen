@@ -64,6 +64,8 @@ Future<void> buildStart({
         break;
       case EnumTypeRun.run:
         break;
+      case EnumTypeRun.import:
+        break;
     }
 
     // logger.info(ConstConsole.GEN_MSG_END);
