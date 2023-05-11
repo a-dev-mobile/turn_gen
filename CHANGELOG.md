@@ -1,4 +1,8 @@
 
+## 0.9.0
+
+- slightly corrected the formatting of the output
+
 ## 0.8.9
 
 - in data and enum script you can now initialize values with different characters
