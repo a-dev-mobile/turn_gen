@@ -128,7 +128,7 @@ Future<void> assetsStart({
       ),
     );
     type = TypeNameFile.init;
-    extensionUniq.add(fileExtension);
+    final _ = extensionUniq.add(fileExtension);
   }
   for (final n in nameFormatList.toSet().toList()) {
     final list = assetsList.where((i) => i.fileOnlyName == n).toList();
@@ -211,7 +211,8 @@ class AssetPaths {
 ''');
   listStrNameFile.clear();
 
-  await File(pathGenFile).writeAsString('''
+  // ignore: unused_local_variable
+  final file = await File(pathGenFile).writeAsString('''
 ${ConstConsole.GEN_MSG_START(EnumTypeRun.assets)}$sb
 ''');
   Terminal.runFormat(pathGenFile);
@@ -350,9 +351,10 @@ Future<void> _createFolderAndFile(
   String pathGenFolder,
   String pathGenFile,
 ) async {
-  await Directory(pathGenFolder).create(recursive: true);
+  final _ = await Directory(pathGenFolder).create(recursive: true);
   final file = File(pathGenFile);
-  await file.create();
+  // ignore: unused_local_variable
+  final f = await file.create();
 }
 
 bool _isExistFolder(String path) {

@@ -244,3 +244,16 @@ enum EnumWeightStatus implements Comparable<EnumWeightStatus> {
   @override
   String toString() => 'EnumWeightStatus.$name($maxValue)';
 }
+
+extension EnumWeightStatusX on EnumWeightStatus {
+  bool get severe_thinness => this == EnumWeightStatus.severe_thinness;
+  bool get moderate_thinness => this == EnumWeightStatus.moderate_thinness;
+  bool get mild_thinness => this == EnumWeightStatus.mild_thinness;
+  bool get normal => this == EnumWeightStatus.normal;
+  bool get overweight => this == EnumWeightStatus.overweight;
+  bool get obesity_1 => this == EnumWeightStatus.obesity_1;
+  bool get obesity_2 => this == EnumWeightStatus.obesity_2;
+  bool get obesity_3 => this == EnumWeightStatus.obesity_3;
+  bool get obesity_4 => this == EnumWeightStatus.obesity_4;
+  bool get none => this == EnumWeightStatus.none;
+}

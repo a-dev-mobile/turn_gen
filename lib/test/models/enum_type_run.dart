@@ -192,3 +192,13 @@ enum EnumTest implements Comparable<EnumTest> {
   @override
   String toString() => 'EnumTest.$name($value)';
 }
+
+extension EnumTestX on EnumTest {
+  bool get enum_ => this == EnumTest.enum_;
+  bool get data => this == EnumTest.data;
+  bool get assets => this == EnumTest.assets;
+  bool get build => this == EnumTest.build;
+  bool get union => this == EnumTest.union;
+  bool get run => this == EnumTest.run;
+  bool get none => this == EnumTest.none;
+}

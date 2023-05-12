@@ -219,6 +219,18 @@ $maybeMapNullSb2
 
 /* ****************************** */
 /* ****************************** */
+  final extension = StringBuffer();
+  extension.write('''
+extension ${nameClass}X on $nameClass {
+''');
+
+  for (final e in model.listItem) {
+    final name = e.nameEnum;
+    extension.write('bool get $name => this == $nameClass.$name;\n');
+  }
+  extension.write('}');
+/* ****************************** */
+/* ****************************** */
   final maybeMapNullValueCommonSb = StringBuffer();
   final maybeMapNullValueSb1 = StringBuffer();
   final maybeMapNullValueSb2 = StringBuffer();
@@ -429,9 +441,9 @@ ${_getComment('''
   /// ```''')}
 $getValuesSb
 $compareSToStringb
-
-
 }
+$extension
+
 ''');
 
   final _ = file.writeAsString(newContent.toString());

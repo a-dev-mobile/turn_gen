@@ -1,4 +1,8 @@
 
+## 0.9.2
+
+- added an extension for `enum` scripts that makes it easier to check the value of an enum in a concise and readable way.
+
 ## 0.9.1
 
 - after the release of dart 3 fixed a bug in the Enum script - The class 'Comparable' can't be used as a mixin because it's neither a mixin class nor a mixin.

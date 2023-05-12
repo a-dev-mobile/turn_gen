@@ -209,3 +209,14 @@ enum EnumTypeRun implements Comparable<EnumTypeRun> {
   @override
   String toString() => 'EnumTypeRun.$name($value)';
 }
+
+extension EnumTypeRunX on EnumTypeRun {
+  bool get enum_ => this == EnumTypeRun.enum_;
+  bool get data => this == EnumTypeRun.data;
+  bool get assets => this == EnumTypeRun.assets;
+  bool get build => this == EnumTypeRun.build;
+  bool get union => this == EnumTypeRun.union;
+  bool get run => this == EnumTypeRun.run;
+  bool get import => this == EnumTypeRun.import;
+  bool get none => this == EnumTypeRun.none;
+}
