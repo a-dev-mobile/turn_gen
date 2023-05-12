@@ -214,7 +214,7 @@ class AssetPaths {
   await File(pathGenFile).writeAsString('''
 ${ConstConsole.GEN_MSG_START(EnumTypeRun.assets)}$sb
 ''');
-
+  Terminal.runFormat(pathGenFile);
   logger.info(ConstConsole.GEN_MSG_END(pathGenFile));
 }
 

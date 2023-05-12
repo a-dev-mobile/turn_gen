@@ -20,13 +20,9 @@ String getToMapVarable(Varable v) {
 
   switch (type) {
     case EnumTypeVarable.string_:
-
     case EnumTypeVarable.bool_:
-
     case EnumTypeVarable.int_:
-
     case EnumTypeVarable.num_:
-
     case EnumTypeVarable.double_:
       if (yes_null_default_yes) {
         return name;

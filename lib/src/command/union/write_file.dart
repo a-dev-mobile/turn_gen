@@ -348,8 +348,11 @@ $sbMaybeMapOrNull1    }
       //  sbEqualsTemp.write(' && ');
 
       sbEqualsTemp.write(
-        getEquals(p.typeEnum, '_${p.name}_${l.nameUnion}', isLast)
-            .replaceAll(RegExp(r'\s+'), ' '),
+        Equals.get(
+          type: p.typeEnum,
+          nameVar: '_${p.name}_${l.nameUnion}',
+          isLast: isLast,
+        ).replaceAll(RegExp(r'\s+'), ' '),
       );
     }
   }
@@ -440,10 +443,7 @@ $sbUnionTag}
 $sbExtendsClass''';
 
   final _ = file.writeAsString(newContent);
-  // final _ =
-  //     File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/resources/to_union.dart')
-  //         .writeAsString(newContent);
-
+  Terminal.runFormat(file.path);
   logger.info(ConstConsole.GEN_MSG_END(file.path));
 }
 

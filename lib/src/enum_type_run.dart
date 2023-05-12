@@ -1,5 +1,5 @@
 // turngen
-enum EnumTypeRun with Comparable<EnumTypeRun> {
+enum EnumTypeRun implements Comparable<EnumTypeRun> {
   enum_('enum'),
   data('data'),
   assets('assets'),

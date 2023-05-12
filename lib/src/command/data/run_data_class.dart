@@ -288,7 +288,13 @@ Future<void> dataStart({
 
     toString.write('${v.nameVar}: \$${v.nameVar}, ');
 
-    equals.write(getEquals(v.type, v.nameVar, i == listVarSort.length - 1));
+    equals.write(
+      Equals.get(
+        type: v.type,
+        nameVar: v.nameVar,
+        isLast: i == listVarSort.length - 1,
+      ),
+    );
     hashCode.write(
       getHashCode(
         v.type,

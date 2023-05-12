@@ -67,8 +67,6 @@ Future<void> buildStart({
       case EnumTypeRun.import:
         break;
     }
-
-    // logger.info(ConstConsole.GEN_MSG_END);
   }
 
   if (mainRunModel.listRun.isEmpty) {

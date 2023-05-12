@@ -1,4 +1,9 @@
 
+## 0.9.1
+
+- after the release of dart 3 fixed a bug in the Enum script - The class 'Comparable' can't be used as a mixin because it's neither a mixin class nor a mixin.
+- added automatic formatting after generation - with the command `dart format`
+- added documentation to some open method
 
 ## 0.9.0
 

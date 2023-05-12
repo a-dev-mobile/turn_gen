@@ -1,5 +1,5 @@
 // turnGen
-enum EnumApi with Comparable<EnumApi> {
+enum EnumApi implements Comparable<EnumApi> {
   prod('https://api.nadodeneg.ru/'),
   stage1('https://api1.nadodeneg.ru/');
 

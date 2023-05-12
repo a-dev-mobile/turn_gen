@@ -181,6 +181,8 @@ ${_getEquatable(listNameNoSortVar, isUseEquatable)}}\n''';
 
   final _ = file.writeAsString(newContent);
 
+  Terminal.runFormat(file.path);
+
   logger.info(ConstConsole.GEN_MSG_END(file.path));
 }
 

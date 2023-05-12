@@ -1,7 +1,7 @@
 // turnGen
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
-enum EnumWeightStatus with Comparable<EnumWeightStatus> {
+enum EnumWeightStatus implements Comparable<EnumWeightStatus> {
   severe_thinness(0),
   moderate_thinness(16),
   mild_thinness(17),

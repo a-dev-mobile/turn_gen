@@ -278,7 +278,7 @@ $maybeMapNullValueSb2
 /* ****************************** */
 /* ******************************* */
 
-  final newHeader = 'enum $nameClass with Comparable<$nameClass> {';
+  final newHeader = 'enum $nameClass implements Comparable<$nameClass> {';
   var updateContentToEnd = '''
 // turnGen
 $newHeader
@@ -435,8 +435,7 @@ $compareSToStringb
 ''');
 
   final _ = file.writeAsString(newContent.toString());
-  // _ = File('F:/DEV/FLUTTER/project/MY_GITHUB/turn_gen/test/enum_v2.dart')
-  //     .writeAsString(newContent.toString());
+  Terminal.runFormat(file.path);
   logger.info(ConstConsole.GEN_MSG_END(file.path));
 }
 

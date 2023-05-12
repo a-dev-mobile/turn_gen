@@ -1,5 +1,5 @@
 // turngen
-enum EnumTest with Comparable<EnumTest> {
+enum EnumTest implements Comparable<EnumTest> {
   enum_('enum'),
   data('data'),
   assets('assets'),
