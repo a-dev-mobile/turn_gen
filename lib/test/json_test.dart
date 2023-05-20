@@ -1,3 +1,20 @@
+
+
+
+
+import 'package:turn_gen/test/union.dart';
+
+// void main() {
+//   const a = Conn.notDetermined(listString: ['asdf']);
+
+// a.map(notDetermined: (v) => {}, isDisconnected: isDisconnected, isConnected: isConnected)
+
+
+// }
+
+
+
+
 // // ignore_for_file: cascade_invocations
 
 // import 'dart:io';

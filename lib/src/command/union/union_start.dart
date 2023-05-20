@@ -70,7 +70,51 @@ Future<void> unionStart({
     if (textBrackets.isEmpty) textBrackets = '()';
     final enumParam = _getTypeParameter(textBrackets);
 
-    final listParamRaw = textBrackets.split(',');
+    // final listParamRaw = textBrackets.split(',');
+    final params = textBrackets.split(',');
+
+    final listParamRaw = <String>[];
+    final listIndex = <int>[];
+    var isHaveOpenBracket = false;
+    for (var i = 0; i < params.length; i++) {
+      var v = params[i];
+      v = v.replaceAll(RegExp(r'^\(\{'), '');
+      if (isHaveOpenBracket) {
+        final sum = listIndex.map((e) => params[e]).toList().join(', ');
+        v = '$sum,$v';
+
+        if (v.contains('<') && !v.contains('>')) {
+          listIndex.add(i);
+          continue;
+        }
+        if (v.contains('[') && !v.contains(']')) {
+          listIndex.add(i);
+          continue;
+        }
+        if (v.contains('{') && !v.contains('}')) {
+          listIndex.add(i);
+          continue;
+        }
+
+        isHaveOpenBracket = false;
+
+        listIndex.clear();
+        listParamRaw.add(v);
+        continue;
+      }
+
+      if ((v.contains('<') && !v.contains('>')) ||
+          (v.contains('[') && !v.contains(']')) ||
+          (v.contains('{') && !v.contains('}'))) {
+        isHaveOpenBracket = true;
+        listIndex.add(i);
+        continue;
+      }
+
+      listIndex.clear();
+      listParamRaw.add(v);
+    }
+
     final listParamFormat = <String>[];
     final listParamModel = <UnionParameterModel>[];
 // get comment
@@ -240,8 +284,7 @@ List<String> _getUnionName(
   final list = <String>[];
 
   for (final v in listFormatUnionRawItem) {
-    final union =
-        v.replaceAll(className, '').replaceAll('.', '').split(' ').first;
+    final union = v.replaceAll('$className.', '').split(' ').first;
 
     if (union.isEmpty) {
       list.add(ConstHelper.emptyUnionName);

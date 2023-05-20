@@ -58,7 +58,7 @@ ${l.comment}
     final sbReturn = StringBuffer();
     for (var i = 0; i < l.listParameters.length; i++) {
       final p = l.listParameters[i];
-      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
+      final lastText = l.listParameters.length - 1 == i ? ',' : ', ';
 
       final letterNull = p.isCanNull ? '?' : '';
       final letterNotNull = p.isCanNull ? '' : '!';
@@ -99,7 +99,7 @@ $sbCase    }
     final sbReturn = StringBuffer();
     for (var i = 0; i < l.listParameters.length; i++) {
       final p = l.listParameters[i];
-      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
+      final lastText = l.listParameters.length - 1 == i ? ',' : ', ';
 
       const letterNotNull = '!';
 
@@ -112,7 +112,7 @@ $sbCase    }
     final constText = sbReturn.isEmpty ? 'const ' : '';
     sbMapCase.write('''
       case _${model.nameClass}Tag.${l.nameUnion}:
-        return ${l.nameUnion}($constText$nameClassExtends($sbReturn));
+        return ${l.nameUnion}($constText$nameClassExtends($sbReturn),);
 ''');
   }
   sbMap.write('''
@@ -139,7 +139,7 @@ $sbMapCase    }
     final sbReturn = StringBuffer();
     for (var i = 0; i < l.listParameters.length; i++) {
       final p = l.listParameters[i];
-      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
+      final lastText = l.listParameters.length - 1 == i ? ',' : ', ';
 
       const letterNotNull = '!';
 
@@ -152,7 +152,7 @@ $sbMapCase    }
     final constText = sbReturn.isEmpty ? 'const ' : '';
     sbMapOrNullCase.write('''
       case _${model.nameClass}Tag.${l.nameUnion}:
-        return ${l.nameUnion}?.call($constText$nameClassExtends($sbReturn));
+        return ${l.nameUnion}?.call($constText$nameClassExtends($sbReturn),);
 ''');
   }
   sbMapOrNull.write('''
@@ -177,7 +177,7 @@ $sbMapOrNullCase    }
     final sbReturn = StringBuffer();
     for (var i = 0; i < l.listParameters.length; i++) {
       final p = l.listParameters[i];
-      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
+      final lastText = l.listParameters.length - 1 == i ? ',' : ', ';
 
       final letterNotNull = p.isCanNull ? '!' : '!';
 
@@ -190,7 +190,7 @@ $sbMapOrNullCase    }
     final constText = sbReturn.isEmpty ? 'const ' : '';
     sbMaybeMapCase.write('''
       case _${model.nameClass}Tag.${l.nameUnion}:
-        if(${l.nameUnion} != null) return ${l.nameUnion}($constText$nameClassExtends($sbReturn));
+        if(${l.nameUnion} != null) return ${l.nameUnion}($constText$nameClassExtends($sbReturn),);
         return orElse();
 ''');
   }
@@ -222,7 +222,7 @@ $sbMaybeMapCase    }
 ''');
     for (var i = 0; i < l.listParameters.length; i++) {
       final p = l.listParameters[i];
-      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
+      final lastText = l.listParameters.length - 1 == i ? ',' : ', ';
 
       sbReturn.write('_${p.name}_${l.nameUnion}!$lastText');
     }
@@ -230,7 +230,7 @@ $sbMaybeMapCase    }
     final constText = sbReturn.isEmpty ? 'const ' : '';
     sbMaybeMapOrNull1.write('''
       case _${model.nameClass}Tag.${l.nameUnion}:
-        if(${l.nameUnion} != null) return ${l.nameUnion}($constText$nameClassExtends($sbReturn));
+        if(${l.nameUnion} != null) return ${l.nameUnion}($constText$nameClassExtends($sbReturn),);
         return null;
 ''');
   }
@@ -303,7 +303,7 @@ $sbMaybeMapOrNull1    }
             .replaceAll(RegExp(r'\s+'), ' '),
       );
     }
-    sbHashTemp.write(''']);''');
+    sbHashTemp.write('''],);''');
   }
   sbHashTemp.write('''
   
@@ -379,7 +379,7 @@ $sbMaybeMapOrNull1    }
     final sbParamFinal = StringBuffer();
     for (var i = 0; i < l.listParameters.length; i++) {
       final p = l.listParameters[i];
-      final lastText = l.listParameters.length - 1 == i ? '' : ', ';
+      final lastText = l.listParameters.length - 1 == i ? ',' : ', ';
 
       sbParam.write('this.${p.name}$lastText');
 
@@ -401,6 +401,8 @@ $sbMaybeMapOrNull1    }
           l.parameter == EnumParameter.defaultWithOptional ||
           l.parameter == EnumParameter.default_) {
         addRequiest = '';
+      } else {
+        addRequiest = '${p.name}:';
       }
 
       sbParamSuper.write('$addRequiest ${p.name}$lastText');
