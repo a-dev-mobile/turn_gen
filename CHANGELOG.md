@@ -1,4 +1,8 @@
 
+## 0.9.4
+
+- fixed minor bugs in `union` script
+
 ## 0.9.3
 
 - added the `tomap` and `fromMap` methods for the `union` script

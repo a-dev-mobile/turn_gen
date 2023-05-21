@@ -68,8 +68,8 @@ Future<void> unionStart({
 
     var textBrackets = UtilsRegex.getTextRegexMatch(
       content: v,
-      regex: r'\([\s\S]+?\)',
-    );
+      regex: r'\((.*?)\);',
+    ).replaceAll(RegExp(r'\;$'), '');
     if (textBrackets.isEmpty) textBrackets = '()';
     final enumParam = _getTypeParameter(textBrackets);
 
@@ -92,9 +92,10 @@ Future<void> unionStart({
       v = v.replaceAll(RegExp(r'^\{'), '');
       v = v.replaceAll(RegExp(r'\}$'), '');
       v = v.replaceAll(RegExp(r'\]$'), '');
-      v = v.replaceAll(RegExp(r'\)$'), '');
-
-      if (v.length <= 1) continue;
+      if (!v.contains(RegExp(r'\(\)$'))) {
+        v = v.replaceAll(RegExp(r'\)$'), '');
+      }
+      if (v.length <= 3) continue;
       if (isHaveOpenBracket) {
         final sum = listIndex.map((e) => params[e]).toList().join(',');
         v = '$sum,$v';
@@ -147,7 +148,8 @@ Future<void> unionStart({
     final docCommentUnion = _getCommentDoc(rawDocCommentUnion);
 
     for (var i = 0; i < listParamRaw.length; i++) {
-      var v = cleanParam(listParamRaw[i]);
+      // var v = cleanParam(listParamRaw[i]);
+      var v = listParamRaw[i];
       var isRequired = false;
       var initValue = '';
 
