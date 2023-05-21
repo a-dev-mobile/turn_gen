@@ -1,30 +1,14 @@
 // turngen
 
+// ignore_for_file: unnecessary_null_checks
+
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:turn_gen/test/models/models.dart';
 
 class _UnionTest {
   const _UnionTest.no({
-    // ghtht
-    EnumTest? enum_yes_null_default_yes = EnumTest.run,
-    // ghtht
-    EnumTest? enum_yes_null_default_no,
-    EnumTest enum_no_null_default_yes = EnumTest.data,
-    required EnumTest enum_no_null_default_no,
-    Map<String, bool> listMapBool = const {'asd': true, 'asd2': false},
     List<String?>? listString7,
-    Set<int> setDouble2 = const {123, 2, 3, 4},
-    List<String>? listString6 = const ['asd', 'asd2'],
-    required List<String> listString5,
-    bool isLoad2 = false,
-    List<String> listString = const [],
-    List<String> listString2 = const [],
-    List<String> listString3 = const [],
-    Set<double> setDouble = const {},
-    List<String?>? listString9 = const ['asdasd', null, 'asdasd'],
-    List<bool> listString4 = const [true, false, true],
-    List<int> listint3 = const [],
   });
   const _UnionTest.yes({
     List<String?>? listString7,
@@ -40,6 +24,7 @@ class _UnionTest {
     List<String?>? listString9 = const ['asdasd', null, 'asdasd'],
     List<bool> listString4 = const [true, false, true],
     List<int> listint3 = const [],
+    Map<String, dynamic> listint32 = const {},
   });
   const _UnionTest.none({
     List<String?>? listString7,
@@ -70,41 +55,9 @@ class _UnionTest {
 @immutable
 class UnionTest {
   const UnionTest.no({
-    EnumTest? enum_yes_null_default_yes = EnumTest.run,
-    EnumTest? enum_yes_null_default_no,
-    EnumTest enum_no_null_default_yes = EnumTest.data,
-    required EnumTest enum_no_null_default_no,
-    Map<String, bool> listMapBool = const {'asd': true, 'asd2': false},
     List<String?>? listString7,
-    Set<int> setDouble2 = const {123, 2, 3, 4},
-    List<String>? listString6 = const ['asd', 'asd2'],
-    required List<String> listString5,
-    bool isLoad2 = false,
-    List<String> listString = const [],
-    List<String> listString2 = const [],
-    List<String> listString3 = const [],
-    Set<double> setDouble = const {},
-    List<String?>? listString9 = const ['asdasd', null, 'asdasd'],
-    List<bool> listString4 = const [true, false, true],
-    List<int> listint3 = const [],
   })  : _tag = _UnionTestTag.no,
-        _enum_yes_null_default_yes_no = enum_yes_null_default_yes,
-        _enum_yes_null_default_no_no = enum_yes_null_default_no,
-        _enum_no_null_default_yes_no = enum_no_null_default_yes,
-        _enum_no_null_default_no_no = enum_no_null_default_no,
-        _listMapBool_no = listMapBool,
         _listString7_no = listString7,
-        _setDouble2_no = setDouble2,
-        _listString6_no = listString6,
-        _listString5_no = listString5,
-        _isLoad2_no = isLoad2,
-        _listString_no = listString,
-        _listString2_no = listString2,
-        _listString3_no = listString3,
-        _setDouble_no = setDouble,
-        _listString9_no = listString9,
-        _listString4_no = listString4,
-        _listint3_no = listint3,
         _listString7_yes = null,
         _setDouble2_yes = null,
         _listMapBool_yes = null,
@@ -118,6 +71,7 @@ class UnionTest {
         _listString9_yes = null,
         _listString4_yes = null,
         _listint3_yes = null,
+        _listint32_yes = null,
         _listString7_none = null,
         _setDouble2_none = null,
         _listMapBool_none = null,
@@ -147,24 +101,9 @@ class UnionTest {
     List<String?>? listString9 = const ['asdasd', null, 'asdasd'],
     List<bool> listString4 = const [true, false, true],
     List<int> listint3 = const [],
+    Map<String, dynamic> listint32 = const {},
   })  : _tag = _UnionTestTag.yes,
-        _enum_yes_null_default_yes_no = null,
-        _enum_yes_null_default_no_no = null,
-        _enum_no_null_default_yes_no = null,
-        _enum_no_null_default_no_no = null,
-        _listMapBool_no = null,
         _listString7_no = null,
-        _setDouble2_no = null,
-        _listString6_no = null,
-        _listString5_no = null,
-        _isLoad2_no = null,
-        _listString_no = null,
-        _listString2_no = null,
-        _listString3_no = null,
-        _setDouble_no = null,
-        _listString9_no = null,
-        _listString4_no = null,
-        _listint3_no = null,
         _listString7_yes = listString7,
         _setDouble2_yes = setDouble2,
         _listMapBool_yes = listMapBool,
@@ -178,6 +117,7 @@ class UnionTest {
         _listString9_yes = listString9,
         _listString4_yes = listString4,
         _listint3_yes = listint3,
+        _listint32_yes = listint32,
         _listString7_none = null,
         _setDouble2_none = null,
         _listMapBool_none = null,
@@ -209,23 +149,7 @@ class UnionTest {
     List<int> listint3 = const [],
     required bool isLoad1,
   })  : _tag = _UnionTestTag.none,
-        _enum_yes_null_default_yes_no = null,
-        _enum_yes_null_default_no_no = null,
-        _enum_no_null_default_yes_no = null,
-        _enum_no_null_default_no_no = null,
-        _listMapBool_no = null,
         _listString7_no = null,
-        _setDouble2_no = null,
-        _listString6_no = null,
-        _listString5_no = null,
-        _isLoad2_no = null,
-        _listString_no = null,
-        _listString2_no = null,
-        _listString3_no = null,
-        _setDouble_no = null,
-        _listString9_no = null,
-        _listString4_no = null,
-        _listint3_no = null,
         _listString7_yes = null,
         _setDouble2_yes = null,
         _listMapBool_yes = null,
@@ -239,6 +163,7 @@ class UnionTest {
         _listString9_yes = null,
         _listString4_yes = null,
         _listint3_yes = null,
+        _listint32_yes = null,
         _listString7_none = listString7,
         _setDouble2_none = setDouble2,
         _listMapBool_none = listMapBool,
@@ -254,14 +179,184 @@ class UnionTest {
         _listint3_none = listint3,
         _isLoad1_none = isLoad1;
 
+  Map<String, dynamic> toMap() {
+    switch (_tag) {
+      case _UnionTestTag.no:
+        return {
+          'tag': 'no',
+          'listString7': _listString7_no!,
+        };
+      case _UnionTestTag.yes:
+        return {
+          'tag': 'yes',
+          'listString7': _listString7_yes!,
+          'setDouble2': _setDouble2_yes!.toList(),
+          'listMapBool': _listMapBool_yes!.map(MapEntry.new),
+          'listString6': _listString6_yes!,
+          'listString5': _listString5_yes!,
+          'isLoad2': _isLoad2_yes!,
+          'listString': _listString_yes!,
+          'listString2': _listString2_yes!,
+          'listString3': _listString3_yes!,
+          'setDouble': _setDouble_yes!.toList(),
+          'listString9': _listString9_yes!,
+          'listString4': _listString4_yes!,
+          'listint3': _listint3_yes!,
+          'listint32': _listint32_yes!.map(MapEntry.new),
+        };
+      case _UnionTestTag.none:
+        return {
+          'tag': 'none',
+          'listString7': _listString7_none!,
+          'setDouble2': _setDouble2_none!.toList(),
+          'listMapBool': _listMapBool_none!.map(MapEntry.new),
+          'listString6': _listString6_none!,
+          'listString5': _listString5_none!,
+          'isLoad2': _isLoad2_none!,
+          'listString': _listString_none!,
+          'listString2': _listString2_none!,
+          'listString3': _listString3_none!,
+          'setDouble': _setDouble_none!.toList(),
+          'listString9': _listString9_none!,
+          'listString4': _listString4_none!,
+          'listint3': _listint3_none!,
+          'isLoad1': _isLoad1_none!,
+        };
+    }
+  }
+
+  static UnionTest fromMap(Map<dynamic, dynamic> map) {
+    final tag = map['tag'];
+    switch (tag) {
+      case 'no':
+        return UnionTest.no(
+          listString7: (map['listString7'] as List<dynamic>?)
+              ?.map((e) => e as String?)
+              .toList(),
+        );
+      case 'yes':
+        return UnionTest.yes(
+          listString7: (map['listString7'] as List<dynamic>?)
+              ?.map((e) => e as String?)
+              .toList(),
+          setDouble2: (map['setDouble2'] as List<dynamic>?)
+                  ?.map((e) => e as int)
+                  .toSet() ??
+              const {123, 2, 3, 4},
+          listMapBool: (map['listMapBool'] as Map<String, dynamic>?)
+                  ?.map((k, e) => MapEntry(k, e as bool)) ??
+              const {'asd': true, 'asd2': false},
+          listString6: (map['listString6'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              const ['asd', 'asd2'],
+          listString5: map['listString5'] != null
+              ? (map['listString5'] as List<dynamic>)
+                  .map((e) => e as String)
+                  .toList()
+              : throw Exception(
+                  "map['listString5']_type_'Null'",
+                ),
+          isLoad2: map['isLoad2'] as bool? ?? false,
+          listString: (map['listString'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              const [],
+          listString2: (map['listString2'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              const [],
+          listString3: (map['listString3'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              const [],
+          setDouble: (map['setDouble'] as List<dynamic>?)
+                  ?.map((e) => (e as num).toDouble())
+                  .toSet() ??
+              const {},
+          listString9: (map['listString9'] as List<dynamic>?)
+                  ?.map((e) => e as String?)
+                  .toList() ??
+              const ['asdasd', null, 'asdasd'],
+          listString4: (map['listString4'] as List<dynamic>?)
+                  ?.map((e) => e as bool)
+                  .toList() ??
+              const [true, false, true],
+          listint3: (map['listint3'] as List<dynamic>?)
+                  ?.map((e) => e as int)
+                  .toList() ??
+              const [],
+          listint32: map['listint32'] != null
+              ? map['listint32'] as Map<String, dynamic>
+              : const {},
+        );
+      case 'none':
+        return UnionTest.none(
+          listString7: (map['listString7'] as List<dynamic>?)
+              ?.map((e) => e as String?)
+              .toList(),
+          setDouble2: (map['setDouble2'] as List<dynamic>?)
+                  ?.map((e) => e as int)
+                  .toSet() ??
+              const {123, 2, 3, 4},
+          listMapBool: (map['listMapBool'] as Map<String, dynamic>?)
+                  ?.map((k, e) => MapEntry(k, e as bool)) ??
+              const {'asd': true, 'asd2': false},
+          listString6: (map['listString6'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              const ['asd', 'asd2'],
+          listString5: map['listString5'] != null
+              ? (map['listString5'] as List<dynamic>)
+                  .map((e) => e as String)
+                  .toList()
+              : throw Exception(
+                  "map['listString5']_type_'Null'",
+                ),
+          isLoad2: map['isLoad2'] as bool? ?? false,
+          listString: (map['listString'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              const [],
+          listString2: (map['listString2'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              const [],
+          listString3: (map['listString3'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              const [],
+          setDouble: (map['setDouble'] as List<dynamic>?)
+                  ?.map((e) => (e as num).toDouble())
+                  .toSet() ??
+              const {},
+          listString9: (map['listString9'] as List<dynamic>?)
+                  ?.map((e) => e as String?)
+                  .toList() ??
+              const ['asdasd', null, 'asdasd'],
+          listString4: (map['listString4'] as List<dynamic>?)
+                  ?.map((e) => e as bool)
+                  .toList() ??
+              const [true, false, true],
+          listint3: (map['listint3'] as List<dynamic>?)
+                  ?.map((e) => e as int)
+                  .toList() ??
+              const [],
+          isLoad1: map['isLoad1'] != null
+              ? map['isLoad1'] as bool
+              : throw Exception(
+                  "map['isLoad1']_type_'Null'",
+                ),
+        );
+      default:
+        throw ArgumentError('Invalid map: $map');
+    }
+  }
+
   UnionTest copyWith({
-    EnumTest? enum_yes_null_default_yes,
-    EnumTest? enum_yes_null_default_no,
-    EnumTest? enum_no_null_default_yes,
-    EnumTest? enum_no_null_default_no,
-    Map<String, bool>? listMapBool,
     List<String?>? listString7,
     Set<int>? setDouble2,
+    Map<String, bool>? listMapBool,
     List<String>? listString6,
     List<String>? listString5,
     bool? isLoad2,
@@ -272,32 +367,13 @@ class UnionTest {
     List<String?>? listString9,
     List<bool>? listString4,
     List<int>? listint3,
+    Map<String, dynamic>? listint32,
     bool? isLoad1,
   }) {
     switch (_tag) {
       case _UnionTestTag.no:
         return UnionTest.no(
-          enum_yes_null_default_yes:
-              enum_yes_null_default_yes ?? _enum_yes_null_default_yes_no!,
-          enum_yes_null_default_no:
-              enum_yes_null_default_no ?? _enum_yes_null_default_no_no!,
-          enum_no_null_default_yes:
-              enum_no_null_default_yes ?? _enum_no_null_default_yes_no!,
-          enum_no_null_default_no:
-              enum_no_null_default_no ?? _enum_no_null_default_no_no!,
-          listMapBool: listMapBool ?? _listMapBool_no!,
           listString7: listString7 ?? _listString7_no!,
-          setDouble2: setDouble2 ?? _setDouble2_no!,
-          listString6: listString6 ?? _listString6_no!,
-          listString5: listString5 ?? _listString5_no!,
-          isLoad2: isLoad2 ?? _isLoad2_no!,
-          listString: listString ?? _listString_no!,
-          listString2: listString2 ?? _listString2_no!,
-          listString3: listString3 ?? _listString3_no!,
-          setDouble: setDouble ?? _setDouble_no!,
-          listString9: listString9 ?? _listString9_no!,
-          listString4: listString4 ?? _listString4_no!,
-          listint3: listint3 ?? _listint3_no!,
         );
       case _UnionTestTag.yes:
         return UnionTest.yes(
@@ -314,6 +390,7 @@ class UnionTest {
           listString9: listString9 ?? _listString9_yes!,
           listString4: listString4 ?? _listString4_yes!,
           listint3: listint3 ?? _listint3_yes!,
+          listint32: listint32 ?? _listint32_yes!,
         );
       case _UnionTestTag.none:
         return UnionTest.none(
@@ -344,23 +421,7 @@ class UnionTest {
       case _UnionTestTag.no:
         return no(
           _UnionTestNo(
-            _enum_yes_null_default_yes_no!,
-            _enum_yes_null_default_no_no!,
-            _enum_no_null_default_yes_no!,
-            _enum_no_null_default_no_no!,
-            _listMapBool_no!,
             _listString7_no!,
-            _setDouble2_no!,
-            _listString6_no!,
-            _listString5_no!,
-            _isLoad2_no!,
-            _listString_no!,
-            _listString2_no!,
-            _listString3_no!,
-            _setDouble_no!,
-            _listString9_no!,
-            _listString4_no!,
-            _listint3_no!,
           ),
         );
       case _UnionTestTag.yes:
@@ -379,6 +440,7 @@ class UnionTest {
             _listString9_yes!,
             _listString4_yes!,
             _listint3_yes!,
+            _listint32_yes!,
           ),
         );
       case _UnionTestTag.none:
@@ -414,23 +476,7 @@ class UnionTest {
         if (no != null)
           return no(
             _UnionTestNo(
-              _enum_yes_null_default_yes_no!,
-              _enum_yes_null_default_no_no!,
-              _enum_no_null_default_yes_no!,
-              _enum_no_null_default_no_no!,
-              _listMapBool_no!,
               _listString7_no!,
-              _setDouble2_no!,
-              _listString6_no!,
-              _listString5_no!,
-              _isLoad2_no!,
-              _listString_no!,
-              _listString2_no!,
-              _listString3_no!,
-              _setDouble_no!,
-              _listString9_no!,
-              _listString4_no!,
-              _listint3_no!,
             ),
           );
         return orElse();
@@ -451,6 +497,7 @@ class UnionTest {
               _listString9_yes!,
               _listString4_yes!,
               _listint3_yes!,
+              _listint32_yes!,
             ),
           );
         return orElse();
@@ -487,23 +534,7 @@ class UnionTest {
       case _UnionTestTag.no:
         return no?.call(
           _UnionTestNo(
-            _enum_yes_null_default_yes_no!,
-            _enum_yes_null_default_no_no!,
-            _enum_no_null_default_yes_no!,
-            _enum_no_null_default_no_no!,
-            _listMapBool_no!,
             _listString7_no!,
-            _setDouble2_no!,
-            _listString6_no!,
-            _listString5_no!,
-            _isLoad2_no!,
-            _listString_no!,
-            _listString2_no!,
-            _listString3_no!,
-            _setDouble_no!,
-            _listString9_no!,
-            _listString4_no!,
-            _listint3_no!,
           ),
         );
       case _UnionTestTag.yes:
@@ -522,6 +553,7 @@ class UnionTest {
             _listString9_yes!,
             _listString4_yes!,
             _listint3_yes!,
+            _listint32_yes!,
           ),
         );
       case _UnionTestTag.none:
@@ -556,23 +588,7 @@ class UnionTest {
         if (no != null)
           return no(
             _UnionTestNo(
-              _enum_yes_null_default_yes_no!,
-              _enum_yes_null_default_no_no!,
-              _enum_no_null_default_yes_no!,
-              _enum_no_null_default_no_no!,
-              _listMapBool_no!,
               _listString7_no!,
-              _setDouble2_no!,
-              _listString6_no!,
-              _listString5_no!,
-              _isLoad2_no!,
-              _listString_no!,
-              _listString2_no!,
-              _listString3_no!,
-              _setDouble_no!,
-              _listString9_no!,
-              _listString4_no!,
-              _listint3_no!,
             ),
           );
         return null;
@@ -593,6 +609,7 @@ class UnionTest {
               _listString9_yes!,
               _listString4_yes!,
               _listint3_yes!,
+              _listint32_yes!,
             ),
           );
         return null;
@@ -622,23 +639,7 @@ class UnionTest {
 
   T when<T>({
     required T Function(
-      EnumTest? enum_yes_null_default_yes,
-      EnumTest? enum_yes_null_default_no,
-      EnumTest enum_no_null_default_yes,
-      EnumTest enum_no_null_default_no,
-      Map<String, bool> listMapBool,
       List<String?>? listString7,
-      Set<int> setDouble2,
-      List<String>? listString6,
-      List<String> listString5,
-      bool isLoad2,
-      List<String> listString,
-      List<String> listString2,
-      List<String> listString3,
-      Set<double> setDouble,
-      List<String?>? listString9,
-      List<bool> listString4,
-      List<int> listint3,
     ) no,
     required T Function(
       List<String?>? listString7,
@@ -654,6 +655,7 @@ class UnionTest {
       List<String?>? listString9,
       List<bool> listString4,
       List<int> listint3,
+      Map<String, dynamic> listint32,
     ) yes,
     required T Function(
       List<String?>? listString7,
@@ -675,23 +677,7 @@ class UnionTest {
     switch (_tag) {
       case _UnionTestTag.no:
         return no(
-          _enum_yes_null_default_yes_no,
-          _enum_yes_null_default_no_no,
-          _enum_no_null_default_yes_no!,
-          _enum_no_null_default_no_no!,
-          _listMapBool_no!,
           _listString7_no,
-          _setDouble2_no!,
-          _listString6_no,
-          _listString5_no!,
-          _isLoad2_no!,
-          _listString_no!,
-          _listString2_no!,
-          _listString3_no!,
-          _setDouble_no!,
-          _listString9_no,
-          _listString4_no!,
-          _listint3_no!,
         );
       case _UnionTestTag.yes:
         return yes(
@@ -708,6 +694,7 @@ class UnionTest {
           _listString9_yes,
           _listString4_yes!,
           _listint3_yes!,
+          _listint32_yes!,
         );
       case _UnionTestTag.none:
         return none(
@@ -736,82 +723,9 @@ class UnionTest {
         return identical(this, other) ||
             (other.runtimeType == runtimeType &&
                 other is UnionTest &&
-                (identical(
-                      other._enum_yes_null_default_yes_no,
-                      _enum_yes_null_default_yes_no,
-                    ) ||
-                    other._enum_yes_null_default_yes_no ==
-                        _enum_yes_null_default_yes_no) &&
-                (identical(
-                      other._enum_yes_null_default_no_no,
-                      _enum_yes_null_default_no_no,
-                    ) ||
-                    other._enum_yes_null_default_no_no ==
-                        _enum_yes_null_default_no_no) &&
-                (identical(
-                      other._enum_no_null_default_yes_no,
-                      _enum_no_null_default_yes_no,
-                    ) ||
-                    other._enum_no_null_default_yes_no ==
-                        _enum_no_null_default_yes_no) &&
-                (identical(
-                      other._enum_no_null_default_no_no,
-                      _enum_no_null_default_no_no,
-                    ) ||
-                    other._enum_no_null_default_no_no ==
-                        _enum_no_null_default_no_no) &&
-                const DeepCollectionEquality().equals(
-                  other._listMapBool_no,
-                  _listMapBool_no,
-                ) &&
                 const DeepCollectionEquality().equals(
                   other._listString7_no,
                   _listString7_no,
-                ) &&
-                const DeepCollectionEquality().equals(
-                  other._setDouble2_no,
-                  _setDouble2_no,
-                ) &&
-                const DeepCollectionEquality().equals(
-                  other._listString6_no,
-                  _listString6_no,
-                ) &&
-                const DeepCollectionEquality().equals(
-                  other._listString5_no,
-                  _listString5_no,
-                ) &&
-                (identical(
-                      other._isLoad2_no,
-                      _isLoad2_no,
-                    ) ||
-                    other._isLoad2_no == _isLoad2_no) &&
-                const DeepCollectionEquality().equals(
-                  other._listString_no,
-                  _listString_no,
-                ) &&
-                const DeepCollectionEquality().equals(
-                  other._listString2_no,
-                  _listString2_no,
-                ) &&
-                const DeepCollectionEquality().equals(
-                  other._listString3_no,
-                  _listString3_no,
-                ) &&
-                const DeepCollectionEquality().equals(
-                  other._setDouble_no,
-                  _setDouble_no,
-                ) &&
-                const DeepCollectionEquality().equals(
-                  other._listString9_no,
-                  _listString9_no,
-                ) &&
-                const DeepCollectionEquality().equals(
-                  other._listString4_no,
-                  _listString4_no,
-                ) &&
-                const DeepCollectionEquality().equals(
-                  other._listint3_no,
-                  _listint3_no,
                 ));
       case _UnionTestTag.yes:
         return identical(this, other) ||
@@ -869,6 +783,10 @@ class UnionTest {
                 const DeepCollectionEquality().equals(
                   other._listint3_yes,
                   _listint3_yes,
+                ) &&
+                const DeepCollectionEquality().equals(
+                  other._listint32_yes,
+                  _listint32_yes,
                 ));
       case _UnionTestTag.none:
         return identical(this, other) ||
@@ -942,46 +860,8 @@ class UnionTest {
         return Object.hashAll(
           [
             runtimeType,
-            _enum_yes_null_default_yes_no,
-            _enum_yes_null_default_no_no,
-            _enum_no_null_default_yes_no,
-            _enum_no_null_default_no_no,
-            const DeepCollectionEquality().hash(
-              _listMapBool_no,
-            ),
             const DeepCollectionEquality().hash(
               _listString7_no,
-            ),
-            const DeepCollectionEquality().hash(
-              _setDouble2_no,
-            ),
-            const DeepCollectionEquality().hash(
-              _listString6_no,
-            ),
-            const DeepCollectionEquality().hash(
-              _listString5_no,
-            ),
-            _isLoad2_no,
-            const DeepCollectionEquality().hash(
-              _listString_no,
-            ),
-            const DeepCollectionEquality().hash(
-              _listString2_no,
-            ),
-            const DeepCollectionEquality().hash(
-              _listString3_no,
-            ),
-            const DeepCollectionEquality().hash(
-              _setDouble_no,
-            ),
-            const DeepCollectionEquality().hash(
-              _listString9_no,
-            ),
-            const DeepCollectionEquality().hash(
-              _listString4_no,
-            ),
-            const DeepCollectionEquality().hash(
-              _listint3_no,
             ),
           ],
         );
@@ -1025,6 +905,9 @@ class UnionTest {
             ),
             const DeepCollectionEquality().hash(
               _listint3_yes,
+            ),
+            const DeepCollectionEquality().hash(
+              _listint32_yes,
             ),
           ],
         );
@@ -1079,32 +962,16 @@ class UnionTest {
   String toString() {
     switch (_tag) {
       case _UnionTestTag.no:
-        return 'UnionTest.no(enum_yes_null_default_yes: $_enum_yes_null_default_yes_no, enum_yes_null_default_no: $_enum_yes_null_default_no_no, enum_no_null_default_yes: $_enum_no_null_default_yes_no, enum_no_null_default_no: $_enum_no_null_default_no_no, listMapBool: $_listMapBool_no, listString7: $_listString7_no, setDouble2: $_setDouble2_no, listString6: $_listString6_no, listString5: $_listString5_no, isLoad2: $_isLoad2_no, listString: $_listString_no, listString2: $_listString2_no, listString3: $_listString3_no, setDouble: $_setDouble_no, listString9: $_listString9_no, listString4: $_listString4_no, listint3: $_listint3_no)';
+        return 'UnionTest.no(listString7: $_listString7_no)';
       case _UnionTestTag.yes:
-        return 'UnionTest.yes(listString7: $_listString7_yes, setDouble2: $_setDouble2_yes, listMapBool: $_listMapBool_yes, listString6: $_listString6_yes, listString5: $_listString5_yes, isLoad2: $_isLoad2_yes, listString: $_listString_yes, listString2: $_listString2_yes, listString3: $_listString3_yes, setDouble: $_setDouble_yes, listString9: $_listString9_yes, listString4: $_listString4_yes, listint3: $_listint3_yes)';
+        return 'UnionTest.yes(listString7: $_listString7_yes, setDouble2: $_setDouble2_yes, listMapBool: $_listMapBool_yes, listString6: $_listString6_yes, listString5: $_listString5_yes, isLoad2: $_isLoad2_yes, listString: $_listString_yes, listString2: $_listString2_yes, listString3: $_listString3_yes, setDouble: $_setDouble_yes, listString9: $_listString9_yes, listString4: $_listString4_yes, listint3: $_listint3_yes, listint32: $_listint32_yes)';
       case _UnionTestTag.none:
         return 'UnionTest.none(listString7: $_listString7_none, setDouble2: $_setDouble2_none, listMapBool: $_listMapBool_none, listString6: $_listString6_none, listString5: $_listString5_none, isLoad2: $_isLoad2_none, listString: $_listString_none, listString2: $_listString2_none, listString3: $_listString3_none, setDouble: $_setDouble_none, listString9: $_listString9_none, listString4: $_listString4_none, listint3: $_listint3_none, isLoad1: $_isLoad1_none)';
     }
   }
 
   final _UnionTestTag _tag;
-  final EnumTest? _enum_yes_null_default_yes_no;
-  final EnumTest? _enum_yes_null_default_no_no;
-  final EnumTest? _enum_no_null_default_yes_no;
-  final EnumTest? _enum_no_null_default_no_no;
-  final Map<String, bool>? _listMapBool_no;
   final List<String?>? _listString7_no;
-  final Set<int>? _setDouble2_no;
-  final List<String>? _listString6_no;
-  final List<String>? _listString5_no;
-  final bool? _isLoad2_no;
-  final List<String>? _listString_no;
-  final List<String>? _listString2_no;
-  final List<String>? _listString3_no;
-  final Set<double>? _setDouble_no;
-  final List<String?>? _listString9_no;
-  final List<bool>? _listString4_no;
-  final List<int>? _listint3_no;
   final List<String?>? _listString7_yes;
   final Set<int>? _setDouble2_yes;
   final Map<String, bool>? _listMapBool_yes;
@@ -1118,6 +985,7 @@ class UnionTest {
   final List<String?>? _listString9_yes;
   final List<bool>? _listString4_yes;
   final List<int>? _listint3_yes;
+  final Map<String, dynamic>? _listint32_yes;
   final List<String?>? _listString7_none;
   final Set<int>? _setDouble2_none;
   final Map<String, bool>? _listMapBool_none;
@@ -1143,59 +1011,11 @@ enum _UnionTestTag {
 @immutable
 class _UnionTestNo extends UnionTest {
   const _UnionTestNo(
-    this.enum_yes_null_default_yes,
-    this.enum_yes_null_default_no,
-    this.enum_no_null_default_yes,
-    this.enum_no_null_default_no,
-    this.listMapBool,
     this.listString7,
-    this.setDouble2,
-    this.listString6,
-    this.listString5,
-    this.isLoad2,
-    this.listString,
-    this.listString2,
-    this.listString3,
-    this.setDouble,
-    this.listString9,
-    this.listString4,
-    this.listint3,
   ) : super.no(
-          enum_yes_null_default_yes: enum_yes_null_default_yes,
-          enum_yes_null_default_no: enum_yes_null_default_no,
-          enum_no_null_default_yes: enum_no_null_default_yes,
-          enum_no_null_default_no: enum_no_null_default_no,
-          listMapBool: listMapBool,
           listString7: listString7,
-          setDouble2: setDouble2,
-          listString6: listString6,
-          listString5: listString5,
-          isLoad2: isLoad2,
-          listString: listString,
-          listString2: listString2,
-          listString3: listString3,
-          setDouble: setDouble,
-          listString9: listString9,
-          listString4: listString4,
-          listint3: listint3,
         );
-  final EnumTest enum_yes_null_default_yes;
-  final EnumTest enum_yes_null_default_no;
-  final EnumTest enum_no_null_default_yes;
-  final EnumTest enum_no_null_default_no;
-  final Map<String, bool> listMapBool;
   final List<String?> listString7;
-  final Set<int> setDouble2;
-  final List<String> listString6;
-  final List<String> listString5;
-  final bool isLoad2;
-  final List<String> listString;
-  final List<String> listString2;
-  final List<String> listString3;
-  final Set<double> setDouble;
-  final List<String?> listString9;
-  final List<bool> listString4;
-  final List<int> listint3;
 }
 
 @immutable
@@ -1214,6 +1034,7 @@ class _UnionTestYes extends UnionTest {
     this.listString9,
     this.listString4,
     this.listint3,
+    this.listint32,
   ) : super.yes(
           listString7: listString7,
           setDouble2: setDouble2,
@@ -1228,6 +1049,7 @@ class _UnionTestYes extends UnionTest {
           listString9: listString9,
           listString4: listString4,
           listint3: listint3,
+          listint32: listint32,
         );
   final List<String?> listString7;
   final Set<int> setDouble2;
@@ -1242,6 +1064,7 @@ class _UnionTestYes extends UnionTest {
   final List<String?> listString9;
   final List<bool> listString4;
   final List<int> listint3;
+  final Map<String, dynamic> listint32;
 }
 
 @immutable

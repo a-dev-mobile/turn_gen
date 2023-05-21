@@ -372,10 +372,14 @@ $sbMaybeMapOrNull1    }
 
   final sbExtendsClass = StringBuffer();
 
-  final sbCopyWithMain = StringBuffer();
+  final sbCopyWith = StringBuffer();
   final sbCopyWith_1 = StringBuffer();
   final sbCopyWith_2 = StringBuffer();
 
+  final sbFromMap = StringBuffer();
+  final sbFromMap_1 = StringBuffer();
+  final sbToMap = StringBuffer();
+  final sbToMap_1 = StringBuffer();
   for (final l in model.listUnion) {
     final nameClass = _getNameExtendsClass(model, l);
     // example _UnionTestTag.a:
@@ -385,6 +389,18 @@ $sbMaybeMapOrNull1    }
     final sbParamSuper = StringBuffer();
     final sbParamFinal = StringBuffer();
 
+    sbToMap_1.write('''
+ case $nameUnionWithTag:
+    return {
+     'tag': '${l.nameUnion}', 
+''');
+
+    sbFromMap_1.write('''
+ case '${l.nameUnion}':
+    return $nameUnionWithoutTag(
+''');
+
+// ===============
     sbCopyWith_2.write('''
  case $nameUnionWithTag:
     return $nameUnionWithoutTag(
@@ -423,16 +439,41 @@ $sbMaybeMapOrNull1    }
       sbParamFinal.write('  final ${p.typeStr} ${p.name};\n');
 
       final paramCopyWith = '${p.typeStr}? ${p.name}, ';
-      // если не содержит текст то добавляем
+      // если не содержит текст. то добавляем
       if (!sbCopyWith_1.toString().contains(paramCopyWith)) {
         sbCopyWith_1.write(paramCopyWith);
       }
+
+      // переобразуем в модель которай уходит в метод
+      var v = Varable(
+        isCanNull: p.isCanNull,
+        nameVar: p.name,
+        type: p.typeEnum,
+        initValueComment: p.initValue,
+        nameData: p.typeStr,
+      );
+
+      final valueFromMap = getFromMap(v);
+      sbFromMap_1.write('''
+${p.name}: $valueFromMap,
+''');
+
+// меняем название переменной
+      v = v.copyWith(nameVar: '_${p.name}_${l.nameUnion}!');
+      final valueToMap = getToMapVarable(v);
+      sbToMap_1.write('''
+'${p.name}': $valueToMap,
+''');
 
       sbCopyWith_2.write('''
 ${p.name}: ${p.name}?? _${p.name}_${l.nameUnion}!,
 ''');
 // добавить текст в конце итерации
-      if (isLastText) sbCopyWith_2.write(');');
+      if (isLastText) {
+        sbCopyWith_2.write(');');
+        sbFromMap_1.write(');');
+        sbToMap_1.write('};');
+      }
     }
 
     sbExtendsClass.write('''
@@ -445,7 +486,7 @@ $sbParamFinal}\n''');
   /* ****************************** */
 // собрать copywith
 
-  sbCopyWithMain.write('''
+  sbCopyWith.write('''
 ${model.nameClass} copyWith({
 $sbCopyWith_1
   }) {
@@ -455,7 +496,31 @@ $sbCopyWith_2
 ''');
 
   /* ****************************** */
+// собрать fromJson
 
+  sbFromMap.write('''
+static ${model.nameClass} fromMap(Map<dynamic, dynamic> map) {
+     final tag = map['tag'];
+     switch (tag) {
+$sbFromMap_1
+  default:
+        throw ArgumentError('Invalid map: \$map');
+ 
+}}      
+''');
+
+  /* ****************************** */
+  /* ****************************** */
+// собрать toMap
+
+  sbToMap.write('''
+  Map<String, dynamic> toMap() {
+     switch (_tag) {   
+$sbToMap_1
+}}      
+''');
+
+  /* ****************************** */
   final newContent = '''
 ${model.contentToEnd}
 
@@ -466,7 +531,9 @@ ${ConstConsole.GEN_MSG_START(EnumTypeRun.union)}
 ${model.comments}
 ${model.classHeader}
 $sbUnionClass
-$sbCopyWithMain
+$sbToMap
+$sbFromMap
+$sbCopyWith
 $sbMap
 $sbMaybeMap
 $sbMapOrNull
