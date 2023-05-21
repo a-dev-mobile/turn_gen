@@ -80,8 +80,22 @@ Future<void> unionStart({
     final listIndex = <int>[];
     var isHaveOpenBracket = false;
     for (var i = 0; i < params.length; i++) {
-      var v = params[i];
+      var v = params[i].trim();
+
+
       v = v.replaceAll(RegExp(r'^\(\{'), '');
+      v = v.replaceAll(RegExp(r'^\(\['), '');
+      v = v.replaceAll(RegExp(r'\]\)$'), '');
+      v = v.replaceAll(RegExp(r'\}\)$'), '');
+
+      v = v.replaceAll(RegExp(r'^\('), '');
+      v = v.replaceAll(RegExp(r'^\['), '');
+      v = v.replaceAll(RegExp(r'^\{'), '');
+      v = v.replaceAll(RegExp(r'\}$'), '');
+      v = v.replaceAll(RegExp(r'\]$'), '');
+      v = v.replaceAll(RegExp(r'\)$'), '');
+
+      if (v.length <= 1) continue;
       if (isHaveOpenBracket) {
         final sum = listIndex.map((e) => params[e]).toList().join(',');
         v = '$sum,$v';
@@ -102,7 +116,7 @@ Future<void> unionStart({
         isHaveOpenBracket = false;
 
         listIndex.clear();
-// 
+//
         // v = v.replaceAll('  ', ' ');
         listParamRaw.add(v);
         continue;
@@ -240,7 +254,7 @@ Future<void> unionStart({
   );
 
   final file = File(path);
-  writeToFileUnion(logger, file, newCommonModel, contentFile);
+  writeToFileUnion(logger, file, newCommonModel);
 }
 
 String _getCommentDoc(String content) {

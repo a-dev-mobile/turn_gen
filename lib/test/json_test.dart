@@ -1,71 +1,33 @@
-
-
-
-
 import 'package:turn_gen/test/union.dart';
 
-// void main() {
-//   const a = Conn.notDetermined(listString: ['asdf']);
+void main() {
+  const a = ApiResponse.success('content', 'exception');
+  const a4 = ApiResponse.failed();
+  const a2 = ApiResponse.success(
+    'content',
+    'exception',
+  );
+  const a3 = ApiResponse.load(text: 'content');
+  print(a2 == a);
+  final aJson = a.toMap();
+  final a2Json = a2.toMap();
+  final a3Json = a3.toMap();
+  final a4Json = a4.toMap();
 
-// a.map(notDetermined: (v) => {}, isDisconnected: isDisconnected, isConnected: isConnected)
+  final b = ApiResponse.fromMap(a4Json);
+  final b2 = ApiResponse.fromMap(a2Json);
+  final b3 = ApiResponse.fromMap(a3Json);
+  final b4 = ApiResponse.fromMap(a4Json);
 
+  // final b5 = b4.copyWith(content: '11111');
 
-// }
+  b.maybeMap(
+    orElse: () {},
+    failed: (v) => print(v),
+  );
 
-
-
-
-// // ignore_for_file: cascade_invocations
-
-// import 'dart:io';
-
-// // ignore_for_file: prefer_const_constructors
-
-// import 'models/data.dart';
-// import 'models/enum_type_run.dart';
-
-// Future<void> main() async {
-//   final testDataModel = DataTestModel(
-//     enum_no_null_default_no: EnumTest.assets,
-//     Set_no_null_default_no: {'asd'},
-//     String_no_null_default_no: '123',
-//     int_no_null_default_no: 10,
-//     num_no_null_default_no: 20.2,
-//     Set_string_no_null_default_no: {'asd'},
-//     Set_int_no_null_default_no: {123, 2323},
-//     Set_int_null_no_null_default_no: {null},
-//     Set_bool_no_null_default_no: {false, true},
-//     Set_bool_null_no_null_default_no: {null, false},
-//     Set_double_yes_null_default_yes: {123.333},
-//     Set_double_no_null_default_no: {123, 123.123},
-//     Set_double_no_null_default_yes: {123, 123.33},
-//     List_bool_no_null_default_no: [false, true, false],
-//     List_bool_null_no_null_default_no: [false, true, false, null],
-//   );
-
-//   final fileDataModel = File(r'test\json\data.json');
-
-//   fileDataModel.writeAsStringSync(testDataModel.toJson());
-
-//   final testDataModelRaw = await fileDataModel.readAsString();
-//   final testDataModelFromJson = DataTestModel.fromJson(testDataModelRaw);
-
-//   test('compare with json model', () {
-//     expect(testDataModel, testDataModelFromJson);
-//   });
-//   // final testDataModel2 = DataTestModel(
-//   //   enum_no_null_default_no: EnumTest.assets,
-//   //   Set_no_null_default_no: {'asd'},
-//   //   String_no_null_default_no: '123',
-//   //   int_no_null_default_no: 10,
-//   //   num_no_null_default_no: 20.2,
-//   //   Set_string_no_null_default_no: {'asd'},
-//   //   Set_int_no_null_default_no: {123, 2323},
-//   //   Set_int_null_no_null_default_no: {null},
-//   //   Set_bool_no_null_default_no: {false, true},
-//   //   Set_bool_null_no_null_default_no: {null, false}, Set_double_yes_null_default_yes: {123.333},  Set_double_no_null_default_no:{123,123.123}, Set_double_no_null_default_yes: {123,123.334},
-//   // );
-//   // test('compare two model identical', () {
-//   //   expect(testDataModel, testDataModel2);
-//   // });
-// }
+  print(a == b);
+  print(a2 == b2);
+  print(a3 == b3);
+  print(a4 == b4);
+}

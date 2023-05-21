@@ -8,7 +8,6 @@ void writeToFileUnion(
   FLILogger logger,
   File file,
   UnionCommonModel model,
-  String contentFile,
 ) {
   /* ****************************** */
   final sbAllParams = StringBuffer();
@@ -169,6 +168,7 @@ $sbMapOrNullCase    }
   // ignore: cascade_invocations
   sbMaybeMap.write('''
   T maybeMap<T>({
+       required T Function() orElse,
 ''');
 
   final sbMaybeMapCase = StringBuffer();
@@ -190,13 +190,12 @@ $sbMapOrNullCase    }
     final constText = sbReturn.isEmpty ? 'const ' : '';
     sbMaybeMapCase.write('''
       case _${model.nameClass}Tag.${l.nameUnion}:
-        if(${l.nameUnion} != null) return ${l.nameUnion}($constText$nameClassExtends($sbReturn),);
+        if(${l.nameUnion} != null) { return ${l.nameUnion}($constText$nameClassExtends($sbReturn),); }
         return orElse();
 ''');
   }
 
   sbMaybeMap.write('''
-      required T Function() orElse,
   }) {
     switch (_tag) {
 $sbMaybeMapCase    }
@@ -230,7 +229,7 @@ $sbMaybeMapCase    }
     final constText = sbReturn.isEmpty ? 'const ' : '';
     sbMaybeMapOrNull1.write('''
       case _${model.nameClass}Tag.${l.nameUnion}:
-        if(${l.nameUnion} != null) return ${l.nameUnion}($constText$nameClassExtends($sbReturn),);
+        if(${l.nameUnion} != null) { return ${l.nameUnion}($constText$nameClassExtends($sbReturn),); }
         return null;
 ''');
   }
@@ -363,9 +362,6 @@ $sbMaybeMapOrNull1    }
 
   final sbEquals = StringBuffer(
     sbEqualsTemp.toString(),
-    /* .replaceAll(',]);', ']);')
-      .replaceAll(', ]);', ']);')
-      .replaceAll(',)]);', ')]);') */
   );
 
   /* ****************************** */
@@ -406,6 +402,13 @@ $sbMaybeMapOrNull1    }
     return $nameUnionWithoutTag(
 ''');
 
+// если параметров нету
+    if (l.listParameters.isEmpty) {
+      sbCopyWith_2.write(');');
+      sbFromMap_1.write(');');
+      sbToMap_1.write('};');
+    }
+
     for (var i = 0; i < l.listParameters.length; i++) {
       final p = l.listParameters[i];
       final isLastText = l.listParameters.length - 1 == i;
@@ -419,8 +422,7 @@ $sbMaybeMapOrNull1    }
       } else if (l.parameter == EnumParameter.defaultWithRequired &&
           p.initValue.isEmpty) {
         addRequiest = '';
-      } else if (l.parameter == EnumParameter.required &&
-              p.initValue.isNotEmpty ||
+      } else if (l.parameter == EnumParameter.required ||
           l.parameter == EnumParameter.defaultWithRequired &&
               p.initValue.isNotEmpty) {
         addRequiest = '${p.name}:';
@@ -430,13 +432,11 @@ $sbMaybeMapOrNull1    }
           l.parameter == EnumParameter.defaultWithOptional ||
           l.parameter == EnumParameter.default_) {
         addRequiest = '';
-      } else {
-        addRequiest = '${p.name}:';
       }
 
       sbParamSuper.write('$addRequiest ${p.name},');
-
-      sbParamFinal.write('  final ${p.typeStr} ${p.name};\n');
+      final addIsNull = p.isCanNull ? '?' : '';
+      sbParamFinal.write('final ${p.typeStr}$addIsNull ${p.name};\n');
 
       final paramCopyWith = '${p.typeStr}? ${p.name}, ';
       // если не содержит текст. то добавляем
@@ -454,19 +454,20 @@ $sbMaybeMapOrNull1    }
       );
 
       final valueFromMap = getFromMap(v);
+
       sbFromMap_1.write('''
-${p.name}: $valueFromMap,
+$addRequiest $valueFromMap,
 ''');
 
 // меняем название переменной
-      v = v.copyWith(nameVar: '_${p.name}_${l.nameUnion}!');
+      v = v.copyWith(nameVar: '_${p.name}_${l.nameUnion}');
       final valueToMap = getToMapVarable(v);
       sbToMap_1.write('''
 '${p.name}': $valueToMap,
 ''');
 
       sbCopyWith_2.write('''
-${p.name}: ${p.name}?? _${p.name}_${l.nameUnion}!,
+$addRequiest ${p.name}?? _${p.name}_${l.nameUnion}!,
 ''');
 // добавить текст в конце итерации
       if (isLastText) {
@@ -485,24 +486,31 @@ $sbParamFinal}\n''');
 
   /* ****************************** */
 // собрать copywith
+  final isEmptyCopyWith = sbCopyWith_1.isEmpty;
+
+  final letterCopyWithStart = isEmptyCopyWith ? '' : '{';
+  final letterCopyWithEnd = isEmptyCopyWith ? '' : '}';
+  // нужно добавить const если нет параметров
+  final updateCopyWith_2 = _addConstIfNotParam(isEmptyCopyWith, sbCopyWith_2);
 
   sbCopyWith.write('''
-${model.nameClass} copyWith({
+${model.nameClass} copyWith($letterCopyWithStart
 $sbCopyWith_1
-  }) {
+  $letterCopyWithEnd) {
     switch (_tag) {
-$sbCopyWith_2
+$updateCopyWith_2
 }}      
 ''');
 
   /* ****************************** */
-// собрать fromJson
-
+// собрать fromMap
+  // нужно добавить const если нет параметров
+  final updateFromMap_1 = _addConstIfNotParam(isEmptyCopyWith, sbFromMap_1);
   sbFromMap.write('''
 static ${model.nameClass} fromMap(Map<dynamic, dynamic> map) {
      final tag = map['tag'];
      switch (tag) {
-$sbFromMap_1
+$updateFromMap_1
   default:
         throw ArgumentError('Invalid map: \$map');
  
@@ -526,7 +534,15 @@ ${model.contentToEnd}
 
 ${ConstConsole.GEN_MSG_START(EnumTypeRun.union)}
 // coverage:ignore-file
-// ignore_for_file: avoid_unused_constructor_parameters, unused_element, avoid-non-null-assertion,  library_private_types_in_public_api,non_constant_identifier_names, always_put_required_named_parameters_first,  avoid_positional_boolean_parameters, strict_raw_type, curly_braces_in_flow_control_structures
+// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: avoid-non-null-assertion
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: unnecessary_null_checks
+// ignore_for_file: unused_element
+// ignore_for_file: avoid_unused_constructor_parameters
+// ignore_for_file: avoid_positional_boolean_parameters, 
+// ignore_for_file: always_put_required_named_parameters_first
+
 @immutable
 ${model.comments}
 ${model.classHeader}
@@ -552,6 +568,12 @@ $sbExtendsClass''';
   final _ = file.writeAsString(newContent);
   Terminal.runFormat(file.path);
   logger.info(ConstConsole.GEN_MSG_END(file.path));
+}
+
+String _addConstIfNotParam(bool isEmptyCopyWith, StringBuffer sbCopyWith_2) {
+  return isEmptyCopyWith
+      ? sbCopyWith_2.toString().replaceAll('return ', 'return const ')
+      : sbCopyWith_2.toString();
 }
 
 String _getNameExtendsClass(UnionCommonModel model, UnionItemModel l) {
