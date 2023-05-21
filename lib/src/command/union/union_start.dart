@@ -82,7 +82,6 @@ Future<void> unionStart({
     for (var i = 0; i < params.length; i++) {
       var v = params[i].trim();
 
-
       v = v.replaceAll(RegExp(r'^\(\{'), '');
       v = v.replaceAll(RegExp(r'^\(\['), '');
       v = v.replaceAll(RegExp(r'\]\)$'), '');
@@ -204,6 +203,7 @@ Future<void> unionStart({
       }
 
       final nameWithTag = '_${nameVar}_$unionName';
+
       listStartWriteParams.add('final $typeVar? $nameWithTag;');
       listParamsForMap[nameWithTag] = 'null';
       listParamFormat.add(v);

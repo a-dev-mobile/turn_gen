@@ -1,4 +1,8 @@
 
+## 0.9.3
+
+- added the `tomap` and `fromMap` methods for the `union` script
+
 ## 0.9.2
 
 - added an extension for `enum` scripts that makes it easier to check the value of an enum in a concise and readable way.

@@ -100,9 +100,9 @@ $sbCase    }
       final p = l.listParameters[i];
       final lastText = l.listParameters.length - 1 == i ? ',' : ', ';
 
-      const letterNotNull = '!';
+      final addIsNull = p.isCanNull ? '' : '!';
 
-      sbReturn.write('_${p.name}_${l.nameUnion}$letterNotNull$lastText');
+      sbReturn.write('_${p.name}_${l.nameUnion}$addIsNull$lastText');
     }
 
     sbMap.write('''
@@ -139,10 +139,9 @@ $sbMapCase    }
     for (var i = 0; i < l.listParameters.length; i++) {
       final p = l.listParameters[i];
       final lastText = l.listParameters.length - 1 == i ? ',' : ', ';
+      final addIsNull = p.isCanNull ? '' : '!';
 
-      const letterNotNull = '!';
-
-      sbReturn.write('_${p.name}_${l.nameUnion}$letterNotNull$lastText');
+      sbReturn.write('_${p.name}_${l.nameUnion}$addIsNull$lastText');
     }
 
     sbMapOrNull.write('''
@@ -179,7 +178,7 @@ $sbMapOrNullCase    }
       final p = l.listParameters[i];
       final lastText = l.listParameters.length - 1 == i ? ',' : ', ';
 
-      final letterNotNull = p.isCanNull ? '!' : '!';
+      final letterNotNull = p.isCanNull ? '' : '!';
 
       sbReturn.write('_${p.name}_${l.nameUnion}$letterNotNull$lastText');
     }
@@ -223,7 +222,8 @@ $sbMaybeMapCase    }
       final p = l.listParameters[i];
       final lastText = l.listParameters.length - 1 == i ? ',' : ', ';
 
-      sbReturn.write('_${p.name}_${l.nameUnion}!$lastText');
+      final addIsNull = p.isCanNull ? '' : '!';
+      sbReturn.write('_${p.name}_${l.nameUnion}$addIsNull$lastText');
     }
 
     final constText = sbReturn.isEmpty ? 'const ' : '';
@@ -327,6 +327,7 @@ $sbMaybeMapOrNull1    }
   bool operator ==(dynamic other) {
     switch (_tag) {
 ''');
+
   for (final l in model.listUnion) {
     final lastText = l.listParameters.isEmpty ? ');' : ' && ';
     sbEqualsTemp.write('''
@@ -368,10 +369,6 @@ $sbMaybeMapOrNull1    }
 
   final sbExtendsClass = StringBuffer();
 
-  final sbCopyWith = StringBuffer();
-  final sbCopyWith_1 = StringBuffer();
-  final sbCopyWith_2 = StringBuffer();
-
   final sbFromMap = StringBuffer();
   final sbFromMap_1 = StringBuffer();
   final sbToMap = StringBuffer();
@@ -385,34 +382,34 @@ $sbMaybeMapOrNull1    }
     final sbParamSuper = StringBuffer();
     final sbParamFinal = StringBuffer();
 
+    final sbCopyWith = StringBuffer();
+    final sbCopyWith_1 = StringBuffer();
+    final sbCopyWith_2 = StringBuffer();
+
     sbToMap_1.write('''
  case $nameUnionWithTag:
     return {
      'tag': '${l.nameUnion}', 
 ''');
+// ===============
+    final isNotParam = l.listParameters.isEmpty;
+
+    final addConst = isNotParam ? 'const' : '';
 
     sbFromMap_1.write('''
  case '${l.nameUnion}':
-    return $nameUnionWithoutTag(
-''');
-
-// ===============
-    sbCopyWith_2.write('''
- case $nameUnionWithTag:
-    return $nameUnionWithoutTag(
+    return $addConst $nameUnionWithoutTag(
 ''');
 
 // если параметров нету
-    if (l.listParameters.isEmpty) {
-      sbCopyWith_2.write(');');
+    if (isNotParam) {
       sbFromMap_1.write(');');
       sbToMap_1.write('};');
     }
-
     for (var i = 0; i < l.listParameters.length; i++) {
       final p = l.listParameters[i];
-      final isLastText = l.listParameters.length - 1 == i;
 
+      final isLastText = l.listParameters.length - 1 == i;
       sbParam.write('this.${p.name},');
 
       var addRequiest = '';
@@ -440,9 +437,11 @@ $sbMaybeMapOrNull1    }
 
       final paramCopyWith = '${p.typeStr}? ${p.name}, ';
       // если не содержит текст. то добавляем
-      if (!sbCopyWith_1.toString().contains(paramCopyWith)) {
-        sbCopyWith_1.write(paramCopyWith);
-      }
+      sbCopyWith_1.write(paramCopyWith);
+
+      sbCopyWith_2.write('''
+${p.name}?? this.${p.name},
+''');
 
       // переобразуем в модель которай уходит в метод
       var v = Varable(
@@ -460,57 +459,54 @@ $addRequiest $valueFromMap,
 ''');
 
 // меняем название переменной
-      v = v.copyWith(nameVar: '_${p.name}_${l.nameUnion}');
+      v = v.copyWith(isCanNull: true, nameVar: '_${p.name}_${l.nameUnion}');
       final valueToMap = getToMapVarable(v);
       sbToMap_1.write('''
 '${p.name}': $valueToMap,
 ''');
 
-      sbCopyWith_2.write('''
-$addRequiest ${p.name}?? _${p.name}_${l.nameUnion}!,
-''');
 // добавить текст в конце итерации
       if (isLastText) {
-        sbCopyWith_2.write(');');
         sbFromMap_1.write(');');
         sbToMap_1.write('};');
       }
     }
 
+// собираем copyWith
+    sbCopyWith.write('''
+
+ $nameClass copyWith({
+  $sbCopyWith_1
+  }) {
+    return $nameClass(
+      $sbCopyWith_2
+);
+
+}
+''');
+// если нет параметров нет copy with
+    if (isNotParam) sbCopyWith.clear();
+
     sbExtendsClass.write('''
 @immutable
 class $nameClass extends ${model.nameClass} {
   const $nameClass($sbParam) : super.${l.nameUnion}($sbParamSuper);
-$sbParamFinal}\n''');
+$sbParamFinal
+
+$sbCopyWith
+
+}''');
   }
 
   /* ****************************** */
-// собрать copywith
-  final isEmptyCopyWith = sbCopyWith_1.isEmpty;
 
-  final letterCopyWithStart = isEmptyCopyWith ? '' : '{';
-  final letterCopyWithEnd = isEmptyCopyWith ? '' : '}';
-  // нужно добавить const если нет параметров
-  final updateCopyWith_2 = _addConstIfNotParam(isEmptyCopyWith, sbCopyWith_2);
-
-  sbCopyWith.write('''
-${model.nameClass} copyWith($letterCopyWithStart
-$sbCopyWith_1
-  $letterCopyWithEnd) {
-    switch (_tag) {
-$updateCopyWith_2
-}}      
-''');
-
-  /* ****************************** */
 // собрать fromMap
-  // нужно добавить const если нет параметров
-  final updateFromMap_1 = _addConstIfNotParam(isEmptyCopyWith, sbFromMap_1);
+
   sbFromMap.write('''
 static ${model.nameClass} fromMap(Map<dynamic, dynamic> map) {
      final tag = map['tag'];
      switch (tag) {
-$updateFromMap_1
+$sbFromMap_1
   default:
         throw ArgumentError('Invalid map: \$map');
  
@@ -549,7 +545,6 @@ ${model.classHeader}
 $sbUnionClass
 $sbToMap
 $sbFromMap
-$sbCopyWith
 $sbMap
 $sbMaybeMap
 $sbMapOrNull
@@ -568,12 +563,6 @@ $sbExtendsClass''';
   final _ = file.writeAsString(newContent);
   Terminal.runFormat(file.path);
   logger.info(ConstConsole.GEN_MSG_END(file.path));
-}
-
-String _addConstIfNotParam(bool isEmptyCopyWith, StringBuffer sbCopyWith_2) {
-  return isEmptyCopyWith
-      ? sbCopyWith_2.toString().replaceAll('return ', 'return const ')
-      : sbCopyWith_2.toString();
 }
 
 String _getNameExtendsClass(UnionCommonModel model, UnionItemModel l) {
