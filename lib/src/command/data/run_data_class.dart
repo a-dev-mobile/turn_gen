@@ -264,7 +264,7 @@ Future<void> dataStart({
         ${v.nameVar}: ${getWordConst(v)},
 ''');
     }
-
+// v.nameData это название класса а v.type.value это название типа
     typeStrTemp = v.type == EnumTypeVarable.enum_ ? v.nameData : v.type.value;
     if (v.nameData.isNotEmpty) {
       typeStrTemp = v.nameData;

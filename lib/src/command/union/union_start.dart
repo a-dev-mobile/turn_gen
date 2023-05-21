@@ -35,10 +35,13 @@ Future<void> unionStart({
 
   final commentDocClass = _getCommentDoc(contentBeforeClass);
 
-  final classToEnd = UtilsRegex.getTextRegexMatch(
+  var classToEnd = UtilsRegex.getTextRegexMatch(
     content: contentFile,
     regex: r'class[\s\S]+?(\/\/\s+end)',
   );
+  // remove comment
+  classToEnd = classToEnd.replaceAll(RegExp(r'[\s]//.*'), '');
+
   final classBrackets = UtilsRegex.getTextRegexMatch(
     content: classToEnd,
     regex: r'\{[\s\S]+\}',
@@ -80,7 +83,7 @@ Future<void> unionStart({
       var v = params[i];
       v = v.replaceAll(RegExp(r'^\(\{'), '');
       if (isHaveOpenBracket) {
-        final sum = listIndex.map((e) => params[e]).toList().join(', ');
+        final sum = listIndex.map((e) => params[e]).toList().join(',');
         v = '$sum,$v';
 
         if (v.contains('<') && !v.contains('>')) {
@@ -99,6 +102,8 @@ Future<void> unionStart({
         isHaveOpenBracket = false;
 
         listIndex.clear();
+// 
+        // v = v.replaceAll('  ', ' ');
         listParamRaw.add(v);
         continue;
       }

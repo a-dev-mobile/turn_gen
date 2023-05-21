@@ -372,16 +372,29 @@ $sbMaybeMapOrNull1    }
 
   final sbExtendsClass = StringBuffer();
 
+  final sbCopyWithMain = StringBuffer();
+  final sbCopyWith_1 = StringBuffer();
+  final sbCopyWith_2 = StringBuffer();
+
   for (final l in model.listUnion) {
     final nameClass = _getNameExtendsClass(model, l);
+    // example _UnionTestTag.a:
+    final nameUnionWithTag = '_${model.nameClass}Tag.${l.nameUnion}';
+    final nameUnionWithoutTag = '${model.nameClass}.${l.nameUnion}';
     final sbParam = StringBuffer();
     final sbParamSuper = StringBuffer();
     final sbParamFinal = StringBuffer();
+
+    sbCopyWith_2.write('''
+ case $nameUnionWithTag:
+    return $nameUnionWithoutTag(
+''');
+
     for (var i = 0; i < l.listParameters.length; i++) {
       final p = l.listParameters[i];
-      final lastText = l.listParameters.length - 1 == i ? ',' : ', ';
+      final isLastText = l.listParameters.length - 1 == i;
 
-      sbParam.write('this.${p.name}$lastText');
+      sbParam.write('this.${p.name},');
 
       var addRequiest = '';
 
@@ -405,9 +418,21 @@ $sbMaybeMapOrNull1    }
         addRequiest = '${p.name}:';
       }
 
-      sbParamSuper.write('$addRequiest ${p.name}$lastText');
+      sbParamSuper.write('$addRequiest ${p.name},');
 
       sbParamFinal.write('  final ${p.typeStr} ${p.name};\n');
+
+      final paramCopyWith = '${p.typeStr}? ${p.name}, ';
+      // если не содержит текст то добавляем
+      if (!sbCopyWith_1.toString().contains(paramCopyWith)) {
+        sbCopyWith_1.write(paramCopyWith);
+      }
+
+      sbCopyWith_2.write('''
+${p.name}: ${p.name}?? _${p.name}_${l.nameUnion}!,
+''');
+// добавить текст в конце итерации
+      if (isLastText) sbCopyWith_2.write(');');
     }
 
     sbExtendsClass.write('''
@@ -416,6 +441,18 @@ class $nameClass extends ${model.nameClass} {
   const $nameClass($sbParam) : super.${l.nameUnion}($sbParamSuper);
 $sbParamFinal}\n''');
   }
+
+  /* ****************************** */
+// собрать copywith
+
+  sbCopyWithMain.write('''
+${model.nameClass} copyWith({
+$sbCopyWith_1
+  }) {
+    switch (_tag) {
+$sbCopyWith_2
+}}      
+''');
 
   /* ****************************** */
 
@@ -429,6 +466,7 @@ ${ConstConsole.GEN_MSG_START(EnumTypeRun.union)}
 ${model.comments}
 ${model.classHeader}
 $sbUnionClass
+$sbCopyWithMain
 $sbMap
 $sbMaybeMap
 $sbMapOrNull
