@@ -3,6 +3,8 @@
 // turngen
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
+
 class Success1 {
   /* init: '' */
   final String payment;
@@ -15,7 +17,8 @@ class Success1 {
   final String start_date;
   /* init: '' */
   final String end_date;
-
+  /* init: [] */
+  final List<bool> listBool;
   // end
 
 //          --TURN_GEN--
@@ -29,6 +32,7 @@ class Success1 {
     this.commission = '',
     this.start_date = '',
     this.end_date = '',
+    this.listBool = const [],
   });
 
   Map<String, dynamic> toMap() {
@@ -38,6 +42,7 @@ class Success1 {
       'commission': commission,
       'start_date': start_date,
       'end_date': end_date,
+      'listBool': listBool,
     };
   }
 
@@ -50,6 +55,9 @@ class Success1 {
       commission: map['commission'] as String? ?? '',
       start_date: map['start_date'] as String? ?? '',
       end_date: map['end_date'] as String? ?? '',
+      listBool:
+          (map['listBool'] as List<dynamic>?)?.map((e) => e as bool).toList() ??
+              const [],
     );
   }
 
@@ -59,6 +67,7 @@ class Success1 {
     String? commission,
     String? start_date,
     String? end_date,
+    List<bool>? listBool,
   }) {
     return Success1(
       payment: payment ?? this.payment,
@@ -66,6 +75,7 @@ class Success1 {
       commission: commission ?? this.commission,
       start_date: start_date ?? this.start_date,
       end_date: end_date ?? this.end_date,
+      listBool: listBool ?? this.listBool,
     );
   }
 
@@ -103,7 +113,11 @@ class Success1 {
                   other.end_date,
                   end_date,
                 ) ||
-                other.end_date == end_date));
+                other.end_date == end_date) &&
+            const DeepCollectionEquality().equals(
+              other.listBool,
+              listBool,
+            ));
   }
 
   @override
@@ -114,10 +128,13 @@ class Success1 {
         commission,
         start_date,
         end_date,
+        const DeepCollectionEquality().hash(
+          listBool,
+        ),
       ]);
 
   @override
   String toString() {
-    return 'Success1(payment: $payment, body: $body, commission: $commission, start_date: $start_date, end_date: $end_date, )';
+    return 'Success1(payment: $payment, body: $body, commission: $commission, start_date: $start_date, end_date: $end_date, listBool: $listBool, )';
   }
 }

@@ -39,7 +39,7 @@ class UnionCommonModel {
   });
 
   UnionCommonModel copyWith({
-    String? nameClass,            
+    String? nameClass,
     String? classHeader,
     String? comments,
     String? contentToEnd,

@@ -90,9 +90,9 @@ Future<void> unionStart({
       if (!v.contains(RegExp(r'\(\)$'))) {
         v = v.replaceAll(RegExp(r'\)$'), '');
       }
-      if (!v.contains(RegExp(r'\[\]$'))) {
-        v = v.replaceAll(RegExp(r'\]$'), '');
-      }
+      // if (!v.contains(RegExp(r'\[\]$'))) {
+      //   v = v.replaceAll(RegExp(r'\]$'), '');
+      // }
       v = v.replaceAll(RegExp(r'^\('), '');
       v = v.replaceAll(RegExp(r'^\['), '');
       v = v.replaceAll(RegExp(r'^\{'), '');
@@ -101,7 +101,23 @@ Future<void> unionStart({
       if (v.length <= 3) continue;
       if (isHaveOpenBracket) {
         final sum = listIndex.map((e) => params[e]).toList().join(',');
-        v = '$sum,$v';
+        v = '$sum, $v';
+
+        v = v.replaceAll(RegExp(r'^\(\{'), '');
+        v = v.replaceAll(RegExp(r'^\(\['), '');
+        v = v.replaceAll(RegExp(r'\]\)$'), '');
+        v = v.replaceAll(RegExp(r'\}\)$'), '');
+
+        if (!v.contains(RegExp(r'\(\)$'))) {
+          v = v.replaceAll(RegExp(r'\)$'), '');
+        }
+        // if (!v.contains(RegExp(r'\[\]$'))) {
+        //   v = v.replaceAll(RegExp(r'\]$'), '');
+        // }
+        v = v.replaceAll(RegExp(r'^\('), '');
+        v = v.replaceAll(RegExp(r'^\['), '');
+        v = v.replaceAll(RegExp(r'^\{'), '');
+        v = v.replaceAll(RegExp(r'\}$'), '');
 
         if (v.contains('<') && !v.contains('>')) {
           listIndex.add(i);
@@ -232,6 +248,23 @@ Future<void> unionStart({
             orElse: false,
             list_data: true,
             list_data_null: true,
+            list_string_: true,
+            list_string_null: true,
+            list_: true,
+            list_bool_: true,
+            list_bool_null: true,
+            list_double_: true,
+            list_double_null: true,
+            list_dynamic_: true,
+            list_enum: true,
+            list_enum_null: true,
+            list_int_: true,
+            list_int_null: true,
+            list_map_int_dynamic_: true,
+            list_map_int_string_: true,
+            list_map_int_string_null: true,
+            list_map_string_dynamic_: true,
+            list_other: true,
           ) &&
           listParamRaw.length == 1;
     }
@@ -248,9 +281,8 @@ Future<void> unionStart({
     );
   }
 
-
-final isHaveOnlyList = listUnionItem.map((e) => e.isOnlyListData).toList().isNotEmpty;
-
+  final isHaveOnlyList =
+      listUnionItem.map((e) => e.isOnlyListData).toList().isNotEmpty;
 
   final commonModel = UnionCommonModel(
     // глобально  если есть только 1 парвметр и он является листом

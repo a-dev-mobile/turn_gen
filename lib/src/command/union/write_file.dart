@@ -375,11 +375,11 @@ $sbMaybeMapOrNull1    }
   /* ****************************** */
   final sbFromJson = StringBuffer();
 
-  // если у нас есть один параметр и он лист в любом union 
+  // если у нас есть один параметр и он лист в любом union
   //то добавляем метод fromlist
   if (model.isHaveOnlyList) {
     sbFromJson.write('''
-  factory $nameClass.fromJson(String source, ${model.nameClass}Tag? tag) {
+  factory $nameClass.fromJson(String source, [${model.nameClass}Tag? tag]) {
     if (source.isEmpty) {
       throw ArgumentError('Source string is empty');
     }
@@ -388,6 +388,10 @@ $sbMaybeMapOrNull1    }
     if (raw is Map<String, dynamic>) {
       return $nameClass.fromMap(raw, tag);
     } else if (raw is List<dynamic>) {
+          if (tag == null) {
+        throw ArgumentError.notNull('tag');
+      }
+
       return $nameClass.fromList(raw, tag);
     }
 
@@ -414,8 +418,14 @@ $sbMaybeMapOrNull1    }
   final sbFromMap_1 = StringBuffer();
   final sbToMap = StringBuffer();
   final sbToMap_1 = StringBuffer();
+
+  final sbFromList = StringBuffer();
+  final sbFromList_1 = StringBuffer();
+
   for (final l in model.listUnion) {
     final nameClass = _getNameExtendsClass(model, l);
+    final nameCase = '${model.nameClass}Tag.${l.nameUnion}';
+    final nameReturn = '${model.nameClass}.${l.nameUnion}';
     // example _UnionTestTag.a:
     final nameUnionWithTag = '${model.nameClass}Tag.${l.nameUnion}';
     final nameUnionWithoutTag = '${model.nameClass}.${l.nameUnion}';
@@ -442,11 +452,27 @@ $sbMaybeMapOrNull1    }
     return $addConst $nameUnionWithoutTag(
 ''');
 
+//  from list
+    sbFromList_1.write('''
+      case $nameCase:
+''');
+    if (!l.isOnlyListData) {
+      sbFromList_1.write('''
+      throw ArgumentError('Invalid type for $nameCase: \$list');
+''');
+    } else {
+      sbFromList_1.write('''
+        return $nameReturn(
+''');
+    }
+
 // если параметров нету
     if (isNotParam) {
       sbFromMap_1.write(');');
       sbToMap_1.write('};');
+      sbFromList_1.write(');');
     }
+
     for (var i = 0; i < l.listParameters.length; i++) {
       final p = l.listParameters[i];
 
@@ -498,7 +524,15 @@ ${p.name}?? this.${p.name},
       sbFromMap_1.write('''
 $addRequiest $valueFromMap,
 ''');
-
+// здесь меняем fromlist
+      final updateValueFromMap =
+          valueFromMap.split('.map((e)').last.replaceAll('??', ':');
+      if (l.isOnlyListData) {
+        final addTextIsNotNull = p.isCanNull ? '' : 'list.isNotEmpty?';
+        sbFromList_1.write('''
+$addRequiest $addTextIsNotNull list.map((e)$updateValueFromMap,
+''');
+      }
 // меняем название переменной
       v = v.copyWith(isCanNull: true, nameVar: '_${p.name}_${l.nameUnion}');
       final valueToMap = getToMapVarable(v);
@@ -509,6 +543,7 @@ $addRequiest $valueFromMap,
 // добавить текст в конце итерации
       if (isLastText) {
         sbFromMap_1.write(');');
+        if (l.isOnlyListData) sbFromList_1.write(');');
         sbToMap_1.write('};');
       }
     }
@@ -553,6 +588,20 @@ $sbFromMap_1
 ''');
 
   /* ****************************** */
+// собрать fromList
+
+  if (model.isHaveOnlyList) {
+    sbFromList.write('''
+  factory $nameClass.fromList(List<dynamic> list, ${nameClass}Tag tag) {
+    switch (tag) {
+$sbFromList_1
+
+  }}
+''');
+  } else {
+    sbFromList.clear();
+  }
+
   /* ****************************** */
 // собрать toMap
 
@@ -587,6 +636,7 @@ $sbUnionGetterIsType
   String toJson() => json.encode(toMap());
 
 $sbFromJson
+$sbFromList
 $sbToMap
 $sbFromMap
 $sbMap
