@@ -71,44 +71,45 @@ class Union1 {
 
   String toJson() => json.encode(toMap());
 
-  factory Union1.fromJson(String source, Union1Tag? tag) {
+  factory Union1.fromJson(String source, Union1Tag tag) {
     if (source.isEmpty) {
       throw ArgumentError('Source string is empty');
     }
     final raw = json.decode(source);
 
-    if (raw is Map<String, dynamic>) {
+    if (raw is Map) {
       return Union1.fromMap(raw, tag);
-    } else if (raw is List<dynamic>) {
+    } else if (raw is List) {
       return Union1.fromList(raw, tag);
     }
 
     return throw ArgumentError('Invalid type: $raw');
   }
 
-  Map<String, dynamic> toMap() {
-    switch (_tag) {
+  factory Union1.fromList(List<dynamic> list, Union1Tag tag) {
+    switch (tag) {
       case Union1Tag.success:
-        return {
-          'tag': 'success',
-          'data': _data_success?.map((e) => e.toMap()).toList() ?? const [],
-        };
+        return Union1.success(
+          data: list.isNotEmpty
+              ? list
+                  .map(
+                    (e) => Success1.fromMap(
+                      e as Map<dynamic, dynamic>,
+                    ),
+                  )
+                  .toList()
+              : const [],
+        );
       case Union1Tag.success3:
-        return {
-          'tag': 'success3',
-          'data': _data_success3,
-        };
+        return Union1.success3(
+          list.map((e) => e as String).toList(),
+        );
       case Union1Tag.error:
-        return {
-          'tag': 'error',
-          'message': _message_error,
-          'error': _error_error,
-        };
+        return throw ArgumentError('Invalid type: $list');
     }
   }
 
-  factory Union1.fromMap(Map<dynamic, dynamic> map, Union1Tag? tag) {
-    tag ??= Union1Tag.values.byName(map['tag'].toString());
+  factory Union1.fromMap(Map<dynamic, dynamic> map, Union1Tag tag) {
     switch (tag) {
       case Union1Tag.success:
         return Union1.success(
@@ -133,6 +134,56 @@ class Union1 {
         );
     }
   }
+
+  Map<String, dynamic> toMap() {
+    switch (_tag) {
+      case Union1Tag.success:
+        return {
+          'tag': 'success',
+          'data': _data_success?.map((e) => e.toMap()).toList() ?? const [],
+        };
+      case Union1Tag.success3:
+        return {
+          'tag': 'success3',
+          'data': _data_success3,
+        };
+      case Union1Tag.error:
+        return {
+          'tag': 'error',
+          'message': _message_error,
+          'error': _error_error,
+        };
+    }
+  }
+
+  // static Union1 fromMap(Map<dynamic, dynamic> map) {
+  //   final tag = map['tag'];
+  //   switch (tag) {
+  //     case 'success':
+  //       return Union1.success(
+  //         data: map['data'] != null
+  //             ? (map['data'] as List<dynamic>)
+  //                 .map(
+  //                   (e) => Success1.fromMap(
+  //                     e as Map<dynamic, dynamic>,
+  //                   ),
+  //                 )
+  //                 .toList()
+  //             : const [],
+  //       );
+  //     case 'success3':
+  //       return Union1.success3(
+  //         (map['data'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  //       );
+  //     case 'error':
+  //       return Union1.error(
+  //         message: map['message'] as String? ?? '',
+  //         error: map['error'] as String? ?? '',
+  //       );
+  //     default:
+  //       throw ArgumentError('Invalid map: $map');
+  //   }
+  // }
 
   T map<T>({
     required T Function(_Union1Success v) success,

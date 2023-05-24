@@ -15,15 +15,16 @@ class UnionItemModel {
   final List<UnionParameterModel> listParameters;
   /*  init: EnumParameter.none   */
   final EnumParameter parameter;
+/* init:false */
+  final bool isOnlyListData;
 
   // end
 
 //          --TURN_GEN--
-//             v0.3.0
+//             (data)
 //  *************************************
-//           GENERATED CODE
+//         GENERATED CODE
 //  *************************************
-
   const UnionItemModel({
     this.nameUnion = '',
     this.paramStr = '',
@@ -31,11 +32,8 @@ class UnionItemModel {
     this.mapNameWithTag = const {},
     this.listParameters = const [],
     this.parameter = EnumParameter.none,
+    this.isOnlyListData = false,
   });
-  /*
-   factory UnionItemModel.init() => UnionItemModel(
-      ); 
-  */
 
   UnionItemModel copyWith({
     String? nameUnion,
@@ -44,6 +42,7 @@ class UnionItemModel {
     Map<String, String>? mapNameWithTag,
     List<UnionParameterModel>? listParameters,
     EnumParameter? parameter,
+    bool? isOnlyListData,
   }) {
     return UnionItemModel(
       nameUnion: nameUnion ?? this.nameUnion,
@@ -52,11 +51,12 @@ class UnionItemModel {
       mapNameWithTag: mapNameWithTag ?? this.mapNameWithTag,
       listParameters: listParameters ?? this.listParameters,
       parameter: parameter ?? this.parameter,
+      isOnlyListData: isOnlyListData ?? this.isOnlyListData,
     );
   }
 
   @override
   String toString() {
-    return 'UnionItemModel(nameUnion: $nameUnion, paramStr: $paramStr, comment: $comment, mapNameWithTag: $mapNameWithTag, listParameters: $listParameters, parameter: $parameter, )';
+    return 'UnionItemModel(nameUnion: $nameUnion, paramStr: $paramStr, comment: $comment, mapNameWithTag: $mapNameWithTag, listParameters: $listParameters, parameter: $parameter, isOnlyListData: $isOnlyListData, )';
   }
 }

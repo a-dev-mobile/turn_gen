@@ -1,0 +1,53 @@
+{
+  "data": [
+    {
+      "payment": "5829.81",
+      "body": "2329.81",
+      "commission": "3500.00",
+      "start_date": "2023-05-25",
+      "end_date": "2023-06-07"
+    },
+    {
+      "payment": "5829.81",
+      "body": "2655.98",
+      "commission": "3173.83",
+      "start_date": "2023-06-08",
+      "end_date": "2023-06-21"
+    },
+    {
+      "payment": "5829.81",
+      "body": "3027.82",
+      "commission": "2801.99",
+      "start_date": "2023-06-22",
+      "end_date": "2023-07-05"
+    },
+    {
+      "payment": "5829.81",
+      "body": "3451.72",
+      "commission": "2378.09",
+      "start_date": "2023-07-06",
+      "end_date": "2023-07-19"
+    },
+    {
+      "payment": "5829.81",
+      "body": "3934.96",
+      "commission": "1894.85",
+      "start_date": "2023-07-20",
+      "end_date": "2023-08-02"
+    },
+    {
+      "payment": "5829.81",
+      "body": "4485.85",
+      "commission": "1343.96",
+      "start_date": "2023-08-03",
+      "end_date": "2023-08-16"
+    },
+    {
+      "payment": "5829.81",
+      "body": "5113.86",
+      "commission": "715.95",
+      "start_date": "2023-08-17",
+      "end_date": "2023-08-30"
+    }
+  ]
+}

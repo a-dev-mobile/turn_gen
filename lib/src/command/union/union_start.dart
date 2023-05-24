@@ -59,7 +59,7 @@ Future<void> unionStart({
 
   final listUnionItem = <UnionItemModel>[];
 
-  final listStartWriteParams = <String>['final _${className}Tag _tag;'];
+  final listStartWriteParams = <String>['final ${className}Tag _tag;'];
   final listParamsForMap = <String, String>{'_tag': 'null'};
   msgTitleAnotherType(logger);
   for (var i = 0; i < listFormatUnionItem.length; i++) {
@@ -87,14 +87,17 @@ Future<void> unionStart({
       v = v.replaceAll(RegExp(r'\]\)$'), '');
       v = v.replaceAll(RegExp(r'\}\)$'), '');
 
+      if (!v.contains(RegExp(r'\(\)$'))) {
+        v = v.replaceAll(RegExp(r'\)$'), '');
+      }
+      if (!v.contains(RegExp(r'\[\]$'))) {
+        v = v.replaceAll(RegExp(r'\]$'), '');
+      }
       v = v.replaceAll(RegExp(r'^\('), '');
       v = v.replaceAll(RegExp(r'^\['), '');
       v = v.replaceAll(RegExp(r'^\{'), '');
       v = v.replaceAll(RegExp(r'\}$'), '');
-      v = v.replaceAll(RegExp(r'\]$'), '');
-      if (!v.contains(RegExp(r'\(\)$'))) {
-        v = v.replaceAll(RegExp(r'\)$'), '');
-      }
+
       if (v.length <= 3) continue;
       if (isHaveOpenBracket) {
         final sum = listIndex.map((e) => params[e]).toList().join(',');
@@ -146,6 +149,9 @@ Future<void> unionStart({
       regex: regexRawDocCommentUnion,
     );
     final docCommentUnion = _getCommentDoc(rawDocCommentUnion);
+
+    // переменная показывает что параметр один и имеет тип list. Для метода fromjson
+    var isOnlyListDate = false;
 
     for (var i = 0; i < listParamRaw.length; i++) {
       // var v = cleanParam(listParamRaw[i]);
@@ -200,6 +206,7 @@ Future<void> unionStart({
           fallback: EnumTypeVarable.none,
         );
       }
+
       if (typeEnum == EnumTypeVarable.none) {
         typeEnum = autoUpdateType(typeEnum, typeVar, logger);
       }
@@ -220,10 +227,18 @@ Future<void> unionStart({
           isCanNull: isCanNull,
         ),
       );
+      // проверка что значение одно и имеет тип list. Для метода fromjson
+      isOnlyListDate = typeEnum.maybeMapValue(
+            orElse: false,
+            list_data: true,
+            list_data_null: true,
+          ) &&
+          listParamRaw.length == 1;
     }
 
     listUnionItem.add(
       UnionItemModel(
+        isOnlyListData: isOnlyListDate,
         comment: docCommentUnion,
         paramStr: textBrackets,
         nameUnion: listUnionName[i],
@@ -232,7 +247,14 @@ Future<void> unionStart({
       ),
     );
   }
+
+
+final isHaveOnlyList = listUnionItem.map((e) => e.isOnlyListData).toList().isNotEmpty;
+
+
   final commonModel = UnionCommonModel(
+    // глобально  если есть только 1 парвметр и он является листом
+    isHaveOnlyList: isHaveOnlyList,
     contentToEnd: contentToEnd,
     nameClass: className,
     listParams: listStartWriteParams,
@@ -243,7 +265,7 @@ Future<void> unionStart({
   final newListUnion = <UnionItemModel>[];
   for (final u in commonModel.listUnion) {
     final newlistParamsForMap = Map<String, String>.from(listParamsForMap);
-    newlistParamsForMap['_tag'] = '_${className}Tag.${u.nameUnion}';
+    newlistParamsForMap['_tag'] = '${className}Tag.${u.nameUnion}';
     for (final p in u.listParameters) {
       newlistParamsForMap['_${p.name}_${u.nameUnion}'] = p.name;
     }

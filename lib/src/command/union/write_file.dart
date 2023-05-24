@@ -18,9 +18,16 @@ void writeToFileUnion(
   }
   /* ****************************** */
   final sbUnionTag = StringBuffer();
+  final sbUnionGetterIsType = StringBuffer();
+  final nameClass = model.nameClass;
   for (final v in model.listUnion) {
+    final nameUnion = v.nameUnion;
     sbUnionTag.write('''
   ${v.nameUnion},
+''');
+
+    sbUnionGetterIsType.write('''
+   bool get is${nameUnion.toCapitalized()} => _tag == ${nameClass}Tag.$nameUnion;
 ''');
   }
   /* ****************************** */
@@ -70,7 +77,7 @@ ${l.comment}
 ''');
 
     sbCase.write('''
-      case _${model.nameClass}Tag.${l.nameUnion}:
+      case ${model.nameClass}Tag.${l.nameUnion}:
         return ${l.nameUnion}($sbReturn);
 ''');
   }
@@ -110,7 +117,7 @@ $sbCase    }
 ''');
     final constText = sbReturn.isEmpty ? 'const ' : '';
     sbMapCase.write('''
-      case _${model.nameClass}Tag.${l.nameUnion}:
+      case ${model.nameClass}Tag.${l.nameUnion}:
         return ${l.nameUnion}($constText$nameClassExtends($sbReturn),);
 ''');
   }
@@ -149,7 +156,7 @@ $sbMapCase    }
 ''');
     final constText = sbReturn.isEmpty ? 'const ' : '';
     sbMapOrNullCase.write('''
-      case _${model.nameClass}Tag.${l.nameUnion}:
+      case ${model.nameClass}Tag.${l.nameUnion}:
         return ${l.nameUnion}?.call($constText$nameClassExtends($sbReturn),);
 ''');
   }
@@ -188,7 +195,7 @@ $sbMapOrNullCase    }
 ''');
     final constText = sbReturn.isEmpty ? 'const ' : '';
     sbMaybeMapCase.write('''
-      case _${model.nameClass}Tag.${l.nameUnion}:
+      case ${model.nameClass}Tag.${l.nameUnion}:
         if(${l.nameUnion} != null) { return ${l.nameUnion}($constText$nameClassExtends($sbReturn),); }
         return orElse();
 ''');
@@ -228,7 +235,7 @@ $sbMaybeMapCase    }
 
     final constText = sbReturn.isEmpty ? 'const ' : '';
     sbMaybeMapOrNull1.write('''
-      case _${model.nameClass}Tag.${l.nameUnion}:
+      case ${model.nameClass}Tag.${l.nameUnion}:
         if(${l.nameUnion} != null) { return ${l.nameUnion}($constText$nameClassExtends($sbReturn),); }
         return null;
 ''');
@@ -257,7 +264,7 @@ $sbMaybeMapOrNull1    }
         l.nameUnion == ConstHelper.emptyUnionName ? '' : '.${l.nameUnion}';
     sbToString.write('''
 
-      case _${model.nameClass}Tag.${l.nameUnion}:
+      case ${model.nameClass}Tag.${l.nameUnion}:
         return '${model.nameClass}$unionName(''');
     final length = l.listParameters.length;
 
@@ -289,7 +296,7 @@ $sbMaybeMapOrNull1    }
   for (final l in model.listUnion) {
     sbHashTemp.write('''
 
-      case _${model.nameClass}Tag.${l.nameUnion}:
+      case ${model.nameClass}Tag.${l.nameUnion}:
         return Object.hashAll([runtimeType,''');
     final length = l.listParameters.length;
 
@@ -332,7 +339,7 @@ $sbMaybeMapOrNull1    }
     final lastText = l.listParameters.isEmpty ? ');' : ' && ';
     sbEqualsTemp.write('''
 
-      case _${model.nameClass}Tag.${l.nameUnion}:
+      case ${model.nameClass}Tag.${l.nameUnion}:
         return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ${model.nameClass} $lastText 
@@ -366,6 +373,40 @@ $sbMaybeMapOrNull1    }
   );
 
   /* ****************************** */
+  final sbFromJson = StringBuffer();
+
+  // если у нас есть один параметр и он лист в любом union 
+  //то добавляем метод fromlist
+  if (model.isHaveOnlyList) {
+    sbFromJson.write('''
+  factory $nameClass.fromJson(String source, ${model.nameClass}Tag? tag) {
+    if (source.isEmpty) {
+      throw ArgumentError('Source string is empty');
+    }
+    final raw = json.decode(source);
+
+    if (raw is Map<String, dynamic>) {
+      return $nameClass.fromMap(raw, tag);
+    } else if (raw is List<dynamic>) {
+      return $nameClass.fromList(raw, tag);
+    }
+
+    return throw ArgumentError('Invalid type: \$raw');
+  }
+
+
+''');
+  } else {
+    sbFromJson.write('''
+
+  factory $nameClass.fromJson(String source) => $nameClass.fromMap(
+        json.decode(source) as Map<String, dynamic>,
+      );
+
+''');
+  }
+
+  /* ****************************** */
 
   final sbExtendsClass = StringBuffer();
 
@@ -376,7 +417,7 @@ $sbMaybeMapOrNull1    }
   for (final l in model.listUnion) {
     final nameClass = _getNameExtendsClass(model, l);
     // example _UnionTestTag.a:
-    final nameUnionWithTag = '_${model.nameClass}Tag.${l.nameUnion}';
+    final nameUnionWithTag = '${model.nameClass}Tag.${l.nameUnion}';
     final nameUnionWithoutTag = '${model.nameClass}.${l.nameUnion}';
     final sbParam = StringBuffer();
     final sbParamSuper = StringBuffer();
@@ -397,7 +438,7 @@ $sbMaybeMapOrNull1    }
     final addConst = isNotParam ? 'const' : '';
 
     sbFromMap_1.write('''
- case '${l.nameUnion}':
+ case $nameUnionWithTag:
     return $addConst $nameUnionWithoutTag(
 ''');
 
@@ -503,13 +544,11 @@ $sbCopyWith
 // собрать fromMap
 
   sbFromMap.write('''
-static ${model.nameClass} fromMap(Map<dynamic, dynamic> map) {
-     final tag = map['tag'];
-     switch (tag) {
+factory ${model.nameClass}.fromMap(Map<dynamic, dynamic> map, ${model.nameClass}Tag? tag) {
+   tag ??= ${model.nameClass}Tag.values.byName(map['tag'].toString());
+  switch (tag) {
 $sbFromMap_1
-  default:
-        throw ArgumentError('Invalid map: \$map');
- 
+  
 }}      
 ''');
 
@@ -535,6 +574,7 @@ ${ConstConsole.GEN_MSG_START(EnumTypeRun.union)}
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: unnecessary_null_checks
 // ignore_for_file: unused_element
+// ignore_for_file: sort_constructors_first
 // ignore_for_file: avoid_unused_constructor_parameters
 // ignore_for_file: avoid_positional_boolean_parameters, 
 // ignore_for_file: always_put_required_named_parameters_first
@@ -543,6 +583,10 @@ ${ConstConsole.GEN_MSG_START(EnumTypeRun.union)}
 ${model.comments}
 ${model.classHeader}
 $sbUnionClass
+$sbUnionGetterIsType
+  String toJson() => json.encode(toMap());
+
+$sbFromJson
 $sbToMap
 $sbFromMap
 $sbMap
@@ -556,8 +600,9 @@ $sbToString
 $sbAllParams
 }
 
-enum _${model.nameClass}Tag {
-$sbUnionTag}
+enum ${model.nameClass}Tag {
+$sbUnionTag
+}
 $sbExtendsClass''';
 
   final _ = file.writeAsString(newContent);
