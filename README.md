@@ -1,7 +1,7 @@
 
 # TurnGen
 
-[![pub package](https://img.shields.io/badge/pub-0.9.4-blue)](https://pub.dev/packages/turn_gen)
+[![pub package](https://img.shields.io/badge/pub-0.9.5-blue)](https://pub.dev/packages/turn_gen)
 
 Welcome to [TurnGen]!. This project is a set of scripts combined into a command line tool, all scripts are written in dart language and run instantly without using build_runner, they are designed to minimize coding and simplify various tasks such as:
 
@@ -726,11 +726,65 @@ After running the script, you will get additional methods and override the stand
 - `compareTo`
 - `toString`, `operator ==`, `hashCode`
 
-#### toJson / fromJson
+#### toJson fromJson
 
-In developing...
 
-#### Example
+Added the ability to convert a `Union` class to a JSON string and vice versa. When performing the initial conversion, you need to provide a `tag`. However, for subsequent conversions, the `tag` parameter is optional.
+```dart
+
+// union class example
+
+// turngen
+@immutable
+class _ApiLoanSchedule {
+  
+  /// Creates a successful API loan schedule.
+  const _ApiLoanSchedule.success({
+    List<ApiLoanScheduleItem> list = const [],
+  });
+
+  /// Creates an error API loan schedule.
+  const _ApiLoanSchedule.error({
+    String message = '',
+    String error = '',
+    String code = '',
+  });
+}
+
+
+// ... other code
+
+
+// Deserialize the class
+return response.statusCode == 200
+          ? ApiLoanSchedule.fromJson(
+              response.data,
+              ApiLoanScheduleTag.success,
+            )
+          : ApiLoanSchedule.fromJson(
+              response.data,
+              ApiLoanScheduleTag.error,
+            );
+
+
+
+// how to use
+
+ loanScheduleModel.map(
+      success: (v) {
+// Something to do
+      },
+      error: (v) {
+// Something to do
+      },
+    );
+
+// Data serialization
+  final loanScheduleJson = loanScheduleModel.toJson();
+
+```
+
+#### Example of generated file
 
 ```dart
 

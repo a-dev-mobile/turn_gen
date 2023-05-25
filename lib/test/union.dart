@@ -139,13 +139,13 @@ class Union1 {
   bool get isError_1 => _tag == Union1Tag.error_1;
   bool get isError_2 => _tag == Union1Tag.error_2;
 
-  String toJson() => json.encode(toMap());
+  String toJson() => jsonEncode(toMap());
 
-  factory Union1.fromJson(String source, [Union1Tag? tag]) {
-    if (source.isEmpty) {
+  factory Union1.fromJson(dynamic source, [Union1Tag? tag]) {
+    if (source is String && source.isEmpty) {
       throw ArgumentError('Source string is empty');
     }
-    final raw = json.decode(source);
+    final raw = source is String ? json.decode(source) : source;
 
     if (raw is Map<String, dynamic>) {
       return Union1.fromMap(raw, tag);
@@ -233,7 +233,10 @@ class Union1 {
     }
   }
 
-  factory Union1.fromMap(Map<dynamic, dynamic> map, Union1Tag? tag) {
+  factory Union1.fromMap(
+    Map<dynamic, dynamic> map,
+    Union1Tag? tag,
+  ) {
     tag ??= Union1Tag.values.byName(map['tag'].toString());
     switch (tag) {
       case Union1Tag.listBool2:
