@@ -1,7 +1,7 @@
 
 # TurnGen
 
-[![pub package](https://img.shields.io/badge/pub-0.9.5-blue)](https://pub.dev/packages/turn_gen)
+[![pub package](https://img.shields.io/badge/pub-0.9.7-blue)](https://pub.dev/packages/turn_gen)
 
 Welcome to [TurnGen]!. This project is a set of scripts combined into a command line tool, all scripts are written in dart language and run instantly without using build_runner, they are designed to minimize coding and simplify various tasks such as:
 

@@ -403,8 +403,8 @@ $sbMaybeMapOrNull1    }
   } else {
     sbFromJson.write('''
 
-  factory $nameClass.fromJson(String source) => $nameClass.fromMap(
-        json.decode(source) as Map<String, dynamic>,
+ factory $nameClass.fromJson(String source, [${model.nameClass}Tag? tag])  => $nameClass.fromMap(
+        json.decode(source) as Map<String, dynamic>, tag,
       );
 
 ''');
@@ -458,7 +458,7 @@ $sbMaybeMapOrNull1    }
 ''');
     if (!l.isOnlyListData) {
       sbFromList_1.write('''
-      throw ArgumentError('Invalid type for $nameCase: \$list');
+      throw ArgumentError('Invalid type for $nameCase: \$list',);
 ''');
     } else {
       sbFromList_1.write('''
@@ -470,7 +470,7 @@ $sbMaybeMapOrNull1    }
     if (isNotParam) {
       sbFromMap_1.write(');');
       sbToMap_1.write('};');
-      sbFromList_1.write(');');
+      // sbFromList_1.write(');');
     }
 
     for (var i = 0; i < l.listParameters.length; i++) {

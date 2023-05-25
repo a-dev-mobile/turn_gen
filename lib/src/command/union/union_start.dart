@@ -281,8 +281,9 @@ Future<void> unionStart({
     );
   }
 
-  final isHaveOnlyList =
-      listUnionItem.map((e) => e.isOnlyListData).toList().isNotEmpty;
+  final isHaveOnlyList = listUnionItem
+      .firstWhere((e) => e.isOnlyListData, orElse: () => const UnionItemModel())
+      .isOnlyListData;
 
   final commonModel = UnionCommonModel(
     // глобально  если есть только 1 парвметр и он является листом
