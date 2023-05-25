@@ -1,5 +1,5 @@
 
-## 0.9.5
+## 0.9.6
 
 - added `fromJson` and `toJson` methods for `union` script
 - updated README.md

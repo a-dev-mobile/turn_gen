@@ -137,13 +137,13 @@ void writeToFileData(
   // if (!isOnlyCopyWith) {
   //   if (!header.contains('part of')) {
   // if (header.contains('@immutable')) {
-  //   const add3 = "import 'package:meta/meta.dart';";
+  //   const add3 = "// import 'package:meta/meta.dart';";
   //   if (!header.contains(add3)) {
   //     header = '$add3\n$header';
   //   }
   // }
   //     if (equals.toString().contains('DeepCollectionEquality')&&isActiveToString) {
-  //       const add2 = "import 'package:collection/collection.dart';";
+  //       const add2 = "// import 'package:collection/collection.dart';";
   //       if (!header.contains(add2)) {
   //         header = '$add2\n$header';
   //       }

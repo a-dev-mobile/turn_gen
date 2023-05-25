@@ -57,7 +57,7 @@ TurnGen can be run with a single command that searches for files that have a com
 For example, when using the `union` script:
 
 ```dart
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 // turngen
 /* no: tojson fromJson */
 @immutable
@@ -72,7 +72,7 @@ class _ConnectivityState {
 For example, when using the `data` script:
 
 ```dart
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 // turngen
 @immutable
 class DataFio {
@@ -728,8 +728,8 @@ After running the script, you will get additional methods and override the stand
 
 #### toJson fromJson
 
-
 Added the ability to convert a `Union` class to a JSON string and vice versa. When performing the initial conversion, you need to provide a `tag`. However, for subsequent conversions, the `tag` parameter is optional.
+
 ```dart
 
 // union class example
