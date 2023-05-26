@@ -53,11 +53,16 @@ TurnGen can be run with a single command that searches for files that have a com
 ```dart
 // turngen
 ```
+We use the command to start it:
+
+```shell
+dart run turn_gen
+```
 
 For example, when using the `union` script:
 
 ```dart
-// import 'package:meta/meta.dart';
+import 'package:meta/meta.dart';
 // turngen
 /* no: tojson fromJson */
 @immutable
@@ -113,11 +118,6 @@ enum EnumActivity  {
 }
 ```
 
-We use the command to start it:
-
-```shell
-dart run turn_gen
-```
 
 But it takes a bit longer to run this command than to directly call the desired script, which are described below.
 
@@ -160,7 +160,8 @@ After running the script, you will get additional methods and override the stand
 #### Example
   
 ```dart
-enum Speed with Comparable<Speed>  {
+// turngen
+enum Speed implements Comparable<Speed> {
   stop(0),
   slow(5),
   normal(10),
@@ -172,26 +173,15 @@ enum Speed with Comparable<Speed>  {
   // end
 
 //          --TURN_GEN--
+//             (enum)
 //  *************************************
-//           GENERATED CODE 
+//         GENERATED CODE
 //  *************************************
-  
-  /// Creates a new instance of [Speed] from a given int value.
-  ///
-  /// If the given value matches one of the values defined in the [Speed] enumeration,
-  /// a corresponding instance of [Speed] is returned.
-  /// If the given value is null or does not match any of the enumeration values and a fallback
-  /// value is not provided, an [ArgumentError] is thrown.
-  ///
-  /// The `fallback` parameter is an optional [Speed] value that will be returned if the
-  /// given value does not match any of the enumeration values.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum locale = LocaleEnum.fromValue('en', fallback: LocaleEnum.ru);
-  /// print(locale); // Output: LocaleEnum.en(en)
-  /// ```
-  static Speed fromValue(int? value, {Speed? fallback}) {
+
+  static Speed fromValue(
+    int? value, {
+    Speed? fallback,
+  }) {
     switch (value) {
       case 0:
         return stop;
@@ -202,25 +192,15 @@ enum Speed with Comparable<Speed>  {
       case 20:
         return fast;
       default:
-        return fallback ?? (throw ArgumentError.value(
-          value, '', 'Value not found in Speed',));
+        return fallback ??
+            (throw ArgumentError.value(
+              value,
+              '',
+              'Value not found in Speed',
+            ));
     }
   }
 
-
-  /// Calls the appropriate function based on the value of this [Speed] instance.
-  ///
-  /// This method returns the result of calling the appropriate function for the value of the current [Speed] instance.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum ru = LocaleEnum.ru;
-  /// String result = ru.map(
-  ///   ru: () => 'Привет!',
-  ///   en: () => 'Hello!',
-  /// );
-  /// print(result); // Output: 'Привет!'
-  /// ```
   T map<T>({
     required T Function() stop,
     required T Function() slow,
@@ -239,19 +219,6 @@ enum Speed with Comparable<Speed>  {
     }
   }
 
-  /// Calls the appropriate function based on the value of this [Speed] instance.
-  ///
-  /// This method returns the appropriate value for the value of the current [Speed] instance.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum en = LocaleEnum.en;
-  /// String result = en.mapValue(
-  ///   ru: 'Привет!',
-  ///   en: 'Hello!',
-  /// );
-  /// print(result); // Output: 'Hello!'
-  /// ```
   T mapValue<T>({
     required T stop,
     required T slow,
@@ -270,21 +237,6 @@ enum Speed with Comparable<Speed>  {
     }
   }
 
-  /// Calls the appropriate function based on the value of this [Speed] instance.
-  ///
-  /// If the corresponding function for the value of this [Speed] instance is not provided,
-  /// the `orElse` function will be called instead.
-  /// This method returns the value returned by the appropriate function for the value of this [Speed] instance.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum ru = LocaleEnum.ru;
-  /// String result = ru.maybeMap<String>(
-  ///   orElse: () => 'Unknown',
-  ///   ru: () => 'Привет!',
-  /// );
-  /// print(result); // Output: 'Привет!'
-  /// ```
   T maybeMap<T>({
     required T Function() orElse,
     T Function()? stop,
@@ -293,30 +245,12 @@ enum Speed with Comparable<Speed>  {
     T Function()? fast,
   }) =>
       map<T>(
-      stop: stop ?? orElse,
-      slow: slow ?? orElse,
-      normal: normal ?? orElse,
-      fast: fast ?? orElse,
+        stop: stop ?? orElse,
+        slow: slow ?? orElse,
+        normal: normal ?? orElse,
+        fast: fast ?? orElse,
       );
 
-  /// Maps the value of this [Speed] to a new value of type [T], using the given
-  /// values to replace each possible value of the enumeration.
-  ///
-  /// The value that corresponds to the value of this [Speed] is returned from this method.
-  ///
-  /// If no corresponding value is provided for the value of this [Speed], the
-  /// `orElse` parameter is returned from this method.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum locale = LocaleEnum.en;
-  /// String message = locale.maybeMapValue<String>(
-  ///   orElse: 'Unknown locale',
-  ///   ru: 'Привет!',
-  ///   en: 'Hello!',
-  /// );
-  /// print(message); // Output: 'Hello!'
-  /// ```
   T maybeMapValue<T>({
     required T orElse,
     T? stop,
@@ -325,29 +259,12 @@ enum Speed with Comparable<Speed>  {
     T? fast,
   }) =>
       mapValue<T>(
-      stop: stop ?? orElse,
-      slow: slow ?? orElse,
-      normal: normal ?? orElse,
-      fast: fast ?? orElse,
+        stop: stop ?? orElse,
+        slow: slow ?? orElse,
+        normal: normal ?? orElse,
+        fast: fast ?? orElse,
       );
 
- /// Maps the value of this [Speed] to a new value of type [T], using the given
-  /// functions to replace each possible value of the enumeration.
-  /// 
-  /// The function that corresponds to the value of this
-  /// [Speed] is called and its result is returned from this method.
-  ///
-  /// If no corresponding function is provided for the value of this [Speed], `null`
-  /// is returned from this method.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum locale = LocaleEnum.en;
-  /// String? message = locale.maybeMapOrNull<String>(
-  ///   en: () => 'Hello!',
-  /// );
-  /// print(message); // Output: 'Hello!'
-  /// ```
   T? maybeMapOrNull<T>({
     T Function()? stop,
     T Function()? slow,
@@ -362,22 +279,6 @@ enum Speed with Comparable<Speed>  {
         fast: fast,
       );
 
-  /// Maps the value of this [Speed] to a new value of type [T], using the given
-  /// values to replace each possible value of the enumeration.
-  ///
-  /// The value that corresponds to the value of this [Speed] is returned from this method.
-  ///
-  /// If no corresponding value is provided for the value of this [Speed], `null`
-  /// is returned from this method.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum locale = LocaleEnum.en;
-  /// String? message = locale.maybeMapOrNullValue<String>(
-  ///   en: 'Hello!',
-  /// );
-  /// print(message); // Output: 'Hello!'
-  /// ```
   T? maybeMapOrNullValue<T>({
     T? stop,
     T? slow,
@@ -392,24 +293,20 @@ enum Speed with Comparable<Speed>  {
         fast: fast,
       );
 
-  /// Returns a list of all possible values of this enumeration.
-  ///
-  /// The values are returned as a list of strings, representing the value of each
-  /// enumeration value in the same order as they were declared in the enumeration.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// List<String> values = LocaleEnum.getValues();
-  /// print(values); // Output: ['ru', 'en']
-  /// ```
   static List<int> getValues() => Speed.values.map((e) => e.value).toList();
 
   @override
   int compareTo(Speed other) => index.compareTo(other.index);
 
   @override
-  String toString() => 'Speed.$name($value)';
+  String toString() => 'Speed.$name';
+}
 
+extension SpeedX on Speed {
+  bool get stop => this == Speed.stop;
+  bool get slow => this == Speed.slow;
+  bool get normal => this == Speed.normal;
+  bool get fast => this == Speed.fast;
 }
 
 
@@ -593,6 +490,8 @@ toMap: dateRegModel.toMap()
 And to start, we use the command:
 
 ```shell
+dart run turn_gen
+# or
 dart run turn_gen -t data -f <path to your file>
 ```
 
@@ -612,74 +511,110 @@ After executing the script you get a typical `dart` class with new and overridde
 #### Example
 
 ```dart
+
+import 'dart:convert';
+import 'package:collection/collection.dart';
+import 'package:meta/meta.dart';
+
+// turngen
 @immutable
 class RegistrationState {
-  final bool isLoad;
-  final String? name;
-  final List<int> activitySelected;
+  final bool isLoad;
+  final String? name;
+  final List<int> activitySelected;
+
 // end
-//          --TURN_GEN--
-//  *************************************
-//           GENERATED CODE
-//  *************************************
-  const RegistrationState({
-    required this.isLoad,
-    required this.activitySelected,
-    this.name,
-  });
-  /*
-   factory RegistrationState.init() => RegistrationState(
-        isLoad: false,
-        activitySelected: const [],
-      );
-  */
-Map<String, dynamic> toMap() {
-  return <String, dynamic>{
-      'isLoad': isLoad,
-      'activitySelected': activitySelected,
-      'name': name,
-    };
-  }
-    factory RegistrationState.fromMap(Map<String, dynamic> map) {
-    return RegistrationState(
-      isLoad: map['isLoad'] as bool,
-      activitySelected: (map['activitySelected'] as List<dynamic>).map((e) => e as int).toList(),
-      name: map['name'] as String?,
-    );
-  }
-  RegistrationState copyWith({
-    bool? isLoad,
-    List<int>? activitySelected,
-    String? name,
-  }) {
-    return RegistrationState(
-      isLoad: isLoad ?? this.isLoad,
-      activitySelected: activitySelected ?? this.activitySelected,
-      name: name ?? this.name,
-    );
-  }
-  String toJson() => json.encode(toMap());  
-  factory RegistrationState.fromJson(String source) => RegistrationState.fromMap(json.decode(source) as Map<String, dynamic>,);  
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is RegistrationState &&
-            (identical(other.isLoad, isLoad) || other.isLoad == isLoad)&&
-            const DeepCollectionEquality().equals(other.activitySelected, activitySelected,)&&
-            (identical(other.name, name) || other.name == name));
-  }
-  @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        isLoad,
-        const DeepCollectionEquality().hash(activitySelected,),
-        name,
-]);
-      @override
-  String toString() {
-    return 'RegistrationState(isLoad: $isLoad, activitySelected: $activitySelected, name: $name, )';
-    }
+
+//          --TURN_GEN--
+//             (data)
+//  *************************************
+//         GENERATED CODE
+//  *************************************
+  const RegistrationState({
+    required this.isLoad,
+    required this.activitySelected,
+    this.name,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'isLoad': isLoad,
+      'name': name,
+      'activitySelected': activitySelected,
+    };
+  }
+
+  factory RegistrationState.fromMap(Map<dynamic, dynamic> map) {
+    return RegistrationState(
+      isLoad: map['isLoad'] != null
+          ? map['isLoad'] as bool
+          : throw Exception(
+              "map['isLoad']_type_'Null'",
+            ),
+      name: map['name'] as String?,
+      activitySelected: map['activitySelected'] != null
+          ? (map['activitySelected'] as List<dynamic>)
+              .map((e) => e as int)
+              .toList()
+          : throw Exception(
+              "map['activitySelected']_type_'Null'",
+            ),
+    );
+  }
+
+  RegistrationState copyWith({
+    bool? isLoad,
+    String? name,
+    List<int>? activitySelected,
+  }) {
+    return RegistrationState(
+      isLoad: isLoad ?? this.isLoad,
+      name: name ?? this.name,
+      activitySelected: activitySelected ?? this.activitySelected,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+  factory RegistrationState.fromJson(String source) =>
+      RegistrationState.fromMap(
+        json.decode(source) as Map<String, dynamic>,
+      );
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is RegistrationState &&
+            (identical(
+                  other.isLoad,
+                  isLoad,
+                ) ||
+                other.isLoad == isLoad) &&
+            (identical(
+                  other.name,
+                  name,
+                ) ||
+                other.name == name) &&
+            const DeepCollectionEquality().equals(
+              other.activitySelected,
+              activitySelected,
+            ));
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        isLoad,
+        name,
+        const DeepCollectionEquality().hash(
+          activitySelected,
+        ),
+      ]);
+
+  @override
+  String toString() {
+    return 'RegistrationState(isLoad: $isLoad, name: $name, activitySelected: $activitySelected, )';
+  }
 }
 ```
 
@@ -688,6 +623,10 @@ Map<String, dynamic> toMap() {
 TurnGen scripts can generate "union types" by creating a class with named constructors, but this requires making a fake private class. This class is not used anywhere, but it is useful for modifying the generated code. And add a `// end` comment at the end of the class, like in the example below:
 
 ```dart
+import 'package:collection/collection.dart';
+import 'package:meta/meta.dart';
+
+// turngen
 class _Union {
   _Union.success({required List<User> listUser});
   _Union.load();
@@ -703,6 +642,8 @@ class _Union {
 And to start, we use the command:
 
 ```shell
+dart run turn_gen
+# or
 dart run turn_gen -t union -f <path to your file>
 ```
 

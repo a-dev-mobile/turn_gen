@@ -1,6 +1,6 @@
 // ignore_for_file: avoid-non-null-assertion, non_constant_identifier_names, constant_identifier_names
-
-enum EnumTypeVarable with Comparable<EnumTypeVarable> {
+// turngen
+enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
   enum_('enum'),
   string_('String'),
   bool_('bool'),
@@ -64,12 +64,15 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
 // end
 
 //          --TURN_GEN--
-//          v0.8.1 (enum)
+//             (enum)
 //  *************************************
 //         GENERATED CODE
 //  *************************************
 
-  static EnumTypeVarable fromValue(String? value, {EnumTypeVarable? fallback}) {
+  static EnumTypeVarable fromValue(
+    String? value, {
+    EnumTypeVarable? fallback,
+  }) {
     switch (value) {
       case 'enum':
         return enum_;
@@ -1020,5 +1023,69 @@ enum EnumTypeVarable with Comparable<EnumTypeVarable> {
   int compareTo(EnumTypeVarable other) => index.compareTo(other.index);
 
   @override
-  String toString() => 'EnumTypeVarable.$name($value)';
+  String toString() => 'EnumTypeVarable.$name';
+}
+
+extension EnumTypeVarableX on EnumTypeVarable {
+  bool get enum_ => this == EnumTypeVarable.enum_;
+  bool get string_ => this == EnumTypeVarable.string_;
+  bool get bool_ => this == EnumTypeVarable.bool_;
+  bool get int_ => this == EnumTypeVarable.int_;
+  bool get double_ => this == EnumTypeVarable.double_;
+  bool get num_ => this == EnumTypeVarable.num_;
+  bool get list_ => this == EnumTypeVarable.list_;
+  bool get list_bool_ => this == EnumTypeVarable.list_bool_;
+  bool get list_other => this == EnumTypeVarable.list_other;
+  bool get list_int_ => this == EnumTypeVarable.list_int_;
+  bool get list_string_ => this == EnumTypeVarable.list_string_;
+  bool get list_double_ => this == EnumTypeVarable.list_double_;
+  bool get list_bool_null => this == EnumTypeVarable.list_bool_null;
+  bool get list_int_null => this == EnumTypeVarable.list_int_null;
+  bool get list_string_null => this == EnumTypeVarable.list_string_null;
+  bool get list_double_null => this == EnumTypeVarable.list_double_null;
+  bool get list_dynamic_ => this == EnumTypeVarable.list_dynamic_;
+  bool get list_map_int_string_ => this == EnumTypeVarable.list_map_int_string_;
+  bool get list_map_int_string_null =>
+      this == EnumTypeVarable.list_map_int_string_null;
+  bool get list_map_int_dynamic_ =>
+      this == EnumTypeVarable.list_map_int_dynamic_;
+  bool get list_map_string_dynamic_ =>
+      this == EnumTypeVarable.list_map_string_dynamic_;
+  bool get set_ => this == EnumTypeVarable.set_;
+  bool get set_string => this == EnumTypeVarable.set_string;
+  bool get set_string_null => this == EnumTypeVarable.set_string_null;
+  bool get set_int => this == EnumTypeVarable.set_int;
+  bool get set_int_null => this == EnumTypeVarable.set_int_null;
+  bool get set_bool => this == EnumTypeVarable.set_bool;
+  bool get set_bool_null => this == EnumTypeVarable.set_bool_null;
+  bool get set_double => this == EnumTypeVarable.set_double;
+  bool get set_double_null => this == EnumTypeVarable.set_double_null;
+  bool get map_ => this == EnumTypeVarable.map_;
+  bool get map_string_dynamic_ => this == EnumTypeVarable.map_string_dynamic_;
+  bool get map_string_bool => this == EnumTypeVarable.map_string_bool;
+  bool get map_string_int => this == EnumTypeVarable.map_string_int;
+  bool get map_string_string => this == EnumTypeVarable.map_string_string;
+  bool get map_string_double_ => this == EnumTypeVarable.map_string_double_;
+  bool get map_string_bool_null => this == EnumTypeVarable.map_string_bool_null;
+  bool get map_string_int_null => this == EnumTypeVarable.map_string_int_null;
+  bool get map_string_string_null =>
+      this == EnumTypeVarable.map_string_string_null;
+  bool get map_string_double_null =>
+      this == EnumTypeVarable.map_string_double_null;
+  bool get map_int_string => this == EnumTypeVarable.map_int_string;
+  bool get map_int_string_null => this == EnumTypeVarable.map_int_string_null;
+  bool get map_int_double => this == EnumTypeVarable.map_int_double;
+  bool get map_int_double_null => this == EnumTypeVarable.map_int_double_null;
+  bool get map_int_bool => this == EnumTypeVarable.map_int_bool;
+  bool get map_int_bool_null => this == EnumTypeVarable.map_int_bool_null;
+  bool get map_int_dynamic_ => this == EnumTypeVarable.map_int_dynamic_;
+  bool get date_time => this == EnumTypeVarable.date_time;
+  bool get map_dynamic_dynamic_ => this == EnumTypeVarable.map_dynamic_dynamic_;
+  bool get data => this == EnumTypeVarable.data;
+  bool get list_data => this == EnumTypeVarable.list_data;
+  bool get list_enum => this == EnumTypeVarable.list_enum;
+  bool get list_enum_null => this == EnumTypeVarable.list_enum_null;
+  bool get list_data_null => this == EnumTypeVarable.list_data_null;
+  bool get null_ => this == EnumTypeVarable.null_;
+  bool get none => this == EnumTypeVarable.none;
 }

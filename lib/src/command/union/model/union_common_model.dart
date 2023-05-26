@@ -19,7 +19,8 @@ class UnionCommonModel {
   final bool isHaveOnlyList;
   /* init: const []*/
   final List<UnionItemModel> listUnion;
-
+  /* init: const []*/
+  final List<SettingClassModel> listSettingClass;
   // end
 
 //          --TURN_GEN--
@@ -35,6 +36,7 @@ class UnionCommonModel {
     this.listParams = const [],
     this.isHaveOnlyList = false,
     this.listUnion = const [],
+    this.listSettingClass = const [],
   });
 
   UnionCommonModel copyWith({
@@ -45,6 +47,7 @@ class UnionCommonModel {
     List<String>? listParams,
     bool? isHaveOnlyList,
     List<UnionItemModel>? listUnion,
+    List<SettingClassModel>? listSettingClass,
   }) {
     return UnionCommonModel(
       nameClass: nameClass ?? this.nameClass,
@@ -54,6 +57,7 @@ class UnionCommonModel {
       listParams: listParams ?? this.listParams,
       isHaveOnlyList: isHaveOnlyList ?? this.isHaveOnlyList,
       listUnion: listUnion ?? this.listUnion,
+      listSettingClass: listSettingClass ?? this.listSettingClass,
     );
   }
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, parameter_assignments
 import 'dart:io';
 
 import 'package:turn_gen/src/src.dart';
@@ -39,6 +39,14 @@ Future<void> unionStart({
     content: contentFile,
     regex: r'class[\s\S]+?(\/\/\s+end)',
   );
+
+  final rawSettingClass = getSettingClass(contentFile);
+
+  final listSettingClass = [
+    ...getListSettingClass(
+      content: rawSettingClass,
+    ),
+  ];
   // remove comment
   classToEnd = classToEnd.replaceAll(RegExp(r'[\s]//.*'), '');
 
@@ -82,42 +90,14 @@ Future<void> unionStart({
     for (var i = 0; i < params.length; i++) {
       var v = params[i].trim();
 
-      v = v.replaceAll(RegExp(r'^\(\{'), '');
-      v = v.replaceAll(RegExp(r'^\(\['), '');
-      v = v.replaceAll(RegExp(r'\]\)$'), '');
-      v = v.replaceAll(RegExp(r'\}\)$'), '');
-
-      if (!v.contains(RegExp(r'\(\)$'))) {
-        v = v.replaceAll(RegExp(r'\)$'), '');
-      }
-      // if (!v.contains(RegExp(r'\[\]$'))) {
-      //   v = v.replaceAll(RegExp(r'\]$'), '');
-      // }
-      v = v.replaceAll(RegExp(r'^\('), '');
-      v = v.replaceAll(RegExp(r'^\['), '');
-      v = v.replaceAll(RegExp(r'^\{'), '');
-      v = v.replaceAll(RegExp(r'\}$'), '');
+      v = _replaceOtherSymbol(v);
 
       if (v.length <= 3) continue;
       if (isHaveOpenBracket) {
         final sum = listIndex.map((e) => params[e]).toList().join(',');
         v = '$sum, $v';
 
-        v = v.replaceAll(RegExp(r'^\(\{'), '');
-        v = v.replaceAll(RegExp(r'^\(\['), '');
-        v = v.replaceAll(RegExp(r'\]\)$'), '');
-        v = v.replaceAll(RegExp(r'\}\)$'), '');
-
-        if (!v.contains(RegExp(r'\(\)$'))) {
-          v = v.replaceAll(RegExp(r'\)$'), '');
-        }
-        // if (!v.contains(RegExp(r'\[\]$'))) {
-        //   v = v.replaceAll(RegExp(r'\]$'), '');
-        // }
-        v = v.replaceAll(RegExp(r'^\('), '');
-        v = v.replaceAll(RegExp(r'^\['), '');
-        v = v.replaceAll(RegExp(r'^\{'), '');
-        v = v.replaceAll(RegExp(r'\}$'), '');
+        v = _replaceOtherSymbol(v);
 
         if (v.contains('<') && !v.contains('>')) {
           listIndex.add(i);
@@ -292,6 +272,7 @@ Future<void> unionStart({
     nameClass: className,
     listParams: listStartWriteParams,
     listUnion: listUnionItem,
+    listSettingClass: listSettingClass,
   );
 
 // rebuild the general model of all parameters with a unique parameter for each union
@@ -312,6 +293,24 @@ Future<void> unionStart({
 
   final file = File(path);
   writeToFileUnion(logger, file, newCommonModel);
+}
+
+String _replaceOtherSymbol(String v) {
+  v = v.replaceAll(RegExp(r'^\(\{'), '');
+  v = v.replaceAll(RegExp(r'^\(\['), '');
+  v = v.replaceAll(RegExp(r'\]\)$'), '');
+  v = v.replaceAll(RegExp(r'\}\)$'), '');
+
+  if (!v.contains(RegExp(r'\(\)$'))) {
+    v = v.replaceAll(RegExp(r'\)$'), '');
+  }
+
+  v = v.replaceAll(RegExp(r'^\('), '');
+  v = v.replaceAll(RegExp(r'^\['), '');
+  v = v.replaceAll(RegExp(r'^\{'), '');
+  v = v.replaceAll(RegExp(r'\}$'), '');
+
+  return v;
 }
 
 String _getCommentDoc(String content) {

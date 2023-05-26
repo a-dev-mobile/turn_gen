@@ -1,4 +1,5 @@
-enum EnumKeySetting with Comparable<EnumKeySetting> {
+// turngen
+enum EnumKeySetting implements Comparable<EnumKeySetting> {
   type('type:'),
   fromMap('frommap:'),
   toMap('tomap:'),
@@ -14,27 +15,15 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
 // end
 
 //          --TURN_GEN--
-//             v0.4.0
+//             (enum)
 //  *************************************
-//           GENERATED CODE
+//         GENERATED CODE
 //  *************************************
 
-  /// Creates a new instance of [EnumKeySetting] from a given String value.
-  ///
-  /// If the given value matches one of the values defined in the [EnumKeySetting] enumeration,
-  /// a corresponding instance of [EnumKeySetting] is returned.
-  /// If the given value is null or does not match any of the enumeration values and a fallback
-  /// value is not provided, an [ArgumentError] is thrown.
-  ///
-  /// The `fallback` parameter is an optional [EnumKeySetting] value that will be returned if the
-  /// given value does not match any of the enumeration values.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum locale = LocaleEnum.fromValue('en', fallback: LocaleEnum.ru);
-  /// print(locale); // Output: LocaleEnum.en(en)
-  /// ```
-  static EnumKeySetting fromValue(String? value, {EnumKeySetting? fallback}) {
+  static EnumKeySetting fromValue(
+    String? value, {
+    EnumKeySetting? fallback,
+  }) {
     switch (value) {
       case 'type:':
         return type;
@@ -62,19 +51,6 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
     }
   }
 
-  /// Calls the appropriate function based on the value of this [EnumKeySetting] instance.
-  ///
-  /// This method returns the result of calling the appropriate function for the value of the current [EnumKeySetting] instance.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum ru = LocaleEnum.ru;
-  /// String result = ru.map(
-  ///   ru: () => 'Привет!',
-  ///   en: () => 'Hello!',
-  /// );
-  /// print(result); // Output: 'Привет!'
-  /// ```
   T map<T>({
     required T Function() type,
     required T Function() fromMap,
@@ -105,19 +81,6 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
     }
   }
 
-  /// Calls the appropriate function based on the value of this [EnumKeySetting] instance.
-  ///
-  /// This method returns the appropriate value for the value of the current [EnumKeySetting] instance.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum en = LocaleEnum.en;
-  /// String result = en.mapValue(
-  ///   ru: 'Привет!',
-  ///   en: 'Hello!',
-  /// );
-  /// print(result); // Output: 'Hello!'
-  /// ```
   T mapValue<T>({
     required T type,
     required T fromMap,
@@ -148,21 +111,6 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
     }
   }
 
-  /// Calls the appropriate function based on the value of this [EnumKeySetting] instance.
-  ///
-  /// If the corresponding function for the value of this [EnumKeySetting] instance is not provided,
-  /// the `orElse` function will be called instead.
-  /// This method returns the value returned by the appropriate function for the value of this [EnumKeySetting] instance.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum ru = LocaleEnum.ru;
-  /// String result = ru.maybeMap<String>(
-  ///   orElse: () => 'Unknown',
-  ///   ru: () => 'Привет!',
-  /// );
-  /// print(result); // Output: 'Привет!'
-  /// ```
   T maybeMap<T>({
     required T Function() orElse,
     T Function()? type,
@@ -185,24 +133,6 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
         none: none ?? orElse,
       );
 
-  /// Maps the value of this [EnumKeySetting] to a new value of type [T], using the given
-  /// values to replace each possible value of the enumeration.
-  ///
-  /// The value that corresponds to the value of this [EnumKeySetting] is returned from this method.
-  ///
-  /// If no corresponding value is provided for the value of this [EnumKeySetting], the
-  /// `orElse` parameter is returned from this method.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum locale = LocaleEnum.en;
-  /// String message = locale.maybeMapValue<String>(
-  ///   orElse: 'Unknown locale',
-  ///   ru: 'Привет!',
-  ///   en: 'Hello!',
-  /// );
-  /// print(message); // Output: 'Hello!'
-  /// ```
   T maybeMapValue<T>({
     required T orElse,
     T? type,
@@ -225,23 +155,6 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
         none: none ?? orElse,
       );
 
-  /// Maps the value of this [EnumKeySetting] to a new value of type [T], using the given
-  /// functions to replace each possible value of the enumeration.
-  ///
-  /// The function that corresponds to the value of this
-  /// [EnumKeySetting] is called and its result is returned from this method.
-  ///
-  /// If no corresponding function is provided for the value of this [EnumKeySetting], `null`
-  /// is returned from this method.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum locale = LocaleEnum.en;
-  /// String? message = locale.maybeMapOrNull<String>(
-  ///   en: () => 'Hello!',
-  /// );
-  /// print(message); // Output: 'Hello!'
-  /// ```
   T? maybeMapOrNull<T>({
     T Function()? type,
     T Function()? fromMap,
@@ -264,22 +177,6 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
         none: none,
       );
 
-  /// Maps the value of this [EnumKeySetting] to a new value of type [T], using the given
-  /// values to replace each possible value of the enumeration.
-  ///
-  /// The value that corresponds to the value of this [EnumKeySetting] is returned from this method.
-  ///
-  /// If no corresponding value is provided for the value of this [EnumKeySetting], `null`
-  /// is returned from this method.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// LocaleEnum locale = LocaleEnum.en;
-  /// String? message = locale.maybeMapOrNullValue<String>(
-  ///   en: 'Hello!',
-  /// );
-  /// print(message); // Output: 'Hello!'
-  /// ```
   T? maybeMapOrNullValue<T>({
     T? type,
     T? fromMap,
@@ -302,16 +199,6 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
         none: none,
       );
 
-  /// Returns a list of all possible values of this enumeration.
-  ///
-  /// The values are returned as a list of strings, representing the value of each
-  /// enumeration value in the same order as they were declared in the enumeration.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// List<String> values = LocaleEnum.getValues();
-  /// print(values); // Output: ['ru', 'en']
-  /// ```
   static List<String> getValues() =>
       EnumKeySetting.values.map((e) => e.value).toList();
 
@@ -319,5 +206,16 @@ enum EnumKeySetting with Comparable<EnumKeySetting> {
   int compareTo(EnumKeySetting other) => index.compareTo(other.index);
 
   @override
-  String toString() => 'EnumKeySetting.$name($value)';
+  String toString() => 'EnumKeySetting.$name';
+}
+
+extension EnumKeySettingX on EnumKeySetting {
+  bool get type => this == EnumKeySetting.type;
+  bool get fromMap => this == EnumKeySetting.fromMap;
+  bool get toMap => this == EnumKeySetting.toMap;
+  bool get init => this == EnumKeySetting.init;
+  bool get only => this == EnumKeySetting.only;
+  bool get no => this == EnumKeySetting.no;
+  bool get use => this == EnumKeySetting.use;
+  bool get none => this == EnumKeySetting.none;
 }

@@ -16,19 +16,11 @@ Future<void> dataStart({
   msgIfNodEnd(contentFile, logger);
 // prepare settings for splitting
 
-  final rawSettingClass = UtilsRegex.getTextRegexMatch(
-    content: contentFile,
-    regex: r'\/\*[\s\S]+?\*\/\s+(class|@immutable)',
-  );
+  final rawSettingClass = getSettingClass(contentFile);
 
-  final settingClass = UtilsRegex.getTextRegexMatch(
-    content: rawSettingClass,
-    regex: r'\/\*[\s\S]+?\*\/',
-  );
-
-  final listFirstSetting = <FirstSetting>[
-    ..._getSetting(
-      content: settingClass,
+  final listFirstSetting = <SettingClassModel>[
+    ...getListSettingClass(
+      content: rawSettingClass,
     ),
   ];
 
@@ -344,59 +336,6 @@ String _formatFinalVarablse(String content) {
       .trim();
 
   return contentFormat;
-}
-
-List<FirstSetting> _getSetting({
-  required String content,
-}) {
-  final settingRegExp = RegExp(r'(\w+\s+:)|(\w+:)');
-  final listFirstSetting = <FirstSetting>[];
-
-  if (!content.contains(settingRegExp)) return listFirstSetting;
-
-  final contentFormat = content
-      .replaceAll(':', ': ')
-      .replaceAll(',', ', ')
-      .replaceAll('/*', '')
-      .replaceAll('*/', '')
-      .replaceAll(RegExp(r'\s+'), ' ')
-      .replaceAll(' ,', '')
-      .replaceAll(' :', ':')
-      .trim();
-
-  var keySetting = EnumKeySetting.none;
-
-  for (final key in EnumKeySetting.values) {
-    keySetting = EnumKeySetting.none;
-
-    // if it contains settings, then continue
-    if (contentFormat.contains(key.value)) {
-      keySetting = key;
-
-      final tempList = contentFormat.split(' ');
-      final indexKey = tempList.indexOf(key.value);
-      final listSetting = <EnumValueSettingDataClass>[];
-      for (var i = indexKey + 1; i < tempList.length; i++) {
-        if (tempList[i].contains(':')) break;
-        final setting = tempList[i];
-        final tempEnum = EnumValueSettingDataClass.fromValue(
-          setting.toLowerCase(),
-          fallback: EnumValueSettingDataClass.none,
-        );
-        if (tempEnum != EnumValueSettingDataClass.none) {
-          listSetting.add(tempEnum);
-        }
-      }
-
-      listFirstSetting.add(
-        FirstSetting(keySetting: keySetting, listValueSetting: listSetting),
-      );
-    } else {
-      continue;
-    }
-  }
-
-  return listFirstSetting;
 }
 
 String _getNameClass(String classHeader) {

@@ -3,6 +3,77 @@ import 'dart:io';
 
 import 'package:turn_gen/src/src.dart';
 
+// получит не форматированную строку первоночальных настроек класса
+String getSettingClass(String contentFile) {
+  final raw = UtilsRegex.getTextRegexMatch(
+    content: contentFile,
+    regex: r'\/\*[\s\S]+?\*\/\s+(class|@immutable)',
+  );
+
+  return UtilsRegex.getTextRegexMatch(
+    content: raw,
+    regex: r'\/\*[\s\S]+?\*\/',
+  );
+}
+
+// преобразовать не форматированную строку первоночальных настроек класса
+// в model
+List<SettingClassModel> getListSettingClass({
+  required String content,
+}) {
+  final settingRegExp = RegExp(r'(\w+\s+:)|(\w+:)');
+  final listFirstSetting = <SettingClassModel>[];
+
+  if (!content.contains(settingRegExp)) return listFirstSetting;
+
+  final contentFormat = content
+      .replaceAll(':', ': ')
+      .replaceAll(',', ', ')
+      .replaceAll('/*', '')
+      .replaceAll('*/', '')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .replaceAll(' ,', '')
+      .replaceAll(' :', ':')
+      .trim();
+
+  var keySetting = EnumKeySetting.none;
+
+  for (final key in EnumKeySetting.values) {
+    keySetting = EnumKeySetting.none;
+
+    // if it contains settings, then continue
+    if (contentFormat.contains(key.value)) {
+      keySetting = key;
+
+      final tempList = contentFormat.split(' ');
+      final indexKey = tempList.indexOf(key.value);
+      final listSetting = <EnumSettingClass>[];
+      for (var i = indexKey + 1; i < tempList.length; i++) {
+        if (tempList[i].contains(':')) break;
+        final setting = tempList[i];
+        final tempEnum = EnumSettingClass.fromValue(
+          setting.toLowerCase(),
+          fallback: EnumSettingClass.none,
+        );
+        if (tempEnum != EnumSettingClass.none) {
+          listSetting.add(tempEnum);
+        }
+      }
+
+      listFirstSetting.add(
+        SettingClassModel(
+          keySetting: keySetting,
+          listValueSetting: listSetting,
+        ),
+      );
+    } else {
+      continue;
+    }
+  }
+
+  return listFirstSetting;
+}
+
 Map<EnumKeySetting, String> getMapSettingVarable(String content) {
   var contentFormat = content
       .replaceAll(':', ': ')

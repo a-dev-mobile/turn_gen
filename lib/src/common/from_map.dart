@@ -657,7 +657,7 @@ map['$name'] != null
         return "(map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(k, e as String)) ?? $initComment";
       } else if (no_null_default_no) {
         return _getValueWithException(
-          "Map<String, String>.from(map['$name'] as Map)",
+          "Map<String, String>.from(map['$name'] as Map,)",
           name,
         );
       }
@@ -671,7 +671,7 @@ map['$name'] != null
       } else if (no_null_default_yes) {
         return "(map['$name'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(k, e as String?)) ?? $initComment";
       } else if (no_null_default_no) {
-        return "Map<String, String>.from(map['$name'] as Map)";
+        return "Map<String, String>.from(map['$name'] as Map,)";
       }
       return error;
 
@@ -684,7 +684,7 @@ map['$name'] != null
         return "(map['$name'] as Map<String, dynamic>?)?.map( (k, e) => MapEntry(k, e as int)) ?? $initComment";
       } else if (no_null_default_no) {
         return _getValueWithException(
-          "Map<String, int>.from(map['$name'] as Map)",
+          "Map<String, int>.from(map['$name'] as Map,)",
           name,
         );
       }
@@ -698,7 +698,7 @@ map['$name'] != null
         return "(map['$name'] as Map<String, dynamic>?)?.map( (k, e) => MapEntry(k, e as int?)) ?? $initComment";
       } else if (no_null_default_no) {
         return _getValueWithException(
-          "Map<String, int>.from(map['$name'] as Map)",
+          "Map<String, int>.from(map['$name'] as Map,)",
           name,
         );
       }
@@ -820,19 +820,19 @@ map['$name'] != null
     case EnumTypeVarable.data:
       if (yes_null_default_yes) {
         return _getValueWithInit(
-          "$nameObject.fromMap(Map<String, dynamic>.from(map['$name'] as Map),)",
+          "$nameObject.fromMap(Map<String, dynamic>.from(map['$name'] as Map,),)",
           name,
           initComment,
         );
       } else if (yes_null_default_no) {
         return _getValueWithInit(
-          "$nameObject.fromMap(Map<String, dynamic>.from(map['$name'] as Map),)",
+          "$nameObject.fromMap(Map<String, dynamic>.from(map['$name'] as Map,),)",
           name,
           'null',
         );
       } else if (no_null_default_yes) {
         return _getValueWithInit(
-          "$nameObject.fromMap(Map<String, dynamic>.from(map['$name'] as Map),)",
+          "$nameObject.fromMap(Map<String, dynamic>.from(map['$name'] as Map,),)",
           name,
           initComment,
         );

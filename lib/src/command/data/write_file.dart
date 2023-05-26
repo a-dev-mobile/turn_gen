@@ -8,7 +8,7 @@ bool _isShowComment = false;
 void writeToFileData(
   FLILogger logger,
   List<String> listNameNoSortVar,
-  List<FirstSetting> listFirstSetting,
+  List<SettingClassModel> listFirstSetting,
   String contentFile,
   String classHeader,
   String className,
@@ -32,52 +32,46 @@ void writeToFileData(
   final noSetting = listFirstSetting
       .firstWhere(
         (v) => v.keySetting == EnumKeySetting.no,
-        orElse: FirstSetting.new,
+        orElse: SettingClassModel.new,
       )
       .listValueSetting;
 
   final onlySetting = listFirstSetting
       .firstWhere(
         (v) => v.keySetting == EnumKeySetting.only,
-        orElse: FirstSetting.new,
+        orElse: SettingClassModel.new,
       )
       .listValueSetting;
   final useSetting = listFirstSetting
       .firstWhere(
         (v) => v.keySetting == EnumKeySetting.use,
-        orElse: FirstSetting.new,
+        orElse: SettingClassModel.new,
       )
       .listValueSetting;
 
   _msgOnlyOne(onlySetting, logger);
 
-  var isActiveToMap = !noSetting.contains(EnumValueSettingDataClass.toMap);
-  var isActiveToJson = !noSetting.contains(EnumValueSettingDataClass.toJson);
-  var isActiveFromMap = !noSetting.contains(EnumValueSettingDataClass.fromMap);
-  var isActiveFromJson =
-      !noSetting.contains(EnumValueSettingDataClass.fromJson);
-  var isActiveToString =
-      !noSetting.contains(EnumValueSettingDataClass.toString_);
-  var isActiveHash = !noSetting.contains(EnumValueSettingDataClass.hash_);
-  var isActiveEquals = !noSetting.contains(EnumValueSettingDataClass.equals_);
-  var isActiveCopyWith =
-      !noSetting.contains(EnumValueSettingDataClass.copyWith);
+  var isActiveToMap = !noSetting.contains(EnumSettingClass.toMap);
+  var isActiveToJson = !noSetting.contains(EnumSettingClass.toJson);
+  var isActiveFromMap = !noSetting.contains(EnumSettingClass.fromMap);
+  var isActiveFromJson = !noSetting.contains(EnumSettingClass.fromJson);
+  var isActiveToString = !noSetting.contains(EnumSettingClass.toString_);
+  var isActiveHash = !noSetting.contains(EnumSettingClass.hash_);
+  var isActiveEquals = !noSetting.contains(EnumSettingClass.equals_);
+  var isActiveCopyWith = !noSetting.contains(EnumSettingClass.copyWith);
   // only no setting
-  final isOnlyCopyWith =
-      onlySetting.contains(EnumValueSettingDataClass.copyWith);
-  final isOnlyFromMap = onlySetting.contains(EnumValueSettingDataClass.fromMap);
-  final isOnlyFromJson =
-      onlySetting.contains(EnumValueSettingDataClass.fromJson);
-  final isOnlyToJson = onlySetting.contains(EnumValueSettingDataClass.toJson);
-  final isOnlyToMap = onlySetting.contains(EnumValueSettingDataClass.toMap);
+  final isOnlyCopyWith = onlySetting.contains(EnumSettingClass.copyWith);
+  final isOnlyFromMap = onlySetting.contains(EnumSettingClass.fromMap);
+  final isOnlyFromJson = onlySetting.contains(EnumSettingClass.fromJson);
+  final isOnlyToJson = onlySetting.contains(EnumSettingClass.toJson);
+  final isOnlyToMap = onlySetting.contains(EnumSettingClass.toMap);
 //   use setting
-  final isUseEquatable =
-      useSetting.contains(EnumValueSettingDataClass.equatable);
+  final isUseEquatable = useSetting.contains(EnumSettingClass.equatable);
 
 // hash_and_equals disable or enable at the same time
   var isActiveHashAndEquals = isActiveEquals && isActiveHash;
 
-  if (!isActiveToMap | !isActiveToJson) {
+  if (!isActiveToMap || !isActiveToJson) {
     isActiveToJson = false;
     isActiveToMap = false;
   }
@@ -187,7 +181,7 @@ ${_getEquatable(listNameNoSortVar, isUseEquatable)}}\n''';
 }
 
 void _msgOnlyOne(
-  List<EnumValueSettingDataClass> onlySetting,
+  List<EnumSettingClass> onlySetting,
   FLILogger logger,
 ) {
   if (onlySetting.length > 1) {

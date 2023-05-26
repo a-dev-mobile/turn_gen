@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:turn_gen/src/command/import/run_import.dart';
 import 'package:turn_gen/src/src.dart';
 
 // ignore: prefer-static-class

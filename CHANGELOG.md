@@ -1,4 +1,9 @@
 
+## 1.0.0
+
+- added the ability to disable the `fromMap`, `toMap` methods in the `union` script by adding a comment above the class`/* no: tomap frommap */` similar to `data` script
+- updated README.md
+
 ## 0.9.8-0.9.9
 
 - now `fromMap` method for `enum` type can accept both index and name

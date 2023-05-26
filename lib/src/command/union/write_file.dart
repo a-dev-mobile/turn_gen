@@ -9,6 +9,28 @@ void writeToFileUnion(
   File file,
   UnionCommonModel model,
 ) {
+  // находим настройки
+  final noSetting = model.listSettingClass
+      .firstWhere(
+        (v) => v.keySetting == EnumKeySetting.no,
+        orElse: SettingClassModel.new,
+      )
+      .listValueSetting;
+  var isActiveToMap = !noSetting.contains(EnumSettingClass.toMap);
+  var isActiveToJson = !noSetting.contains(EnumSettingClass.toJson);
+  var isActiveFromMap = !noSetting.contains(EnumSettingClass.fromMap);
+  var isActiveFromJson = !noSetting.contains(EnumSettingClass.fromJson);
+
+  if (!isActiveToMap || !isActiveToJson) {
+    isActiveToJson = false;
+    isActiveToMap = false;
+  }
+
+  if (!isActiveFromMap || !isActiveFromJson) {
+    isActiveFromJson = false;
+    isActiveFromMap = false;
+  }
+
   /* ****************************** */
   final sbAllParams = StringBuffer();
   for (final v in model.listParams) {
@@ -403,7 +425,7 @@ $sbMaybeMapOrNull1    }
   } else {
     sbFromJson.write('''
 
- factory $nameClass.fromJson(String source, [${model.nameClass}Tag? tag])  => $nameClass.fromMap(
+ factory $nameClass.fromJson(String source, [${model.nameClass}Tag? tag,])  => $nameClass.fromMap(
         json.decode(source) as Map<String, dynamic>, tag,
       );
 
@@ -635,14 +657,16 @@ $sbUnionTag
 @immutable
 ${model.comments}
 ${model.classHeader}
+$sbAllParams
 $sbUnionClass
 $sbUnionGetterIsType
-  String toJson() => jsonEncode(toMap());
 
-$sbFromJson
-$sbFromList
-$sbToMap
-$sbFromMap
+
+${isActiveFromJson ? sbFromJson : ''}
+${isActiveFromJson ? sbFromList : ''}
+${isActiveToMap ? sbToMap : ''}
+${isActiveToMap ? 'String toJson() => json.encode(toMap());\n' : ''}
+${isActiveFromMap ? sbFromMap : ''}
 $sbMap
 $sbMaybeMap
 $sbMapOrNull
@@ -651,7 +675,7 @@ $sbWhere
 $sbEquals
 $sbHash
 $sbToString
-$sbAllParams
+
 }
 
 
