@@ -1,5 +1,5 @@
 
-## 0.9.8
+## 0.9.8-0.9.9
 
 - now `fromMap` method for `enum` type can accept both index and name
 

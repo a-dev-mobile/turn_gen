@@ -42,17 +42,19 @@
 
 //   factory Data1.fromMap(Map<dynamic, dynamic> map) {
 //     return Data1(
-//       enumTypeRun_init: map['enumTypeRun_init'] is int
-//           ? EnumTypeRun.values[map['enumTypeRun_init'] as int]
-//           : map['enumTypeRun_init'] is String
-//               // ignore: prefer-enums-by-name
-//               ? EnumTypeRun.values.firstWhere(
-//                   (e) =>
-//                       e.toString().split('.').last ==
-//                       map['enumTypeRun_init'].toString(),
-//                   orElse: () => EnumTypeRun.run,
-//                 )
-//               : EnumTypeRun.run,
+//       enumTypeRun_init: map['enumTypeRun_init'] != null
+//           ? map['enumTypeRun_init'] is int
+//               ? EnumTypeRun.values[map['enumTypeRun_init'] as int]
+//               : map['enumTypeRun_init'] is String
+//                   // ignore: prefer-enums-by-name
+//                   ? EnumTypeRun.values.firstWhere(
+//                       (e) =>
+//                           e.toString().split('.').last ==
+//                           map['enumTypeRun_init'].toString(),
+//                       orElse: () => EnumTypeRun.run,
+//                     )
+//                   : EnumTypeRun.run
+//           : EnumTypeRun.run,
 //       enumTypeRun_null_init: map['enumTypeRun_null_init'] != null
 //           ? map['enumTypeRun_null_init'] is int
 //               ? EnumTypeRun.values[map['enumTypeRun_null_init'] as int]
@@ -66,21 +68,25 @@
 //                     )
 //                   : EnumTypeRun.run
 //           : EnumTypeRun.run,
-//       enumTypeRun: map['enumTypeRun'] is int
-//           ? EnumTypeRun.values[map['enumTypeRun'] as int]
-//           : map['enumTypeRun'] is String
-//               // ignore: prefer-enums-by-name
-//               ? EnumTypeRun.values.firstWhere(
-//                   (e) =>
-//                       e.toString().split('.').last ==
-//                       map['enumTypeRun'].toString(),
-//                   orElse: () => throw Exception(
-//                     "EnumTypeRun - No matching value found for map['enumTypeRun']",
-//                   ),
-//                 )
-//               : throw Exception(
-//                   "EnumTypeRun - Wrong type for map['enumTypeRun']'",
-//                 ),
+//       enumTypeRun: map['enumTypeRun'] != null
+//           ? map['enumTypeRun'] is int
+//               ? EnumTypeRun.values[map['enumTypeRun'] as int]
+//               : map['enumTypeRun'] is String
+//                   // ignore: prefer-enums-by-name
+//                   ? EnumTypeRun.values.firstWhere(
+//                       (e) =>
+//                           e.toString().split('.').last ==
+//                           map['enumTypeRun'].toString(),
+//                       orElse: () => throw Exception(
+//                         "EnumTypeRun - No matching value found for map['enumTypeRun']",
+//                       ),
+//                     )
+//                   : throw Exception(
+//                       "EnumTypeRun - Wrong type for map['enumTypeRun']'",
+//                     )
+//           : throw Exception(
+//               "EnumTypeRun - map['enumTypeRun']' is null",
+//             ),
 //       enumTypeRun_null: map['enumTypeRun_null'] != null
 //           ? map['enumTypeRun_null'] is int
 //               ? EnumTypeRun.values[map['enumTypeRun_null'] as int]

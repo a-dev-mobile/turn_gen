@@ -89,6 +89,8 @@ map['$name'] != null
 ''';
       } else if (no_null_default_yes) {
         return '''
+map['$name'] != null
+          ?
            map['$name'] is int
               ? $nameObject.values[map['$name'] as int]
               : map['$name'] is String
@@ -100,10 +102,12 @@ map['$name'] != null
                            orElse: () => $initComment,
                     )
                   : $initComment
-
+: $initComment
 ''';
       } else if (no_null_default_no) {
         return '''
+map['$name'] != null
+          ?
            map['$name'] is int
               ? $nameObject.values[map['$name'] as int]
               : map['$name'] is String
@@ -115,7 +119,7 @@ map['$name'] != null
                            orElse: () => throw Exception("$nameObject - No matching value found for map['$name']",),
                     ) 
                   : throw Exception("$nameObject - Wrong type for map['$name']'",)
-
+: throw Exception("$nameObject - map['$name']' is null",)
 ''';
       }
       return error;
