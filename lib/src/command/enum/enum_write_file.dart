@@ -285,7 +285,7 @@ $maybeMapNullValueSb2
   int compareTo($nameClass other) => index.compareTo(other.index);
 
   @override
-  String toString() => '$nameClass.\$name(\$${model.nameValue})';''');
+  String toString() => '$nameClass.\$name';''');
 
 /* ****************************** */
 /* ******************************* */

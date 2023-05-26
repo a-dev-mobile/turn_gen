@@ -57,28 +57,66 @@ String getFromMap(Varable v) {
 
     case EnumTypeVarable.enum_:
       if (yes_null_default_yes) {
-        return _getValueWithInit(
-          "$nameObject.values[map['$name'] as int]",
-          name,
-          initComment,
-        );
+        return '''
+map['$name'] != null
+          ? map['$name'] is int
+              ? $nameObject.values[map['$name'] as int]
+              : map['$name'] is String
+                  // ignore: prefer-enums-by-name
+                  ? $nameObject.values.firstWhere(
+                      (e) =>
+                          e.toString().split('.').last ==
+                          map['$name'].toString(),
+                          orElse: () => $initComment,
+                    )
+                  : $initComment
+          : $initComment
+''';
       } else if (yes_null_default_no) {
-        return _getValueWithInit(
-          "$nameObject.values[map['$name'] as int]",
-          name,
-          'null',
-        );
+        return '''
+map['$name'] != null
+          ? map['$name'] is int
+              ? $nameObject.values[map['$name'] as int]
+              : map['$name'] is String
+                  // ignore: prefer-enums-by-name
+                  ? $nameObject.values.firstWhereOrNull(
+                      (e) =>
+                          e.toString().split('.').last ==
+                          map['$name'].toString(),
+                    )
+                  : null
+          : null
+''';
       } else if (no_null_default_yes) {
-        return _getValueWithInit(
-          "$nameObject.values[map['$name'] as int]",
-          name,
-          initComment,
-        );
+        return '''
+           map['$name'] is int
+              ? $nameObject.values[map['$name'] as int]
+              : map['$name'] is String
+                  // ignore: prefer-enums-by-name
+                  ? $nameObject.values.firstWhere(
+                      (e) =>
+                          e.toString().split('.').last ==
+                          map['$name'].toString(),
+                           orElse: () => $initComment,
+                    )
+                  : $initComment
+
+''';
       } else if (no_null_default_no) {
-        return _getValueWithException(
-          "$nameObject.values[map['$name'] as int]",
-          name,
-        );
+        return '''
+           map['$name'] is int
+              ? $nameObject.values[map['$name'] as int]
+              : map['$name'] is String
+                  // ignore: prefer-enums-by-name
+                  ? $nameObject.values.firstWhere(
+                      (e) =>
+                          e.toString().split('.').last ==
+                          map['$name'].toString(), 
+                           orElse: () => throw Exception("$nameObject - No matching value found for map['$name']",),
+                    ) 
+                  : throw Exception("$nameObject - Wrong type for map['$name']'",)
+
+''';
       }
       return error;
 

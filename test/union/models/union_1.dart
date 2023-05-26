@@ -3,7 +3,10 @@
 // // import 'package:collection/collection.dart';
 // // import 'package:meta/meta.dart';
 
-// import 'package:turn_gen/test/union/models/success_1.dart';
+// import 'package:collection/collection.dart';
+// import 'package:meta/meta.dart';
+
+// import 'success_1.dart';
 
 // // turngen
 // @immutable
@@ -47,6 +50,15 @@
 // // ignore_for_file: avoid_unused_constructor_parameters
 // // ignore_for_file: avoid_positional_boolean_parameters,
 // // ignore_for_file: always_put_required_named_parameters_first
+
+// enum Union1Tag {
+//   listBool2,
+//   success,
+//   success3,
+//   listBool,
+//   error_1,
+//   error_2,
+// }
 
 // @immutable
 // class Union1 {
@@ -185,9 +197,13 @@
 //                 ),
 //         );
 //       case Union1Tag.error_1:
-//         throw ArgumentError('Invalid type for Union1Tag.error_1: $list');
+//         throw ArgumentError(
+//           'Invalid type for Union1Tag.error_1: $list',
+//         );
 //       case Union1Tag.error_2:
-//         throw ArgumentError('Invalid type for Union1Tag.error_2: $list');
+//         throw ArgumentError(
+//           'Invalid type for Union1Tag.error_2: $list',
+//         );
 //     }
 //   }
 
@@ -720,15 +736,6 @@
 //   final String? _error_error_1;
 //   final String? _message_error_2;
 //   final String? _error_error_2;
-// }
-
-// enum Union1Tag {
-//   listBool2,
-//   success,
-//   success3,
-//   listBool,
-//   error_1,
-//   error_2,
 // }
 
 // @immutable

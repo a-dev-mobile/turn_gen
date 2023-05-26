@@ -628,6 +628,10 @@ ${ConstConsole.GEN_MSG_START(EnumTypeRun.union)}
 // ignore_for_file: avoid_positional_boolean_parameters, 
 // ignore_for_file: always_put_required_named_parameters_first
 
+enum ${model.nameClass}Tag {
+$sbUnionTag
+}
+
 @immutable
 ${model.comments}
 ${model.classHeader}
@@ -650,9 +654,7 @@ $sbToString
 $sbAllParams
 }
 
-enum ${model.nameClass}Tag {
-$sbUnionTag
-}
+
 $sbExtendsClass''';
 
   final _ = file.writeAsString(newContent);

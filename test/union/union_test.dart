@@ -1,8 +1,8 @@
 // import 'dart:io';
 
-// // import 'package:test/test.dart';
+// import 'package:test/test.dart';
 
-// import 'package:turn_gen/test/union/models/union_1.dart';
+// import 'models/union_1.dart';
 
 // void main() {
 //   group('union_1', () {
@@ -14,13 +14,13 @@
 //     late String listBool;
 //     late String listBool2;
 //     test('проверка json, что он не пустой', () async {
-//       final fileSuccess1 = File(r'lib\test\union\json\success_1.json');
-//       final fileSuccess2 = File(r'lib\test\union\json\success_2.json');
-//       final fileSuccess3 = File(r'lib\test\union\json\success_3.json');
-//       final fileError1 = File(r'lib\test\union\json\error_1.json');
-//       final fileError2 = File(r'lib\test\union\json\error_2.json');
-//       final fileListBool = File(r'lib\test\union\json\list_bool.json');
-//       final fileListBool2 = File(r'lib\test\union\json\list_bool_2.json');
+//       final fileSuccess1 = File(r'test\union\json\success_1.json');
+//       final fileSuccess2 = File(r'test\union\json\success_2.json');
+//       final fileSuccess3 = File(r'test\union\json\success_3.json');
+//       final fileError1 = File(r'test\union\json\error_1.json');
+//       final fileError2 = File(r'test\union\json\error_2.json');
+//       final fileListBool = File(r'test\union\json\list_bool.json');
+//       final fileListBool2 = File(r'test\union\json\list_bool_2.json');
 //       expect(fileSuccess1.existsSync(), isTrue, reason: 'File does not exist');
 //       expect(fileSuccess2.existsSync(), isTrue, reason: 'File does not exist');
 //       expect(fileSuccess3.existsSync(), isTrue, reason: 'File does not exist');

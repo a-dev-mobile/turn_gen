@@ -1,3 +1,8 @@
+
+## 0.9.8
+
+- now `fromMap` method for `enum` type can accept both index and name
+
 ## 0.9.7
 
 - fixed work of `union` script without  parameters
