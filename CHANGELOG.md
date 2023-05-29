@@ -1,3 +1,15 @@
+## 1.0.1
+
+- Script `Enum` now allows 2 string parameters. For `Map` methods validation occurs on the first parameter
+example:
+
+```Dart
+// turngen
+  const EnumPaymentStatus(this.value, this.name);
+  final String value;
+  final String name;
+
+```
 
 ## 1.0.0
 

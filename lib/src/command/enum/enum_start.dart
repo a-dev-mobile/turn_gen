@@ -113,11 +113,28 @@ Future<void> enumStart({
   final enumItem = <EnumItemModel>[];
   for (var i = 0; i < listEnumNameFormat.length; i++) {
     final name = listEnumNameFormat[i];
-    final value = isDefault ? "'$name'" : listEnumValueFormat[i];
+    var value = listEnumValueFormat[i];
+
+// если у нас 2 параметра в enum
+//   payed('status.schedule.payed', 'оплачен');
+// чтобы 2 ой пропустить
+    const split1 = "','";
+    const split2 = '","';
+
+    if (value.contains(split1) || name.contains(split1)) {
+      if (value.contains(split1)) {
+        value = "${value.split(split1).first}'";
+      }
+      if (value.contains(split2)) {
+        value = '${value.split(split1).first}"';
+      }
+    }
+    final valueMain = isDefault ? "'$name'" : value;
+
     enumItem.add(
       EnumItemModel(
         nameEnum: name,
-        valueEnum: value,
+        valueEnum: valueMain,
       ),
     );
   }
