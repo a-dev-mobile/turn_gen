@@ -1,3 +1,7 @@
+## 1.0.2
+
+- fix fromMap method for `Enum` type
+
 ## 1.0.1
 
 - Script `Enum` now allows 2 string parameters. For `Map` methods validation occurs on the first parameter

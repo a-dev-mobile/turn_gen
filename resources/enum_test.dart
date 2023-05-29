@@ -242,7 +242,7 @@ enum EnumWeightStatus implements Comparable<EnumWeightStatus> {
   int compareTo(EnumWeightStatus other) => index.compareTo(other.index);
 
   @override
-  String toString() => 'EnumWeightStatus.$name';
+  String toString() => 'EnumWeightStatus.$maxValue';
 }
 
 extension EnumWeightStatusX on EnumWeightStatus {

@@ -141,7 +141,7 @@ enum EumPaymentStatus implements Comparable<EumPaymentStatus> {
   int compareTo(EumPaymentStatus other) => index.compareTo(other.index);
 
   @override
-  String toString() => 'EumPaymentStatus.$name';
+  String toString() => 'EumPaymentStatus.$value';
 }
 
 extension EumPaymentStatusX on EumPaymentStatus {

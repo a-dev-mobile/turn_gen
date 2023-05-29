@@ -190,7 +190,7 @@ enum TestRun implements Comparable<TestRun> {
   int compareTo(TestRun other) => index.compareTo(other.index);
 
   @override
-  String toString() => 'TestRun.$name';
+  String toString() => 'TestRun.$value';
 }
 
 extension TestRunX on TestRun {

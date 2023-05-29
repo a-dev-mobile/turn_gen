@@ -284,8 +284,11 @@ $maybeMapNullValueSb2
   @override
   int compareTo($nameClass other) => index.compareTo(other.index);
 
+ 
   @override
-  String toString() => '$nameClass.\$name';''');
+  String toString() => '$nameClass.\$$nameValue';
+
+''');
 
 /* ****************************** */
 /* ******************************* */

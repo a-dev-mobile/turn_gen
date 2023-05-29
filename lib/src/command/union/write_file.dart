@@ -401,7 +401,7 @@ $sbMaybeMapOrNull1    }
   //то добавляем метод fromlist
   if (model.isHaveOnlyList) {
     sbFromJson.write('''
-  factory $nameClass.fromJson(dynamic source, [${model.nameClass}Tag? tag]) {
+  factory $nameClass.fromJson(dynamic source, [${model.nameClass}Tag? tag,]) {
     if (source is String && source.isEmpty) {
       throw ArgumentError('Source string is empty');
     }
@@ -601,7 +601,7 @@ $sbCopyWith
 // собрать fromMap
 
   sbFromMap.write('''
-factory ${model.nameClass}.fromMap(Map<dynamic, dynamic> map, ${model.nameClass}Tag? tag,) {
+factory ${model.nameClass}.fromMap(Map<dynamic, dynamic> map, [${model.nameClass}Tag? tag,]) {
    tag ??= ${model.nameClass}Tag.values.byName(map['tag'].toString());
   switch (tag) {
 $sbFromMap_1
@@ -614,7 +614,7 @@ $sbFromMap_1
 
   if (model.isHaveOnlyList) {
     sbFromList.write('''
-  factory $nameClass.fromList(List<dynamic> list, ${nameClass}Tag tag) {
+  factory $nameClass.fromList(List<dynamic> list, ${nameClass}Tag tag,) {
     switch (tag) {
 $sbFromList_1
 

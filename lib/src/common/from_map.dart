@@ -65,7 +65,7 @@ map['$name'] != null
                   // ignore: prefer-enums-by-name
                   ? $nameObject.values.firstWhere(
                       (e) =>
-                          e.toString().split('.').last ==
+                          e.toString().split('$nameObject.')[1] ==
                           map['$name'].toString(),
                           orElse: () => $initComment,
                     )
@@ -81,7 +81,7 @@ map['$name'] != null
                   // ignore: prefer-enums-by-name
                   ? $nameObject.values.firstWhereOrNull(
                       (e) =>
-                          e.toString().split('.').last ==
+                          e.toString().split('$nameObject.')[1] ==
                           map['$name'].toString(),
                     )
                   : null
@@ -97,7 +97,7 @@ map['$name'] != null
                   // ignore: prefer-enums-by-name
                   ? $nameObject.values.firstWhere(
                       (e) =>
-                          e.toString().split('.').last ==
+                          e.toString().split('$nameObject.')[1] ==
                           map['$name'].toString(),
                            orElse: () => $initComment,
                     )
@@ -114,8 +114,8 @@ map['$name'] != null
                   // ignore: prefer-enums-by-name
                   ? $nameObject.values.firstWhere(
                       (e) =>
-                          e.toString().split('.').last ==
-                          map['$name'].toString(), 
+                          e.toString().split('$nameObject.')[1] ==
+                          map['$name'].toString(),
                            orElse: () => throw Exception("$nameObject - No matching value found for map['$name']",),
                     ) 
                   : throw Exception("$nameObject - Wrong type for map['$name']'",)
