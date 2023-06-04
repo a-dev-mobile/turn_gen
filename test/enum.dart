@@ -1,15 +1,13 @@
 // turnGen
-// ignore_for_file: constant_identifier_names, non_constant_identifier_names
-
 enum EumPaymentStatus implements Comparable<EumPaymentStatus> {
-  active('status.schedule.active', 'к оплате'),
-  done('status.schedule.done', 'к оплате'),
-  overdue('status.schedule.overdue', 'просрочен'),
-  payed('status.schedule.payed', 'оплачен');
 
-  const EumPaymentStatus(this.value, this.name);
+  active('active'),
+  done('done'),
+  overdue('overdue'),
+  payed('payed');
+
+  const EumPaymentStatus(this.value);
   final String value;
-  final String name;
 
 // end
 
@@ -19,28 +17,22 @@ enum EumPaymentStatus implements Comparable<EumPaymentStatus> {
 //         GENERATED CODE
 //  *************************************
 
-  static EumPaymentStatus fromValue(
-    String? value, {
-    EumPaymentStatus? fallback,
-  }) {
+  static EumPaymentStatus fromValue(String? value, {EumPaymentStatus? fallback,}) {
     switch (value) {
-      case 'status.schedule.active':
+      case 'active':
         return active;
-      case 'status.schedule.done':
+      case 'done':
         return done;
-      case 'status.schedule.overdue':
+      case 'overdue':
         return overdue;
-      case 'status.schedule.payed':
+      case 'payed':
         return payed;
       default:
-        return fallback ??
-            (throw ArgumentError.value(
-              value,
-              '',
-              'Value not found in EumPaymentStatus',
-            ));
+        return fallback ?? (throw ArgumentError.value(
+          value, '', 'Value not found in EumPaymentStatus',));
     }
   }
+
 
   T map<T>({
     required T Function() active,
@@ -60,6 +52,7 @@ enum EumPaymentStatus implements Comparable<EumPaymentStatus> {
     }
   }
 
+
   T mapValue<T>({
     required T active,
     required T done,
@@ -78,6 +71,7 @@ enum EumPaymentStatus implements Comparable<EumPaymentStatus> {
     }
   }
 
+
   T maybeMap<T>({
     required T Function() orElse,
     T Function()? active,
@@ -86,11 +80,12 @@ enum EumPaymentStatus implements Comparable<EumPaymentStatus> {
     T Function()? payed,
   }) =>
       map<T>(
-        active: active ?? orElse,
-        done: done ?? orElse,
-        overdue: overdue ?? orElse,
-        payed: payed ?? orElse,
+      active: active ?? orElse,
+      done: done ?? orElse,
+      overdue: overdue ?? orElse,
+      payed: payed ?? orElse,
       );
+
 
   T maybeMapValue<T>({
     required T orElse,
@@ -100,11 +95,12 @@ enum EumPaymentStatus implements Comparable<EumPaymentStatus> {
     T? payed,
   }) =>
       mapValue<T>(
-        active: active ?? orElse,
-        done: done ?? orElse,
-        overdue: overdue ?? orElse,
-        payed: payed ?? orElse,
+      active: active ?? orElse,
+      done: done ?? orElse,
+      overdue: overdue ?? orElse,
+      payed: payed ?? orElse,
       );
+
 
   T? maybeMapOrNull<T>({
     T Function()? active,
@@ -120,6 +116,7 @@ enum EumPaymentStatus implements Comparable<EumPaymentStatus> {
         payed: payed,
       );
 
+
   T? maybeMapOrNullValue<T>({
     T? active,
     T? done,
@@ -134,19 +131,22 @@ enum EumPaymentStatus implements Comparable<EumPaymentStatus> {
         payed: payed,
       );
 
-  static List<String> getValues() =>
-      EumPaymentStatus.values.map((e) => e.value).toList();
+
+  static List<String> getValues() => EumPaymentStatus.values.map((e) => e.value).toList();
 
   @override
   int compareTo(EumPaymentStatus other) => index.compareTo(other.index);
 
+ 
   @override
   String toString() => 'EumPaymentStatus.$value';
+
+
+}
+extension EumPaymentStatusX on EumPaymentStatus {
+bool get active => this == EumPaymentStatus.active;
+bool get done => this == EumPaymentStatus.done;
+bool get overdue => this == EumPaymentStatus.overdue;
+bool get payed => this == EumPaymentStatus.payed;
 }
 
-extension EumPaymentStatusX on EumPaymentStatus {
-  bool get active => this == EumPaymentStatus.active;
-  bool get done => this == EumPaymentStatus.done;
-  bool get overdue => this == EumPaymentStatus.overdue;
-  bool get payed => this == EumPaymentStatus.payed;
-}

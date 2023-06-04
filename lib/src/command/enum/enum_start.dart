@@ -11,6 +11,7 @@ Future<void> enumStart({
   final contentFile = await UtilsString.readFile(path: path);
   final isShowComment =
       YamlRead().isShowComment(filePath: path, logger: logger);
+
   final enumHeader = UtilsRegex.getTextRegexMatch(
     content: contentFile,
     regex: r'enum[\s\S]+?{',
@@ -74,67 +75,86 @@ Future<void> enumStart({
   );
 
   final listEnumValueFormat = _getFormatEnumRaw(listEnumValueRaw);
-  // получаю значения
-  final listEnumTypeValueRaw = UtilsRegex.getTextRegexListMatch(
-    content: enumToEndRaw,
-    regex: r'final[\s\S]+?;',
-  );
+  // final listEnumValueFormat =listEnumValueRaw;
 
-  var nameVar = 'value';
-  var typeEnum = EnumTypeVarable.string_;
-  var isCanNull = false;
+  final listItemFinal = getFinalParamList(contentToEndWithoutComment);
+
+// значение по умолчанию
+  final listParameterMain = <EnumParamItemModel>[
+    const EnumParamItemModel(
+      enumTypeVarable: EnumTypeVarable.string_,
+      name: 'value',
+    ),
+  ];
+
+  // перебор параметров если enum не по умолчанию
+  if (!isDefault) {
+    listParameterMain.clear();
+    for (var i = 0; i < listItemFinal.length; i++) {
+      final varWithoutFinal = getVarWithoutFinal(listItemFinal[i]);
+
+      final listSplit = varWithoutFinal.split(' ');
+      // take the name and delete it
+      final name = listSplit.last;
+      final _ = listSplit.removeLast();
+
+      var typeStr = listSplit.join(' ').trim();
+
+      if (typeStr.isEmpty) msgErrorParsingVarable(listItemFinal[i], logger);
+      var isCanNull = false;
+// determining whether null is a value or not
+      if (typeStr.substring(typeStr.length - 1) == '?') {
+        isCanNull = true;
+        typeStr = typeStr.substring(0, typeStr.length - 1);
+      }
+      // picking up the type of
+      var enumType =
+          EnumTypeVarable.fromValue(typeStr, fallback: EnumTypeVarable.none);
+
+      var nameObject = '';
+      if (enumType == EnumTypeVarable.none) {
+        msgTitleAnotherType(logger);
+        enumType = autoUpdateType(enumType, typeStr, logger);
+        nameObject = typeStr;
+      }
+
+      listParameterMain.add(
+        EnumParamItemModel(
+          isCanNull: isCanNull,
+          name: name,
+          enumTypeVarable: enumType,
+          nameObject: nameObject,
+        ),
+      );
+    }
+  }
   if (listEnumValueFormat.isNotEmpty) {
     final _ = listEnumValueFormat.removeLast();
   }
-  if (!isDefault) {
-    //
-    final enumTypeValueFormat = _getFormatEnumRaw(listEnumTypeValueRaw).first;
 
-    if (!isDefault) {
-      nameVar = enumTypeValueFormat.split(' ').last.replaceAll(';', '');
-      var typeVar = enumTypeValueFormat
-          .replaceAll(' $nameVar', '')
-          .replaceAll('final', '')
-          .replaceAll(';', '')
-          .trim();
-      if (typeVar[typeVar.length - 1] == '?') {
-        isCanNull = true;
-        typeVar = typeVar.replaceAll(RegExp(r'\?$'), '');
-      }
-
-      typeEnum =
-          EnumTypeVarable.fromValue(typeVar, fallback: EnumTypeVarable.none);
-      if (typeEnum == EnumTypeVarable.none) {
-        msgTitleAnotherType(logger);
-        typeEnum = autoUpdateType(typeEnum, typeVar, logger);
-      }
-    }
-  }
   final enumItem = <EnumItemModel>[];
   for (var i = 0; i < listEnumNameFormat.length; i++) {
     final name = listEnumNameFormat[i];
-    var value = listEnumValueFormat[i];
+
+    var valueClean = isDefault ? "'$name'" : listEnumValueFormat[i].trim();
+    if (!isDefault && listItemFinal.length > 1) {
+      final value = listEnumValueFormat[i].trim();
 
 // если у нас 2 параметра в enum
 //   payed('status.schedule.payed', 'оплачен');
 // чтобы 2 ой пропустить
-    const split1 = "','";
-    const split2 = '","';
 
-    if (value.contains(split1) || name.contains(split1)) {
-      if (value.contains(split1)) {
-        value = "${value.split(split1).first}'";
-      }
-      if (value.contains(split2)) {
-        value = '${value.split(split1).first}"';
-      }
+      valueClean = value.split(',').first;
+
+// если тип число удаляем кавычки
+      // if (typeEnum.int_ || typeEnum.double_ || typeEnum.num_) {
+      //   valueClean = value.replaceAll("'", '').replaceAll('"', '');
+      // }
     }
-    final valueMain = isDefault ? "'$name'" : value;
-
     enumItem.add(
       EnumItemModel(
         nameEnum: name,
-        valueEnum: valueMain,
+        valueEnum: isDefault ? "'$name'" : valueClean,
       ),
     );
   }
@@ -142,18 +162,16 @@ Future<void> enumStart({
   final enumCommon = EnumCommonModel(
     nameClass: enumName,
     headerClass: enumHeader,
-    nameValue: nameVar,
-    typeEnum: typeEnum,
     listItem: enumItem,
     isDefault: isDefault,
     contentFile: contentFile,
-    isCanNull: isCanNull,
+    listParam: listParameterMain,
     contentToEnd: contentToEnd,
     isShowComment: isShowComment,
   );
 
   final file = File(path);
-  enumV2WriteToFile(logger, file, enumCommon);
+  enumWriteToFile(logger, file, enumCommon);
 }
 
 List<String> _getFormatEnumRaw(
@@ -164,49 +182,8 @@ List<String> _getFormatEnumRaw(
     formatList.add(
       v
           .trim()
-          .replaceAll(':', ' : ')
-          .replaceAll('?', ' ? ')
-          .replaceAll(',', ' , ')
-          .replaceAll('>', ' > ')
-          .replaceAll('<', ' < ')
-          .replaceAll('(', ' ( ')
-          .replaceAll(')', ' ) ')
-          .replaceAll(']', ' ] ')
-          .replaceAll('[', ' [ ')
-          .replaceAll('}', ' } ')
-          .replaceAll('{', ' { ')
-          .replaceAll('=', ' = ')
-          .replaceAll(':', ' : ')
-          .replaceAll(',', ' , ')
-          .replaceAll(';', ' ; ')
-          .replaceAll('.', ' . ')
-          .replaceAll(',', ' , ')
-          .replaceAll(RegExp(r'\s+'), ' ')
-          .replaceAll(' :', ':')
-          .replaceAll(' ? ', '? ')
-          .replaceAll(' >', '>')
-          .replaceAll(' <', '<')
-          .replaceAll('< ', '<')
-          .replaceAll('( ', '(')
-          .replaceAll(' )', ')')
-          .replaceAll(' ]', ']')
-          .replaceAll('] ', ']')
-          .replaceAll(' [', '[')
-          .replaceAll('[ ', '[')
-          .replaceAll(' }', '}')
-          .replaceAll('{ ', '{')
-          .replaceAll(' ;', ';')
-          .replaceAll(' .', '.')
-          .replaceAll('. ', '.')
-          .replaceAll(' :', ':')
-          .replaceAll(' ,', ',')
-          .replaceAll(" '", "'")
-          .replaceAll(',[', ', [')
-          .replaceAll(',{', ', {')
-          .trim()
           .replaceAll(RegExp(r'^\('), '')
           .replaceAll(RegExp(r'\)$'), '')
-          .replaceAll('https: ', 'https:')
           .trim(),
     );
   }

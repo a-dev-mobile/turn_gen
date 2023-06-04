@@ -25,10 +25,10 @@ enum EnumWeightStatus implements Comparable<EnumWeightStatus> {
 //  *************************************
 
   static EnumWeightStatus fromValue(
-    double? value, {
+    double? maxValue, {
     EnumWeightStatus? fallback,
   }) {
-    switch (value?.toString()) {
+    switch (maxValue?.toString()) {
       case '0':
         return severe_thinness;
       case '16':
@@ -52,7 +52,7 @@ enum EnumWeightStatus implements Comparable<EnumWeightStatus> {
       default:
         return fallback ??
             (throw ArgumentError.value(
-              value,
+              maxValue,
               '',
               'Value not found in EnumWeightStatus',
             ));

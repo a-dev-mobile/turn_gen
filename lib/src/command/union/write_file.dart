@@ -533,7 +533,7 @@ ${p.name}?? this.${p.name},
 ''');
 
       // переобразуем в модель которай уходит в метод
-      var v = Varable(
+      var v = Parameter(
         isCanNull: p.isCanNull,
         nameVar: p.name,
         type: p.typeEnum,

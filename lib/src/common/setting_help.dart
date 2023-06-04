@@ -16,6 +16,83 @@ String getSettingClass(String contentFile) {
   );
 }
 
+List<String> getFinalParamList(String contentFile) {
+  final listItemFinalRaw = UtilsRegex.getTextRegexListMatch(
+    content: contentFile,
+    regex: r'^[\s\s]+?final[\w\W]+?;',
+  );
+
+  return _getFormatFinalItem(listItemFinalRaw);
+}
+
+/// получает final String name;
+///
+/// возвращает String name
+String getVarWithoutFinal(String content) {
+  // ignore: prefer-immediate-return
+  final contentFormat = content
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .replaceAll(';', '')
+      .replaceAll('final', '')
+      .trim();
+
+  return contentFormat;
+}
+
+List<String> _getFormatFinalItem(
+  List<String> content,
+) {
+  final formatList = <String>[];
+  for (final v in content) {
+    formatList.add(
+      v
+          .trim()
+          .replaceAll(':', ' : ')
+          .replaceAll('?', ' ? ')
+          .replaceAll(',', ' , ')
+          .replaceAll('>', ' > ')
+          .replaceAll('<', ' < ')
+          .replaceAll('(', ' ( ')
+          .replaceAll(')', ' ) ')
+          .replaceAll(']', ' ] ')
+          .replaceAll('[', ' [ ')
+          .replaceAll('}', ' } ')
+          .replaceAll('{', ' { ')
+          .replaceAll('=', ' = ')
+          .replaceAll(':', ' : ')
+          .replaceAll(',', ' , ')
+          .replaceAll(';', ' ; ')
+          .replaceAll('.', ' . ')
+          .replaceAll(',', ' , ')
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .replaceAll(' :', ':')
+          .replaceAll(' ? ', '? ')
+          .replaceAll(' >', '>')
+          .replaceAll(' <', '<')
+          .replaceAll('< ', '<')
+          .replaceAll('( ', '(')
+          .replaceAll(' )', ')')
+          .replaceAll(' ]', ']')
+          .replaceAll('] ', ']')
+          .replaceAll(' [', '[')
+          .replaceAll('[ ', '[')
+          .replaceAll(' }', '}')
+          .replaceAll('{ ', '{')
+          .replaceAll(' ;', ';')
+          .replaceAll(' .', '.')
+          .replaceAll('. ', '.')
+          .replaceAll(' :', ':')
+          .replaceAll(' ,', ',')
+          .replaceAll(',[', ', [')
+          .replaceAll(',{', ', {')
+          .replaceAll(RegExp('^const '), '')
+          .trim(),
+    );
+  }
+
+  return formatList;
+}
+
 // преобразовать не форматированную строку первоночальных настроек класса
 // в model
 List<SettingClassModel> getListSettingClass({
@@ -218,6 +295,14 @@ void msgAnotherType(
     ..info('-- INFO --')
     ..info('TurnGen did not define a variable type for `$typeVar`')
     ..info('Type was assigned: `${typeEnum.value}`');
+}
+
+void msgErrorParsingVarable(String varable, FLILogger logger) {
+  logger
+    ..info('\n')
+    ..error('check the variable - `$varable`')
+    ..info('\n');
+  exit(0);
 }
 
 void msgTitleAnotherType(

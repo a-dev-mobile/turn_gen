@@ -4,7 +4,7 @@
 import 'package:turn_gen/src/src.dart';
 
 // ignore: prefer-static-class
-String getWordConst(Varable v) {
+String getWordConst(Parameter v) {
   // final type = v.type;
   final init = v.initValueDefault;
   final initComment = v.initValueComment;
@@ -106,6 +106,7 @@ String getDefaultInitValue(EnumTypeVarable type, String init, bool isCanNull) {
     null_: () => '',
     list_enum: () => listDefault,
     list_enum_null: () => listDefault,
+    dynamic_: () => init,
   );
 
   // print(initValue.toString());

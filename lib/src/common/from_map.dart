@@ -3,7 +3,7 @@
 import 'package:turn_gen/src/src.dart';
 
 // ignore: prefer-static-class
-String getFromMap(Varable v) {
+String getFromMap(Parameter v) {
   final type = v.type;
   final name = v.nameVar;
   var nameObject = v.nameData;
@@ -913,6 +913,17 @@ map['$name'] != null
           "(map['$name'] as List<dynamic>).map((e) => $typeInList.values[e as int]).toList()",
           name,
         );
+      }
+      return error;
+    case EnumTypeVarable.dynamic_:
+      if (yes_null_default_yes) {
+        return "map['$name'] ?? $initComment";
+      } else if (yes_null_default_no) {
+        return "map['$name']";
+      } else if (no_null_default_yes) {
+        return "map['$name'] ?? $initComment";
+      } else if (no_null_default_no) {
+        return _getValueWithException("map['$name']", name);
       }
       return error;
   }

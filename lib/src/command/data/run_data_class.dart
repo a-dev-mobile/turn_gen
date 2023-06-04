@@ -47,13 +47,9 @@ Future<void> dataStart({
 // delete all comments, for parsing purity
   classContent = classContent.replaceAll(RegExp(r'[\s]//.*'), '');
 
-  final listItemFinalRaw = UtilsRegex.getTextRegexListMatch(
-    content: classBrackets,
-    regex: r'^[\s\s]+?final[\w\W]+?;',
-  );
-  final listItemFinal = _getFormatFinalItem(listItemFinalRaw);
+  final listItemFinal = getFinalParamList(classBrackets);
 
-  final listVarMain = <Varable>[];
+  final listParameterMain = <Parameter>[];
   var listSplit = <String>[];
 
   var name = '';
@@ -71,13 +67,13 @@ Future<void> dataStart({
   const emptySettingVar = '/*  */';
   msgTitleAnotherType(logger);
   for (var i = 0; i < listItemFinal.length; i++) {
-    final finalVarable = _formatFinalVarablse(listItemFinal[i]);
+    final varWithoutFinal = getVarWithoutFinal(listItemFinal[i]);
 
     var settingVarable = emptySettingVar;
 
     final regexBetwen = i == 0
         ? '$className[\\s\\S]+?final'
-        : '[\\s]${listVarMain[i - 1].nameVar};[\\s\\S]+?final';
+        : '[\\s]${listParameterMain[i - 1].nameVar};[\\s\\S]+?final';
 
     final betwenText = UtilsRegex.getTextRegexMatch(
       isLast: false,
@@ -94,14 +90,14 @@ Future<void> dataStart({
     final settingVarableMap = getMapSettingVarable(settingVarable);
     isCanNull = false;
 
-    listSplit = finalVarable.split(' ');
+    listSplit = varWithoutFinal.split(' ');
     // take the name and delete it
     name = listSplit.last;
     final _ = listSplit.removeLast();
 
     typeStr = listSplit.join(' ').trim();
 
-    if (typeStr.isEmpty) _msgErrorParsingVarable(listItemFinalRaw[i], logger);
+    if (typeStr.isEmpty) msgErrorParsingVarable(listItemFinal[i], logger);
 
 // determining whether null is a value or not
     if (typeStr.substring(typeStr.length - 1) == '?') {
@@ -158,7 +154,7 @@ Future<void> dataStart({
     initValueDefault = getDefaultInitValue(type, initValueTemp, isCanNull);
 
     if (type == EnumTypeVarable.none) {
-      logger.error('($finalVarable) - type is not defined');
+      logger.error('($varWithoutFinal) - type is not defined');
     }
 
     var typeInList = '';
@@ -169,8 +165,8 @@ Future<void> dataStart({
               .replaceAll('<', '');
     }
 
-    listVarMain.add(
-      Varable(
+    listParameterMain.add(
+      Parameter(
         isCanNull: isCanNull,
         nameVar: name,
         nameData: nameObject,
@@ -196,12 +192,12 @@ Future<void> dataStart({
   final hashCode = StringBuffer();
 
   var typeStrTemp = '';
-  var v = const Varable();
+  var v = const Parameter();
 
 // I sort the Required varable first
-  final listVarSort = [...listVarMain];
+  final listVarSort = [...listParameterMain];
 
-  final listRequired = listVarMain
+  final listRequired = listParameterMain
       .where((v) => !v.isCanNull && v.initValueComment.isEmpty)
       .toList();
   listVarSort.removeWhere(listRequired.contains);
@@ -240,8 +236,8 @@ Future<void> dataStart({
   }
 
   // Showing warning is null var, but init value have
-  for (var i = 0; i < listVarMain.length; i++) {
-    v = listVarMain[i];
+  for (var i = 0; i < listParameterMain.length; i++) {
+    v = listParameterMain[i];
     // if (v.isCanNull && v.initValueDefault.isNotEmpty) {
     //   logger
     //     ..info('')
@@ -319,25 +315,6 @@ Future<void> dataStart({
   );
 }
 
-void _msgErrorParsingVarable(String varable, FLILogger logger) {
-  logger
-    ..info('\n')
-    ..error('check the variable - `$varable`')
-    ..info('\n');
-  exit(0);
-}
-
-String _formatFinalVarablse(String content) {
-  // ignore: prefer-immediate-return
-  final contentFormat = content
-      .replaceAll(RegExp(r'\s+'), ' ')
-      .replaceAll(';', '')
-      .replaceAll('final', '')
-      .trim();
-
-  return contentFormat;
-}
-
 String _getNameClass(String classHeader) {
   final splitHeaderClass =
       classHeader.replaceAll(RegExp(r'\s+'), ' ').trim().split(' ');
@@ -348,58 +325,4 @@ String _getNameClass(String classHeader) {
   }
 
   return '';
-}
-
-List<String> _getFormatFinalItem(
-  List<String> content,
-) {
-  final formatList = <String>[];
-  for (final v in content) {
-    formatList.add(
-      v
-          .trim()
-          .replaceAll(':', ' : ')
-          .replaceAll('?', ' ? ')
-          .replaceAll(',', ' , ')
-          .replaceAll('>', ' > ')
-          .replaceAll('<', ' < ')
-          .replaceAll('(', ' ( ')
-          .replaceAll(')', ' ) ')
-          .replaceAll(']', ' ] ')
-          .replaceAll('[', ' [ ')
-          .replaceAll('}', ' } ')
-          .replaceAll('{', ' { ')
-          .replaceAll('=', ' = ')
-          .replaceAll(':', ' : ')
-          .replaceAll(',', ' , ')
-          .replaceAll(';', ' ; ')
-          .replaceAll('.', ' . ')
-          .replaceAll(',', ' , ')
-          .replaceAll(RegExp(r'\s+'), ' ')
-          .replaceAll(' :', ':')
-          .replaceAll(' ? ', '? ')
-          .replaceAll(' >', '>')
-          .replaceAll(' <', '<')
-          .replaceAll('< ', '<')
-          .replaceAll('( ', '(')
-          .replaceAll(' )', ')')
-          .replaceAll(' ]', ']')
-          .replaceAll('] ', ']')
-          .replaceAll(' [', '[')
-          .replaceAll('[ ', '[')
-          .replaceAll(' }', '}')
-          .replaceAll('{ ', '{')
-          .replaceAll(' ;', ';')
-          .replaceAll(' .', '.')
-          .replaceAll('. ', '.')
-          .replaceAll(' :', ':')
-          .replaceAll(' ,', ',')
-          .replaceAll(',[', ', [')
-          .replaceAll(',{', ', {')
-          .replaceAll(RegExp('^const '), '')
-          .trim(),
-    );
-  }
-
-  return formatList;
 }

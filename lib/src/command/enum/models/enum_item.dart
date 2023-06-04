@@ -1,5 +1,6 @@
 // ignore_for_file: sort_constructors_first, avoid_bool_literals_in_conditional_expressions
 
+// turngen
 /* no: hash tojson fromjson*/
 class EnumItemModel {
   /* init: '' */
@@ -9,19 +10,14 @@ class EnumItemModel {
   // end
 
 //          --TURN_GEN--
-//             v0.3.2
+//             (data)
 //  *************************************
-//           GENERATED CODE
+//         GENERATED CODE
 //  *************************************
-
   const EnumItemModel({
     this.nameEnum = '',
     this.valueEnum = '',
   });
-  /*
-   factory EnumV2ItemModel.init() => EnumV2ItemModel(
-      ); 
-  */
 
   EnumItemModel copyWith({
     String? nameEnum,
@@ -35,6 +31,6 @@ class EnumItemModel {
 
   @override
   String toString() {
-    return 'EnumV2ItemModel(nameEnum: $nameEnum, valueEnum: $valueEnum, )';
+    return 'EnumItemModel(nameEnum: $nameEnum, valueEnum: $valueEnum, )';
   }
 }

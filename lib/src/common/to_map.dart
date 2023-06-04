@@ -3,7 +3,7 @@
 import 'package:turn_gen/src/src.dart';
 
 // ignore: prefer-static-class
-String getToMapVarable(Varable v) {
+String getToMapVarable(Parameter v) {
   final type = v.type;
   final name = v.nameVar;
 
@@ -24,6 +24,7 @@ String getToMapVarable(Varable v) {
     case EnumTypeVarable.int_:
     case EnumTypeVarable.num_:
     case EnumTypeVarable.double_:
+    case EnumTypeVarable.dynamic_:
       if (yes_null_default_yes) {
         return name;
       } else if (yes_null_default_no) {

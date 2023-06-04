@@ -74,6 +74,7 @@ class Equals {
       case EnumTypeVarable.string_:
       case EnumTypeVarable.none:
       case EnumTypeVarable.date_time:
+      case EnumTypeVarable.dynamic_:
       case EnumTypeVarable.data:
         return '            (identical(other.$nameVar, $nameVar,) || other.$nameVar == $nameVar)$end';
       case EnumTypeVarable.null_:

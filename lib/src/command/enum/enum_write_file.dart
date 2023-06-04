@@ -6,7 +6,7 @@ import 'package:turn_gen/src/src.dart';
 
 bool _isShowComment = false;
 // ignore: prefer-static-class
-void enumV2WriteToFile(
+void enumWriteToFile(
   FLILogger logger,
   File file,
   EnumCommonModel model,
@@ -14,8 +14,9 @@ void enumV2WriteToFile(
   final newContent = StringBuffer();
   final nameClass = model.nameClass;
   // final nameFile = model.nameFile;
-  final typeStr = model.typeEnum.value;
-  final nameValue = model.nameValue;
+  final typeEnum = model.listParam.first.enumTypeVarable;
+  final typeStr = typeEnum.value;
+  final nameValueFirst = model.listParam.first.name;
   _isShowComment = model.isShowComment;
 /* ****************************** */
   final paramSb = StringBuffer();
@@ -36,29 +37,38 @@ void enumV2WriteToFile(
 /* ****************************** */
   final fromValueSb1 = StringBuffer();
   // for double other value
-  final switchVar = model.typeEnum
-      .maybeMapValue(orElse: 'value', double_: 'value?.toString()');
+  final switchVar = typeEnum.maybeMapValue(
+    orElse: nameValueFirst,
+    double_: '$nameValueFirst?.toString()',
+    num_: '$nameValueFirst?.toString()',
+  );
   for (final e in model.listItem) {
     final name = e.nameEnum;
     // for double other value
-    final value = model.typeEnum
-        .maybeMapValue(orElse: e.valueEnum, double_: "'${e.valueEnum}'");
+// для значений с плавающей точкой используем преобразование в строку
+    final value = typeEnum.maybeMapValue(
+      orElse: e.valueEnum,
+      num_: "'${e.valueEnum}'",
+      double_: "'${e.valueEnum}'",
+    );
 
-    fromValueSb1.write('      case $value:\n');
-    fromValueSb1.write('        return $name');
+    fromValueSb1.write('case $value:\n');
+    fromValueSb1.write('return $name');
     var lastSymbol = ';\n';
     if (e == model.listItem.last) lastSymbol = ';';
     fromValueSb1.write(lastSymbol);
   }
 /* ******************************* */
+  final typeStrUpdate =
+      typeEnum.maybeMapValue(orElse: '$typeStr?', dynamic_: typeStr);
 
   fromValueSb.write('''
-  static $nameClass fromValue($typeStr? value, {$nameClass? fallback,}) {
+  static $nameClass fromValue($typeStrUpdate $nameValueFirst, {$nameClass? fallback,}) {
     switch ($switchVar) {
 $fromValueSb1
       default:
         return fallback ?? (throw ArgumentError.value(
-          value, '', 'Value not found in $nameClass',));
+          $nameValueFirst, '', 'Value not found in $nameClass',));
     }
   }
 ''');
@@ -264,8 +274,8 @@ $maybeMapNullValueSb2
   final constructorSb = StringBuffer();
 
   constructorSb.write('''
-  const $nameClass(this.$nameValue);
-  final $typeStr $nameValue;
+  const $nameClass(this.$nameValueFirst);
+  final $typeStr $nameValueFirst;
 ''');
 
 /* ****************************** */
@@ -273,7 +283,7 @@ $maybeMapNullValueSb2
   final getValuesSb = StringBuffer();
 
   getValuesSb.write('''
-  static List<$typeStr> getValues() => $nameClass.values.map((e) => e.${model.nameValue}).toList();
+  static List<$typeStr> getValues() => $nameClass.values.map((e) => e.$nameValueFirst).toList();
 ''');
 
 /* ****************************** */
@@ -286,7 +296,7 @@ $maybeMapNullValueSb2
 
  
   @override
-  String toString() => '$nameClass.\$$nameValue';
+  String toString() => '$nameClass.\$$nameValueFirst';
 
 ''');
 

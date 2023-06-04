@@ -60,6 +60,7 @@ String getHashCode(EnumTypeVarable type, String nameVar) {
     case EnumTypeVarable.none:
     case EnumTypeVarable.date_time:
     case EnumTypeVarable.data:
+    case EnumTypeVarable.dynamic_:
       return '        $nameVar$end';
     case EnumTypeVarable.null_:
       return '';

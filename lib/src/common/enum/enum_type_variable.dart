@@ -6,6 +6,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
   bool_('bool'),
   int_('int'),
   double_('double'),
+  dynamic_('dynamic'),
   num_('num'),
   list_('List'),
   list_bool_('List<bool>'),
@@ -84,6 +85,8 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return int_;
       case 'double':
         return double_;
+      case 'dynamic':
+        return dynamic_;
       case 'num':
         return num_;
       case 'List':
@@ -202,6 +205,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
     required T Function() bool_,
     required T Function() int_,
     required T Function() double_,
+    required T Function() dynamic_,
     required T Function() num_,
     required T Function() list_,
     required T Function() list_bool_,
@@ -265,6 +269,8 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return int_();
       case EnumTypeVarable.double_:
         return double_();
+      case EnumTypeVarable.dynamic_:
+        return dynamic_();
       case EnumTypeVarable.num_:
         return num_();
       case EnumTypeVarable.list_:
@@ -376,6 +382,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
     required T bool_,
     required T int_,
     required T double_,
+    required T dynamic_,
     required T num_,
     required T list_,
     required T list_bool_,
@@ -439,6 +446,8 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return int_;
       case EnumTypeVarable.double_:
         return double_;
+      case EnumTypeVarable.dynamic_:
+        return dynamic_;
       case EnumTypeVarable.num_:
         return num_;
       case EnumTypeVarable.list_:
@@ -551,6 +560,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
     T Function()? bool_,
     T Function()? int_,
     T Function()? double_,
+    T Function()? dynamic_,
     T Function()? num_,
     T Function()? list_,
     T Function()? list_bool_,
@@ -609,6 +619,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         bool_: bool_ ?? orElse,
         int_: int_ ?? orElse,
         double_: double_ ?? orElse,
+        dynamic_: dynamic_ ?? orElse,
         num_: num_ ?? orElse,
         list_: list_ ?? orElse,
         list_bool_: list_bool_ ?? orElse,
@@ -669,6 +680,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
     T? bool_,
     T? int_,
     T? double_,
+    T? dynamic_,
     T? num_,
     T? list_,
     T? list_bool_,
@@ -727,6 +739,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         bool_: bool_ ?? orElse,
         int_: int_ ?? orElse,
         double_: double_ ?? orElse,
+        dynamic_: dynamic_ ?? orElse,
         num_: num_ ?? orElse,
         list_: list_ ?? orElse,
         list_bool_: list_bool_ ?? orElse,
@@ -786,6 +799,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
     T Function()? bool_,
     T Function()? int_,
     T Function()? double_,
+    T Function()? dynamic_,
     T Function()? num_,
     T Function()? list_,
     T Function()? list_bool_,
@@ -845,6 +859,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         bool_: bool_,
         int_: int_,
         double_: double_,
+        dynamic_: dynamic_,
         num_: num_,
         list_: list_,
         list_bool_: list_bool_,
@@ -904,6 +919,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
     T? bool_,
     T? int_,
     T? double_,
+    T? dynamic_,
     T? num_,
     T? list_,
     T? list_bool_,
@@ -963,6 +979,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         bool_: bool_,
         int_: int_,
         double_: double_,
+        dynamic_: dynamic_,
         num_: num_,
         list_: list_,
         list_bool_: list_bool_,
@@ -1032,6 +1049,7 @@ extension EnumTypeVarableX on EnumTypeVarable {
   bool get bool_ => this == EnumTypeVarable.bool_;
   bool get int_ => this == EnumTypeVarable.int_;
   bool get double_ => this == EnumTypeVarable.double_;
+  bool get dynamic_ => this == EnumTypeVarable.dynamic_;
   bool get num_ => this == EnumTypeVarable.num_;
   bool get list_ => this == EnumTypeVarable.list_;
   bool get list_bool_ => this == EnumTypeVarable.list_bool_;

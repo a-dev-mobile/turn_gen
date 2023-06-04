@@ -1,3 +1,7 @@
+## 1.0.3
+
+- fix bug in `enum` script
+
 ## 1.0.2
 
 - fix fromMap method for `Enum` type
