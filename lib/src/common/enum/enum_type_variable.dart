@@ -1038,9 +1038,6 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
 
   @override
   int compareTo(EnumTypeVarable other) => index.compareTo(other.index);
-
-  @override
-  String toString() => 'EnumTypeVarable.$value';
 }
 
 extension EnumTypeVarableX on EnumTypeVarable {

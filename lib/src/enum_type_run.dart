@@ -205,9 +205,6 @@ enum EnumTypeRun implements Comparable<EnumTypeRun> {
 
   @override
   int compareTo(EnumTypeRun other) => index.compareTo(other.index);
-
-  @override
-  String toString() => 'EnumTypeRun.$value';
 }
 
 extension EnumTypeRunX on EnumTypeRun {

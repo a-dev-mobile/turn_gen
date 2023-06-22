@@ -204,9 +204,6 @@ enum EnumKeySetting implements Comparable<EnumKeySetting> {
 
   @override
   int compareTo(EnumKeySetting other) => index.compareTo(other.index);
-
-  @override
-  String toString() => 'EnumKeySetting.$value';
 }
 
 extension EnumKeySettingX on EnumKeySetting {

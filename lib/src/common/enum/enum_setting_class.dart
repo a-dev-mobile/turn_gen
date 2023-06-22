@@ -237,9 +237,6 @@ enum EnumSettingClass implements Comparable<EnumSettingClass> {
 
   @override
   int compareTo(EnumSettingClass other) => index.compareTo(other.index);
-
-  @override
-  String toString() => 'EnumSettingClass.$value';
 }
 
 extension EnumSettingClassX on EnumSettingClass {
