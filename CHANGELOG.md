@@ -1,3 +1,8 @@
+## 1.0.4
+
+- the `toString` method is now not overridden by the `enum` script, but is used by default
+- added a hint if, when using the `data` script, the variable does not have the word `final`
+
 ## 1.0.3
 
 - fix bug in `enum` script

@@ -25,6 +25,15 @@ List<String> getFinalParamList(String contentFile) {
   return _getFormatFinalItem(listItemFinalRaw);
 }
 
+List<String> getRowParamList(String contentFile) {
+  final listItemFinalRaw = UtilsRegex.getTextRegexListMatch(
+    content: contentFile,
+    regex: r'^[\s\s]+?[\w\W]+?;',
+  );
+
+  return _getFormatFinalItem(listItemFinalRaw);
+}
+
 /// получает final String name;
 ///
 /// возвращает String name
@@ -301,6 +310,14 @@ void msgErrorParsingVarable(String varable, FLILogger logger) {
   logger
     ..info('\n')
     ..error('check the variable - `$varable`')
+    ..info('\n');
+  exit(0);
+}
+
+void msgErrorParsingFinalVarable(FLILogger logger) {
+  logger
+    ..info('\n')
+    ..error('final - must be before each variable')
     ..info('\n');
   exit(0);
 }

@@ -48,6 +48,12 @@ Future<void> dataStart({
   classContent = classContent.replaceAll(RegExp(r'[\s]//.*'), '');
 
   final listItemFinal = getFinalParamList(classBrackets);
+// для проверки финальных переменных
+  final listItemRow = getRowParamList(classBrackets);
+
+  if (listItemFinal.isEmpty || listItemFinal.length != listItemRow.length) {
+    msgErrorParsingFinalVarable(logger);
+  }
 
   final listParameterMain = <Parameter>[];
   var listSplit = <String>[];
