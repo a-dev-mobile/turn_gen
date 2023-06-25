@@ -206,7 +206,7 @@ enum EnumKeySetting implements Comparable<EnumKeySetting> {
   int compareTo(EnumKeySetting other) => index.compareTo(other.index);
 }
 
-extension EnumKeySettingX on EnumKeySetting {
+extension $EnumKeySetting on EnumKeySetting {
   bool get type => this == EnumKeySetting.type;
   bool get fromMap => this == EnumKeySetting.fromMap;
   bool get toMap => this == EnumKeySetting.toMap;

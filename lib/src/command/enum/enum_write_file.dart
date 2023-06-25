@@ -231,7 +231,7 @@ $maybeMapNullSb2
 /* ****************************** */
   final extension = StringBuffer();
   extension.write('''
-extension ${nameClass}X on $nameClass {
+extension \$$nameClass on $nameClass {
 ''');
 
   for (final e in model.listItem) {

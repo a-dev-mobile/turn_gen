@@ -1040,7 +1040,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
   int compareTo(EnumTypeVarable other) => index.compareTo(other.index);
 }
 
-extension EnumTypeVarableX on EnumTypeVarable {
+extension $EnumTypeVarable on EnumTypeVarable {
   bool get enum_ => this == EnumTypeVarable.enum_;
   bool get string_ => this == EnumTypeVarable.string_;
   bool get bool_ => this == EnumTypeVarable.bool_;

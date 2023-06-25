@@ -1,3 +1,31 @@
+## 1.0.5
+
+- added ability to use different data types in `enum` when using `turngen` example:
+
+```dart
+
+enum EnumScheduleStatus implements Comparable<EnumScheduleStatus> {
+  active('status.schedule.active', 'к оплате', Color(0xFFCACACA)),
+  done('status.schedule.done', 'к оплате', Color(0xFFCACACA)),
+  overdue('status.schedule.overdue', 'просрочен', Color(0xFFBF1212)),
+  payed('status.schedule.payed', 'оплачен', Color(0xFF12BF6C)),
+  error('error', 'ошибка', Color(0xFFBF1212));
+
+  const EnumScheduleStatus(
+    this.value,
+    this.valueRu,
+    this.color,
+  );
+
+  final String value;
+  final String valueRu;
+  final Color color;
+
+// end
+}
+
+```
+
 ## 1.0.4
 
 - the `toString` method is now not overridden by the `enum` script, but is used by default

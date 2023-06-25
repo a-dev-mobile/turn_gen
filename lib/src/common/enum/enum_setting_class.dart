@@ -239,7 +239,7 @@ enum EnumSettingClass implements Comparable<EnumSettingClass> {
   int compareTo(EnumSettingClass other) => index.compareTo(other.index);
 }
 
-extension EnumSettingClassX on EnumSettingClass {
+extension $EnumSettingClass on EnumSettingClass {
   bool get fromMap => this == EnumSettingClass.fromMap;
   bool get toMap => this == EnumSettingClass.toMap;
   bool get toJson => this == EnumSettingClass.toJson;

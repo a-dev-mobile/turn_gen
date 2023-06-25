@@ -190,7 +190,7 @@ enum TestRun implements Comparable<TestRun> {
   int compareTo(TestRun other) => index.compareTo(other.index);
 }
 
-extension TestRunX on TestRun {
+extension $TestRun on TestRun {
   bool get enum_ => this == TestRun.enum_;
   bool get data => this == TestRun.data;
   bool get assets => this == TestRun.assets;

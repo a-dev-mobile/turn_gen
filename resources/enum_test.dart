@@ -242,7 +242,7 @@ enum EnumWeightStatus implements Comparable<EnumWeightStatus> {
   int compareTo(EnumWeightStatus other) => index.compareTo(other.index);
 }
 
-extension EnumWeightStatusX on EnumWeightStatus {
+extension $EnumWeightStatus on EnumWeightStatus {
   bool get severe_thinness => this == EnumWeightStatus.severe_thinness;
   bool get moderate_thinness => this == EnumWeightStatus.moderate_thinness;
   bool get mild_thinness => this == EnumWeightStatus.mild_thinness;

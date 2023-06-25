@@ -207,7 +207,7 @@ enum EnumTypeRun implements Comparable<EnumTypeRun> {
   int compareTo(EnumTypeRun other) => index.compareTo(other.index);
 }
 
-extension EnumTypeRunX on EnumTypeRun {
+extension $EnumTypeRun on EnumTypeRun {
   bool get enum_ => this == EnumTypeRun.enum_;
   bool get data => this == EnumTypeRun.data;
   bool get assets => this == EnumTypeRun.assets;

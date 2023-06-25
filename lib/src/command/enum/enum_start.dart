@@ -50,7 +50,7 @@ Future<void> enumStart({
   var regexEnumNameRaw = r'\w+';
 
   if (!isDefault) {
-    regexEnumNameRaw = r'\w+(|[\n\r\s]+)\(';
+    regexEnumNameRaw = r'^\s+\w+\(';
   }
 
 // получаю название  enum item
@@ -60,12 +60,6 @@ Future<void> enumStart({
   );
   final listEnumNameFormat =
       listEnumNameRaw.map((e) => e.replaceAll('(', '').trim()).toList();
-
-  // удаляю лишнее поле
-
-  if (listEnumNameFormat.isNotEmpty) {
-    final _ = listEnumNameFormat.removeLast();
-  }
 
 // ******************************
 // получаю значения

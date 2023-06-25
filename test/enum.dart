@@ -1,146 +1,175 @@
-// turnGen
-enum EumPaymentStatus implements Comparable<EumPaymentStatus> {
-  active('active'),
-  done('done'),
-  overdue('overdue'),
-  payed('payed');
+// // turnGen
+// // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
-  const EumPaymentStatus(this.value);
-  final String value;
+// import 'dart:ui';
 
-// end
+// enum EnumScheduleStatus implements Comparable<EnumScheduleStatus> {
+//   active('status.schedule.active', 'к оплате', Color(0xFFCACACA)),
+//   done('status.schedule.done', 'к оплате', Color(0xFFCACACA)),
+//   overdue('status.schedule.overdue', 'просрочен', Color(0xFFBF1212)),
+//   payed('status.schedule.payed', 'оплачен', Color(0xFF12BF6C)),
+//   error('error', 'ошибка', Color(0xFFBF1212));
 
-//          --TURN_GEN--
-//             (enum)
-//  *************************************
-//         GENERATED CODE
-//  *************************************
+//   const EnumScheduleStatus(
+//     this.value,
+//     this.valueRu,
+//     this.color,
+//   );
 
-  static EumPaymentStatus fromValue(
-    String? value, {
-    EumPaymentStatus? fallback,
-  }) {
-    switch (value) {
-      case 'active':
-        return active;
-      case 'done':
-        return done;
-      case 'overdue':
-        return overdue;
-      case 'payed':
-        return payed;
-      default:
-        return fallback ??
-            (throw ArgumentError.value(
-              value,
-              '',
-              'Value not found in EumPaymentStatus',
-            ));
-    }
-  }
+//   final String value;
+//   final String valueRu;
+//   final Color color;
 
-  T map<T>({
-    required T Function() active,
-    required T Function() done,
-    required T Function() overdue,
-    required T Function() payed,
-  }) {
-    switch (this) {
-      case EumPaymentStatus.active:
-        return active();
-      case EumPaymentStatus.done:
-        return done();
-      case EumPaymentStatus.overdue:
-        return overdue();
-      case EumPaymentStatus.payed:
-        return payed();
-    }
-  }
+// // end
 
-  T mapValue<T>({
-    required T active,
-    required T done,
-    required T overdue,
-    required T payed,
-  }) {
-    switch (this) {
-      case EumPaymentStatus.active:
-        return active;
-      case EumPaymentStatus.done:
-        return done;
-      case EumPaymentStatus.overdue:
-        return overdue;
-      case EumPaymentStatus.payed:
-        return payed;
-    }
-  }
+// //          --TURN_GEN--
+// //             (enum)
+// //  *************************************
+// //         GENERATED CODE
+// //  *************************************
 
-  T maybeMap<T>({
-    required T Function() orElse,
-    T Function()? active,
-    T Function()? done,
-    T Function()? overdue,
-    T Function()? payed,
-  }) =>
-      map<T>(
-        active: active ?? orElse,
-        done: done ?? orElse,
-        overdue: overdue ?? orElse,
-        payed: payed ?? orElse,
-      );
+//   static EnumScheduleStatus fromValue(
+//     String? value, {
+//     EnumScheduleStatus? fallback,
+//   }) {
+//     switch (value) {
+//       case 'status.schedule.active':
+//         return active;
+//       case 'status.schedule.done':
+//         return done;
+//       case 'status.schedule.overdue':
+//         return overdue;
+//       case 'status.schedule.payed':
+//         return payed;
+//       case 'error':
+//         return error;
+//       default:
+//         return fallback ??
+//             (throw ArgumentError.value(
+//               value,
+//               '',
+//               'Value not found in EnumScheduleStatus',
+//             ));
+//     }
+//   }
 
-  T maybeMapValue<T>({
-    required T orElse,
-    T? active,
-    T? done,
-    T? overdue,
-    T? payed,
-  }) =>
-      mapValue<T>(
-        active: active ?? orElse,
-        done: done ?? orElse,
-        overdue: overdue ?? orElse,
-        payed: payed ?? orElse,
-      );
+//   T map<T>({
+//     required T Function() active,
+//     required T Function() done,
+//     required T Function() overdue,
+//     required T Function() payed,
+//     required T Function() error,
+//   }) {
+//     switch (this) {
+//       case EnumScheduleStatus.active:
+//         return active();
+//       case EnumScheduleStatus.done:
+//         return done();
+//       case EnumScheduleStatus.overdue:
+//         return overdue();
+//       case EnumScheduleStatus.payed:
+//         return payed();
+//       case EnumScheduleStatus.error:
+//         return error();
+//     }
+//   }
 
-  T? maybeMapOrNull<T>({
-    T Function()? active,
-    T Function()? done,
-    T Function()? overdue,
-    T Function()? payed,
-  }) =>
-      maybeMap<T?>(
-        orElse: () => null,
-        active: active,
-        done: done,
-        overdue: overdue,
-        payed: payed,
-      );
+//   T mapValue<T>({
+//     required T active,
+//     required T done,
+//     required T overdue,
+//     required T payed,
+//     required T error,
+//   }) {
+//     switch (this) {
+//       case EnumScheduleStatus.active:
+//         return active;
+//       case EnumScheduleStatus.done:
+//         return done;
+//       case EnumScheduleStatus.overdue:
+//         return overdue;
+//       case EnumScheduleStatus.payed:
+//         return payed;
+//       case EnumScheduleStatus.error:
+//         return error;
+//     }
+//   }
 
-  T? maybeMapOrNullValue<T>({
-    T? active,
-    T? done,
-    T? overdue,
-    T? payed,
-  }) =>
-      maybeMapValue<T?>(
-        orElse: null,
-        active: active,
-        done: done,
-        overdue: overdue,
-        payed: payed,
-      );
+//   T maybeMap<T>({
+//     required T Function() orElse,
+//     T Function()? active,
+//     T Function()? done,
+//     T Function()? overdue,
+//     T Function()? payed,
+//     T Function()? error,
+//   }) =>
+//       map<T>(
+//         active: active ?? orElse,
+//         done: done ?? orElse,
+//         overdue: overdue ?? orElse,
+//         payed: payed ?? orElse,
+//         error: error ?? orElse,
+//       );
 
-  static List<String> getValues() =>
-      EumPaymentStatus.values.map((e) => e.value).toList();
+//   T maybeMapValue<T>({
+//     required T orElse,
+//     T? active,
+//     T? done,
+//     T? overdue,
+//     T? payed,
+//     T? error,
+//   }) =>
+//       mapValue<T>(
+//         active: active ?? orElse,
+//         done: done ?? orElse,
+//         overdue: overdue ?? orElse,
+//         payed: payed ?? orElse,
+//         error: error ?? orElse,
+//       );
 
-  @override
-  int compareTo(EumPaymentStatus other) => index.compareTo(other.index);
-}
+//   T? maybeMapOrNull<T>({
+//     T Function()? active,
+//     T Function()? done,
+//     T Function()? overdue,
+//     T Function()? payed,
+//     T Function()? error,
+//   }) =>
+//       maybeMap<T?>(
+//         orElse: () => null,
+//         active: active,
+//         done: done,
+//         overdue: overdue,
+//         payed: payed,
+//         error: error,
+//       );
 
-extension EumPaymentStatusX on EumPaymentStatus {
-  bool get active => this == EumPaymentStatus.active;
-  bool get done => this == EumPaymentStatus.done;
-  bool get overdue => this == EumPaymentStatus.overdue;
-  bool get payed => this == EumPaymentStatus.payed;
-}
+//   T? maybeMapOrNullValue<T>({
+//     T? active,
+//     T? done,
+//     T? overdue,
+//     T? payed,
+//     T? error,
+//   }) =>
+//       maybeMapValue<T?>(
+//         orElse: null,
+//         active: active,
+//         done: done,
+//         overdue: overdue,
+//         payed: payed,
+//         error: error,
+//       );
+
+//   static List<String> getValues() =>
+//       EnumScheduleStatus.values.map((e) => e.value).toList();
+
+//   @override
+//   int compareTo(EnumScheduleStatus other) => index.compareTo(other.index);
+// }
+
+// extension $EnumScheduleStatus on EnumScheduleStatus {
+//   bool get active => this == EnumScheduleStatus.active;
+//   bool get done => this == EnumScheduleStatus.done;
+//   bool get overdue => this == EnumScheduleStatus.overdue;
+//   bool get payed => this == EnumScheduleStatus.payed;
+//   bool get error => this == EnumScheduleStatus.error;
+// }
