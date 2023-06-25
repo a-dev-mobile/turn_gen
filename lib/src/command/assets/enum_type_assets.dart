@@ -1,4 +1,4 @@
-enum TypeNameFile with Comparable<TypeNameFile> {
+enum TypeNameFile implements Comparable<TypeNameFile> {
   notNormal('notNormal'),
   normal('normal'),
   onlyExtension('onlyExtension'),

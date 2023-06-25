@@ -106,6 +106,7 @@ String getDefaultInitValue(EnumTypeVarable type, String init, bool isCanNull) {
     null_: () => '',
     list_enum: () => listDefault,
     list_enum_null: () => listDefault,
+    list_map_string_string_: () => listDefault,
     dynamic_: () => init,
   );
 

@@ -16,6 +16,7 @@ String getHashCode(EnumTypeVarable type, String nameVar) {
     case EnumTypeVarable.list_map_int_string_:
     case EnumTypeVarable.list_map_int_string_null:
     case EnumTypeVarable.list_map_string_dynamic_:
+    case EnumTypeVarable.list_map_string_string_:
     case EnumTypeVarable.list_string_:
     case EnumTypeVarable.list_string_null:
     case EnumTypeVarable.map_:

@@ -1,3 +1,9 @@
+## 1.0.6
+
+- added new type `List<Map<String, String>>` for `fromJson` and `toJson` methods
+- minor `union` script fixes
+
+
 ## 1.0.5
 
 - added ability to use different data types in `enum` when using `turngen` example:

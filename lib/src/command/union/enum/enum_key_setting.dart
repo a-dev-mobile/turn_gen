@@ -1,4 +1,4 @@
-enum EnumKeySettingUnion with Comparable<EnumKeySettingUnion> {
+enum EnumKeySettingUnion implements Comparable<EnumKeySettingUnion> {
   type('type:'),
   init('init:'),
   none('none:');

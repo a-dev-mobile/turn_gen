@@ -185,6 +185,18 @@ String getToMapVarable(Parameter v) {
       }
 
       return error;
+    case EnumTypeVarable.list_map_string_string_:
+      if (yes_null_default_yes) {
+        return '''$name?.map((e) => e.map(MapEntry.new)).toList()''';
+      } else if (yes_null_default_no) {
+        return '''$name?.map((e) => e.map(MapEntry.new)).toList()''';
+      } else if (no_null_default_yes) {
+        return '''$name.map((e) => e.map(MapEntry.new)).toList()''';
+      } else if (no_null_default_no) {
+        return '''$name.map((e) => e.map(MapEntry.new)).toList()''';
+      }
+
+      return error;
     case EnumTypeVarable.list_map_int_string_null:
       if (yes_null_default_yes) {
         return '''$name?.map((e) => e.map((k, e) => MapEntry(k.toString(), e))).toList()''';

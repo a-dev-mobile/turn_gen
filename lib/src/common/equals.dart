@@ -62,6 +62,7 @@ class Equals {
       case EnumTypeVarable.list_data:
       case EnumTypeVarable.list_data_null:
       case EnumTypeVarable.list_map_string_dynamic_:
+      case EnumTypeVarable.list_map_string_string_:
       case EnumTypeVarable.list_enum:
       case EnumTypeVarable.list_other:
       case EnumTypeVarable.list_enum_null:

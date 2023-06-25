@@ -1,4 +1,4 @@
-enum EnumParameter with Comparable<EnumParameter> {
+enum EnumParameter implements Comparable<EnumParameter> {
   default_('default_'),
   defaultWithOptional('defaultWithOptional'),
   defaultWithRequired('defaultWithRequired'),

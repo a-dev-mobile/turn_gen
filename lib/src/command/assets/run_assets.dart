@@ -368,10 +368,10 @@ String _formatFileName(String s) {
       sFormat.split(RegExp(r'[!@#<>?":`~;[\]\\|=+)(*&^%-\.-$—\s_]+'));
   var newString = '';
 
-  if (separatedWords[0].isEmpty ||
-      int.tryParse(separatedWords[0]) != null ||
-      int.tryParse(separatedWords[0][0]) != null) {
-    separatedWords[0] = ConstHelper.replaceIfFirstLetterNumber;
+  if (separatedWords.first.isEmpty ||
+      int.tryParse(separatedWords.first) != null ||
+      int.tryParse(separatedWords.first[0]) != null) {
+    separatedWords.first = ConstHelper.replaceIfFirstLetterNumber;
   }
 
   for (final word in separatedWords) {
@@ -392,6 +392,7 @@ String _formatFileName(String s) {
     }
   }
   // reserved word
+
   return text == 'values' ? 'vValues' : text;
 }
 

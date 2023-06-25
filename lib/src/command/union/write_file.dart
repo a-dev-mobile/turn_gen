@@ -49,7 +49,7 @@ void writeToFileUnion(
 ''');
 
     sbUnionGetterIsType.write('''
-   bool get is${nameUnion.toCapitalized()} => _tag == ${nameClass}Tag.$nameUnion;
+   bool get $nameUnion => _tag == ${nameClass}Tag.$nameUnion;
 ''');
   }
   /* ****************************** */
@@ -368,13 +368,9 @@ $sbMaybeMapOrNull1    }
 ''');
     final length = l.listParameters.length;
 
-    // if (length == 0) sbHash.write(']);');
-
-    // lastTextTemp = length == 0 ? ');' : '';
     for (var i = 0; i < length; i++) {
       final isLast = i + 1 == length;
       final p = l.listParameters[i];
-      //  sbEqualsTemp.write(' && ');
 
       sbEqualsTemp.write(
         Equals.get(
@@ -532,7 +528,7 @@ $sbMaybeMapOrNull1    }
 ${p.name}?? this.${p.name},
 ''');
 
-      // переобразуем в модель которай уходит в метод
+      // переобразуем в модель которая уходит в метод
       var v = Parameter(
         isCanNull: p.isCanNull,
         nameVar: p.name,
@@ -641,6 +637,7 @@ ${model.contentToEnd}
 ${ConstConsole.GEN_MSG_START(EnumTypeRun.union)}
 // coverage:ignore-file
 // ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: camel_case_types
 // ignore_for_file: avoid-non-null-assertion
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: unnecessary_null_checks

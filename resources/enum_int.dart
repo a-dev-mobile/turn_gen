@@ -14,7 +14,7 @@
 // GENERATED CODE BELOW - DO NOT MODIFY
 //  *************************************
 
-enum Speed with Comparable<Speed> {
+enum Speed implements Comparable<Speed> {
   slow(5),
   normal(10),
   fast(25),
