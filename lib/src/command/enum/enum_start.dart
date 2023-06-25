@@ -61,6 +61,12 @@ Future<void> enumStart({
   final listEnumNameFormat =
       listEnumNameRaw.map((e) => e.replaceAll('(', '').trim()).toList();
 
+  // удаляю лишнее поле
+
+  if (listEnumNameFormat.isNotEmpty && isDefault) {
+    final _ = listEnumNameFormat.removeLast();
+  }
+
 // ******************************
 // получаю значения
   final listEnumValueRaw = UtilsRegex.getTextRegexListMatch(

@@ -1,4 +1,4 @@
-## 1.0.6
+## 1.0.7
 
 - added new type `List<Map<String, String>>` for `fromJson` and `toJson` methods
 - minor `union` script fixes
