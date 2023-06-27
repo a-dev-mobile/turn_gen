@@ -1,8 +1,11 @@
+## 1.0.8
+
+- `fromJson` and `toJson` methods can now work with `Color` type (`import 'dart:ui'`)
+
 ## 1.0.7
 
-- added new type `List<Map<String, String>>` for `fromJson` and `toJson` methods
+- `fromJson` and `toJson` methods can now work with `List<Map<String, String>>` type
 - minor `union` script fixes
-
 
 ## 1.0.5
 

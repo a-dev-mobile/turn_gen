@@ -108,6 +108,7 @@ String getDefaultInitValue(EnumTypeVarable type, String init, bool isCanNull) {
     list_enum_null: () => listDefault,
     list_map_string_string_: () => listDefault,
     dynamic_: () => init,
+    color: () => 'const Color(0x00FFFFFF)',
   );
 
   // print(initValue.toString());

@@ -112,8 +112,8 @@ Future<void> dataStart({
     }
     // picking up the type of
     type = EnumTypeVarable.fromValue(typeStr, fallback: EnumTypeVarable.none);
-
-    nameObject = '';
+    // особенные условия для других типов
+    nameObject = type.maybeMapValue(orElse: '', color: type.value);
 
     // If it does not work, I see if there is a value in the commentary
     if (type == EnumTypeVarable.none &&

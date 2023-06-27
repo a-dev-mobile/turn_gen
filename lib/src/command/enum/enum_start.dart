@@ -50,7 +50,7 @@ Future<void> enumStart({
   var regexEnumNameRaw = r'\w+';
 
   if (!isDefault) {
-    regexEnumNameRaw = r'^\s+\w+\(';
+    regexEnumNameRaw = r'^\s{0,3}\b(\w+)\(';
   }
 
 // получаю название  enum item
@@ -69,10 +69,34 @@ Future<void> enumStart({
 
 // ******************************
 // получаю значения
-  final listEnumValueRaw = UtilsRegex.getTextRegexListMatch(
-    content: enumToEndRaw,
-    regex: r'\(([\w\W]+?)\)',
-  );
+
+  final listEnumValueRaw = <String>[];
+
+  final length = listEnumNameFormat.length;
+
+  for (var i = 0; i < length; i++) {
+    final isLast = i + 1 >= length;
+
+    final item = listEnumNameFormat[i];
+    final itemPlus = isLast ? '' : listEnumNameFormat[i + 1];
+
+// тк переменные иногда похожи - заменяем сначала текстом с кол символов больше
+    final replaceTextStart =
+        item.length > itemPlus.length ? '$item(' : '$itemPlus(';
+
+    final regex =
+        isLast ? '$item\\(([\\w\\W]+?);' : '$item\\(([\\w\\W]*?)$itemPlus\\(';
+    listEnumValueRaw.add(
+      UtilsRegex.getTextRegexMatch(
+        content: enumToEndRaw,
+        isLast: false,
+        regex: regex,
+      )
+          .replaceAll(replaceTextStart, '')
+          .replaceAll('$item(', '')
+          .replaceAll('$itemPlus(', ''),
+    );
+  }
 
   final listEnumValueFormat = _getFormatEnumRaw(listEnumValueRaw);
   // final listEnumValueFormat =listEnumValueRaw;
@@ -129,7 +153,7 @@ Future<void> enumStart({
     }
   }
   if (listEnumValueFormat.isNotEmpty) {
-    final _ = listEnumValueFormat.removeLast();
+    // final _ = listEnumValueFormat.removeLast();
   }
 
   final enumItem = <EnumItemModel>[];
@@ -178,13 +202,19 @@ List<String> _getFormatEnumRaw(
   List<String> content,
 ) {
   final formatList = <String>[];
-  for (final v in content) {
+  for (var v in content) {
+    v = v.replaceAll(RegExp(r'\s{2,}'), ' ').trim();
+
+    if (!v.contains('(') && v.contains(')')) {
+      v = v.replaceAll(RegExp(r'\);$'), '').replaceAll(RegExp(r'\),$'), '');
+    }
+
     formatList.add(
       v
-          .trim()
-          .replaceAll(RegExp(r'^\('), '')
-          .replaceAll(RegExp(r'\)$'), '')
-          .trim(),
+          .replaceAll(RegExp(r', \), \($'), '')
+          .replaceAll(RegExp(r'\), \($'), '')
+          .replaceAll(RegExp(r', \);$'), '')
+          .replaceAll(RegExp(r'^\('), ''),
     );
   }
 

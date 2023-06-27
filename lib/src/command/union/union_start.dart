@@ -300,8 +300,8 @@ String _replaceOtherSymbol(String v) {
   v = v.replaceAll(RegExp(r'^\(\['), '');
   v = v.replaceAll(RegExp(r'\]\)$'), '');
   v = v.replaceAll(RegExp(r'\}\)$'), '');
-
-  if (!v.contains(RegExp(r'\(\)$'))) {
+// для значений типа Color? c3 = const Color (0x00FFFFFF)
+  if (!v.contains(RegExp(r'\(.*\)$'))) {
     v = v.replaceAll(RegExp(r'\)$'), '');
   }
 

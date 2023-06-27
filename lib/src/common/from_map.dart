@@ -939,6 +939,45 @@ map['$name'] != null
         return _getValueWithException("map['$name']", name);
       }
       return error;
+    case EnumTypeVarable.color:
+      if (yes_null_default_yes) {
+        return '''
+map['$name'] != null
+          ? map['$name'] is int
+              ? Color(map['$name'] as int)
+                : $initComment
+             
+          : $initComment
+''';
+      } else if (yes_null_default_no) {
+        return '''
+map['$name'] != null
+          ? map['$name'] is int
+              ? Color(map['$name'] as int)
+              : null              
+          : null
+''';
+      } else if (no_null_default_yes) {
+        return '''
+map['$name'] != null
+          ? map['$name'] is int
+              ? Color(map['$name'] as int)
+                : $initComment          
+          : $initComment
+''';
+      } else if (no_null_default_no) {
+        return '''
+map['$name'] != null
+          ? map['$name'] is int
+              ? Color(map['$name'] as int)
+               : throw Exception(
+                  "Color - Wrong type for map['$name']'",
+                )
+            : throw Exception("$nameObject - map['$name']' is null",)
+        
+''';
+      }
+      return error;
   }
 }
 

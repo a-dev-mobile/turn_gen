@@ -1,5 +1,7 @@
 // import 'dart:convert';
 
+// import 'package:flutter/material.dart';
+
 // // import 'package:collection/collection.dart';
 // // import 'package:meta/meta.dart';
 
@@ -10,11 +12,12 @@
 // // turngen
 // @immutable
 // class _Union1 {
-//   const _Union1.listBool2([
-//     List<Map<String, String>> data22 = const [],
-//     List<bool> list_bool = const [true, false],
-//     List<dynamic> data = const [],
-//   ]);
+//   const _Union1.listBool2({
+//     Color? c3 = const Color(0x00FFFFFF),
+//     required Color c1,
+//     Color? c2,
+//     Color c4 = const Color(0x00FFFFFF),
+//   });
 //   const _Union1.success({
 //     List<int> data = const [],
 //     List<Map<int, String>> data2 = const [],
@@ -71,9 +74,10 @@
 // @immutable
 // class Union1 {
 //   final Union1Tag _tag;
-//   final List<Map<String, String>>? _data22_listBool2;
-//   final List<bool>? _list_bool_listBool2;
-//   final List<dynamic>? _data_listBool2;
+//   final Color? _c3_listBool2;
+//   final Color? _c1_listBool2;
+//   final Color? _c2_listBool2;
+//   final Color? _c4_listBool2;
 //   final List<int>? _data_success;
 //   final List<Map<int, String>>? _data2_success;
 //   final List<String>? _data_success3;
@@ -88,14 +92,16 @@
 //   final String? _message_error_2;
 //   final String? _error_error_2;
 
-//   const Union1.listBool2([
-//     List<Map<String, String>> data22 = const [],
-//     List<bool> list_bool = const [true, false],
-//     List<dynamic> data = const [],
-//   ])  : _tag = Union1Tag.listBool2,
-//         _data22_listBool2 = data22,
-//         _list_bool_listBool2 = list_bool,
-//         _data_listBool2 = data,
+//   const Union1.listBool2({
+//     Color? c3 = const Color(0x00FFFFFF),
+//     required Color c1,
+//     Color? c2,
+//     Color c4 = const Color(0x00FFFFFF),
+//   })  : _tag = Union1Tag.listBool2,
+//         _c3_listBool2 = c3,
+//         _c1_listBool2 = c1,
+//         _c2_listBool2 = c2,
+//         _c4_listBool2 = c4,
 //         _data_success = null,
 //         _data2_success = null,
 //         _data_success3 = null,
@@ -114,9 +120,10 @@
 //     List<int> data = const [],
 //     List<Map<int, String>> data2 = const [],
 //   })  : _tag = Union1Tag.success,
-//         _data22_listBool2 = null,
-//         _list_bool_listBool2 = null,
-//         _data_listBool2 = null,
+//         _c3_listBool2 = null,
+//         _c1_listBool2 = null,
+//         _c2_listBool2 = null,
+//         _c4_listBool2 = null,
 //         _data_success = data,
 //         _data2_success = data2,
 //         _data_success3 = null,
@@ -135,9 +142,10 @@
 //     List<String>? data,
 //     String a,
 //   )   : _tag = Union1Tag.success3,
-//         _data22_listBool2 = null,
-//         _list_bool_listBool2 = null,
-//         _data_listBool2 = null,
+//         _c3_listBool2 = null,
+//         _c1_listBool2 = null,
+//         _c2_listBool2 = null,
+//         _c4_listBool2 = null,
 //         _data_success = null,
 //         _data2_success = null,
 //         _data_success3 = data,
@@ -156,9 +164,10 @@
 //     List<bool>? list_bool,
 //     String a = '20',
 //   ])  : _tag = Union1Tag.listBool,
-//         _data22_listBool2 = null,
-//         _list_bool_listBool2 = null,
-//         _data_listBool2 = null,
+//         _c3_listBool2 = null,
+//         _c1_listBool2 = null,
+//         _c2_listBool2 = null,
+//         _c4_listBool2 = null,
 //         _data_success = null,
 //         _data2_success = null,
 //         _data_success3 = null,
@@ -180,9 +189,10 @@
 //     String mesdfssage = '',
 //     String error = '',
 //   })  : _tag = Union1Tag.error_1,
-//         _data22_listBool2 = null,
-//         _list_bool_listBool2 = null,
-//         _data_listBool2 = null,
+//         _c3_listBool2 = null,
+//         _c1_listBool2 = null,
+//         _c2_listBool2 = null,
+//         _c4_listBool2 = null,
 //         _data_success = null,
 //         _data2_success = null,
 //         _data_success3 = null,
@@ -201,9 +211,10 @@
 //     String message = '',
 //     String? error,
 //   })  : _tag = Union1Tag.error_2,
-//         _data22_listBool2 = null,
-//         _list_bool_listBool2 = null,
-//         _data_listBool2 = null,
+//         _c3_listBool2 = null,
+//         _c1_listBool2 = null,
+//         _c2_listBool2 = null,
+//         _c4_listBool2 = null,
 //         _data_success = null,
 //         _data2_success = null,
 //         _data_success3 = null,
@@ -239,9 +250,10 @@
 //       case Union1Tag.listBool2:
 //         return {
 //           'tag': 'listBool2',
-//           'data22': _data22_listBool2?.map((e) => e.map(MapEntry.new)).toList(),
-//           'list_bool': _list_bool_listBool2,
-//           'data': _data_listBool2,
+//           'c3': _c3_listBool2?.value ?? const Color(0x00FFFFFF).value,
+//           'c1': _c1_listBool2?.value,
+//           'c2': _c2_listBool2?.value,
+//           'c4': _c4_listBool2?.value ?? const Color(0x00FFFFFF).value,
 //         };
 //       case Union1Tag.success:
 //         return {
@@ -291,17 +303,30 @@
 //     switch (tag) {
 //       case Union1Tag.listBool2:
 //         return Union1.listBool2(
-//           (map['data22'] as List<dynamic>?)
-//                   ?.map(
-//                     (e) => (e as Map<String, String>).map(MapEntry.new),
-//                   )
-//                   .toList() ??
-//               const [],
-//           (map['list_bool'] as List<dynamic>?)
-//                   ?.map((e) => e as bool)
-//                   .toList() ??
-//               const [true, false],
-//           (map['data'] as List<dynamic>?)?.map((e) => e).toList() ?? const [],
+//           c3: map['c3'] != null
+//               ? map['c3'] is int
+//                   ? Color(map['c3'] as int)
+//                   : const Color(0x00FFFFFF)
+//               : const Color(0x00FFFFFF),
+//           c1: map['c1'] != null
+//               ? map['c1'] is int
+//                   ? Color(map['c1'] as int)
+//                   : throw Exception(
+//                       "Color - Wrong type for map['c1']'",
+//                     )
+//               : throw Exception(
+//                   "Color - map['c1']' is null",
+//                 ),
+//           c2: map['c2'] != null
+//               ? map['c2'] is int
+//                   ? Color(map['c2'] as int)
+//                   : null
+//               : null,
+//           c4: map['c4'] != null
+//               ? map['c4'] is int
+//                   ? Color(map['c4'] as int)
+//                   : const Color(0x00FFFFFF)
+//               : const Color(0x00FFFFFF),
 //         );
 //       case Union1Tag.success:
 //         return Union1.success(
@@ -363,9 +388,10 @@
 //       case Union1Tag.listBool2:
 //         return listBool2(
 //           _Union1ListBool2(
-//             _data22_listBool2!,
-//             _list_bool_listBool2!,
-//             _data_listBool2!,
+//             _c3_listBool2,
+//             _c1_listBool2!,
+//             _c2_listBool2,
+//             _c4_listBool2!,
 //           ),
 //         );
 //       case Union1Tag.success:
@@ -423,9 +449,10 @@
 //         if (listBool2 != null) {
 //           return listBool2(
 //             _Union1ListBool2(
-//               _data22_listBool2!,
-//               _list_bool_listBool2!,
-//               _data_listBool2!,
+//               _c3_listBool2,
+//               _c1_listBool2!,
+//               _c2_listBool2,
+//               _c4_listBool2!,
 //             ),
 //           );
 //         }
@@ -498,9 +525,10 @@
 //       case Union1Tag.listBool2:
 //         return listBool2?.call(
 //           _Union1ListBool2(
-//             _data22_listBool2!,
-//             _list_bool_listBool2!,
-//             _data_listBool2!,
+//             _c3_listBool2,
+//             _c1_listBool2!,
+//             _c2_listBool2,
+//             _c4_listBool2!,
 //           ),
 //         );
 //       case Union1Tag.success:
@@ -557,9 +585,10 @@
 //         if (listBool2 != null) {
 //           return listBool2(
 //             _Union1ListBool2(
-//               _data22_listBool2!,
-//               _list_bool_listBool2!,
-//               _data_listBool2!,
+//               _c3_listBool2,
+//               _c1_listBool2!,
+//               _c2_listBool2,
+//               _c4_listBool2!,
 //             ),
 //           );
 //         }
@@ -622,9 +651,10 @@
 
 //   T when<T>({
 //     required T Function(
-//       List<Map<String, String>> data22,
-//       List<bool> list_bool,
-//       List<dynamic> data,
+//       Color? c3,
+//       Color c1,
+//       Color? c2,
+//       Color c4,
 //     ) listBool2,
 //     required T Function(
 //       List<int> data,
@@ -653,9 +683,10 @@
 //     switch (_tag) {
 //       case Union1Tag.listBool2:
 //         return listBool2(
-//           _data22_listBool2!,
-//           _list_bool_listBool2!,
-//           _data_listBool2!,
+//           _c3_listBool2,
+//           _c1_listBool2!,
+//           _c2_listBool2,
+//           _c4_listBool2!,
 //         );
 //       case Union1Tag.success:
 //         return success(
@@ -695,18 +726,26 @@
 //         return identical(this, other) ||
 //             (other.runtimeType == runtimeType &&
 //                 other is Union1 &&
-//                 const DeepCollectionEquality().equals(
-//                   other._data22_listBool2,
-//                   _data22_listBool2,
-//                 ) &&
-//                 const DeepCollectionEquality().equals(
-//                   other._list_bool_listBool2,
-//                   _list_bool_listBool2,
-//                 ) &&
-//                 const DeepCollectionEquality().equals(
-//                   other._data_listBool2,
-//                   _data_listBool2,
-//                 ));
+//                 (identical(
+//                       other._c3_listBool2,
+//                       _c3_listBool2,
+//                     ) ||
+//                     other._c3_listBool2 == _c3_listBool2) &&
+//                 (identical(
+//                       other._c1_listBool2,
+//                       _c1_listBool2,
+//                     ) ||
+//                     other._c1_listBool2 == _c1_listBool2) &&
+//                 (identical(
+//                       other._c2_listBool2,
+//                       _c2_listBool2,
+//                     ) ||
+//                     other._c2_listBool2 == _c2_listBool2) &&
+//                 (identical(
+//                       other._c4_listBool2,
+//                       _c4_listBool2,
+//                     ) ||
+//                     other._c4_listBool2 == _c4_listBool2));
 //       case Union1Tag.success:
 //         return identical(this, other) ||
 //             (other.runtimeType == runtimeType &&
@@ -798,15 +837,10 @@
 //         return Object.hashAll(
 //           [
 //             runtimeType,
-//             const DeepCollectionEquality().hash(
-//               _data22_listBool2,
-//             ),
-//             const DeepCollectionEquality().hash(
-//               _list_bool_listBool2,
-//             ),
-//             const DeepCollectionEquality().hash(
-//               _data_listBool2,
-//             ),
+//             _c3_listBool2,
+//             _c1_listBool2,
+//             _c2_listBool2,
+//             _c4_listBool2,
 //           ],
 //         );
 //       case Union1Tag.success:
@@ -867,7 +901,7 @@
 //   String toString() {
 //     switch (_tag) {
 //       case Union1Tag.listBool2:
-//         return 'Union1.listBool2(data22: $_data22_listBool2, list_bool: $_list_bool_listBool2, data: $_data_listBool2)';
+//         return 'Union1.listBool2(c3: $_c3_listBool2, c1: $_c1_listBool2, c2: $_c2_listBool2, c4: $_c4_listBool2)';
 //       case Union1Tag.success:
 //         return 'Union1.success(data: $_data_success, data2: $_data2_success)';
 //       case Union1Tag.success3:
@@ -885,27 +919,32 @@
 // @immutable
 // class _Union1ListBool2 extends Union1 {
 //   const _Union1ListBool2(
-//     this.data22,
-//     this.list_bool,
-//     this.data,
+//     this.c3,
+//     this.c1,
+//     this.c2,
+//     this.c4,
 //   ) : super.listBool2(
-//           data22,
-//           list_bool,
-//           data,
+//           c3: c3,
+//           c1: c1,
+//           c2: c2,
+//           c4: c4,
 //         );
-//   final List<Map<String, String>> data22;
-//   final List<bool> list_bool;
-//   final List<dynamic> data;
+//   final Color? c3;
+//   final Color c1;
+//   final Color? c2;
+//   final Color c4;
 
 //   _Union1ListBool2 copyWith({
-//     List<Map<String, String>>? data22,
-//     List<bool>? list_bool,
-//     List<dynamic>? data,
+//     Color? c3,
+//     Color? c1,
+//     Color? c2,
+//     Color? c4,
 //   }) {
 //     return _Union1ListBool2(
-//       data22 ?? this.data22,
-//       list_bool ?? this.list_bool,
-//       data ?? this.data,
+//       c3 ?? this.c3,
+//       c1 ?? this.c1,
+//       c2 ?? this.c2,
+//       c4 ?? this.c4,
 //     );
 //   }
 // }

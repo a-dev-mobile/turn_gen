@@ -9,6 +9,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
   dynamic_('dynamic'),
   num_('num'),
   list_('List'),
+  color('Color'),
   list_bool_('List<bool>'),
   list_other('List<Object>'),
   list_int_('List<int>'),
@@ -88,10 +89,10 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return double_;
       case 'dynamic':
         return dynamic_;
-      case 'num':
-        return num_;
       case 'List':
         return list_;
+      case 'Color':
+        return color;
       case 'List<bool>':
         return list_bool_;
       case 'List<Object>':
@@ -142,8 +143,6 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return set_double_null;
       case 'Map':
         return map_;
-      case 'Map<String, dynamic>':
-        return map_string_dynamic_;
       case 'Map<String, bool>':
         return map_string_bool;
       case 'Map<String, int>':
@@ -162,8 +161,6 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return map_string_double_null;
       case 'Map<int, String>':
         return map_int_string;
-      case 'Map<int, String?>':
-        return map_int_string_null;
       case 'Map<int, double>':
         return map_int_double;
       case 'Map<int, double?>':
@@ -172,8 +169,6 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return map_int_bool;
       case 'Map<int, bool?>':
         return map_int_bool_null;
-      case 'Map<int, dynamic>':
-        return map_int_dynamic_;
       case 'DateTime':
         return date_time;
       case 'Map<dynamic, dynamic>':
@@ -211,6 +206,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
     required T Function() dynamic_,
     required T Function() num_,
     required T Function() list_,
+    required T Function() color,
     required T Function() list_bool_,
     required T Function() list_other,
     required T Function() list_int_,
@@ -279,6 +275,8 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return num_();
       case EnumTypeVarable.list_:
         return list_();
+      case EnumTypeVarable.color:
+        return color();
       case EnumTypeVarable.list_bool_:
         return list_bool_();
       case EnumTypeVarable.list_other:
@@ -391,6 +389,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
     required T dynamic_,
     required T num_,
     required T list_,
+    required T color,
     required T list_bool_,
     required T list_other,
     required T list_int_,
@@ -459,6 +458,8 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return num_;
       case EnumTypeVarable.list_:
         return list_;
+      case EnumTypeVarable.color:
+        return color;
       case EnumTypeVarable.list_bool_:
         return list_bool_;
       case EnumTypeVarable.list_other:
@@ -572,6 +573,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
     T Function()? dynamic_,
     T Function()? num_,
     T Function()? list_,
+    T Function()? color,
     T Function()? list_bool_,
     T Function()? list_other,
     T Function()? list_int_,
@@ -632,6 +634,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         dynamic_: dynamic_ ?? orElse,
         num_: num_ ?? orElse,
         list_: list_ ?? orElse,
+        color: color ?? orElse,
         list_bool_: list_bool_ ?? orElse,
         list_other: list_other ?? orElse,
         list_int_: list_int_ ?? orElse,
@@ -694,6 +697,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
     T? dynamic_,
     T? num_,
     T? list_,
+    T? color,
     T? list_bool_,
     T? list_other,
     T? list_int_,
@@ -754,6 +758,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         dynamic_: dynamic_ ?? orElse,
         num_: num_ ?? orElse,
         list_: list_ ?? orElse,
+        color: color ?? orElse,
         list_bool_: list_bool_ ?? orElse,
         list_other: list_other ?? orElse,
         list_int_: list_int_ ?? orElse,
@@ -815,6 +820,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
     T Function()? dynamic_,
     T Function()? num_,
     T Function()? list_,
+    T Function()? color,
     T Function()? list_bool_,
     T Function()? list_other,
     T Function()? list_int_,
@@ -876,6 +882,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         dynamic_: dynamic_,
         num_: num_,
         list_: list_,
+        color: color,
         list_bool_: list_bool_,
         list_other: list_other,
         list_int_: list_int_,
@@ -937,6 +944,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
     T? dynamic_,
     T? num_,
     T? list_,
+    T? color,
     T? list_bool_,
     T? list_other,
     T? list_int_,
@@ -998,6 +1006,7 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         dynamic_: dynamic_,
         num_: num_,
         list_: list_,
+        color: color,
         list_bool_: list_bool_,
         list_other: list_other,
         list_int_: list_int_,
@@ -1066,6 +1075,7 @@ extension $EnumTypeVarable on EnumTypeVarable {
   bool get dynamic_ => this == EnumTypeVarable.dynamic_;
   bool get num_ => this == EnumTypeVarable.num_;
   bool get list_ => this == EnumTypeVarable.list_;
+  bool get color => this == EnumTypeVarable.color;
   bool get list_bool_ => this == EnumTypeVarable.list_bool_;
   bool get list_other => this == EnumTypeVarable.list_other;
   bool get list_int_ => this == EnumTypeVarable.list_int_;

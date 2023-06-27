@@ -255,5 +255,16 @@ String getToMapVarable(Parameter v) {
       return error;
     case EnumTypeVarable.null_:
       return error;
+    case EnumTypeVarable.color:
+      if (yes_null_default_yes) {
+        return '$name?.value ?? $initComment.value';
+      } else if (yes_null_default_no) {
+        return '$name?.value';
+      } else if (no_null_default_yes) {
+        return '$name.value';
+      } else if (no_null_default_no) {
+        return '$name.value';
+      }
+      return error;
   }
 }
