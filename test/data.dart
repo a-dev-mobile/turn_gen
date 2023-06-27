@@ -1,315 +1,154 @@
-// ignore_for_file: avoid_bool_literals_in_conditional_expressions
-// ignore_for_file: sort_constructors_first
-// ignore_for_file: public_member_api_docs, depend_on_referenced_packages, strict_raw_type, avoid_equals_and_hash_code_on_mutable_classes
-// ignore_for_file:  non_constant_identifier_names
+// // ignore_for_file: sort_constructors_first, avoid_bool_literals_in_conditional_expressions
+// import 'dart:convert';
 
-// turngen
+// import 'package:meta/meta.dart';
 
-// import 'package:collection/collection.dart';
+// @immutable
+// class DocumentUser {
+//   /* init: -1 */
+//   final num size;
+//   /* init: '' */
+//   final String type;
+//   /* init: '' */
+//   final String comment;
+//   /* init: '' */
+//   final String createdAt;
+//   /* init: '' */
+//   final String url;
+//   /* init: '' */
+//   final String name;
+//   /* init: false */
+//   final bool isValid;
+//   // end
 
-/* no: frommap only: copywith*/
-class DataTestModel {
-//
-  /* init: 10 */
-  final int? int_yes_null_default_yes;
-  final int? int_yes_null_default_no;
-  /* init: 20 */
-  final int int_no_null_default_yes;
-  final int int_no_null_default_no;
-//
-  /* init: 10 */
-  final num? num_yes_null_default_yes;
-  final num? num_yes_null_default_no;
-  /* init: 20000 */
-  final num num_no_null_default_yes;
-  final num num_no_null_default_no;
-//
-  /* init: '10' */
-  final String? String_yes_null_default_yes;
-  final String? String_yes_null_default_no;
-  /* init: '20000' */
-  final String String_no_null_default_yes;
-  final String String_no_null_default_no;
+// //          --TURN_GEN--
+// //             (data)
+// //  *************************************
+// //         GENERATED CODE
+// //  *************************************
+//   const DocumentUser({
+//     this.size = -1,
+//     this.type = '',
+//     this.comment = '',
+//     this.createdAt = '',
+//     this.url = '',
+//     this.name = '',
+//     this.isValid = false,
+//   });
 
-  /* init:  {'10', '345'} */
-  final Set? Set_yes_null_default_yes;
-  final Set? Set_yes_null_default_no;
-  /* init:  {12} */
-  final Set Set_no_null_default_yes;
-  final Set Set_no_null_default_no;
-  //
-  /* init:  {'10', '345'} */
-  final Set<String>? Set_string_yes_null_default_yes;
-  final Set<String>? Set_string_yes_null_default_no;
-  /* init:  {'12'} */
-  final Set<String> Set_string_no_null_default_yes;
-  final Set<String> Set_string_no_null_default_no;
+//   Map<String, dynamic> toMap() {
+//     return <String, dynamic>{
+//       'size': size.toMap(),
+//       'type': type,
+//       'comment': comment,
+//       'createdAt': createdAt,
+//       'url': url,
+//       'name': name,
+//       'isValid': isValid,
+//     };
+//   }
 
-  //
-  /* init:  {10, 345,} */
-  final Set<int>? Set_int_yes_null_default_yes;
-  final Set<int>? Set_int_yes_null_default_no;
-  /* init:  {12} */
-  final Set<int> Set_int_no_null_default_yes;
-  final Set<int> Set_int_no_null_default_no;
+//   factory DocumentUser.fromMap(Map<dynamic, dynamic>? map) {
+//     if (map == null) return const DocumentUser();
 
-  /* init:  {10, 345,} */
-  final Set<int?>? Set_int_null_yes_null_default_yes;
-  final Set<int?>? Set_int_null_yes_null_default_no;
-  /* init:  {12,null} */
-  final Set<int?> Set_int_null_no_null_default_yes;
-  final Set<int?> Set_int_null_no_null_default_no;
-  /* init:  {true, false,} */
-  final Set<bool>? Set_bool_yes_null_default_yes;
-  final Set<bool>? Set_bool_yes_null_default_no;
-  /* init:  {false} */
-  final Set<bool> Set_bool_no_null_default_yes;
-  final Set<bool> Set_bool_no_null_default_no;
-  /* init:  {true, false,null} */
-  final Set<bool?>? Set_bool_null_yes_null_default_yes;
-  final Set<bool?>? Set_bool_null_yes_null_default_no;
-  /* init:  {false,null} */
-  final Set<bool?> Set_bool_null_no_null_default_yes;
-  final Set<bool?> Set_bool_null_no_null_default_no;
+//     return DocumentUser(
+//       size: map['size'] != null
+//           ? num.fromMap(
+//               Map<String, dynamic>.from(
+//                 map['size'] as Map,
+//               ),
+//             )
+//           : -1,
+//       type: map['type'] as String? ?? '',
+//       comment: map['comment'] as String? ?? '',
+//       createdAt: map['createdAt'] as String? ?? '',
+//       url: map['url'] as String? ?? '',
+//       name: map['name'] as String? ?? '',
+//       isValid: map['isValid'] as bool? ?? false,
+//     );
+//   }
 
-  final Set<double>? Set_double_yes_null_default_yes;
-  final Set<double>? Set_double_yes_null_default_no;
+//   DocumentUser copyWith({
+//     num? size,
+//     String? type,
+//     String? comment,
+//     String? createdAt,
+//     String? url,
+//     String? name,
+//     bool? isValid,
+//   }) {
+//     return DocumentUser(
+//       size: size ?? this.size,
+//       type: type ?? this.type,
+//       comment: comment ?? this.comment,
+//       createdAt: createdAt ?? this.createdAt,
+//       url: url ?? this.url,
+//       name: name ?? this.name,
+//       isValid: isValid ?? this.isValid,
+//     );
+//   }
 
-  final Set<double> Set_double_no_null_default_yes;
-  final Set<double> Set_double_no_null_default_no;
+//   String toJson() => json.encode(toMap());
+//   factory DocumentUser.fromJson(String source) => DocumentUser.fromMap(
+//         json.decode(source) as Map<String, dynamic>,
+//       );
 
-  /* init:  [true, false,] */
-  final List<bool>? List_bool_yes_null_default_yes;
-  final List<bool>? List_bool_yes_null_default_no;
+//   @override
+//   bool operator ==(dynamic other) {
+//     return identical(this, other) ||
+//         (other.runtimeType == runtimeType &&
+//             other is DocumentUser &&
+//             (identical(
+//                   other.size,
+//                   size,
+//                 ) ||
+//                 other.size == size) &&
+//             (identical(
+//                   other.type,
+//                   type,
+//                 ) ||
+//                 other.type == type) &&
+//             (identical(
+//                   other.comment,
+//                   comment,
+//                 ) ||
+//                 other.comment == comment) &&
+//             (identical(
+//                   other.createdAt,
+//                   createdAt,
+//                 ) ||
+//                 other.createdAt == createdAt) &&
+//             (identical(
+//                   other.url,
+//                   url,
+//                 ) ||
+//                 other.url == url) &&
+//             (identical(
+//                   other.name,
+//                   name,
+//                 ) ||
+//                 other.name == name) &&
+//             (identical(
+//                   other.isValid,
+//                   isValid,
+//                 ) ||
+//                 other.isValid == isValid));
+//   }
 
-  /* init: const  [false] */
-  final List<bool> List_bool_no_null_default_yes;
-  final List<bool> List_bool_no_null_default_no;
-  /* init:  [true, false,null] */
-  final List<bool?>? List_bool_null_yes_null_default_yes;
-  final List<bool?>? List_bool_null_yes_null_default_no;
-  /* init: const  [false,null] */
-  final List<bool?> List_bool_null_no_null_default_yes;
-  final List<bool?> List_bool_null_no_null_default_no;
+//   @override
+//   int get hashCode => Object.hashAll([
+//         runtimeType,
+//         size,
+//         type,
+//         comment,
+//         createdAt,
+//         url,
+//         name,
+//         isValid,
+//       ]);
 
-  // end
-
-//          --TURN_GEN--
-//             (data)
-//  *************************************
-//         GENERATED CODE
-//  *************************************
-  const DataTestModel({
-    required this.int_no_null_default_no,
-    required this.num_no_null_default_no,
-    required this.String_no_null_default_no,
-    required this.Set_no_null_default_no,
-    required this.Set_string_no_null_default_no,
-    required this.Set_int_no_null_default_no,
-    required this.Set_int_null_no_null_default_no,
-    required this.Set_bool_no_null_default_no,
-    required this.Set_bool_null_no_null_default_no,
-    required this.Set_double_no_null_default_yes,
-    required this.Set_double_no_null_default_no,
-    required this.List_bool_no_null_default_no,
-    required this.List_bool_null_no_null_default_no,
-    this.int_yes_null_default_yes = 10,
-    this.int_no_null_default_yes = 20,
-    this.num_yes_null_default_yes = 10,
-    this.num_no_null_default_yes = 20000,
-    this.String_yes_null_default_yes = '10',
-    this.String_no_null_default_yes = '20000',
-    this.Set_yes_null_default_yes = const {'10', '345'},
-    this.Set_no_null_default_yes = const {12},
-    this.Set_string_yes_null_default_yes = const {'10', '345'},
-    this.Set_string_no_null_default_yes = const {'12'},
-    this.Set_int_yes_null_default_yes = const {
-      10,
-      345,
-    },
-    this.Set_int_no_null_default_yes = const {12},
-    this.Set_int_null_yes_null_default_yes = const {
-      10,
-      345,
-    },
-    this.Set_int_null_no_null_default_yes = const {12, null},
-    this.Set_bool_yes_null_default_yes = const {
-      true,
-      false,
-    },
-    this.Set_bool_no_null_default_yes = const {false},
-    this.Set_bool_null_yes_null_default_yes = const {true, false, null},
-    this.Set_bool_null_no_null_default_yes = const {false, null},
-    this.List_bool_yes_null_default_yes = const [
-      true,
-      false,
-    ],
-    this.List_bool_no_null_default_yes = const [false],
-    this.List_bool_null_yes_null_default_yes = const [true, false, null],
-    this.List_bool_null_no_null_default_yes = const [false, null],
-    this.int_yes_null_default_no,
-    this.num_yes_null_default_no,
-    this.String_yes_null_default_no,
-    this.Set_yes_null_default_no,
-    this.Set_string_yes_null_default_no,
-    this.Set_int_yes_null_default_no,
-    this.Set_int_null_yes_null_default_no,
-    this.Set_bool_yes_null_default_no,
-    this.Set_bool_null_yes_null_default_no,
-    this.Set_double_yes_null_default_yes,
-    this.Set_double_yes_null_default_no,
-    this.List_bool_yes_null_default_no,
-    this.List_bool_null_yes_null_default_no,
-  });
-
-  DataTestModel copyWith({
-    int? int_yes_null_default_yes,
-    int? int_yes_null_default_no,
-    int? int_no_null_default_yes,
-    int? int_no_null_default_no,
-    num? num_yes_null_default_yes,
-    num? num_yes_null_default_no,
-    num? num_no_null_default_yes,
-    num? num_no_null_default_no,
-    String? String_yes_null_default_yes,
-    String? String_yes_null_default_no,
-    String? String_no_null_default_yes,
-    String? String_no_null_default_no,
-    Set? Set_yes_null_default_yes,
-    Set? Set_yes_null_default_no,
-    Set? Set_no_null_default_yes,
-    Set? Set_no_null_default_no,
-    Set<String>? Set_string_yes_null_default_yes,
-    Set<String>? Set_string_yes_null_default_no,
-    Set<String>? Set_string_no_null_default_yes,
-    Set<String>? Set_string_no_null_default_no,
-    Set<int>? Set_int_yes_null_default_yes,
-    Set<int>? Set_int_yes_null_default_no,
-    Set<int>? Set_int_no_null_default_yes,
-    Set<int>? Set_int_no_null_default_no,
-    Set<int?>? Set_int_null_yes_null_default_yes,
-    Set<int?>? Set_int_null_yes_null_default_no,
-    Set<int?>? Set_int_null_no_null_default_yes,
-    Set<int?>? Set_int_null_no_null_default_no,
-    Set<bool>? Set_bool_yes_null_default_yes,
-    Set<bool>? Set_bool_yes_null_default_no,
-    Set<bool>? Set_bool_no_null_default_yes,
-    Set<bool>? Set_bool_no_null_default_no,
-    Set<bool?>? Set_bool_null_yes_null_default_yes,
-    Set<bool?>? Set_bool_null_yes_null_default_no,
-    Set<bool?>? Set_bool_null_no_null_default_yes,
-    Set<bool?>? Set_bool_null_no_null_default_no,
-    Set<double>? Set_double_yes_null_default_yes,
-    Set<double>? Set_double_yes_null_default_no,
-    Set<double>? Set_double_no_null_default_yes,
-    Set<double>? Set_double_no_null_default_no,
-    List<bool>? List_bool_yes_null_default_yes,
-    List<bool>? List_bool_yes_null_default_no,
-    List<bool>? List_bool_no_null_default_yes,
-    List<bool>? List_bool_no_null_default_no,
-    List<bool?>? List_bool_null_yes_null_default_yes,
-    List<bool?>? List_bool_null_yes_null_default_no,
-    List<bool?>? List_bool_null_no_null_default_yes,
-    List<bool?>? List_bool_null_no_null_default_no,
-  }) {
-    return DataTestModel(
-      int_yes_null_default_yes:
-          int_yes_null_default_yes ?? this.int_yes_null_default_yes,
-      int_yes_null_default_no:
-          int_yes_null_default_no ?? this.int_yes_null_default_no,
-      int_no_null_default_yes:
-          int_no_null_default_yes ?? this.int_no_null_default_yes,
-      int_no_null_default_no:
-          int_no_null_default_no ?? this.int_no_null_default_no,
-      num_yes_null_default_yes:
-          num_yes_null_default_yes ?? this.num_yes_null_default_yes,
-      num_yes_null_default_no:
-          num_yes_null_default_no ?? this.num_yes_null_default_no,
-      num_no_null_default_yes:
-          num_no_null_default_yes ?? this.num_no_null_default_yes,
-      num_no_null_default_no:
-          num_no_null_default_no ?? this.num_no_null_default_no,
-      String_yes_null_default_yes:
-          String_yes_null_default_yes ?? this.String_yes_null_default_yes,
-      String_yes_null_default_no:
-          String_yes_null_default_no ?? this.String_yes_null_default_no,
-      String_no_null_default_yes:
-          String_no_null_default_yes ?? this.String_no_null_default_yes,
-      String_no_null_default_no:
-          String_no_null_default_no ?? this.String_no_null_default_no,
-      Set_yes_null_default_yes:
-          Set_yes_null_default_yes ?? this.Set_yes_null_default_yes,
-      Set_yes_null_default_no:
-          Set_yes_null_default_no ?? this.Set_yes_null_default_no,
-      Set_no_null_default_yes:
-          Set_no_null_default_yes ?? this.Set_no_null_default_yes,
-      Set_no_null_default_no:
-          Set_no_null_default_no ?? this.Set_no_null_default_no,
-      Set_string_yes_null_default_yes: Set_string_yes_null_default_yes ??
-          this.Set_string_yes_null_default_yes,
-      Set_string_yes_null_default_no:
-          Set_string_yes_null_default_no ?? this.Set_string_yes_null_default_no,
-      Set_string_no_null_default_yes:
-          Set_string_no_null_default_yes ?? this.Set_string_no_null_default_yes,
-      Set_string_no_null_default_no:
-          Set_string_no_null_default_no ?? this.Set_string_no_null_default_no,
-      Set_int_yes_null_default_yes:
-          Set_int_yes_null_default_yes ?? this.Set_int_yes_null_default_yes,
-      Set_int_yes_null_default_no:
-          Set_int_yes_null_default_no ?? this.Set_int_yes_null_default_no,
-      Set_int_no_null_default_yes:
-          Set_int_no_null_default_yes ?? this.Set_int_no_null_default_yes,
-      Set_int_no_null_default_no:
-          Set_int_no_null_default_no ?? this.Set_int_no_null_default_no,
-      Set_int_null_yes_null_default_yes: Set_int_null_yes_null_default_yes ??
-          this.Set_int_null_yes_null_default_yes,
-      Set_int_null_yes_null_default_no: Set_int_null_yes_null_default_no ??
-          this.Set_int_null_yes_null_default_no,
-      Set_int_null_no_null_default_yes: Set_int_null_no_null_default_yes ??
-          this.Set_int_null_no_null_default_yes,
-      Set_int_null_no_null_default_no: Set_int_null_no_null_default_no ??
-          this.Set_int_null_no_null_default_no,
-      Set_bool_yes_null_default_yes:
-          Set_bool_yes_null_default_yes ?? this.Set_bool_yes_null_default_yes,
-      Set_bool_yes_null_default_no:
-          Set_bool_yes_null_default_no ?? this.Set_bool_yes_null_default_no,
-      Set_bool_no_null_default_yes:
-          Set_bool_no_null_default_yes ?? this.Set_bool_no_null_default_yes,
-      Set_bool_no_null_default_no:
-          Set_bool_no_null_default_no ?? this.Set_bool_no_null_default_no,
-      Set_bool_null_yes_null_default_yes: Set_bool_null_yes_null_default_yes ??
-          this.Set_bool_null_yes_null_default_yes,
-      Set_bool_null_yes_null_default_no: Set_bool_null_yes_null_default_no ??
-          this.Set_bool_null_yes_null_default_no,
-      Set_bool_null_no_null_default_yes: Set_bool_null_no_null_default_yes ??
-          this.Set_bool_null_no_null_default_yes,
-      Set_bool_null_no_null_default_no: Set_bool_null_no_null_default_no ??
-          this.Set_bool_null_no_null_default_no,
-      Set_double_yes_null_default_yes: Set_double_yes_null_default_yes ??
-          this.Set_double_yes_null_default_yes,
-      Set_double_yes_null_default_no:
-          Set_double_yes_null_default_no ?? this.Set_double_yes_null_default_no,
-      Set_double_no_null_default_yes:
-          Set_double_no_null_default_yes ?? this.Set_double_no_null_default_yes,
-      Set_double_no_null_default_no:
-          Set_double_no_null_default_no ?? this.Set_double_no_null_default_no,
-      List_bool_yes_null_default_yes:
-          List_bool_yes_null_default_yes ?? this.List_bool_yes_null_default_yes,
-      List_bool_yes_null_default_no:
-          List_bool_yes_null_default_no ?? this.List_bool_yes_null_default_no,
-      List_bool_no_null_default_yes:
-          List_bool_no_null_default_yes ?? this.List_bool_no_null_default_yes,
-      List_bool_no_null_default_no:
-          List_bool_no_null_default_no ?? this.List_bool_no_null_default_no,
-      List_bool_null_yes_null_default_yes:
-          List_bool_null_yes_null_default_yes ??
-              this.List_bool_null_yes_null_default_yes,
-      List_bool_null_yes_null_default_no: List_bool_null_yes_null_default_no ??
-          this.List_bool_null_yes_null_default_no,
-      List_bool_null_no_null_default_yes: List_bool_null_no_null_default_yes ??
-          this.List_bool_null_no_null_default_yes,
-      List_bool_null_no_null_default_no: List_bool_null_no_null_default_no ??
-          this.List_bool_null_no_null_default_no,
-    );
-  }
-}
+//   @override
+//   String toString() {
+//     return 'DocumentUser(size: $size, type: $type, comment: $comment, createdAt: $createdAt, url: $url, name: $name, isValid: $isValid, )';
+//   }
+// }

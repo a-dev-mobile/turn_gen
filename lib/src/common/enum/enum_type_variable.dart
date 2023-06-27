@@ -89,6 +89,8 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return double_;
       case 'dynamic':
         return dynamic_;
+      case 'num':
+        return num_;
       case 'List':
         return list_;
       case 'Color':
@@ -143,6 +145,8 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return set_double_null;
       case 'Map':
         return map_;
+      case 'Map<String, dynamic>':
+        return map_string_dynamic_;
       case 'Map<String, bool>':
         return map_string_bool;
       case 'Map<String, int>':
@@ -161,6 +165,8 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return map_string_double_null;
       case 'Map<int, String>':
         return map_int_string;
+      case 'Map<int, String?>':
+        return map_int_string_null;
       case 'Map<int, double>':
         return map_int_double;
       case 'Map<int, double?>':
@@ -169,6 +175,8 @@ enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
         return map_int_bool;
       case 'Map<int, bool?>':
         return map_int_bool_null;
+      case 'Map<int, dynamic>':
+        return map_int_dynamic_;
       case 'DateTime':
         return date_time;
       case 'Map<dynamic, dynamic>':

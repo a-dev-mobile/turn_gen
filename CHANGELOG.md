@@ -1,4 +1,4 @@
-## 1.0.8
+## 1.0.9
 
 - `fromJson` and `toJson` methods can now work with `Color` type (`import 'dart:ui'`)
 
