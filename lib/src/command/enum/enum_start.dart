@@ -84,8 +84,9 @@ Future<void> enumStart({
     final replaceTextStart =
         item.length > itemPlus.length ? '$item(' : '$itemPlus(';
 
-    final regex =
-        isLast ? '\\b$item\\(([\\w\\W]+?);' : '\\b$item\\(([\\w\\W]*?)$itemPlus\\(';
+    final regex = isLast
+        ? '\\b$item\\(([\\w\\W]+?);'
+        : '\\b$item\\(([\\w\\W]*?)$itemPlus\\(';
     listEnumValueRaw.add(
       UtilsRegex.getTextRegexMatch(
         content: enumToEndRaw,
@@ -96,7 +97,6 @@ Future<void> enumStart({
           .replaceAll('$item(', '')
           .replaceAll('$itemPlus(', ''),
     );
-    var a;
   }
 
   final listEnumValueFormat = _getFormatEnumRaw(listEnumValueRaw);

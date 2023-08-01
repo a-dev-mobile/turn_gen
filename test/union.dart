@@ -1,6 +1,8 @@
 // import 'dart:convert';
 
+// import 'package:collection/collection.dart';
 // import 'package:flutter/material.dart';
+// import 'package:meta/meta.dart';
 
 // // import 'package:collection/collection.dart';
 // // import 'package:meta/meta.dart';
@@ -720,113 +722,105 @@
 //   }
 
 //   @override
-//   bool operator ==(dynamic other) {
+//   bool operator ==(Object other) {
+//     if (identical(this, other)) return true;
+//     if (other is! Union1) return false;
+//     if (other.runtimeType != runtimeType) return false;
+
 //     switch (_tag) {
 //       case Union1Tag.listBool2:
-//         return identical(this, other) ||
-//             (other.runtimeType == runtimeType &&
-//                 other is Union1 &&
-//                 (identical(
-//                       other._c3_listBool2,
-//                       _c3_listBool2,
-//                     ) ||
-//                     other._c3_listBool2 == _c3_listBool2) &&
-//                 (identical(
-//                       other._c1_listBool2,
-//                       _c1_listBool2,
-//                     ) ||
-//                     other._c1_listBool2 == _c1_listBool2) &&
-//                 (identical(
-//                       other._c2_listBool2,
-//                       _c2_listBool2,
-//                     ) ||
-//                     other._c2_listBool2 == _c2_listBool2) &&
-//                 (identical(
-//                       other._c4_listBool2,
-//                       _c4_listBool2,
-//                     ) ||
-//                     other._c4_listBool2 == _c4_listBool2));
+//         return _tag == other._tag &&
+//             (identical(
+//                   other._c3_listBool2,
+//                   _c3_listBool2,
+//                 ) ||
+//                 other._c3_listBool2 == _c3_listBool2) &&
+//             (identical(
+//                   other._c1_listBool2,
+//                   _c1_listBool2,
+//                 ) ||
+//                 other._c1_listBool2 == _c1_listBool2) &&
+//             (identical(
+//                   other._c2_listBool2,
+//                   _c2_listBool2,
+//                 ) ||
+//                 other._c2_listBool2 == _c2_listBool2) &&
+//             (identical(
+//                   other._c4_listBool2,
+//                   _c4_listBool2,
+//                 ) ||
+//                 other._c4_listBool2 == _c4_listBool2);
 //       case Union1Tag.success:
-//         return identical(this, other) ||
-//             (other.runtimeType == runtimeType &&
-//                 other is Union1 &&
-//                 const DeepCollectionEquality().equals(
-//                   other._data_success,
-//                   _data_success,
-//                 ) &&
-//                 const DeepCollectionEquality().equals(
-//                   other._data2_success,
-//                   _data2_success,
-//                 ));
+//         return _tag == other._tag &&
+//             const DeepCollectionEquality().equals(
+//               other._data_success,
+//               _data_success,
+//             ) &&
+//             const DeepCollectionEquality().equals(
+//               other._data2_success,
+//               _data2_success,
+//             );
 //       case Union1Tag.success3:
-//         return identical(this, other) ||
-//             (other.runtimeType == runtimeType &&
-//                 other is Union1 &&
-//                 const DeepCollectionEquality().equals(
-//                   other._data_success3,
-//                   _data_success3,
-//                 ) &&
-//                 (identical(
-//                       other._a_success3,
-//                       _a_success3,
-//                     ) ||
-//                     other._a_success3 == _a_success3));
+//         return _tag == other._tag &&
+//             const DeepCollectionEquality().equals(
+//               other._data_success3,
+//               _data_success3,
+//             ) &&
+//             (identical(
+//                   other._a_success3,
+//                   _a_success3,
+//                 ) ||
+//                 other._a_success3 == _a_success3);
 //       case Union1Tag.listBool:
-//         return identical(this, other) ||
-//             (other.runtimeType == runtimeType &&
-//                 other is Union1 &&
-//                 const DeepCollectionEquality().equals(
-//                   other._list_bool_listBool,
-//                   _list_bool_listBool,
-//                 ) &&
-//                 (identical(
-//                       other._a_listBool,
-//                       _a_listBool,
-//                     ) ||
-//                     other._a_listBool == _a_listBool));
+//         return _tag == other._tag &&
+//             const DeepCollectionEquality().equals(
+//               other._list_bool_listBool,
+//               _list_bool_listBool,
+//             ) &&
+//             (identical(
+//                   other._a_listBool,
+//                   _a_listBool,
+//                 ) ||
+//                 other._a_listBool == _a_listBool);
 //       case Union1Tag.error_1:
-//         return identical(this, other) ||
-//             (other.runtimeType == runtimeType &&
-//                 other is Union1 &&
-//                 (identical(
-//                       other._message_error_1,
-//                       _message_error_1,
-//                     ) ||
-//                     other._message_error_1 == _message_error_1) &&
-//                 (identical(
-//                       other._messsage_error_1,
-//                       _messsage_error_1,
-//                     ) ||
-//                     other._messsage_error_1 == _messsage_error_1) &&
-//                 (identical(
-//                       other._mesdssage_error_1,
-//                       _mesdssage_error_1,
-//                     ) ||
-//                     other._mesdssage_error_1 == _mesdssage_error_1) &&
-//                 (identical(
-//                       other._mesdfssage_error_1,
-//                       _mesdfssage_error_1,
-//                     ) ||
-//                     other._mesdfssage_error_1 == _mesdfssage_error_1) &&
-//                 (identical(
-//                       other._error_error_1,
-//                       _error_error_1,
-//                     ) ||
-//                     other._error_error_1 == _error_error_1));
+//         return _tag == other._tag &&
+//             (identical(
+//                   other._message_error_1,
+//                   _message_error_1,
+//                 ) ||
+//                 other._message_error_1 == _message_error_1) &&
+//             (identical(
+//                   other._messsage_error_1,
+//                   _messsage_error_1,
+//                 ) ||
+//                 other._messsage_error_1 == _messsage_error_1) &&
+//             (identical(
+//                   other._mesdssage_error_1,
+//                   _mesdssage_error_1,
+//                 ) ||
+//                 other._mesdssage_error_1 == _mesdssage_error_1) &&
+//             (identical(
+//                   other._mesdfssage_error_1,
+//                   _mesdfssage_error_1,
+//                 ) ||
+//                 other._mesdfssage_error_1 == _mesdfssage_error_1) &&
+//             (identical(
+//                   other._error_error_1,
+//                   _error_error_1,
+//                 ) ||
+//                 other._error_error_1 == _error_error_1);
 //       case Union1Tag.error_2:
-//         return identical(this, other) ||
-//             (other.runtimeType == runtimeType &&
-//                 other is Union1 &&
-//                 (identical(
-//                       other._message_error_2,
-//                       _message_error_2,
-//                     ) ||
-//                     other._message_error_2 == _message_error_2) &&
-//                 (identical(
-//                       other._error_error_2,
-//                       _error_error_2,
-//                     ) ||
-//                     other._error_error_2 == _error_error_2));
+//         return _tag == other._tag &&
+//             (identical(
+//                   other._message_error_2,
+//                   _message_error_2,
+//                 ) ||
+//                 other._message_error_2 == _message_error_2) &&
+//             (identical(
+//                   other._error_error_2,
+//                   _error_error_2,
+//                 ) ||
+//                 other._error_error_2 == _error_error_2);
 //     }
 //   }
 
@@ -837,6 +831,7 @@
 //         return Object.hashAll(
 //           [
 //             runtimeType,
+//             _tag,
 //             _c3_listBool2,
 //             _c1_listBool2,
 //             _c2_listBool2,
@@ -847,6 +842,7 @@
 //         return Object.hashAll(
 //           [
 //             runtimeType,
+//             _tag,
 //             const DeepCollectionEquality().hash(
 //               _data_success,
 //             ),
@@ -859,6 +855,7 @@
 //         return Object.hashAll(
 //           [
 //             runtimeType,
+//             _tag,
 //             const DeepCollectionEquality().hash(
 //               _data_success3,
 //             ),
@@ -869,6 +866,7 @@
 //         return Object.hashAll(
 //           [
 //             runtimeType,
+//             _tag,
 //             const DeepCollectionEquality().hash(
 //               _list_bool_listBool,
 //             ),
@@ -879,6 +877,7 @@
 //         return Object.hashAll(
 //           [
 //             runtimeType,
+//             _tag,
 //             _message_error_1,
 //             _messsage_error_1,
 //             _mesdssage_error_1,
@@ -890,6 +889,7 @@
 //         return Object.hashAll(
 //           [
 //             runtimeType,
+//             _tag,
 //             _message_error_2,
 //             _error_error_2,
 //           ],

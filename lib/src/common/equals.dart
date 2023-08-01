@@ -78,7 +78,7 @@ class Equals {
       case EnumTypeVarable.dynamic_:
       case EnumTypeVarable.data:
       case EnumTypeVarable.color:
-        return '            (identical(other.$nameVar, $nameVar,) || other.$nameVar == $nameVar)$end';
+        return '(identical(other.$nameVar, $nameVar,) || other.$nameVar == $nameVar)$end';
       case EnumTypeVarable.null_:
         return 'error _getEquals';
     }

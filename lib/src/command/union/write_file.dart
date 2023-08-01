@@ -319,7 +319,7 @@ $sbMaybeMapOrNull1    }
     sbHashTemp.write('''
 
       case ${model.nameClass}Tag.${l.nameUnion}:
-        return Object.hashAll([runtimeType,''');
+        return Object.hashAll([runtimeType, _tag,''');
     final length = l.listParameters.length;
 
     // if (length == 0) sbHash.write(']);');
@@ -353,32 +353,33 @@ $sbMaybeMapOrNull1    }
   // ignore: cascade_invocations
   sbEqualsTemp.write('''
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ${model.nameClass}) return false;
+    if (other.runtimeType != runtimeType) return false;
+  
     switch (_tag) {
 ''');
 
   for (final l in model.listUnion) {
-    final lastText = l.listParameters.isEmpty ? ');' : ' && ';
+    final lastText = l.listParameters.isEmpty ? ';' : ' && ';
     sbEqualsTemp.write('''
 
       case ${model.nameClass}Tag.${l.nameUnion}:
-        return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is ${model.nameClass} $lastText 
+        return _tag == other._tag $lastText 
 ''');
     final length = l.listParameters.length;
 
     for (var i = 0; i < length; i++) {
       final isLast = i + 1 == length;
       final p = l.listParameters[i];
+      final equals = Equals.get(
+        type: p.typeEnum,
+        nameVar: '_${p.name}_${l.nameUnion}',
+        isLast: isLast,
+      ).replaceAll(RegExp(r'\s+'), ' ').replaceAll('));', ');');
 
-      sbEqualsTemp.write(
-        Equals.get(
-          type: p.typeEnum,
-          nameVar: '_${p.name}_${l.nameUnion}',
-          isLast: isLast,
-        ).replaceAll(RegExp(r'\s+'), ' '),
-      );
+      sbEqualsTemp.write(equals);
     }
   }
   sbEqualsTemp.write('''

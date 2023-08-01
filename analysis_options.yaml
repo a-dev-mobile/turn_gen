@@ -10,8 +10,7 @@ linter:
     # constant_identifier_names: false
 
 analyzer:
-  plugins:
-    - dart_code_metrics
+
   exclude:
     # Generated code
     - "lib/**.gen.dart"
@@ -26,35 +25,3 @@ analyzer:
     - "build/**"
     # Assets
     - "assets/**"
-
-dart_code_metrics:
-  extends:
-    - package:dart_code_metrics/presets/all.yaml
-  rules:
-    - member-ordering: false
-    - prefer-match-file-name: false
-    - avoid-dynamic: false
-    - format-comment: false
-    - prefer-commenting-analyzer-ignores: false
-    - avoid-non-ascii-symbols: false
-    - no-equal-arguments: false
-    - prefer-single-widget-per-file:
-        ignore-private-widgets: true
-    - prefer-correct-identifier-length: false
-    - prefer-moving-to-variable:
-        allowed-duplicated-chains: 3
-    - arguments-ordering: false
-    - avoid-late-keyword: false
-    - no-magic-number: false
-    - avoid-top-level-members-in-tests: false
-
-    - avoid-nested-conditional-expressions: false
-    - prefer-static-class:
-        ignore-annotations:
-          - allowedAnnotation
-        ignore-private: true
-    - no-equal-arguments:
-        ignored-parameters:
-          - height
-          - width
-          - Duration.zero
