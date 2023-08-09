@@ -1,3 +1,7 @@
+## [1.1.1] - 08.08.2023
+
+- due to an unusual bug, returned to the `dynamic` type in the `==` operator
+
 ## [1.1.0] - 01.08.2023
 
 - Improved `==` operator and `hashCode` methods in `Union` script. We switched from using `dynamic` to `Object` for enhanced type safety. Additionally, we now include a check for `runtimeType` to prevent erroneous comparisons between instances of different classes. For `hashCode`, we incorporated `_tag` to create a more unique and accurate hash value, enhancing the equality comparison.

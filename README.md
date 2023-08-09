@@ -1,7 +1,7 @@
 
 # TurnGen
 
-[![pub package](https://img.shields.io/badge/pub-1.1.0-blue)](https://pub.dev/packages/turn_gen)
+[![pub package](https://img.shields.io/badge/pub-1.1.1-blue)](https://pub.dev/packages/turn_gen)
 
 Welcome to [TurnGen]!. This project is a set of scripts combined into a command line tool, all scripts are written in dart language and run instantly without using build_runner, they are designed to minimize coding and simplify various tasks such as:
 
@@ -53,6 +53,7 @@ TurnGen can be run with a single command that searches for files that have a com
 ```dart
 // turngen
 ```
+
 We use the command to start it:
 
 ```shell
@@ -117,7 +118,6 @@ enum EnumActivity  {
 // end
 }
 ```
-
 
 But it takes a bit longer to run this command than to directly call the desired script, which are described below.
 
