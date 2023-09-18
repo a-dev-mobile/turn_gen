@@ -1,3 +1,33 @@
+## [1.1.2] - 18.09.2023
+
+- added the ability to use `List<String>` in `enum` when using Turngen - example:
+
+```dart
+enum EnumStore implements Comparable<EnumStore> {
+  appStore([
+    'com.apple',
+    'com.apple.testflight',
+    'com.apple.simulator',
+  ]),
+  googlePlay([
+    'com.android.vending',
+  ]),
+  packageinstaller([
+    'com.miui.packageinstaller',
+    'com.google.android.packageinstaller',
+  ]),
+  other([
+    'com.sec.android.app.samsungapps',
+    'com.aurora.store',
+  ]);
+
+  const EnumStore(this.packageId);
+  final List<String> packageId;
+
+// end
+}
+```
+
 ## [1.1.1] - 08.08.2023
 
 - due to an unusual bug, returned to the `dynamic` type in the `==` operator
@@ -17,7 +47,7 @@
 
 ## [1.0.5]
 
-- added ability to use different data types in `enum` when using `turngen` example:
+- added ability to use different data types in `enum` when using `turngen` - example:
 
 ```dart
 

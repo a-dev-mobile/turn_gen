@@ -35,7 +35,7 @@ void enumWriteToFile(
   final fromValueSb = StringBuffer();
 
 /* ****************************** */
-  final fromValueSb1 = StringBuffer();
+  final fromValueSbSwitch = StringBuffer();
   // for double other value
   final switchVar = typeEnum.maybeMapValue(
     orElse: nameValueFirst,
@@ -52,11 +52,11 @@ void enumWriteToFile(
       double_: "'${e.valueEnum}'",
     );
 
-    fromValueSb1.write('case $value:\n');
-    fromValueSb1.write('return $name');
+    fromValueSbSwitch.write('case $value:\n');
+    fromValueSbSwitch.write('return $name');
     var lastSymbol = ';\n';
     if (e == model.listItem.last) lastSymbol = ';';
-    fromValueSb1.write(lastSymbol);
+    fromValueSbSwitch.write(lastSymbol);
   }
 /* ******************************* */
   final typeStrUpdate =
@@ -65,13 +65,40 @@ void enumWriteToFile(
   fromValueSb.write('''
   static $nameClass fromValue($typeStrUpdate $nameValueFirst, {$nameClass? fallback,}) {
     switch ($switchVar) {
-$fromValueSb1
+$fromValueSbSwitch
       default:
         return fallback ?? (throw ArgumentError.value(
           $nameValueFirst, '', 'Value not found in $nameClass',));
     }
   }
 ''');
+
+  if (typeEnum.list_string_ || typeEnum.list_string_null) {
+    fromValueSb.clear();
+
+    fromValueSb.write('''
+
+  static $nameClass fromValue(
+    String? $nameValueFirst, {
+    $nameClass? fallback,
+  }) {
+    for (final enumValue in $nameClass.values) {
+      if (enumValue.$nameValueFirst.contains($nameValueFirst)) {
+        return enumValue;
+      }
+    }
+
+    return fallback ??
+        (throw ArgumentError.value(
+          $nameValueFirst,
+          '',
+          'Value not found in $nameClass',
+        ));
+  }
+
+''');
+  }
+
 /* ****************************** */
 
   final mapCommonSb = StringBuffer();
