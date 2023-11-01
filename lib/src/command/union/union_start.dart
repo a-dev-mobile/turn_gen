@@ -181,9 +181,17 @@ Future<void> unionStart({
       }
 
       // получаю initvalue
-      if (v.contains('=')) {
-        initValue = v.split('=').last.trim();
-        v = v.replaceAll(initValue, '').replaceAll('=', '').trim();
+      const separator = ' = ';
+      final arrayInit = v.split(separator);
+      if (v.contains(separator)) {
+        if (arrayInit.length > 2) {
+          initValue = (arrayInit[arrayInit.length - 2] +
+              separator +
+              arrayInit[arrayInit.length - 1]).trim();
+        } else {
+          initValue = arrayInit.last.trim();
+        }
+        v = v.replaceAll(initValue, '').replaceAll(separator, '').trim();
       }
 
       final nameVar = v.split(' ').last;
@@ -359,7 +367,7 @@ List<String> _getUnionName(
   final list = <String>[];
 
   for (final v in listFormatUnionRawItem) {
-    final union = v.replaceAll('$className.', '').split(' ').first;
+    final union = v.replaceAll('$className.', '').split('(').first;
 
     if (union.isEmpty) {
       list.add(ConstHelper.emptyUnionName);
@@ -387,55 +395,53 @@ List<String> _getFormatItemUnion(
   List<String> content,
 ) {
   final formatList = <String>[];
-  for (final v in content) {
-    formatList.add(
-      v
-          .trim()
-          .replaceAll(':', ' : ')
-          .replaceAll('?', ' ? ')
-          .replaceAll(',', ' , ')
-          .replaceAll('>', ' > ')
-          .replaceAll('<', ' < ')
-          .replaceAll('(', ' ( ')
-          .replaceAll(')', ' ) ')
-          .replaceAll(']', ' ] ')
-          .replaceAll('[', ' [ ')
-          .replaceAll('}', ' } ')
-          .replaceAll('{', ' { ')
-          .replaceAll('=', ' = ')
-          .replaceAll(':', ' : ')
-          .replaceAll(',', ' , ')
-          .replaceAll(';', ' ; ')
-          .replaceAll('.', ' . ')
-          .replaceAll(',', ' , ')
-          .replaceAll(RegExp(r'\s+'), ' ')
-          .replaceAll(' :', ':')
-          .replaceAll(' ? ', '? ')
-          .replaceAll(' >', '>')
-          .replaceAll(' <', '<')
-          .replaceAll('< ', '<')
-          .replaceAll('( ', '(')
-          .replaceAll(' )', ')')
-          .replaceAll(' ]', ']')
-          .replaceAll('] ', ']')
-          .replaceAll(' [', '[')
-          .replaceAll('[ ', '[')
-          .replaceAll(' }', '}')
-          .replaceAll('{ ', '{')
-          .replaceAll(' ;', ';')
-          .replaceAll(' .', '.')
-          .replaceAll('. ', '.')
-          .replaceAll(' :', ':')
-          .replaceAll(' ,', ',')
-          .replaceAll(',[', ', [')
-          .replaceAll(',{', ', {')
-          .replaceAll(RegExp('^const '), '')
-          .replaceAll('_$className', className)
-          .trim(),
-    );
+  for (var v in content) {
+    v = v
+        .trim()
+        .replaceAll(RegExp('^const '), '')
+        .replaceAll('_$className', className)
+        .trim();
+    v = replaceOutsideQuotes(v);
+
+    formatList.add(v);
   }
 
   return formatList;
+}
+
+String replaceOutsideQuotes(String v) {
+  var result = StringBuffer();
+  var inSingleQuotes = false;
+  var inDoubleQuotes = false;
+  var inTripleSingleQuotes = false;
+  var inTripleDoubleQuotes = false;
+
+  for (var i = 0; i < v.length; i++) {
+    if (!inSingleQuotes && !inDoubleQuotes && v.startsWith("'''", i)) {
+      inTripleSingleQuotes = !inTripleSingleQuotes;
+      result.write("'''");
+      i += 2;
+    } else if (!inSingleQuotes && !inDoubleQuotes && v.startsWith('"""', i)) {
+      inTripleDoubleQuotes = !inTripleDoubleQuotes;
+      result.write('"""');
+      i += 2;
+    } else if (!inTripleSingleQuotes && !inTripleDoubleQuotes && v.startsWith("'", i)) {
+      inSingleQuotes = !inSingleQuotes;
+      result.write("'");
+    } else if (!inTripleSingleQuotes && !inTripleDoubleQuotes && v.startsWith('"', i)) {
+      inDoubleQuotes = !inDoubleQuotes;
+      result.write('"');
+    } else if (!inSingleQuotes && !inDoubleQuotes && !inTripleSingleQuotes && !inTripleDoubleQuotes) {
+      if (v[i].trim().isEmpty && (i + 1 < v.length) && v[i + 1].trim().isEmpty) {
+        continue;
+      }
+      result.write(v[i].trim().isEmpty ? ' ' : v[i]);
+    } else {
+      result.write(v[i]);
+    }
+  }
+
+  return result.toString();
 }
 
 String _getNameClass(String classHeader) {

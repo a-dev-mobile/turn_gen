@@ -13,6 +13,8 @@ class UnionCommonModel {
   final String comments;
   /* init: '' */
   final String contentToEnd;
+  /* init: '' */
+  final String contentFile;
   /* init: const [] */
   final List<String> listParams;
   /* init: false */
@@ -33,6 +35,7 @@ class UnionCommonModel {
     this.classHeader = '',
     this.comments = '',
     this.contentToEnd = '',
+    this.contentFile = '',
     this.listParams = const [],
     this.isHaveOnlyList = false,
     this.listUnion = const [],
@@ -44,6 +47,7 @@ class UnionCommonModel {
     String? classHeader,
     String? comments,
     String? contentToEnd,
+    String? contentFile,
     List<String>? listParams,
     bool? isHaveOnlyList,
     List<UnionItemModel>? listUnion,
@@ -54,6 +58,7 @@ class UnionCommonModel {
       classHeader: classHeader ?? this.classHeader,
       comments: comments ?? this.comments,
       contentToEnd: contentToEnd ?? this.contentToEnd,
+      contentFile: contentFile ?? this.contentFile,
       listParams: listParams ?? this.listParams,
       isHaveOnlyList: isHaveOnlyList ?? this.isHaveOnlyList,
       listUnion: listUnion ?? this.listUnion,

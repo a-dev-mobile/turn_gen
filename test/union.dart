@@ -1,1080 +1,1048 @@
-// import 'dart:convert';
+// turngen
 
-// import 'package:collection/collection.dart';
-// import 'package:flutter/material.dart';
-// import 'package:meta/meta.dart';
+import 'dart:convert';
 
-// // import 'package:collection/collection.dart';
-// // import 'package:meta/meta.dart';
+import 'package:meta/meta.dart';
 
-// void main(List<String> args) {
-//   print('asd');
-// }
+class _Store {
+  const _Store.appStore({
+    String url =
+        'https://apps.apple.com/us/app/надо-денег-деньги-онлайн/id1663823713',
+    String name = 'AppStore',
+    List<String> packageIds = const [
+      'com.apple',
+      'com.apple.testflight',
+      'com.apple.simulator',
+    ],
+  });
+  const _Store.googlePlay({
+    String url =
+        'https://play.google.com/store/apps/details?id=ru.nadodeneg.mobile',
+    String name = 'GooglePlay',
+    List<String> packageIds = const [
+      'com.android.vending',
+    ],
+  });
+  const _Store.getApps({
+    String url =
+        'https://global.app.mi.com/details?id=ru.nadodeneg.mobile&lo=RU&la=en',
+    String name = 'GetApps',
+    List<String> packageIds = const [
+      'com.xiaomi.mipicks',
+    ],
+  });
+  const _Store.packageInstaller({
+    String name = 'PackageInstaller',
+    List<String> packageIds = const [
+      'com.miui.packageinstaller',
+      'com.google.android.packageinstaller',
+      'com.android.packageinstaller',
+    ],
+  });
+  const _Store.ruStore({
+    String name = 'RuStore',
+    String url = 'https://apps.rustore.ru/app/ru.nadodeneg.mobile',
+    List<String> packageIds = const [
+      'ru.vk.store',
+    ],
+  });
+  const _Store.appGallery({
+    String name = 'AppGallery',
+    String url = 'https://appgallery.huawei.com/app/C109195729',
+    List<String> packageIds = const [
+      'com.huawei.appmarket',
+    ],
+  });
+  const _Store.other({
+    String name = 'Other',
+    List<String> packageIds = const [
+      'com.sec.android.app.samsungapps',
+      'com.aurora.store',
+      'com.samsung.android.scloud',
+      'com.sec.android.easyMover',
+      'com.xrom.intl.appcenter',
+      'com.miui.huanji',
+      'com.apkpure.aegon',
+      'com.aurora.store',
+    ],
+  });
+}
 
-// // turngen
-// @immutable
-// class _Union1 {
-//   const _Union1.listBool2({
-//     Color? c3 = const Color(0x00FFFFFF),
-//     required Color c1,
-//     Color? c2,
-//     Color c4 = const Color(0x00FFFFFF),
-//   });
-//   const _Union1.success({
-//     List<int> data = const [],
-//     List<Map<int, String>> data2 = const [],
-//   });
-//   const _Union1.success3(
-//     List<String>? data,
-//     String a,
-//   );
-//   const _Union1.listBool([
-//     List<bool>? list_bool,
-//     String a = '20',
-//   ]);
-//   const _Union1.error_1({
-//     String message = '',
-//     String messsage = '',
-//     required num mesdssage,
-//     String mesdfssage = '',
-//     String error = '',
-//   });
-//   const _Union1.error_2({
-//     String message = '',
-//     String? error,
-//   });
-// }
+// end
 
-// // end
+//          --TURN_GEN--
+//             (union)
+//  *************************************
+//         GENERATED CODE
+//  *************************************
+// coverage:ignore-file
+// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: camel_case_types
+// ignore_for_file: avoid-non-null-assertion
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: unnecessary_null_checks
+// ignore_for_file: unused_element
+// ignore_for_file: sort_constructors_first
+// ignore_for_file: avoid_unused_constructor_parameters
+// ignore_for_file: avoid_positional_boolean_parameters,
+// ignore_for_file: always_put_required_named_parameters_first
 
-// //          --TURN_GEN--
-// //             (union)
-// //  *************************************
-// //         GENERATED CODE
-// //  *************************************
-// // coverage:ignore-file
-// // ignore_for_file: library_private_types_in_public_api
-// // ignore_for_file: camel_case_types
-// // ignore_for_file: avoid-non-null-assertion
-// // ignore_for_file: non_constant_identifier_names
-// // ignore_for_file: unnecessary_null_checks
-// // ignore_for_file: unused_element
-// // ignore_for_file: sort_constructors_first
-// // ignore_for_file: avoid_unused_constructor_parameters
-// // ignore_for_file: avoid_positional_boolean_parameters,
-// // ignore_for_file: always_put_required_named_parameters_first
+enum StoreTag {
+  appStore,
+  googlePlay,
+  getApps,
+  packageInstaller,
+  ruStore,
+  appGallery,
+  other,
+}
 
-// enum Union1Tag {
-//   listBool2,
-//   success,
-//   success3,
-//   listBool,
-//   error_1,
-//   error_2,
-// }
+@immutable
+class Store {
+  final StoreTag _tag;
+  final String? _url_appStore;
+  final String? _name_appStore;
+  final String? _url_googlePlay;
+  final String? _name_googlePlay;
+  final String? _url_getApps;
+  final String? _name_getApps;
+  final String? _name_packageInstaller;
+  final String? _name_ruStore;
+  final String? _url_ruStore;
+  final String? _name_appGallery;
+  final String? _url_appGallery;
+  final String? _name_other;
 
-// @immutable
-// class Union1 {
-//   final Union1Tag _tag;
-//   final Color? _c3_listBool2;
-//   final Color? _c1_listBool2;
-//   final Color? _c2_listBool2;
-//   final Color? _c4_listBool2;
-//   final List<int>? _data_success;
-//   final List<Map<int, String>>? _data2_success;
-//   final List<String>? _data_success3;
-//   final String? _a_success3;
-//   final List<bool>? _list_bool_listBool;
-//   final String? _a_listBool;
-//   final String? _message_error_1;
-//   final String? _messsage_error_1;
-//   final num? _mesdssage_error_1;
-//   final String? _mesdfssage_error_1;
-//   final String? _error_error_1;
-//   final String? _message_error_2;
-//   final String? _error_error_2;
+  const Store.appStore({
+    String url =
+        'https://apps.apple.com/us/app/надо-денег-деньги-онлайн/id1663823713',
+    String name = 'AppStore',
+    List<String> packageIds = const [
+      'com.apple',
+      'com.apple.testflight',
+      'com.apple.simulator',
+    ],
+  })  : _tag = StoreTag.appStore,
+        _url_appStore = url,
+        _name_appStore = name,
+        _url_googlePlay = null,
+        _name_googlePlay = null,
+        _url_getApps = null,
+        _name_getApps = null,
+        _name_packageInstaller = null,
+        _name_ruStore = null,
+        _url_ruStore = null,
+        _name_appGallery = null,
+        _url_appGallery = null,
+        _name_other = null;
 
-//   const Union1.listBool2({
-//     Color? c3 = const Color(0x00FFFFFF),
-//     required Color c1,
-//     Color? c2,
-//     Color c4 = const Color(0x00FFFFFF),
-//   })  : _tag = Union1Tag.listBool2,
-//         _c3_listBool2 = c3,
-//         _c1_listBool2 = c1,
-//         _c2_listBool2 = c2,
-//         _c4_listBool2 = c4,
-//         _data_success = null,
-//         _data2_success = null,
-//         _data_success3 = null,
-//         _a_success3 = null,
-//         _list_bool_listBool = null,
-//         _a_listBool = null,
-//         _message_error_1 = null,
-//         _messsage_error_1 = null,
-//         _mesdssage_error_1 = null,
-//         _mesdfssage_error_1 = null,
-//         _error_error_1 = null,
-//         _message_error_2 = null,
-//         _error_error_2 = null;
+  const Store.googlePlay({
+    String url =
+        'https://play.google.com/store/apps/details?id=ru.nadodeneg.mobile',
+    String name = 'GooglePlay',
+    List<String> packageIds = const [
+      'com.android.vending',
+    ],
+  })  : _tag = StoreTag.googlePlay,
+        _url_appStore = null,
+        _name_appStore = null,
+        _url_googlePlay = url,
+        _name_googlePlay = name,
+        _url_getApps = null,
+        _name_getApps = null,
+        _name_packageInstaller = null,
+        _name_ruStore = null,
+        _url_ruStore = null,
+        _name_appGallery = null,
+        _url_appGallery = null,
+        _name_other = null;
 
-//   const Union1.success({
-//     List<int> data = const [],
-//     List<Map<int, String>> data2 = const [],
-//   })  : _tag = Union1Tag.success,
-//         _c3_listBool2 = null,
-//         _c1_listBool2 = null,
-//         _c2_listBool2 = null,
-//         _c4_listBool2 = null,
-//         _data_success = data,
-//         _data2_success = data2,
-//         _data_success3 = null,
-//         _a_success3 = null,
-//         _list_bool_listBool = null,
-//         _a_listBool = null,
-//         _message_error_1 = null,
-//         _messsage_error_1 = null,
-//         _mesdssage_error_1 = null,
-//         _mesdfssage_error_1 = null,
-//         _error_error_1 = null,
-//         _message_error_2 = null,
-//         _error_error_2 = null;
+  const Store.getApps({
+    String url =
+        'https://global.app.mi.com/details?id=ru.nadodeneg.mobile&lo=RU&la=en',
+    String name = 'GetApps',
+    List<String> packageIds = const [
+      'com.xiaomi.mipicks',
+    ],
+  })  : _tag = StoreTag.getApps,
+        _url_appStore = null,
+        _name_appStore = null,
+        _url_googlePlay = null,
+        _name_googlePlay = null,
+        _url_getApps = url,
+        _name_getApps = name,
+        _name_packageInstaller = null,
+        _name_ruStore = null,
+        _url_ruStore = null,
+        _name_appGallery = null,
+        _url_appGallery = null,
+        _name_other = null;
 
-//   const Union1.success3(
-//     List<String>? data,
-//     String a,
-//   )   : _tag = Union1Tag.success3,
-//         _c3_listBool2 = null,
-//         _c1_listBool2 = null,
-//         _c2_listBool2 = null,
-//         _c4_listBool2 = null,
-//         _data_success = null,
-//         _data2_success = null,
-//         _data_success3 = data,
-//         _a_success3 = a,
-//         _list_bool_listBool = null,
-//         _a_listBool = null,
-//         _message_error_1 = null,
-//         _messsage_error_1 = null,
-//         _mesdssage_error_1 = null,
-//         _mesdfssage_error_1 = null,
-//         _error_error_1 = null,
-//         _message_error_2 = null,
-//         _error_error_2 = null;
+  const Store.packageInstaller({
+    String name = 'PackageInstaller',
+    List<String> packageIds = const [
+      'com.miui.packageinstaller',
+      'com.google.android.packageinstaller',
+      'com.android.packageinstaller',
+    ],
+  })  : _tag = StoreTag.packageInstaller,
+        _url_appStore = null,
+        _name_appStore = null,
+        _url_googlePlay = null,
+        _name_googlePlay = null,
+        _url_getApps = null,
+        _name_getApps = null,
+        _name_packageInstaller = name,
+        _name_ruStore = null,
+        _url_ruStore = null,
+        _name_appGallery = null,
+        _url_appGallery = null,
+        _name_other = null;
 
-//   const Union1.listBool([
-//     List<bool>? list_bool,
-//     String a = '20',
-//   ])  : _tag = Union1Tag.listBool,
-//         _c3_listBool2 = null,
-//         _c1_listBool2 = null,
-//         _c2_listBool2 = null,
-//         _c4_listBool2 = null,
-//         _data_success = null,
-//         _data2_success = null,
-//         _data_success3 = null,
-//         _a_success3 = null,
-//         _list_bool_listBool = list_bool,
-//         _a_listBool = a,
-//         _message_error_1 = null,
-//         _messsage_error_1 = null,
-//         _mesdssage_error_1 = null,
-//         _mesdfssage_error_1 = null,
-//         _error_error_1 = null,
-//         _message_error_2 = null,
-//         _error_error_2 = null;
+  const Store.ruStore({
+    String name = 'RuStore',
+    String url = 'https://apps.rustore.ru/app/ru.nadodeneg.mobile',
+    List<String> packageIds = const [
+      'ru.vk.store',
+    ],
+  })  : _tag = StoreTag.ruStore,
+        _url_appStore = null,
+        _name_appStore = null,
+        _url_googlePlay = null,
+        _name_googlePlay = null,
+        _url_getApps = null,
+        _name_getApps = null,
+        _name_packageInstaller = null,
+        _name_ruStore = name,
+        _url_ruStore = url,
+        _name_appGallery = null,
+        _url_appGallery = null,
+        _name_other = null;
 
-//   const Union1.error_1({
-//     String message = '',
-//     String messsage = '',
-//     required num mesdssage,
-//     String mesdfssage = '',
-//     String error = '',
-//   })  : _tag = Union1Tag.error_1,
-//         _c3_listBool2 = null,
-//         _c1_listBool2 = null,
-//         _c2_listBool2 = null,
-//         _c4_listBool2 = null,
-//         _data_success = null,
-//         _data2_success = null,
-//         _data_success3 = null,
-//         _a_success3 = null,
-//         _list_bool_listBool = null,
-//         _a_listBool = null,
-//         _message_error_1 = message,
-//         _messsage_error_1 = messsage,
-//         _mesdssage_error_1 = mesdssage,
-//         _mesdfssage_error_1 = mesdfssage,
-//         _error_error_1 = error,
-//         _message_error_2 = null,
-//         _error_error_2 = null;
+  const Store.appGallery({
+    String name = 'AppGallery',
+    String url = 'https://appgallery.huawei.com/app/C109195729',
+    List<String> packageIds = const [
+      'com.huawei.appmarket',
+    ],
+  })  : _tag = StoreTag.appGallery,
+        _url_appStore = null,
+        _name_appStore = null,
+        _url_googlePlay = null,
+        _name_googlePlay = null,
+        _url_getApps = null,
+        _name_getApps = null,
+        _name_packageInstaller = null,
+        _name_ruStore = null,
+        _url_ruStore = null,
+        _name_appGallery = name,
+        _url_appGallery = url,
+        _name_other = null;
 
-//   const Union1.error_2({
-//     String message = '',
-//     String? error,
-//   })  : _tag = Union1Tag.error_2,
-//         _c3_listBool2 = null,
-//         _c1_listBool2 = null,
-//         _c2_listBool2 = null,
-//         _c4_listBool2 = null,
-//         _data_success = null,
-//         _data2_success = null,
-//         _data_success3 = null,
-//         _a_success3 = null,
-//         _list_bool_listBool = null,
-//         _a_listBool = null,
-//         _message_error_1 = null,
-//         _messsage_error_1 = null,
-//         _mesdssage_error_1 = null,
-//         _mesdfssage_error_1 = null,
-//         _error_error_1 = null,
-//         _message_error_2 = message,
-//         _error_error_2 = error;
+  const Store.other({
+    String name = 'Other',
+    List<String> packageIds = const [
+      'com.sec.android.app.samsungapps',
+      'com.aurora.store',
+      'com.samsung.android.scloud',
+      'com.sec.android.easyMover',
+      'com.xrom.intl.appcenter',
+      'com.miui.huanji',
+      'com.apkpure.aegon',
+      'com.aurora.store',
+    ],
+  })  : _tag = StoreTag.other,
+        _url_appStore = null,
+        _name_appStore = null,
+        _url_googlePlay = null,
+        _name_googlePlay = null,
+        _url_getApps = null,
+        _name_getApps = null,
+        _name_packageInstaller = null,
+        _name_ruStore = null,
+        _url_ruStore = null,
+        _name_appGallery = null,
+        _url_appGallery = null,
+        _name_other = name;
 
-//   bool get listBool2 => _tag == Union1Tag.listBool2;
-//   bool get success => _tag == Union1Tag.success;
-//   bool get success3 => _tag == Union1Tag.success3;
-//   bool get listBool => _tag == Union1Tag.listBool;
-//   bool get error_1 => _tag == Union1Tag.error_1;
-//   bool get error_2 => _tag == Union1Tag.error_2;
+  bool get appStore => _tag == StoreTag.appStore;
+  bool get googlePlay => _tag == StoreTag.googlePlay;
+  bool get getApps => _tag == StoreTag.getApps;
+  bool get packageInstaller => _tag == StoreTag.packageInstaller;
+  bool get ruStore => _tag == StoreTag.ruStore;
+  bool get appGallery => _tag == StoreTag.appGallery;
+  bool get other => _tag == StoreTag.other;
 
-//   factory Union1.fromJson(
-//     String source, [
-//     Union1Tag? tag,
-//   ]) =>
-//       Union1.fromMap(
-//         json.decode(source) as Map<String, dynamic>,
-//         tag,
-//       );
+  factory Store.fromJson(
+    String source, [
+    StoreTag? tag,
+  ]) =>
+      Store.fromMap(
+        json.decode(source) as Map<String, dynamic>,
+        tag,
+      );
 
-//   Map<String, dynamic> toMap() {
-//     switch (_tag) {
-//       case Union1Tag.listBool2:
-//         return {
-//           'tag': 'listBool2',
-//           'c3': _c3_listBool2?.value ?? const Color(0x00FFFFFF).value,
-//           'c1': _c1_listBool2?.value,
-//           'c2': _c2_listBool2?.value,
-//           'c4': _c4_listBool2?.value ?? const Color(0x00FFFFFF).value,
-//         };
-//       case Union1Tag.success:
-//         return {
-//           'tag': 'success',
-//           'data': _data_success,
-//           'data2': _data2_success
-//               ?.map((e) => e.map((k, e) => MapEntry(k.toString(), e)))
-//               .toList(),
-//         };
-//       case Union1Tag.success3:
-//         return {
-//           'tag': 'success3',
-//           'data': _data_success3,
-//           'a': _a_success3,
-//         };
-//       case Union1Tag.listBool:
-//         return {
-//           'tag': 'listBool',
-//           'list_bool': _list_bool_listBool,
-//           'a': _a_listBool,
-//         };
-//       case Union1Tag.error_1:
-//         return {
-//           'tag': 'error_1',
-//           'message': _message_error_1,
-//           'messsage': _messsage_error_1,
-//           'mesdssage': _mesdssage_error_1,
-//           'mesdfssage': _mesdfssage_error_1,
-//           'error': _error_error_1,
-//         };
-//       case Union1Tag.error_2:
-//         return {
-//           'tag': 'error_2',
-//           'message': _message_error_2,
-//           'error': _error_error_2,
-//         };
-//     }
-//   }
+  Map<String, dynamic> toMap() {
+    switch (_tag) {
+      case StoreTag.appStore:
+        return {
+          'tag': 'appStore',
+          'url': _url_appStore,
+          'name': _name_appStore,
+        };
+      case StoreTag.googlePlay:
+        return {
+          'tag': 'googlePlay',
+          'url': _url_googlePlay,
+          'name': _name_googlePlay,
+        };
+      case StoreTag.getApps:
+        return {
+          'tag': 'getApps',
+          'url': _url_getApps,
+          'name': _name_getApps,
+        };
+      case StoreTag.packageInstaller:
+        return {
+          'tag': 'packageInstaller',
+          'name': _name_packageInstaller,
+        };
+      case StoreTag.ruStore:
+        return {
+          'tag': 'ruStore',
+          'name': _name_ruStore,
+          'url': _url_ruStore,
+        };
+      case StoreTag.appGallery:
+        return {
+          'tag': 'appGallery',
+          'name': _name_appGallery,
+          'url': _url_appGallery,
+        };
+      case StoreTag.other:
+        return {
+          'tag': 'other',
+          'name': _name_other,
+        };
+    }
+  }
 
-//   String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());
 
-//   factory Union1.fromMap(
-//     Map<dynamic, dynamic> map, [
-//     Union1Tag? tag,
-//   ]) {
-//     tag ??= Union1Tag.values.byName(map['tag'].toString());
-//     switch (tag) {
-//       case Union1Tag.listBool2:
-//         return Union1.listBool2(
-//           c3: map['c3'] != null
-//               ? map['c3'] is int
-//                   ? Color(map['c3'] as int)
-//                   : const Color(0x00FFFFFF)
-//               : const Color(0x00FFFFFF),
-//           c1: map['c1'] != null
-//               ? map['c1'] is int
-//                   ? Color(map['c1'] as int)
-//                   : throw Exception(
-//                       "Color - Wrong type for map['c1']'",
-//                     )
-//               : throw Exception(
-//                   "Color - map['c1']' is null",
-//                 ),
-//           c2: map['c2'] != null
-//               ? map['c2'] is int
-//                   ? Color(map['c2'] as int)
-//                   : null
-//               : null,
-//           c4: map['c4'] != null
-//               ? map['c4'] is int
-//                   ? Color(map['c4'] as int)
-//                   : const Color(0x00FFFFFF)
-//               : const Color(0x00FFFFFF),
-//         );
-//       case Union1Tag.success:
-//         return Union1.success(
-//           data:
-//               (map['data'] as List<dynamic>?)?.map((e) => e as int).toList() ??
-//                   const [],
-//           data2: (map['data2'] as List<dynamic>?)
-//                   ?.map(
-//                     (e) => (e as Map<String, dynamic>).map(
-//                       (k, e) => MapEntry(int.parse(k), e as String),
-//                     ),
-//                   )
-//                   .toList() ??
-//               const [],
-//         );
-//       case Union1Tag.success3:
-//         return Union1.success3(
-//           (map['data'] as List<dynamic>?)?.map((e) => e as String).toList(),
-//           map['a'] != null
-//               ? map['a'] as String
-//               : throw Exception(
-//                   "map['a']_type_'Null'",
-//                 ),
-//         );
-//       case Union1Tag.listBool:
-//         return Union1.listBool(
-//           (map['list_bool'] as List<dynamic>?)?.map((e) => e as bool).toList(),
-//           map['a'] as String? ?? '20',
-//         );
-//       case Union1Tag.error_1:
-//         return Union1.error_1(
-//           message: map['message'] as String? ?? '',
-//           messsage: map['messsage'] as String? ?? '',
-//           mesdssage: map['mesdssage'] != null
-//               ? map['mesdssage'] as num
-//               : throw Exception(
-//                   "map['mesdssage']_type_'Null'",
-//                 ),
-//           mesdfssage: map['mesdfssage'] as String? ?? '',
-//           error: map['error'] as String? ?? '',
-//         );
-//       case Union1Tag.error_2:
-//         return Union1.error_2(
-//           message: map['message'] as String? ?? '',
-//           error: map['error'] as String?,
-//         );
-//     }
-//   }
+  factory Store.fromMap(
+    Map<dynamic, dynamic> map, [
+    StoreTag? tag,
+  ]) {
+    tag ??= StoreTag.values.byName(map['tag'].toString());
+    switch (tag) {
+      case StoreTag.appStore:
+        return Store.appStore(
+          url: map['url'] as String? ??
+              'https://apps.apple.com/us/app/надо-денег-деньги-онлайн/id1663823713',
+          name: map['name'] as String? ?? 'AppStore',
+        );
+      case StoreTag.googlePlay:
+        return Store.googlePlay(
+          url: map['url'] as String? ??
+              'https://play.google.com/store/apps/details?id=ru.nadodeneg.mobile',
+          name: map['name'] as String? ?? 'GooglePlay',
+        );
+      case StoreTag.getApps:
+        return Store.getApps(
+          url: map['url'] as String? ??
+              'https://global.app.mi.com/details?id=ru.nadodeneg.mobile&lo=RU&la=en',
+          name: map['name'] as String? ?? 'GetApps',
+        );
+      case StoreTag.packageInstaller:
+        return Store.packageInstaller(
+          name: map['name'] as String? ?? 'PackageInstaller',
+        );
+      case StoreTag.ruStore:
+        return Store.ruStore(
+          name: map['name'] as String? ?? 'RuStore',
+          url: map['url'] as String? ??
+              'https://apps.rustore.ru/app/ru.nadodeneg.mobile',
+        );
+      case StoreTag.appGallery:
+        return Store.appGallery(
+          name: map['name'] as String? ?? 'AppGallery',
+          url: map['url'] as String? ??
+              'https://appgallery.huawei.com/app/C109195729',
+        );
+      case StoreTag.other:
+        return Store.other(
+          name: map['name'] as String? ?? 'Other',
+        );
+    }
+  }
 
-//   T map<T>({
-//     required T Function(_Union1ListBool2 v) listBool2,
-//     required T Function(_Union1Success v) success,
-//     required T Function(_Union1Success3 v) success3,
-//     required T Function(_Union1ListBool v) listBool,
-//     required T Function(_Union1Error_1 v) error_1,
-//     required T Function(_Union1Error_2 v) error_2,
-//   }) {
-//     switch (_tag) {
-//       case Union1Tag.listBool2:
-//         return listBool2(
-//           _Union1ListBool2(
-//             _c3_listBool2,
-//             _c1_listBool2!,
-//             _c2_listBool2,
-//             _c4_listBool2!,
-//           ),
-//         );
-//       case Union1Tag.success:
-//         return success(
-//           _Union1Success(
-//             _data_success!,
-//             _data2_success!,
-//           ),
-//         );
-//       case Union1Tag.success3:
-//         return success3(
-//           _Union1Success3(
-//             _data_success3,
-//             _a_success3!,
-//           ),
-//         );
-//       case Union1Tag.listBool:
-//         return listBool(
-//           _Union1ListBool(
-//             _list_bool_listBool,
-//             _a_listBool!,
-//           ),
-//         );
-//       case Union1Tag.error_1:
-//         return error_1(
-//           _Union1Error_1(
-//             _message_error_1!,
-//             _messsage_error_1!,
-//             _mesdssage_error_1!,
-//             _mesdfssage_error_1!,
-//             _error_error_1!,
-//           ),
-//         );
-//       case Union1Tag.error_2:
-//         return error_2(
-//           _Union1Error_2(
-//             _message_error_2!,
-//             _error_error_2,
-//           ),
-//         );
-//     }
-//   }
+  T map<T>({
+    required T Function(_StoreAppStore v) appStore,
+    required T Function(_StoreGooglePlay v) googlePlay,
+    required T Function(_StoreGetApps v) getApps,
+    required T Function(_StorePackageInstaller v) packageInstaller,
+    required T Function(_StoreRuStore v) ruStore,
+    required T Function(_StoreAppGallery v) appGallery,
+    required T Function(_StoreOther v) other,
+  }) {
+    switch (_tag) {
+      case StoreTag.appStore:
+        return appStore(
+          _StoreAppStore(
+            _url_appStore!,
+            _name_appStore!,
+          ),
+        );
+      case StoreTag.googlePlay:
+        return googlePlay(
+          _StoreGooglePlay(
+            _url_googlePlay!,
+            _name_googlePlay!,
+          ),
+        );
+      case StoreTag.getApps:
+        return getApps(
+          _StoreGetApps(
+            _url_getApps!,
+            _name_getApps!,
+          ),
+        );
+      case StoreTag.packageInstaller:
+        return packageInstaller(
+          _StorePackageInstaller(
+            _name_packageInstaller!,
+          ),
+        );
+      case StoreTag.ruStore:
+        return ruStore(
+          _StoreRuStore(
+            _name_ruStore!,
+            _url_ruStore!,
+          ),
+        );
+      case StoreTag.appGallery:
+        return appGallery(
+          _StoreAppGallery(
+            _name_appGallery!,
+            _url_appGallery!,
+          ),
+        );
+      case StoreTag.other:
+        return other(
+          _StoreOther(
+            _name_other!,
+          ),
+        );
+    }
+  }
 
-//   T maybeMap<T>({
-//     required T Function() orElse,
-//     T Function(_Union1ListBool2 v)? listBool2,
-//     T Function(_Union1Success v)? success,
-//     T Function(_Union1Success3 v)? success3,
-//     T Function(_Union1ListBool v)? listBool,
-//     T Function(_Union1Error_1 v)? error_1,
-//     T Function(_Union1Error_2 v)? error_2,
-//   }) {
-//     switch (_tag) {
-//       case Union1Tag.listBool2:
-//         if (listBool2 != null) {
-//           return listBool2(
-//             _Union1ListBool2(
-//               _c3_listBool2,
-//               _c1_listBool2!,
-//               _c2_listBool2,
-//               _c4_listBool2!,
-//             ),
-//           );
-//         }
-//         return orElse();
-//       case Union1Tag.success:
-//         if (success != null) {
-//           return success(
-//             _Union1Success(
-//               _data_success!,
-//               _data2_success!,
-//             ),
-//           );
-//         }
-//         return orElse();
-//       case Union1Tag.success3:
-//         if (success3 != null) {
-//           return success3(
-//             _Union1Success3(
-//               _data_success3,
-//               _a_success3!,
-//             ),
-//           );
-//         }
-//         return orElse();
-//       case Union1Tag.listBool:
-//         if (listBool != null) {
-//           return listBool(
-//             _Union1ListBool(
-//               _list_bool_listBool,
-//               _a_listBool!,
-//             ),
-//           );
-//         }
-//         return orElse();
-//       case Union1Tag.error_1:
-//         if (error_1 != null) {
-//           return error_1(
-//             _Union1Error_1(
-//               _message_error_1!,
-//               _messsage_error_1!,
-//               _mesdssage_error_1!,
-//               _mesdfssage_error_1!,
-//               _error_error_1!,
-//             ),
-//           );
-//         }
-//         return orElse();
-//       case Union1Tag.error_2:
-//         if (error_2 != null) {
-//           return error_2(
-//             _Union1Error_2(
-//               _message_error_2!,
-//               _error_error_2,
-//             ),
-//           );
-//         }
-//         return orElse();
-//     }
-//   }
+  T maybeMap<T>({
+    required T Function() orElse,
+    T Function(_StoreAppStore v)? appStore,
+    T Function(_StoreGooglePlay v)? googlePlay,
+    T Function(_StoreGetApps v)? getApps,
+    T Function(_StorePackageInstaller v)? packageInstaller,
+    T Function(_StoreRuStore v)? ruStore,
+    T Function(_StoreAppGallery v)? appGallery,
+    T Function(_StoreOther v)? other,
+  }) {
+    switch (_tag) {
+      case StoreTag.appStore:
+        if (appStore != null) {
+          return appStore(
+            _StoreAppStore(
+              _url_appStore!,
+              _name_appStore!,
+            ),
+          );
+        }
+        return orElse();
+      case StoreTag.googlePlay:
+        if (googlePlay != null) {
+          return googlePlay(
+            _StoreGooglePlay(
+              _url_googlePlay!,
+              _name_googlePlay!,
+            ),
+          );
+        }
+        return orElse();
+      case StoreTag.getApps:
+        if (getApps != null) {
+          return getApps(
+            _StoreGetApps(
+              _url_getApps!,
+              _name_getApps!,
+            ),
+          );
+        }
+        return orElse();
+      case StoreTag.packageInstaller:
+        if (packageInstaller != null) {
+          return packageInstaller(
+            _StorePackageInstaller(
+              _name_packageInstaller!,
+            ),
+          );
+        }
+        return orElse();
+      case StoreTag.ruStore:
+        if (ruStore != null) {
+          return ruStore(
+            _StoreRuStore(
+              _name_ruStore!,
+              _url_ruStore!,
+            ),
+          );
+        }
+        return orElse();
+      case StoreTag.appGallery:
+        if (appGallery != null) {
+          return appGallery(
+            _StoreAppGallery(
+              _name_appGallery!,
+              _url_appGallery!,
+            ),
+          );
+        }
+        return orElse();
+      case StoreTag.other:
+        if (other != null) {
+          return other(
+            _StoreOther(
+              _name_other!,
+            ),
+          );
+        }
+        return orElse();
+    }
+  }
 
-//   T? mapOrNull<T>({
-//     T? Function(_Union1ListBool2 v)? listBool2,
-//     T? Function(_Union1Success v)? success,
-//     T? Function(_Union1Success3 v)? success3,
-//     T? Function(_Union1ListBool v)? listBool,
-//     T? Function(_Union1Error_1 v)? error_1,
-//     T? Function(_Union1Error_2 v)? error_2,
-//   }) {
-//     switch (_tag) {
-//       case Union1Tag.listBool2:
-//         return listBool2?.call(
-//           _Union1ListBool2(
-//             _c3_listBool2,
-//             _c1_listBool2!,
-//             _c2_listBool2,
-//             _c4_listBool2!,
-//           ),
-//         );
-//       case Union1Tag.success:
-//         return success?.call(
-//           _Union1Success(
-//             _data_success!,
-//             _data2_success!,
-//           ),
-//         );
-//       case Union1Tag.success3:
-//         return success3?.call(
-//           _Union1Success3(
-//             _data_success3,
-//             _a_success3!,
-//           ),
-//         );
-//       case Union1Tag.listBool:
-//         return listBool?.call(
-//           _Union1ListBool(
-//             _list_bool_listBool,
-//             _a_listBool!,
-//           ),
-//         );
-//       case Union1Tag.error_1:
-//         return error_1?.call(
-//           _Union1Error_1(
-//             _message_error_1!,
-//             _messsage_error_1!,
-//             _mesdssage_error_1!,
-//             _mesdfssage_error_1!,
-//             _error_error_1!,
-//           ),
-//         );
-//       case Union1Tag.error_2:
-//         return error_2?.call(
-//           _Union1Error_2(
-//             _message_error_2!,
-//             _error_error_2,
-//           ),
-//         );
-//     }
-//   }
+  T? mapOrNull<T>({
+    T? Function(_StoreAppStore v)? appStore,
+    T? Function(_StoreGooglePlay v)? googlePlay,
+    T? Function(_StoreGetApps v)? getApps,
+    T? Function(_StorePackageInstaller v)? packageInstaller,
+    T? Function(_StoreRuStore v)? ruStore,
+    T? Function(_StoreAppGallery v)? appGallery,
+    T? Function(_StoreOther v)? other,
+  }) {
+    switch (_tag) {
+      case StoreTag.appStore:
+        return appStore?.call(
+          _StoreAppStore(
+            _url_appStore!,
+            _name_appStore!,
+          ),
+        );
+      case StoreTag.googlePlay:
+        return googlePlay?.call(
+          _StoreGooglePlay(
+            _url_googlePlay!,
+            _name_googlePlay!,
+          ),
+        );
+      case StoreTag.getApps:
+        return getApps?.call(
+          _StoreGetApps(
+            _url_getApps!,
+            _name_getApps!,
+          ),
+        );
+      case StoreTag.packageInstaller:
+        return packageInstaller?.call(
+          _StorePackageInstaller(
+            _name_packageInstaller!,
+          ),
+        );
+      case StoreTag.ruStore:
+        return ruStore?.call(
+          _StoreRuStore(
+            _name_ruStore!,
+            _url_ruStore!,
+          ),
+        );
+      case StoreTag.appGallery:
+        return appGallery?.call(
+          _StoreAppGallery(
+            _name_appGallery!,
+            _url_appGallery!,
+          ),
+        );
+      case StoreTag.other:
+        return other?.call(
+          _StoreOther(
+            _name_other!,
+          ),
+        );
+    }
+  }
 
-//   T? maybeMapOrNull<T>({
-//     T? Function(_Union1ListBool2 v)? listBool2,
-//     T? Function(_Union1Success v)? success,
-//     T? Function(_Union1Success3 v)? success3,
-//     T? Function(_Union1ListBool v)? listBool,
-//     T? Function(_Union1Error_1 v)? error_1,
-//     T? Function(_Union1Error_2 v)? error_2,
-//   }) {
-//     switch (_tag) {
-//       case Union1Tag.listBool2:
-//         if (listBool2 != null) {
-//           return listBool2(
-//             _Union1ListBool2(
-//               _c3_listBool2,
-//               _c1_listBool2!,
-//               _c2_listBool2,
-//               _c4_listBool2!,
-//             ),
-//           );
-//         }
-//         return null;
-//       case Union1Tag.success:
-//         if (success != null) {
-//           return success(
-//             _Union1Success(
-//               _data_success!,
-//               _data2_success!,
-//             ),
-//           );
-//         }
-//         return null;
-//       case Union1Tag.success3:
-//         if (success3 != null) {
-//           return success3(
-//             _Union1Success3(
-//               _data_success3,
-//               _a_success3!,
-//             ),
-//           );
-//         }
-//         return null;
-//       case Union1Tag.listBool:
-//         if (listBool != null) {
-//           return listBool(
-//             _Union1ListBool(
-//               _list_bool_listBool,
-//               _a_listBool!,
-//             ),
-//           );
-//         }
-//         return null;
-//       case Union1Tag.error_1:
-//         if (error_1 != null) {
-//           return error_1(
-//             _Union1Error_1(
-//               _message_error_1!,
-//               _messsage_error_1!,
-//               _mesdssage_error_1!,
-//               _mesdfssage_error_1!,
-//               _error_error_1!,
-//             ),
-//           );
-//         }
-//         return null;
-//       case Union1Tag.error_2:
-//         if (error_2 != null) {
-//           return error_2(
-//             _Union1Error_2(
-//               _message_error_2!,
-//               _error_error_2,
-//             ),
-//           );
-//         }
-//         return null;
-//     }
-//   }
+  T? maybeMapOrNull<T>({
+    T? Function(_StoreAppStore v)? appStore,
+    T? Function(_StoreGooglePlay v)? googlePlay,
+    T? Function(_StoreGetApps v)? getApps,
+    T? Function(_StorePackageInstaller v)? packageInstaller,
+    T? Function(_StoreRuStore v)? ruStore,
+    T? Function(_StoreAppGallery v)? appGallery,
+    T? Function(_StoreOther v)? other,
+  }) {
+    switch (_tag) {
+      case StoreTag.appStore:
+        if (appStore != null) {
+          return appStore(
+            _StoreAppStore(
+              _url_appStore!,
+              _name_appStore!,
+            ),
+          );
+        }
+        return null;
+      case StoreTag.googlePlay:
+        if (googlePlay != null) {
+          return googlePlay(
+            _StoreGooglePlay(
+              _url_googlePlay!,
+              _name_googlePlay!,
+            ),
+          );
+        }
+        return null;
+      case StoreTag.getApps:
+        if (getApps != null) {
+          return getApps(
+            _StoreGetApps(
+              _url_getApps!,
+              _name_getApps!,
+            ),
+          );
+        }
+        return null;
+      case StoreTag.packageInstaller:
+        if (packageInstaller != null) {
+          return packageInstaller(
+            _StorePackageInstaller(
+              _name_packageInstaller!,
+            ),
+          );
+        }
+        return null;
+      case StoreTag.ruStore:
+        if (ruStore != null) {
+          return ruStore(
+            _StoreRuStore(
+              _name_ruStore!,
+              _url_ruStore!,
+            ),
+          );
+        }
+        return null;
+      case StoreTag.appGallery:
+        if (appGallery != null) {
+          return appGallery(
+            _StoreAppGallery(
+              _name_appGallery!,
+              _url_appGallery!,
+            ),
+          );
+        }
+        return null;
+      case StoreTag.other:
+        if (other != null) {
+          return other(
+            _StoreOther(
+              _name_other!,
+            ),
+          );
+        }
+        return null;
+    }
+  }
 
-//   T when<T>({
-//     required T Function(
-//       Color? c3,
-//       Color c1,
-//       Color? c2,
-//       Color c4,
-//     ) listBool2,
-//     required T Function(
-//       List<int> data,
-//       List<Map<int, String>> data2,
-//     ) success,
-//     required T Function(
-//       List<String>? data,
-//       String a,
-//     ) success3,
-//     required T Function(
-//       List<bool>? list_bool,
-//       String a,
-//     ) listBool,
-//     required T Function(
-//       String message,
-//       String messsage,
-//       num mesdssage,
-//       String mesdfssage,
-//       String error,
-//     ) error_1,
-//     required T Function(
-//       String message,
-//       String? error,
-//     ) error_2,
-//   }) {
-//     switch (_tag) {
-//       case Union1Tag.listBool2:
-//         return listBool2(
-//           _c3_listBool2,
-//           _c1_listBool2!,
-//           _c2_listBool2,
-//           _c4_listBool2!,
-//         );
-//       case Union1Tag.success:
-//         return success(
-//           _data_success!,
-//           _data2_success!,
-//         );
-//       case Union1Tag.success3:
-//         return success3(
-//           _data_success3,
-//           _a_success3!,
-//         );
-//       case Union1Tag.listBool:
-//         return listBool(
-//           _list_bool_listBool,
-//           _a_listBool!,
-//         );
-//       case Union1Tag.error_1:
-//         return error_1(
-//           _message_error_1!,
-//           _messsage_error_1!,
-//           _mesdssage_error_1!,
-//           _mesdfssage_error_1!,
-//           _error_error_1!,
-//         );
-//       case Union1Tag.error_2:
-//         return error_2(
-//           _message_error_2!,
-//           _error_error_2,
-//         );
-//     }
-//   }
+  T when<T>({
+    required T Function(
+      String url,
+      String name,
+    ) appStore,
+    required T Function(
+      String url,
+      String name,
+    ) googlePlay,
+    required T Function(
+      String url,
+      String name,
+    ) getApps,
+    required T Function(
+      String name,
+    ) packageInstaller,
+    required T Function(
+      String name,
+      String url,
+    ) ruStore,
+    required T Function(
+      String name,
+      String url,
+    ) appGallery,
+    required T Function(
+      String name,
+    ) other,
+  }) {
+    switch (_tag) {
+      case StoreTag.appStore:
+        return appStore(
+          _url_appStore!,
+          _name_appStore!,
+        );
+      case StoreTag.googlePlay:
+        return googlePlay(
+          _url_googlePlay!,
+          _name_googlePlay!,
+        );
+      case StoreTag.getApps:
+        return getApps(
+          _url_getApps!,
+          _name_getApps!,
+        );
+      case StoreTag.packageInstaller:
+        return packageInstaller(
+          _name_packageInstaller!,
+        );
+      case StoreTag.ruStore:
+        return ruStore(
+          _name_ruStore!,
+          _url_ruStore!,
+        );
+      case StoreTag.appGallery:
+        return appGallery(
+          _name_appGallery!,
+          _url_appGallery!,
+        );
+      case StoreTag.other:
+        return other(
+          _name_other!,
+        );
+    }
+  }
 
-//   @override
-//   bool operator ==(Object other) {
-//     if (identical(this, other)) return true;
-//     if (other is! Union1) return false;
-//     if (other.runtimeType != runtimeType) return false;
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! Store) return false;
+    if (other.runtimeType != runtimeType) return false;
 
-//     switch (_tag) {
-//       case Union1Tag.listBool2:
-//         return _tag == other._tag &&
-//             (identical(
-//                   other._c3_listBool2,
-//                   _c3_listBool2,
-//                 ) ||
-//                 other._c3_listBool2 == _c3_listBool2) &&
-//             (identical(
-//                   other._c1_listBool2,
-//                   _c1_listBool2,
-//                 ) ||
-//                 other._c1_listBool2 == _c1_listBool2) &&
-//             (identical(
-//                   other._c2_listBool2,
-//                   _c2_listBool2,
-//                 ) ||
-//                 other._c2_listBool2 == _c2_listBool2) &&
-//             (identical(
-//                   other._c4_listBool2,
-//                   _c4_listBool2,
-//                 ) ||
-//                 other._c4_listBool2 == _c4_listBool2);
-//       case Union1Tag.success:
-//         return _tag == other._tag &&
-//             const DeepCollectionEquality().equals(
-//               other._data_success,
-//               _data_success,
-//             ) &&
-//             const DeepCollectionEquality().equals(
-//               other._data2_success,
-//               _data2_success,
-//             );
-//       case Union1Tag.success3:
-//         return _tag == other._tag &&
-//             const DeepCollectionEquality().equals(
-//               other._data_success3,
-//               _data_success3,
-//             ) &&
-//             (identical(
-//                   other._a_success3,
-//                   _a_success3,
-//                 ) ||
-//                 other._a_success3 == _a_success3);
-//       case Union1Tag.listBool:
-//         return _tag == other._tag &&
-//             const DeepCollectionEquality().equals(
-//               other._list_bool_listBool,
-//               _list_bool_listBool,
-//             ) &&
-//             (identical(
-//                   other._a_listBool,
-//                   _a_listBool,
-//                 ) ||
-//                 other._a_listBool == _a_listBool);
-//       case Union1Tag.error_1:
-//         return _tag == other._tag &&
-//             (identical(
-//                   other._message_error_1,
-//                   _message_error_1,
-//                 ) ||
-//                 other._message_error_1 == _message_error_1) &&
-//             (identical(
-//                   other._messsage_error_1,
-//                   _messsage_error_1,
-//                 ) ||
-//                 other._messsage_error_1 == _messsage_error_1) &&
-//             (identical(
-//                   other._mesdssage_error_1,
-//                   _mesdssage_error_1,
-//                 ) ||
-//                 other._mesdssage_error_1 == _mesdssage_error_1) &&
-//             (identical(
-//                   other._mesdfssage_error_1,
-//                   _mesdfssage_error_1,
-//                 ) ||
-//                 other._mesdfssage_error_1 == _mesdfssage_error_1) &&
-//             (identical(
-//                   other._error_error_1,
-//                   _error_error_1,
-//                 ) ||
-//                 other._error_error_1 == _error_error_1);
-//       case Union1Tag.error_2:
-//         return _tag == other._tag &&
-//             (identical(
-//                   other._message_error_2,
-//                   _message_error_2,
-//                 ) ||
-//                 other._message_error_2 == _message_error_2) &&
-//             (identical(
-//                   other._error_error_2,
-//                   _error_error_2,
-//                 ) ||
-//                 other._error_error_2 == _error_error_2);
-//     }
-//   }
+    switch (_tag) {
+      case StoreTag.appStore:
+        return _tag == other._tag &&
+            (identical(
+                  other._url_appStore,
+                  _url_appStore,
+                ) ||
+                other._url_appStore == _url_appStore) &&
+            (identical(
+                  other._name_appStore,
+                  _name_appStore,
+                ) ||
+                other._name_appStore == _name_appStore);
+      case StoreTag.googlePlay:
+        return _tag == other._tag &&
+            (identical(
+                  other._url_googlePlay,
+                  _url_googlePlay,
+                ) ||
+                other._url_googlePlay == _url_googlePlay) &&
+            (identical(
+                  other._name_googlePlay,
+                  _name_googlePlay,
+                ) ||
+                other._name_googlePlay == _name_googlePlay);
+      case StoreTag.getApps:
+        return _tag == other._tag &&
+            (identical(
+                  other._url_getApps,
+                  _url_getApps,
+                ) ||
+                other._url_getApps == _url_getApps) &&
+            (identical(
+                  other._name_getApps,
+                  _name_getApps,
+                ) ||
+                other._name_getApps == _name_getApps);
+      case StoreTag.packageInstaller:
+        return _tag == other._tag &&
+            (identical(
+                  other._name_packageInstaller,
+                  _name_packageInstaller,
+                ) ||
+                other._name_packageInstaller == _name_packageInstaller);
+      case StoreTag.ruStore:
+        return _tag == other._tag &&
+            (identical(
+                  other._name_ruStore,
+                  _name_ruStore,
+                ) ||
+                other._name_ruStore == _name_ruStore) &&
+            (identical(
+                  other._url_ruStore,
+                  _url_ruStore,
+                ) ||
+                other._url_ruStore == _url_ruStore);
+      case StoreTag.appGallery:
+        return _tag == other._tag &&
+            (identical(
+                  other._name_appGallery,
+                  _name_appGallery,
+                ) ||
+                other._name_appGallery == _name_appGallery) &&
+            (identical(
+                  other._url_appGallery,
+                  _url_appGallery,
+                ) ||
+                other._url_appGallery == _url_appGallery);
+      case StoreTag.other:
+        return _tag == other._tag &&
+            (identical(
+                  other._name_other,
+                  _name_other,
+                ) ||
+                other._name_other == _name_other);
+    }
+  }
 
-//   @override
-//   int get hashCode {
-//     switch (_tag) {
-//       case Union1Tag.listBool2:
-//         return Object.hashAll(
-//           [
-//             runtimeType,
-//             _tag,
-//             _c3_listBool2,
-//             _c1_listBool2,
-//             _c2_listBool2,
-//             _c4_listBool2,
-//           ],
-//         );
-//       case Union1Tag.success:
-//         return Object.hashAll(
-//           [
-//             runtimeType,
-//             _tag,
-//             const DeepCollectionEquality().hash(
-//               _data_success,
-//             ),
-//             const DeepCollectionEquality().hash(
-//               _data2_success,
-//             ),
-//           ],
-//         );
-//       case Union1Tag.success3:
-//         return Object.hashAll(
-//           [
-//             runtimeType,
-//             _tag,
-//             const DeepCollectionEquality().hash(
-//               _data_success3,
-//             ),
-//             _a_success3,
-//           ],
-//         );
-//       case Union1Tag.listBool:
-//         return Object.hashAll(
-//           [
-//             runtimeType,
-//             _tag,
-//             const DeepCollectionEquality().hash(
-//               _list_bool_listBool,
-//             ),
-//             _a_listBool,
-//           ],
-//         );
-//       case Union1Tag.error_1:
-//         return Object.hashAll(
-//           [
-//             runtimeType,
-//             _tag,
-//             _message_error_1,
-//             _messsage_error_1,
-//             _mesdssage_error_1,
-//             _mesdfssage_error_1,
-//             _error_error_1,
-//           ],
-//         );
-//       case Union1Tag.error_2:
-//         return Object.hashAll(
-//           [
-//             runtimeType,
-//             _tag,
-//             _message_error_2,
-//             _error_error_2,
-//           ],
-//         );
-//     }
-//   }
+  @override
+  int get hashCode {
+    switch (_tag) {
+      case StoreTag.appStore:
+        return Object.hashAll(
+          [
+            runtimeType,
+            _tag,
+            _url_appStore,
+            _name_appStore,
+          ],
+        );
+      case StoreTag.googlePlay:
+        return Object.hashAll(
+          [
+            runtimeType,
+            _tag,
+            _url_googlePlay,
+            _name_googlePlay,
+          ],
+        );
+      case StoreTag.getApps:
+        return Object.hashAll(
+          [
+            runtimeType,
+            _tag,
+            _url_getApps,
+            _name_getApps,
+          ],
+        );
+      case StoreTag.packageInstaller:
+        return Object.hashAll(
+          [
+            runtimeType,
+            _tag,
+            _name_packageInstaller,
+          ],
+        );
+      case StoreTag.ruStore:
+        return Object.hashAll(
+          [
+            runtimeType,
+            _tag,
+            _name_ruStore,
+            _url_ruStore,
+          ],
+        );
+      case StoreTag.appGallery:
+        return Object.hashAll(
+          [
+            runtimeType,
+            _tag,
+            _name_appGallery,
+            _url_appGallery,
+          ],
+        );
+      case StoreTag.other:
+        return Object.hashAll(
+          [
+            runtimeType,
+            _tag,
+            _name_other,
+          ],
+        );
+    }
+  }
 
-//   @override
-//   String toString() {
-//     switch (_tag) {
-//       case Union1Tag.listBool2:
-//         return 'Union1.listBool2(c3: $_c3_listBool2, c1: $_c1_listBool2, c2: $_c2_listBool2, c4: $_c4_listBool2)';
-//       case Union1Tag.success:
-//         return 'Union1.success(data: $_data_success, data2: $_data2_success)';
-//       case Union1Tag.success3:
-//         return 'Union1.success3(data: $_data_success3, a: $_a_success3)';
-//       case Union1Tag.listBool:
-//         return 'Union1.listBool(list_bool: $_list_bool_listBool, a: $_a_listBool)';
-//       case Union1Tag.error_1:
-//         return 'Union1.error_1(message: $_message_error_1, messsage: $_messsage_error_1, mesdssage: $_mesdssage_error_1, mesdfssage: $_mesdfssage_error_1, error: $_error_error_1)';
-//       case Union1Tag.error_2:
-//         return 'Union1.error_2(message: $_message_error_2, error: $_error_error_2)';
-//     }
-//   }
-// }
+  @override
+  String toString() {
+    switch (_tag) {
+      case StoreTag.appStore:
+        return 'Store.appStore(url: $_url_appStore, name: $_name_appStore)';
+      case StoreTag.googlePlay:
+        return 'Store.googlePlay(url: $_url_googlePlay, name: $_name_googlePlay)';
+      case StoreTag.getApps:
+        return 'Store.getApps(url: $_url_getApps, name: $_name_getApps)';
+      case StoreTag.packageInstaller:
+        return 'Store.packageInstaller(name: $_name_packageInstaller)';
+      case StoreTag.ruStore:
+        return 'Store.ruStore(name: $_name_ruStore, url: $_url_ruStore)';
+      case StoreTag.appGallery:
+        return 'Store.appGallery(name: $_name_appGallery, url: $_url_appGallery)';
+      case StoreTag.other:
+        return 'Store.other(name: $_name_other)';
+    }
+  }
+}
 
-// @immutable
-// class _Union1ListBool2 extends Union1 {
-//   const _Union1ListBool2(
-//     this.c3,
-//     this.c1,
-//     this.c2,
-//     this.c4,
-//   ) : super.listBool2(
-//           c3: c3,
-//           c1: c1,
-//           c2: c2,
-//           c4: c4,
-//         );
-//   final Color? c3;
-//   final Color c1;
-//   final Color? c2;
-//   final Color c4;
+@immutable
+class _StoreAppStore extends Store {
+  const _StoreAppStore(
+    this.url,
+    this.name,
+  ) : super.appStore(
+          url: url,
+          name: name,
+        );
+  final String url;
+  final String name;
 
-//   _Union1ListBool2 copyWith({
-//     Color? c3,
-//     Color? c1,
-//     Color? c2,
-//     Color? c4,
-//   }) {
-//     return _Union1ListBool2(
-//       c3 ?? this.c3,
-//       c1 ?? this.c1,
-//       c2 ?? this.c2,
-//       c4 ?? this.c4,
-//     );
-//   }
-// }
+  _StoreAppStore copyWith({
+    String? url,
+    String? name,
+  }) {
+    return _StoreAppStore(
+      url ?? this.url,
+      name ?? this.name,
+    );
+  }
+}
 
-// @immutable
-// class _Union1Success extends Union1 {
-//   const _Union1Success(
-//     this.data,
-//     this.data2,
-//   ) : super.success(
-//           data: data,
-//           data2: data2,
-//         );
-//   final List<int> data;
-//   final List<Map<int, String>> data2;
+@immutable
+class _StoreGooglePlay extends Store {
+  const _StoreGooglePlay(
+    this.url,
+    this.name,
+  ) : super.googlePlay(
+          url: url,
+          name: name,
+        );
+  final String url;
+  final String name;
 
-//   _Union1Success copyWith({
-//     List<int>? data,
-//     List<Map<int, String>>? data2,
-//   }) {
-//     return _Union1Success(
-//       data ?? this.data,
-//       data2 ?? this.data2,
-//     );
-//   }
-// }
+  _StoreGooglePlay copyWith({
+    String? url,
+    String? name,
+  }) {
+    return _StoreGooglePlay(
+      url ?? this.url,
+      name ?? this.name,
+    );
+  }
+}
 
-// @immutable
-// class _Union1Success3 extends Union1 {
-//   const _Union1Success3(
-//     this.data,
-//     this.a,
-//   ) : super.success3(
-//           data,
-//           a,
-//         );
-//   final List<String>? data;
-//   final String a;
+@immutable
+class _StoreGetApps extends Store {
+  const _StoreGetApps(
+    this.url,
+    this.name,
+  ) : super.getApps(
+          url: url,
+          name: name,
+        );
+  final String url;
+  final String name;
 
-//   _Union1Success3 copyWith({
-//     List<String>? data,
-//     String? a,
-//   }) {
-//     return _Union1Success3(
-//       data ?? this.data,
-//       a ?? this.a,
-//     );
-//   }
-// }
+  _StoreGetApps copyWith({
+    String? url,
+    String? name,
+  }) {
+    return _StoreGetApps(
+      url ?? this.url,
+      name ?? this.name,
+    );
+  }
+}
 
-// @immutable
-// class _Union1ListBool extends Union1 {
-//   const _Union1ListBool(
-//     this.list_bool,
-//     this.a,
-//   ) : super.listBool(
-//           list_bool,
-//           a,
-//         );
-//   final List<bool>? list_bool;
-//   final String a;
+@immutable
+class _StorePackageInstaller extends Store {
+  const _StorePackageInstaller(
+    this.name,
+  ) : super.packageInstaller(
+          name: name,
+        );
+  final String name;
 
-//   _Union1ListBool copyWith({
-//     List<bool>? list_bool,
-//     String? a,
-//   }) {
-//     return _Union1ListBool(
-//       list_bool ?? this.list_bool,
-//       a ?? this.a,
-//     );
-//   }
-// }
+  _StorePackageInstaller copyWith({
+    String? name,
+  }) {
+    return _StorePackageInstaller(
+      name ?? this.name,
+    );
+  }
+}
 
-// @immutable
-// class _Union1Error_1 extends Union1 {
-//   const _Union1Error_1(
-//     this.message,
-//     this.messsage,
-//     this.mesdssage,
-//     this.mesdfssage,
-//     this.error,
-//   ) : super.error_1(
-//           message: message,
-//           messsage: messsage,
-//           mesdssage: mesdssage,
-//           mesdfssage: mesdfssage,
-//           error: error,
-//         );
-//   final String message;
-//   final String messsage;
-//   final num mesdssage;
-//   final String mesdfssage;
-//   final String error;
+@immutable
+class _StoreRuStore extends Store {
+  const _StoreRuStore(
+    this.name,
+    this.url,
+  ) : super.ruStore(
+          name: name,
+          url: url,
+        );
+  final String name;
+  final String url;
 
-//   _Union1Error_1 copyWith({
-//     String? message,
-//     String? messsage,
-//     num? mesdssage,
-//     String? mesdfssage,
-//     String? error,
-//   }) {
-//     return _Union1Error_1(
-//       message ?? this.message,
-//       messsage ?? this.messsage,
-//       mesdssage ?? this.mesdssage,
-//       mesdfssage ?? this.mesdfssage,
-//       error ?? this.error,
-//     );
-//   }
-// }
+  _StoreRuStore copyWith({
+    String? name,
+    String? url,
+  }) {
+    return _StoreRuStore(
+      name ?? this.name,
+      url ?? this.url,
+    );
+  }
+}
 
-// @immutable
-// class _Union1Error_2 extends Union1 {
-//   const _Union1Error_2(
-//     this.message,
-//     this.error,
-//   ) : super.error_2(
-//           message: message,
-//           error: error,
-//         );
-//   final String message;
-//   final String? error;
+@immutable
+class _StoreAppGallery extends Store {
+  const _StoreAppGallery(
+    this.name,
+    this.url,
+  ) : super.appGallery(
+          name: name,
+          url: url,
+        );
+  final String name;
+  final String url;
 
-//   _Union1Error_2 copyWith({
-//     String? message,
-//     String? error,
-//   }) {
-//     return _Union1Error_2(
-//       message ?? this.message,
-//       error ?? this.error,
-//     );
-//   }
-// }
+  _StoreAppGallery copyWith({
+    String? name,
+    String? url,
+  }) {
+    return _StoreAppGallery(
+      name ?? this.name,
+      url ?? this.url,
+    );
+  }
+}
+
+@immutable
+class _StoreOther extends Store {
+  const _StoreOther(
+    this.name,
+  ) : super.other(
+          name: name,
+        );
+  final String name;
+
+  _StoreOther copyWith({
+    String? name,
+  }) {
+    return _StoreOther(
+      name ?? this.name,
+    );
+  }
+}

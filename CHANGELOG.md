@@ -1,3 +1,7 @@
+## [1.1.3] - 02.11.2023
+
+- Improved `union` script due to parsing error with certain characters
+
 ## [1.1.2] - 18.09.2023
 
 - added the ability to use `List<String>` in `enum` when using Turngen - example:
