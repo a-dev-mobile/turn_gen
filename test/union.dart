@@ -4,67 +4,50 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
-class _Store {
-  const _Store.appStore({
-    String url =
-        'https://apps.apple.com/us/app/надо-денег-деньги-онлайн/id1663823713',
-    String name = 'AppStore',
-    List<String> packageIds = const [
-      'com.apple',
-      'com.apple.testflight',
-      'com.apple.simulator',
-    ],
+class _Project {
+  const _Project.stage_4_BLK({
+    String api = 'https://api4.belka.aventus.work/',
+    String url = 'https://bc-api4-ru-belkacredit.wp.mendep.ru/',
   });
-  const _Store.googlePlay({
-    String url =
-        'https://play.google.com/store/apps/details?id=ru.nadodeneg.mobile',
-    String name = 'GooglePlay',
-    List<String> packageIds = const [
-      'com.android.vending',
-    ],
+  const _Project.prod_C7({
+    String api = 'https://api.credit7.ru/',
+    String url = 'https://credit7.ru/',
   });
-  const _Store.getApps({
-    String url =
-        'https://global.app.mi.com/details?id=ru.nadodeneg.mobile&lo=RU&la=en',
-    String name = 'GetApps',
-    List<String> packageIds = const [
-      'com.xiaomi.mipicks',
-    ],
+  const _Project.prod_ND({
+    String api = 'https://api.nadodeneg.ru/',
+    String url = 'https://nadodeneg.ru/',
   });
-  const _Store.packageInstaller({
-    String name = 'PackageInstaller',
-    List<String> packageIds = const [
-      'com.miui.packageinstaller',
-      'com.google.android.packageinstaller',
-      'com.android.packageinstaller',
-    ],
+  const _Project.prod_BLK({
+    String api = 'https://api.belkacredit.ru/',
+    String url = 'https://belkacredit.ru/',
   });
-  const _Store.ruStore({
-    String name = 'RuStore',
-    String url = 'https://apps.rustore.ru/app/ru.nadodeneg.mobile',
-    List<String> packageIds = const [
-      'ru.vk.store',
-    ],
+  const _Project.stage_1_C7({
+    String api = 'https://api1.credit7.online.aventus.work/',
+    String url = 'https://c7-api1-ru-credit7.wp.mendep.ru/',
   });
-  const _Store.appGallery({
-    String name = 'AppGallery',
-    String url = 'https://appgallery.huawei.com/app/C109195729',
-    List<String> packageIds = const [
-      'com.huawei.appmarket',
-    ],
+  const _Project.stage_2_C7({
+    String api = 'https://api2.credit7.online.aventus.work/',
+    String url = 'https://c7-api2-ru-credit7.wp.mendep.ru/',
   });
-  const _Store.other({
-    String name = 'Other',
-    List<String> packageIds = const [
-      'com.sec.android.app.samsungapps',
-      'com.aurora.store',
-      'com.samsung.android.scloud',
-      'com.sec.android.easyMover',
-      'com.xrom.intl.appcenter',
-      'com.miui.huanji',
-      'com.apkpure.aegon',
-      'com.aurora.store',
-    ],
+  const _Project.stage_0_ND({
+    String api = 'https://api0.nd.aventus.work/',
+    String url = '',
+  });
+  const _Project.stage_1_ND({
+    String api = 'https://api1.nd.aventus.work/',
+    String url = '',
+  });
+  const _Project.stage_3_ND({
+    String api = 'https://api3.nd.aventus.work/',
+    String url = '',
+  });
+  const _Project.stage_0_BLK({
+    String api = 'https://api0.belka.aventus.work/',
+    String url = 'https://bc-api0-ru-belkacredit.wp.mendep.ru/',
+  });
+  const _Project.stage_5_BLK({
+    String api = 'https://api5.belka.aventus.work/',
+    String url = '',
   });
 }
 
@@ -87,350 +70,596 @@ class _Store {
 // ignore_for_file: avoid_positional_boolean_parameters,
 // ignore_for_file: always_put_required_named_parameters_first
 
-enum StoreTag {
-  appStore,
-  googlePlay,
-  getApps,
-  packageInstaller,
-  ruStore,
-  appGallery,
-  other,
+enum ProjectTag {
+  stage_4_BLK,
+  prod_C7,
+  prod_ND,
+  prod_BLK,
+  stage_1_C7,
+  stage_2_C7,
+  stage_0_ND,
+  stage_1_ND,
+  stage_3_ND,
+  stage_0_BLK,
+  stage_5_BLK,
 }
 
 @immutable
-class Store {
-  final StoreTag _tag;
-  final String? _url_appStore;
-  final String? _name_appStore;
-  final String? _url_googlePlay;
-  final String? _name_googlePlay;
-  final String? _url_getApps;
-  final String? _name_getApps;
-  final String? _name_packageInstaller;
-  final String? _name_ruStore;
-  final String? _url_ruStore;
-  final String? _name_appGallery;
-  final String? _url_appGallery;
-  final String? _name_other;
+class Project {
+  final ProjectTag _tag;
+  final String? _api_stage_4_BLK;
+  final String? _url_stage_4_BLK;
+  final String? _api_prod_C7;
+  final String? _url_prod_C7;
+  final String? _api_prod_ND;
+  final String? _url_prod_ND;
+  final String? _api_prod_BLK;
+  final String? _url_prod_BLK;
+  final String? _api_stage_1_C7;
+  final String? _url_stage_1_C7;
+  final String? _api_stage_2_C7;
+  final String? _url_stage_2_C7;
+  final String? _api_stage_0_ND;
+  final String? _url_stage_0_ND;
+  final String? _api_stage_1_ND;
+  final String? _url_stage_1_ND;
+  final String? _api_stage_3_ND;
+  final String? _url_stage_3_ND;
+  final String? _api_stage_0_BLK;
+  final String? _url_stage_0_BLK;
+  final String? _api_stage_5_BLK;
+  final String? _url_stage_5_BLK;
 
-  const Store.appStore({
-    String url =
-        'https://apps.apple.com/us/app/надо-денег-деньги-онлайн/id1663823713',
-    String name = 'AppStore',
-    List<String> packageIds = const [
-      'com.apple',
-      'com.apple.testflight',
-      'com.apple.simulator',
-    ],
-  })  : _tag = StoreTag.appStore,
-        _url_appStore = url,
-        _name_appStore = name,
-        _url_googlePlay = null,
-        _name_googlePlay = null,
-        _url_getApps = null,
-        _name_getApps = null,
-        _name_packageInstaller = null,
-        _name_ruStore = null,
-        _url_ruStore = null,
-        _name_appGallery = null,
-        _url_appGallery = null,
-        _name_other = null;
+  const Project.stage_4_BLK({
+    String api = 'https://api4.belka.aventus.work/',
+    String url = 'https://bc-api4-ru-belkacredit.wp.mendep.ru/',
+  })  : _tag = ProjectTag.stage_4_BLK,
+        _api_stage_4_BLK = api,
+        _url_stage_4_BLK = url,
+        _api_prod_C7 = null,
+        _url_prod_C7 = null,
+        _api_prod_ND = null,
+        _url_prod_ND = null,
+        _api_prod_BLK = null,
+        _url_prod_BLK = null,
+        _api_stage_1_C7 = null,
+        _url_stage_1_C7 = null,
+        _api_stage_2_C7 = null,
+        _url_stage_2_C7 = null,
+        _api_stage_0_ND = null,
+        _url_stage_0_ND = null,
+        _api_stage_1_ND = null,
+        _url_stage_1_ND = null,
+        _api_stage_3_ND = null,
+        _url_stage_3_ND = null,
+        _api_stage_0_BLK = null,
+        _url_stage_0_BLK = null,
+        _api_stage_5_BLK = null,
+        _url_stage_5_BLK = null;
 
-  const Store.googlePlay({
-    String url =
-        'https://play.google.com/store/apps/details?id=ru.nadodeneg.mobile',
-    String name = 'GooglePlay',
-    List<String> packageIds = const [
-      'com.android.vending',
-    ],
-  })  : _tag = StoreTag.googlePlay,
-        _url_appStore = null,
-        _name_appStore = null,
-        _url_googlePlay = url,
-        _name_googlePlay = name,
-        _url_getApps = null,
-        _name_getApps = null,
-        _name_packageInstaller = null,
-        _name_ruStore = null,
-        _url_ruStore = null,
-        _name_appGallery = null,
-        _url_appGallery = null,
-        _name_other = null;
+  const Project.prod_C7({
+    String api = 'https://api.credit7.ru/',
+    String url = 'https://credit7.ru/',
+  })  : _tag = ProjectTag.prod_C7,
+        _api_stage_4_BLK = null,
+        _url_stage_4_BLK = null,
+        _api_prod_C7 = api,
+        _url_prod_C7 = url,
+        _api_prod_ND = null,
+        _url_prod_ND = null,
+        _api_prod_BLK = null,
+        _url_prod_BLK = null,
+        _api_stage_1_C7 = null,
+        _url_stage_1_C7 = null,
+        _api_stage_2_C7 = null,
+        _url_stage_2_C7 = null,
+        _api_stage_0_ND = null,
+        _url_stage_0_ND = null,
+        _api_stage_1_ND = null,
+        _url_stage_1_ND = null,
+        _api_stage_3_ND = null,
+        _url_stage_3_ND = null,
+        _api_stage_0_BLK = null,
+        _url_stage_0_BLK = null,
+        _api_stage_5_BLK = null,
+        _url_stage_5_BLK = null;
 
-  const Store.getApps({
-    String url =
-        'https://global.app.mi.com/details?id=ru.nadodeneg.mobile&lo=RU&la=en',
-    String name = 'GetApps',
-    List<String> packageIds = const [
-      'com.xiaomi.mipicks',
-    ],
-  })  : _tag = StoreTag.getApps,
-        _url_appStore = null,
-        _name_appStore = null,
-        _url_googlePlay = null,
-        _name_googlePlay = null,
-        _url_getApps = url,
-        _name_getApps = name,
-        _name_packageInstaller = null,
-        _name_ruStore = null,
-        _url_ruStore = null,
-        _name_appGallery = null,
-        _url_appGallery = null,
-        _name_other = null;
+  const Project.prod_ND({
+    String api = 'https://api.nadodeneg.ru/',
+    String url = 'https://nadodeneg.ru/',
+  })  : _tag = ProjectTag.prod_ND,
+        _api_stage_4_BLK = null,
+        _url_stage_4_BLK = null,
+        _api_prod_C7 = null,
+        _url_prod_C7 = null,
+        _api_prod_ND = api,
+        _url_prod_ND = url,
+        _api_prod_BLK = null,
+        _url_prod_BLK = null,
+        _api_stage_1_C7 = null,
+        _url_stage_1_C7 = null,
+        _api_stage_2_C7 = null,
+        _url_stage_2_C7 = null,
+        _api_stage_0_ND = null,
+        _url_stage_0_ND = null,
+        _api_stage_1_ND = null,
+        _url_stage_1_ND = null,
+        _api_stage_3_ND = null,
+        _url_stage_3_ND = null,
+        _api_stage_0_BLK = null,
+        _url_stage_0_BLK = null,
+        _api_stage_5_BLK = null,
+        _url_stage_5_BLK = null;
 
-  const Store.packageInstaller({
-    String name = 'PackageInstaller',
-    List<String> packageIds = const [
-      'com.miui.packageinstaller',
-      'com.google.android.packageinstaller',
-      'com.android.packageinstaller',
-    ],
-  })  : _tag = StoreTag.packageInstaller,
-        _url_appStore = null,
-        _name_appStore = null,
-        _url_googlePlay = null,
-        _name_googlePlay = null,
-        _url_getApps = null,
-        _name_getApps = null,
-        _name_packageInstaller = name,
-        _name_ruStore = null,
-        _url_ruStore = null,
-        _name_appGallery = null,
-        _url_appGallery = null,
-        _name_other = null;
+  const Project.prod_BLK({
+    String api = 'https://api.belkacredit.ru/',
+    String url = 'https://belkacredit.ru/',
+  })  : _tag = ProjectTag.prod_BLK,
+        _api_stage_4_BLK = null,
+        _url_stage_4_BLK = null,
+        _api_prod_C7 = null,
+        _url_prod_C7 = null,
+        _api_prod_ND = null,
+        _url_prod_ND = null,
+        _api_prod_BLK = api,
+        _url_prod_BLK = url,
+        _api_stage_1_C7 = null,
+        _url_stage_1_C7 = null,
+        _api_stage_2_C7 = null,
+        _url_stage_2_C7 = null,
+        _api_stage_0_ND = null,
+        _url_stage_0_ND = null,
+        _api_stage_1_ND = null,
+        _url_stage_1_ND = null,
+        _api_stage_3_ND = null,
+        _url_stage_3_ND = null,
+        _api_stage_0_BLK = null,
+        _url_stage_0_BLK = null,
+        _api_stage_5_BLK = null,
+        _url_stage_5_BLK = null;
 
-  const Store.ruStore({
-    String name = 'RuStore',
-    String url = 'https://apps.rustore.ru/app/ru.nadodeneg.mobile',
-    List<String> packageIds = const [
-      'ru.vk.store',
-    ],
-  })  : _tag = StoreTag.ruStore,
-        _url_appStore = null,
-        _name_appStore = null,
-        _url_googlePlay = null,
-        _name_googlePlay = null,
-        _url_getApps = null,
-        _name_getApps = null,
-        _name_packageInstaller = null,
-        _name_ruStore = name,
-        _url_ruStore = url,
-        _name_appGallery = null,
-        _url_appGallery = null,
-        _name_other = null;
+  const Project.stage_1_C7({
+    String api = 'https://api1.credit7.online.aventus.work/',
+    String url = 'https://c7-api1-ru-credit7.wp.mendep.ru/',
+  })  : _tag = ProjectTag.stage_1_C7,
+        _api_stage_4_BLK = null,
+        _url_stage_4_BLK = null,
+        _api_prod_C7 = null,
+        _url_prod_C7 = null,
+        _api_prod_ND = null,
+        _url_prod_ND = null,
+        _api_prod_BLK = null,
+        _url_prod_BLK = null,
+        _api_stage_1_C7 = api,
+        _url_stage_1_C7 = url,
+        _api_stage_2_C7 = null,
+        _url_stage_2_C7 = null,
+        _api_stage_0_ND = null,
+        _url_stage_0_ND = null,
+        _api_stage_1_ND = null,
+        _url_stage_1_ND = null,
+        _api_stage_3_ND = null,
+        _url_stage_3_ND = null,
+        _api_stage_0_BLK = null,
+        _url_stage_0_BLK = null,
+        _api_stage_5_BLK = null,
+        _url_stage_5_BLK = null;
 
-  const Store.appGallery({
-    String name = 'AppGallery',
-    String url = 'https://appgallery.huawei.com/app/C109195729',
-    List<String> packageIds = const [
-      'com.huawei.appmarket',
-    ],
-  })  : _tag = StoreTag.appGallery,
-        _url_appStore = null,
-        _name_appStore = null,
-        _url_googlePlay = null,
-        _name_googlePlay = null,
-        _url_getApps = null,
-        _name_getApps = null,
-        _name_packageInstaller = null,
-        _name_ruStore = null,
-        _url_ruStore = null,
-        _name_appGallery = name,
-        _url_appGallery = url,
-        _name_other = null;
+  const Project.stage_2_C7({
+    String api = 'https://api2.credit7.online.aventus.work/',
+    String url = 'https://c7-api2-ru-credit7.wp.mendep.ru/',
+  })  : _tag = ProjectTag.stage_2_C7,
+        _api_stage_4_BLK = null,
+        _url_stage_4_BLK = null,
+        _api_prod_C7 = null,
+        _url_prod_C7 = null,
+        _api_prod_ND = null,
+        _url_prod_ND = null,
+        _api_prod_BLK = null,
+        _url_prod_BLK = null,
+        _api_stage_1_C7 = null,
+        _url_stage_1_C7 = null,
+        _api_stage_2_C7 = api,
+        _url_stage_2_C7 = url,
+        _api_stage_0_ND = null,
+        _url_stage_0_ND = null,
+        _api_stage_1_ND = null,
+        _url_stage_1_ND = null,
+        _api_stage_3_ND = null,
+        _url_stage_3_ND = null,
+        _api_stage_0_BLK = null,
+        _url_stage_0_BLK = null,
+        _api_stage_5_BLK = null,
+        _url_stage_5_BLK = null;
 
-  const Store.other({
-    String name = 'Other',
-    List<String> packageIds = const [
-      'com.sec.android.app.samsungapps',
-      'com.aurora.store',
-      'com.samsung.android.scloud',
-      'com.sec.android.easyMover',
-      'com.xrom.intl.appcenter',
-      'com.miui.huanji',
-      'com.apkpure.aegon',
-      'com.aurora.store',
-    ],
-  })  : _tag = StoreTag.other,
-        _url_appStore = null,
-        _name_appStore = null,
-        _url_googlePlay = null,
-        _name_googlePlay = null,
-        _url_getApps = null,
-        _name_getApps = null,
-        _name_packageInstaller = null,
-        _name_ruStore = null,
-        _url_ruStore = null,
-        _name_appGallery = null,
-        _url_appGallery = null,
-        _name_other = name;
+  const Project.stage_0_ND({
+    String api = 'https://api0.nd.aventus.work/',
+    String url = '',
+  })  : _tag = ProjectTag.stage_0_ND,
+        _api_stage_4_BLK = null,
+        _url_stage_4_BLK = null,
+        _api_prod_C7 = null,
+        _url_prod_C7 = null,
+        _api_prod_ND = null,
+        _url_prod_ND = null,
+        _api_prod_BLK = null,
+        _url_prod_BLK = null,
+        _api_stage_1_C7 = null,
+        _url_stage_1_C7 = null,
+        _api_stage_2_C7 = null,
+        _url_stage_2_C7 = null,
+        _api_stage_0_ND = api,
+        _url_stage_0_ND = url,
+        _api_stage_1_ND = null,
+        _url_stage_1_ND = null,
+        _api_stage_3_ND = null,
+        _url_stage_3_ND = null,
+        _api_stage_0_BLK = null,
+        _url_stage_0_BLK = null,
+        _api_stage_5_BLK = null,
+        _url_stage_5_BLK = null;
 
-  bool get appStore => _tag == StoreTag.appStore;
-  bool get googlePlay => _tag == StoreTag.googlePlay;
-  bool get getApps => _tag == StoreTag.getApps;
-  bool get packageInstaller => _tag == StoreTag.packageInstaller;
-  bool get ruStore => _tag == StoreTag.ruStore;
-  bool get appGallery => _tag == StoreTag.appGallery;
-  bool get other => _tag == StoreTag.other;
+  const Project.stage_1_ND({
+    String api = 'https://api1.nd.aventus.work/',
+    String url = '',
+  })  : _tag = ProjectTag.stage_1_ND,
+        _api_stage_4_BLK = null,
+        _url_stage_4_BLK = null,
+        _api_prod_C7 = null,
+        _url_prod_C7 = null,
+        _api_prod_ND = null,
+        _url_prod_ND = null,
+        _api_prod_BLK = null,
+        _url_prod_BLK = null,
+        _api_stage_1_C7 = null,
+        _url_stage_1_C7 = null,
+        _api_stage_2_C7 = null,
+        _url_stage_2_C7 = null,
+        _api_stage_0_ND = null,
+        _url_stage_0_ND = null,
+        _api_stage_1_ND = api,
+        _url_stage_1_ND = url,
+        _api_stage_3_ND = null,
+        _url_stage_3_ND = null,
+        _api_stage_0_BLK = null,
+        _url_stage_0_BLK = null,
+        _api_stage_5_BLK = null,
+        _url_stage_5_BLK = null;
 
-  factory Store.fromJson(
+  const Project.stage_3_ND({
+    String api = 'https://api3.nd.aventus.work/',
+    String url = '',
+  })  : _tag = ProjectTag.stage_3_ND,
+        _api_stage_4_BLK = null,
+        _url_stage_4_BLK = null,
+        _api_prod_C7 = null,
+        _url_prod_C7 = null,
+        _api_prod_ND = null,
+        _url_prod_ND = null,
+        _api_prod_BLK = null,
+        _url_prod_BLK = null,
+        _api_stage_1_C7 = null,
+        _url_stage_1_C7 = null,
+        _api_stage_2_C7 = null,
+        _url_stage_2_C7 = null,
+        _api_stage_0_ND = null,
+        _url_stage_0_ND = null,
+        _api_stage_1_ND = null,
+        _url_stage_1_ND = null,
+        _api_stage_3_ND = api,
+        _url_stage_3_ND = url,
+        _api_stage_0_BLK = null,
+        _url_stage_0_BLK = null,
+        _api_stage_5_BLK = null,
+        _url_stage_5_BLK = null;
+
+  const Project.stage_0_BLK({
+    String api = 'https://api0.belka.aventus.work/',
+    String url = 'https://bc-api0-ru-belkacredit.wp.mendep.ru/',
+  })  : _tag = ProjectTag.stage_0_BLK,
+        _api_stage_4_BLK = null,
+        _url_stage_4_BLK = null,
+        _api_prod_C7 = null,
+        _url_prod_C7 = null,
+        _api_prod_ND = null,
+        _url_prod_ND = null,
+        _api_prod_BLK = null,
+        _url_prod_BLK = null,
+        _api_stage_1_C7 = null,
+        _url_stage_1_C7 = null,
+        _api_stage_2_C7 = null,
+        _url_stage_2_C7 = null,
+        _api_stage_0_ND = null,
+        _url_stage_0_ND = null,
+        _api_stage_1_ND = null,
+        _url_stage_1_ND = null,
+        _api_stage_3_ND = null,
+        _url_stage_3_ND = null,
+        _api_stage_0_BLK = api,
+        _url_stage_0_BLK = url,
+        _api_stage_5_BLK = null,
+        _url_stage_5_BLK = null;
+
+  const Project.stage_5_BLK({
+    String api = 'https://api5.belka.aventus.work/',
+    String url = '',
+  })  : _tag = ProjectTag.stage_5_BLK,
+        _api_stage_4_BLK = null,
+        _url_stage_4_BLK = null,
+        _api_prod_C7 = null,
+        _url_prod_C7 = null,
+        _api_prod_ND = null,
+        _url_prod_ND = null,
+        _api_prod_BLK = null,
+        _url_prod_BLK = null,
+        _api_stage_1_C7 = null,
+        _url_stage_1_C7 = null,
+        _api_stage_2_C7 = null,
+        _url_stage_2_C7 = null,
+        _api_stage_0_ND = null,
+        _url_stage_0_ND = null,
+        _api_stage_1_ND = null,
+        _url_stage_1_ND = null,
+        _api_stage_3_ND = null,
+        _url_stage_3_ND = null,
+        _api_stage_0_BLK = null,
+        _url_stage_0_BLK = null,
+        _api_stage_5_BLK = api,
+        _url_stage_5_BLK = url;
+
+  bool get stage_4_BLK => _tag == ProjectTag.stage_4_BLK;
+  bool get prod_C7 => _tag == ProjectTag.prod_C7;
+  bool get prod_ND => _tag == ProjectTag.prod_ND;
+  bool get prod_BLK => _tag == ProjectTag.prod_BLK;
+  bool get stage_1_C7 => _tag == ProjectTag.stage_1_C7;
+  bool get stage_2_C7 => _tag == ProjectTag.stage_2_C7;
+  bool get stage_0_ND => _tag == ProjectTag.stage_0_ND;
+  bool get stage_1_ND => _tag == ProjectTag.stage_1_ND;
+  bool get stage_3_ND => _tag == ProjectTag.stage_3_ND;
+  bool get stage_0_BLK => _tag == ProjectTag.stage_0_BLK;
+  bool get stage_5_BLK => _tag == ProjectTag.stage_5_BLK;
+
+  factory Project.fromJson(
     String source, [
-    StoreTag? tag,
+    ProjectTag? tag,
   ]) =>
-      Store.fromMap(
+      Project.fromMap(
         json.decode(source) as Map<String, dynamic>,
         tag,
       );
 
   Map<String, dynamic> toMap() {
     switch (_tag) {
-      case StoreTag.appStore:
+      case ProjectTag.stage_4_BLK:
         return {
-          'tag': 'appStore',
-          'url': _url_appStore,
-          'name': _name_appStore,
+          'tag': 'stage_4_BLK',
+          'api': _api_stage_4_BLK,
+          'url': _url_stage_4_BLK,
         };
-      case StoreTag.googlePlay:
+      case ProjectTag.prod_C7:
         return {
-          'tag': 'googlePlay',
-          'url': _url_googlePlay,
-          'name': _name_googlePlay,
+          'tag': 'prod_C7',
+          'api': _api_prod_C7,
+          'url': _url_prod_C7,
         };
-      case StoreTag.getApps:
+      case ProjectTag.prod_ND:
         return {
-          'tag': 'getApps',
-          'url': _url_getApps,
-          'name': _name_getApps,
+          'tag': 'prod_ND',
+          'api': _api_prod_ND,
+          'url': _url_prod_ND,
         };
-      case StoreTag.packageInstaller:
+      case ProjectTag.prod_BLK:
         return {
-          'tag': 'packageInstaller',
-          'name': _name_packageInstaller,
+          'tag': 'prod_BLK',
+          'api': _api_prod_BLK,
+          'url': _url_prod_BLK,
         };
-      case StoreTag.ruStore:
+      case ProjectTag.stage_1_C7:
         return {
-          'tag': 'ruStore',
-          'name': _name_ruStore,
-          'url': _url_ruStore,
+          'tag': 'stage_1_C7',
+          'api': _api_stage_1_C7,
+          'url': _url_stage_1_C7,
         };
-      case StoreTag.appGallery:
+      case ProjectTag.stage_2_C7:
         return {
-          'tag': 'appGallery',
-          'name': _name_appGallery,
-          'url': _url_appGallery,
+          'tag': 'stage_2_C7',
+          'api': _api_stage_2_C7,
+          'url': _url_stage_2_C7,
         };
-      case StoreTag.other:
+      case ProjectTag.stage_0_ND:
         return {
-          'tag': 'other',
-          'name': _name_other,
+          'tag': 'stage_0_ND',
+          'api': _api_stage_0_ND,
+          'url': _url_stage_0_ND,
+        };
+      case ProjectTag.stage_1_ND:
+        return {
+          'tag': 'stage_1_ND',
+          'api': _api_stage_1_ND,
+          'url': _url_stage_1_ND,
+        };
+      case ProjectTag.stage_3_ND:
+        return {
+          'tag': 'stage_3_ND',
+          'api': _api_stage_3_ND,
+          'url': _url_stage_3_ND,
+        };
+      case ProjectTag.stage_0_BLK:
+        return {
+          'tag': 'stage_0_BLK',
+          'api': _api_stage_0_BLK,
+          'url': _url_stage_0_BLK,
+        };
+      case ProjectTag.stage_5_BLK:
+        return {
+          'tag': 'stage_5_BLK',
+          'api': _api_stage_5_BLK,
+          'url': _url_stage_5_BLK,
         };
     }
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Store.fromMap(
+  factory Project.fromMap(
     Map<dynamic, dynamic> map, [
-    StoreTag? tag,
+    ProjectTag? tag,
   ]) {
-    tag ??= StoreTag.values.byName(map['tag'].toString());
+    tag ??= ProjectTag.values.byName(map['tag'].toString());
     switch (tag) {
-      case StoreTag.appStore:
-        return Store.appStore(
+      case ProjectTag.stage_4_BLK:
+        return Project.stage_4_BLK(
+          api: map['api'] as String? ?? 'https://api4.belka.aventus.work/',
           url: map['url'] as String? ??
-              'https://apps.apple.com/us/app/надо-денег-деньги-онлайн/id1663823713',
-          name: map['name'] as String? ?? 'AppStore',
+              'https://bc-api4-ru-belkacredit.wp.mendep.ru/',
         );
-      case StoreTag.googlePlay:
-        return Store.googlePlay(
+      case ProjectTag.prod_C7:
+        return Project.prod_C7(
+          api: map['api'] as String? ?? 'https://api.credit7.ru/',
+          url: map['url'] as String? ?? 'https://credit7.ru/',
+        );
+      case ProjectTag.prod_ND:
+        return Project.prod_ND(
+          api: map['api'] as String? ?? 'https://api.nadodeneg.ru/',
+          url: map['url'] as String? ?? 'https://nadodeneg.ru/',
+        );
+      case ProjectTag.prod_BLK:
+        return Project.prod_BLK(
+          api: map['api'] as String? ?? 'https://api.belkacredit.ru/',
+          url: map['url'] as String? ?? 'https://belkacredit.ru/',
+        );
+      case ProjectTag.stage_1_C7:
+        return Project.stage_1_C7(
+          api: map['api'] as String? ??
+              'https://api1.credit7.online.aventus.work/',
           url: map['url'] as String? ??
-              'https://play.google.com/store/apps/details?id=ru.nadodeneg.mobile',
-          name: map['name'] as String? ?? 'GooglePlay',
+              'https://c7-api1-ru-credit7.wp.mendep.ru/',
         );
-      case StoreTag.getApps:
-        return Store.getApps(
+      case ProjectTag.stage_2_C7:
+        return Project.stage_2_C7(
+          api: map['api'] as String? ??
+              'https://api2.credit7.online.aventus.work/',
           url: map['url'] as String? ??
-              'https://global.app.mi.com/details?id=ru.nadodeneg.mobile&lo=RU&la=en',
-          name: map['name'] as String? ?? 'GetApps',
+              'https://c7-api2-ru-credit7.wp.mendep.ru/',
         );
-      case StoreTag.packageInstaller:
-        return Store.packageInstaller(
-          name: map['name'] as String? ?? 'PackageInstaller',
+      case ProjectTag.stage_0_ND:
+        return Project.stage_0_ND(
+          api: map['api'] as String? ?? 'https://api0.nd.aventus.work/',
+          url: map['url'] as String? ?? '',
         );
-      case StoreTag.ruStore:
-        return Store.ruStore(
-          name: map['name'] as String? ?? 'RuStore',
+      case ProjectTag.stage_1_ND:
+        return Project.stage_1_ND(
+          api: map['api'] as String? ?? 'https://api1.nd.aventus.work/',
+          url: map['url'] as String? ?? '',
+        );
+      case ProjectTag.stage_3_ND:
+        return Project.stage_3_ND(
+          api: map['api'] as String? ?? 'https://api3.nd.aventus.work/',
+          url: map['url'] as String? ?? '',
+        );
+      case ProjectTag.stage_0_BLK:
+        return Project.stage_0_BLK(
+          api: map['api'] as String? ?? 'https://api0.belka.aventus.work/',
           url: map['url'] as String? ??
-              'https://apps.rustore.ru/app/ru.nadodeneg.mobile',
+              'https://bc-api0-ru-belkacredit.wp.mendep.ru/',
         );
-      case StoreTag.appGallery:
-        return Store.appGallery(
-          name: map['name'] as String? ?? 'AppGallery',
-          url: map['url'] as String? ??
-              'https://appgallery.huawei.com/app/C109195729',
-        );
-      case StoreTag.other:
-        return Store.other(
-          name: map['name'] as String? ?? 'Other',
+      case ProjectTag.stage_5_BLK:
+        return Project.stage_5_BLK(
+          api: map['api'] as String? ?? 'https://api5.belka.aventus.work/',
+          url: map['url'] as String? ?? '',
         );
     }
   }
 
   T map<T>({
-    required T Function(_StoreAppStore v) appStore,
-    required T Function(_StoreGooglePlay v) googlePlay,
-    required T Function(_StoreGetApps v) getApps,
-    required T Function(_StorePackageInstaller v) packageInstaller,
-    required T Function(_StoreRuStore v) ruStore,
-    required T Function(_StoreAppGallery v) appGallery,
-    required T Function(_StoreOther v) other,
+    required T Function(_ProjectStage_4_BLK v) stage_4_BLK,
+    required T Function(_ProjectProd_C7 v) prod_C7,
+    required T Function(_ProjectProd_ND v) prod_ND,
+    required T Function(_ProjectProd_BLK v) prod_BLK,
+    required T Function(_ProjectStage_1_C7 v) stage_1_C7,
+    required T Function(_ProjectStage_2_C7 v) stage_2_C7,
+    required T Function(_ProjectStage_0_ND v) stage_0_ND,
+    required T Function(_ProjectStage_1_ND v) stage_1_ND,
+    required T Function(_ProjectStage_3_ND v) stage_3_ND,
+    required T Function(_ProjectStage_0_BLK v) stage_0_BLK,
+    required T Function(_ProjectStage_5_BLK v) stage_5_BLK,
   }) {
     switch (_tag) {
-      case StoreTag.appStore:
-        return appStore(
-          _StoreAppStore(
-            _url_appStore!,
-            _name_appStore!,
+      case ProjectTag.stage_4_BLK:
+        return stage_4_BLK(
+          _ProjectStage_4_BLK(
+            _api_stage_4_BLK!,
+            _url_stage_4_BLK!,
           ),
         );
-      case StoreTag.googlePlay:
-        return googlePlay(
-          _StoreGooglePlay(
-            _url_googlePlay!,
-            _name_googlePlay!,
+      case ProjectTag.prod_C7:
+        return prod_C7(
+          _ProjectProd_C7(
+            _api_prod_C7!,
+            _url_prod_C7!,
           ),
         );
-      case StoreTag.getApps:
-        return getApps(
-          _StoreGetApps(
-            _url_getApps!,
-            _name_getApps!,
+      case ProjectTag.prod_ND:
+        return prod_ND(
+          _ProjectProd_ND(
+            _api_prod_ND!,
+            _url_prod_ND!,
           ),
         );
-      case StoreTag.packageInstaller:
-        return packageInstaller(
-          _StorePackageInstaller(
-            _name_packageInstaller!,
+      case ProjectTag.prod_BLK:
+        return prod_BLK(
+          _ProjectProd_BLK(
+            _api_prod_BLK!,
+            _url_prod_BLK!,
           ),
         );
-      case StoreTag.ruStore:
-        return ruStore(
-          _StoreRuStore(
-            _name_ruStore!,
-            _url_ruStore!,
+      case ProjectTag.stage_1_C7:
+        return stage_1_C7(
+          _ProjectStage_1_C7(
+            _api_stage_1_C7!,
+            _url_stage_1_C7!,
           ),
         );
-      case StoreTag.appGallery:
-        return appGallery(
-          _StoreAppGallery(
-            _name_appGallery!,
-            _url_appGallery!,
+      case ProjectTag.stage_2_C7:
+        return stage_2_C7(
+          _ProjectStage_2_C7(
+            _api_stage_2_C7!,
+            _url_stage_2_C7!,
           ),
         );
-      case StoreTag.other:
-        return other(
-          _StoreOther(
-            _name_other!,
+      case ProjectTag.stage_0_ND:
+        return stage_0_ND(
+          _ProjectStage_0_ND(
+            _api_stage_0_ND!,
+            _url_stage_0_ND!,
+          ),
+        );
+      case ProjectTag.stage_1_ND:
+        return stage_1_ND(
+          _ProjectStage_1_ND(
+            _api_stage_1_ND!,
+            _url_stage_1_ND!,
+          ),
+        );
+      case ProjectTag.stage_3_ND:
+        return stage_3_ND(
+          _ProjectStage_3_ND(
+            _api_stage_3_ND!,
+            _url_stage_3_ND!,
+          ),
+        );
+      case ProjectTag.stage_0_BLK:
+        return stage_0_BLK(
+          _ProjectStage_0_BLK(
+            _api_stage_0_BLK!,
+            _url_stage_0_BLK!,
+          ),
+        );
+      case ProjectTag.stage_5_BLK:
+        return stage_5_BLK(
+          _ProjectStage_5_BLK(
+            _api_stage_5_BLK!,
+            _url_stage_5_BLK!,
           ),
         );
     }
@@ -438,79 +667,125 @@ class Store {
 
   T maybeMap<T>({
     required T Function() orElse,
-    T Function(_StoreAppStore v)? appStore,
-    T Function(_StoreGooglePlay v)? googlePlay,
-    T Function(_StoreGetApps v)? getApps,
-    T Function(_StorePackageInstaller v)? packageInstaller,
-    T Function(_StoreRuStore v)? ruStore,
-    T Function(_StoreAppGallery v)? appGallery,
-    T Function(_StoreOther v)? other,
+    T Function(_ProjectStage_4_BLK v)? stage_4_BLK,
+    T Function(_ProjectProd_C7 v)? prod_C7,
+    T Function(_ProjectProd_ND v)? prod_ND,
+    T Function(_ProjectProd_BLK v)? prod_BLK,
+    T Function(_ProjectStage_1_C7 v)? stage_1_C7,
+    T Function(_ProjectStage_2_C7 v)? stage_2_C7,
+    T Function(_ProjectStage_0_ND v)? stage_0_ND,
+    T Function(_ProjectStage_1_ND v)? stage_1_ND,
+    T Function(_ProjectStage_3_ND v)? stage_3_ND,
+    T Function(_ProjectStage_0_BLK v)? stage_0_BLK,
+    T Function(_ProjectStage_5_BLK v)? stage_5_BLK,
   }) {
     switch (_tag) {
-      case StoreTag.appStore:
-        if (appStore != null) {
-          return appStore(
-            _StoreAppStore(
-              _url_appStore!,
-              _name_appStore!,
+      case ProjectTag.stage_4_BLK:
+        if (stage_4_BLK != null) {
+          return stage_4_BLK(
+            _ProjectStage_4_BLK(
+              _api_stage_4_BLK!,
+              _url_stage_4_BLK!,
             ),
           );
         }
         return orElse();
-      case StoreTag.googlePlay:
-        if (googlePlay != null) {
-          return googlePlay(
-            _StoreGooglePlay(
-              _url_googlePlay!,
-              _name_googlePlay!,
+      case ProjectTag.prod_C7:
+        if (prod_C7 != null) {
+          return prod_C7(
+            _ProjectProd_C7(
+              _api_prod_C7!,
+              _url_prod_C7!,
             ),
           );
         }
         return orElse();
-      case StoreTag.getApps:
-        if (getApps != null) {
-          return getApps(
-            _StoreGetApps(
-              _url_getApps!,
-              _name_getApps!,
+      case ProjectTag.prod_ND:
+        if (prod_ND != null) {
+          return prod_ND(
+            _ProjectProd_ND(
+              _api_prod_ND!,
+              _url_prod_ND!,
             ),
           );
         }
         return orElse();
-      case StoreTag.packageInstaller:
-        if (packageInstaller != null) {
-          return packageInstaller(
-            _StorePackageInstaller(
-              _name_packageInstaller!,
+      case ProjectTag.prod_BLK:
+        if (prod_BLK != null) {
+          return prod_BLK(
+            _ProjectProd_BLK(
+              _api_prod_BLK!,
+              _url_prod_BLK!,
             ),
           );
         }
         return orElse();
-      case StoreTag.ruStore:
-        if (ruStore != null) {
-          return ruStore(
-            _StoreRuStore(
-              _name_ruStore!,
-              _url_ruStore!,
+      case ProjectTag.stage_1_C7:
+        if (stage_1_C7 != null) {
+          return stage_1_C7(
+            _ProjectStage_1_C7(
+              _api_stage_1_C7!,
+              _url_stage_1_C7!,
             ),
           );
         }
         return orElse();
-      case StoreTag.appGallery:
-        if (appGallery != null) {
-          return appGallery(
-            _StoreAppGallery(
-              _name_appGallery!,
-              _url_appGallery!,
+      case ProjectTag.stage_2_C7:
+        if (stage_2_C7 != null) {
+          return stage_2_C7(
+            _ProjectStage_2_C7(
+              _api_stage_2_C7!,
+              _url_stage_2_C7!,
             ),
           );
         }
         return orElse();
-      case StoreTag.other:
-        if (other != null) {
-          return other(
-            _StoreOther(
-              _name_other!,
+      case ProjectTag.stage_0_ND:
+        if (stage_0_ND != null) {
+          return stage_0_ND(
+            _ProjectStage_0_ND(
+              _api_stage_0_ND!,
+              _url_stage_0_ND!,
+            ),
+          );
+        }
+        return orElse();
+      case ProjectTag.stage_1_ND:
+        if (stage_1_ND != null) {
+          return stage_1_ND(
+            _ProjectStage_1_ND(
+              _api_stage_1_ND!,
+              _url_stage_1_ND!,
+            ),
+          );
+        }
+        return orElse();
+      case ProjectTag.stage_3_ND:
+        if (stage_3_ND != null) {
+          return stage_3_ND(
+            _ProjectStage_3_ND(
+              _api_stage_3_ND!,
+              _url_stage_3_ND!,
+            ),
+          );
+        }
+        return orElse();
+      case ProjectTag.stage_0_BLK:
+        if (stage_0_BLK != null) {
+          return stage_0_BLK(
+            _ProjectStage_0_BLK(
+              _api_stage_0_BLK!,
+              _url_stage_0_BLK!,
+            ),
+          );
+        }
+        return orElse();
+      case ProjectTag.stage_5_BLK:
+        if (stage_5_BLK != null) {
+          return stage_5_BLK(
+            _ProjectStage_5_BLK(
+              _api_stage_5_BLK!,
+              _url_stage_5_BLK!,
             ),
           );
         }
@@ -519,139 +794,219 @@ class Store {
   }
 
   T? mapOrNull<T>({
-    T? Function(_StoreAppStore v)? appStore,
-    T? Function(_StoreGooglePlay v)? googlePlay,
-    T? Function(_StoreGetApps v)? getApps,
-    T? Function(_StorePackageInstaller v)? packageInstaller,
-    T? Function(_StoreRuStore v)? ruStore,
-    T? Function(_StoreAppGallery v)? appGallery,
-    T? Function(_StoreOther v)? other,
+    T? Function(_ProjectStage_4_BLK v)? stage_4_BLK,
+    T? Function(_ProjectProd_C7 v)? prod_C7,
+    T? Function(_ProjectProd_ND v)? prod_ND,
+    T? Function(_ProjectProd_BLK v)? prod_BLK,
+    T? Function(_ProjectStage_1_C7 v)? stage_1_C7,
+    T? Function(_ProjectStage_2_C7 v)? stage_2_C7,
+    T? Function(_ProjectStage_0_ND v)? stage_0_ND,
+    T? Function(_ProjectStage_1_ND v)? stage_1_ND,
+    T? Function(_ProjectStage_3_ND v)? stage_3_ND,
+    T? Function(_ProjectStage_0_BLK v)? stage_0_BLK,
+    T? Function(_ProjectStage_5_BLK v)? stage_5_BLK,
   }) {
     switch (_tag) {
-      case StoreTag.appStore:
-        return appStore?.call(
-          _StoreAppStore(
-            _url_appStore!,
-            _name_appStore!,
+      case ProjectTag.stage_4_BLK:
+        return stage_4_BLK?.call(
+          _ProjectStage_4_BLK(
+            _api_stage_4_BLK!,
+            _url_stage_4_BLK!,
           ),
         );
-      case StoreTag.googlePlay:
-        return googlePlay?.call(
-          _StoreGooglePlay(
-            _url_googlePlay!,
-            _name_googlePlay!,
+      case ProjectTag.prod_C7:
+        return prod_C7?.call(
+          _ProjectProd_C7(
+            _api_prod_C7!,
+            _url_prod_C7!,
           ),
         );
-      case StoreTag.getApps:
-        return getApps?.call(
-          _StoreGetApps(
-            _url_getApps!,
-            _name_getApps!,
+      case ProjectTag.prod_ND:
+        return prod_ND?.call(
+          _ProjectProd_ND(
+            _api_prod_ND!,
+            _url_prod_ND!,
           ),
         );
-      case StoreTag.packageInstaller:
-        return packageInstaller?.call(
-          _StorePackageInstaller(
-            _name_packageInstaller!,
+      case ProjectTag.prod_BLK:
+        return prod_BLK?.call(
+          _ProjectProd_BLK(
+            _api_prod_BLK!,
+            _url_prod_BLK!,
           ),
         );
-      case StoreTag.ruStore:
-        return ruStore?.call(
-          _StoreRuStore(
-            _name_ruStore!,
-            _url_ruStore!,
+      case ProjectTag.stage_1_C7:
+        return stage_1_C7?.call(
+          _ProjectStage_1_C7(
+            _api_stage_1_C7!,
+            _url_stage_1_C7!,
           ),
         );
-      case StoreTag.appGallery:
-        return appGallery?.call(
-          _StoreAppGallery(
-            _name_appGallery!,
-            _url_appGallery!,
+      case ProjectTag.stage_2_C7:
+        return stage_2_C7?.call(
+          _ProjectStage_2_C7(
+            _api_stage_2_C7!,
+            _url_stage_2_C7!,
           ),
         );
-      case StoreTag.other:
-        return other?.call(
-          _StoreOther(
-            _name_other!,
+      case ProjectTag.stage_0_ND:
+        return stage_0_ND?.call(
+          _ProjectStage_0_ND(
+            _api_stage_0_ND!,
+            _url_stage_0_ND!,
+          ),
+        );
+      case ProjectTag.stage_1_ND:
+        return stage_1_ND?.call(
+          _ProjectStage_1_ND(
+            _api_stage_1_ND!,
+            _url_stage_1_ND!,
+          ),
+        );
+      case ProjectTag.stage_3_ND:
+        return stage_3_ND?.call(
+          _ProjectStage_3_ND(
+            _api_stage_3_ND!,
+            _url_stage_3_ND!,
+          ),
+        );
+      case ProjectTag.stage_0_BLK:
+        return stage_0_BLK?.call(
+          _ProjectStage_0_BLK(
+            _api_stage_0_BLK!,
+            _url_stage_0_BLK!,
+          ),
+        );
+      case ProjectTag.stage_5_BLK:
+        return stage_5_BLK?.call(
+          _ProjectStage_5_BLK(
+            _api_stage_5_BLK!,
+            _url_stage_5_BLK!,
           ),
         );
     }
   }
 
   T? maybeMapOrNull<T>({
-    T? Function(_StoreAppStore v)? appStore,
-    T? Function(_StoreGooglePlay v)? googlePlay,
-    T? Function(_StoreGetApps v)? getApps,
-    T? Function(_StorePackageInstaller v)? packageInstaller,
-    T? Function(_StoreRuStore v)? ruStore,
-    T? Function(_StoreAppGallery v)? appGallery,
-    T? Function(_StoreOther v)? other,
+    T? Function(_ProjectStage_4_BLK v)? stage_4_BLK,
+    T? Function(_ProjectProd_C7 v)? prod_C7,
+    T? Function(_ProjectProd_ND v)? prod_ND,
+    T? Function(_ProjectProd_BLK v)? prod_BLK,
+    T? Function(_ProjectStage_1_C7 v)? stage_1_C7,
+    T? Function(_ProjectStage_2_C7 v)? stage_2_C7,
+    T? Function(_ProjectStage_0_ND v)? stage_0_ND,
+    T? Function(_ProjectStage_1_ND v)? stage_1_ND,
+    T? Function(_ProjectStage_3_ND v)? stage_3_ND,
+    T? Function(_ProjectStage_0_BLK v)? stage_0_BLK,
+    T? Function(_ProjectStage_5_BLK v)? stage_5_BLK,
   }) {
     switch (_tag) {
-      case StoreTag.appStore:
-        if (appStore != null) {
-          return appStore(
-            _StoreAppStore(
-              _url_appStore!,
-              _name_appStore!,
+      case ProjectTag.stage_4_BLK:
+        if (stage_4_BLK != null) {
+          return stage_4_BLK(
+            _ProjectStage_4_BLK(
+              _api_stage_4_BLK!,
+              _url_stage_4_BLK!,
             ),
           );
         }
         return null;
-      case StoreTag.googlePlay:
-        if (googlePlay != null) {
-          return googlePlay(
-            _StoreGooglePlay(
-              _url_googlePlay!,
-              _name_googlePlay!,
+      case ProjectTag.prod_C7:
+        if (prod_C7 != null) {
+          return prod_C7(
+            _ProjectProd_C7(
+              _api_prod_C7!,
+              _url_prod_C7!,
             ),
           );
         }
         return null;
-      case StoreTag.getApps:
-        if (getApps != null) {
-          return getApps(
-            _StoreGetApps(
-              _url_getApps!,
-              _name_getApps!,
+      case ProjectTag.prod_ND:
+        if (prod_ND != null) {
+          return prod_ND(
+            _ProjectProd_ND(
+              _api_prod_ND!,
+              _url_prod_ND!,
             ),
           );
         }
         return null;
-      case StoreTag.packageInstaller:
-        if (packageInstaller != null) {
-          return packageInstaller(
-            _StorePackageInstaller(
-              _name_packageInstaller!,
+      case ProjectTag.prod_BLK:
+        if (prod_BLK != null) {
+          return prod_BLK(
+            _ProjectProd_BLK(
+              _api_prod_BLK!,
+              _url_prod_BLK!,
             ),
           );
         }
         return null;
-      case StoreTag.ruStore:
-        if (ruStore != null) {
-          return ruStore(
-            _StoreRuStore(
-              _name_ruStore!,
-              _url_ruStore!,
+      case ProjectTag.stage_1_C7:
+        if (stage_1_C7 != null) {
+          return stage_1_C7(
+            _ProjectStage_1_C7(
+              _api_stage_1_C7!,
+              _url_stage_1_C7!,
             ),
           );
         }
         return null;
-      case StoreTag.appGallery:
-        if (appGallery != null) {
-          return appGallery(
-            _StoreAppGallery(
-              _name_appGallery!,
-              _url_appGallery!,
+      case ProjectTag.stage_2_C7:
+        if (stage_2_C7 != null) {
+          return stage_2_C7(
+            _ProjectStage_2_C7(
+              _api_stage_2_C7!,
+              _url_stage_2_C7!,
             ),
           );
         }
         return null;
-      case StoreTag.other:
-        if (other != null) {
-          return other(
-            _StoreOther(
-              _name_other!,
+      case ProjectTag.stage_0_ND:
+        if (stage_0_ND != null) {
+          return stage_0_ND(
+            _ProjectStage_0_ND(
+              _api_stage_0_ND!,
+              _url_stage_0_ND!,
+            ),
+          );
+        }
+        return null;
+      case ProjectTag.stage_1_ND:
+        if (stage_1_ND != null) {
+          return stage_1_ND(
+            _ProjectStage_1_ND(
+              _api_stage_1_ND!,
+              _url_stage_1_ND!,
+            ),
+          );
+        }
+        return null;
+      case ProjectTag.stage_3_ND:
+        if (stage_3_ND != null) {
+          return stage_3_ND(
+            _ProjectStage_3_ND(
+              _api_stage_3_ND!,
+              _url_stage_3_ND!,
+            ),
+          );
+        }
+        return null;
+      case ProjectTag.stage_0_BLK:
+        if (stage_0_BLK != null) {
+          return stage_0_BLK(
+            _ProjectStage_0_BLK(
+              _api_stage_0_BLK!,
+              _url_stage_0_BLK!,
+            ),
+          );
+        }
+        return null;
+      case ProjectTag.stage_5_BLK:
+        if (stage_5_BLK != null) {
+          return stage_5_BLK(
+            _ProjectStage_5_BLK(
+              _api_stage_5_BLK!,
+              _url_stage_5_BLK!,
             ),
           );
         }
@@ -661,65 +1016,105 @@ class Store {
 
   T when<T>({
     required T Function(
+      String api,
       String url,
-      String name,
-    ) appStore,
+    ) stage_4_BLK,
     required T Function(
+      String api,
       String url,
-      String name,
-    ) googlePlay,
+    ) prod_C7,
     required T Function(
+      String api,
       String url,
-      String name,
-    ) getApps,
+    ) prod_ND,
     required T Function(
-      String name,
-    ) packageInstaller,
-    required T Function(
-      String name,
+      String api,
       String url,
-    ) ruStore,
+    ) prod_BLK,
     required T Function(
-      String name,
+      String api,
       String url,
-    ) appGallery,
+    ) stage_1_C7,
     required T Function(
-      String name,
-    ) other,
+      String api,
+      String url,
+    ) stage_2_C7,
+    required T Function(
+      String api,
+      String url,
+    ) stage_0_ND,
+    required T Function(
+      String api,
+      String url,
+    ) stage_1_ND,
+    required T Function(
+      String api,
+      String url,
+    ) stage_3_ND,
+    required T Function(
+      String api,
+      String url,
+    ) stage_0_BLK,
+    required T Function(
+      String api,
+      String url,
+    ) stage_5_BLK,
   }) {
     switch (_tag) {
-      case StoreTag.appStore:
-        return appStore(
-          _url_appStore!,
-          _name_appStore!,
+      case ProjectTag.stage_4_BLK:
+        return stage_4_BLK(
+          _api_stage_4_BLK!,
+          _url_stage_4_BLK!,
         );
-      case StoreTag.googlePlay:
-        return googlePlay(
-          _url_googlePlay!,
-          _name_googlePlay!,
+      case ProjectTag.prod_C7:
+        return prod_C7(
+          _api_prod_C7!,
+          _url_prod_C7!,
         );
-      case StoreTag.getApps:
-        return getApps(
-          _url_getApps!,
-          _name_getApps!,
+      case ProjectTag.prod_ND:
+        return prod_ND(
+          _api_prod_ND!,
+          _url_prod_ND!,
         );
-      case StoreTag.packageInstaller:
-        return packageInstaller(
-          _name_packageInstaller!,
+      case ProjectTag.prod_BLK:
+        return prod_BLK(
+          _api_prod_BLK!,
+          _url_prod_BLK!,
         );
-      case StoreTag.ruStore:
-        return ruStore(
-          _name_ruStore!,
-          _url_ruStore!,
+      case ProjectTag.stage_1_C7:
+        return stage_1_C7(
+          _api_stage_1_C7!,
+          _url_stage_1_C7!,
         );
-      case StoreTag.appGallery:
-        return appGallery(
-          _name_appGallery!,
-          _url_appGallery!,
+      case ProjectTag.stage_2_C7:
+        return stage_2_C7(
+          _api_stage_2_C7!,
+          _url_stage_2_C7!,
         );
-      case StoreTag.other:
-        return other(
-          _name_other!,
+      case ProjectTag.stage_0_ND:
+        return stage_0_ND(
+          _api_stage_0_ND!,
+          _url_stage_0_ND!,
+        );
+      case ProjectTag.stage_1_ND:
+        return stage_1_ND(
+          _api_stage_1_ND!,
+          _url_stage_1_ND!,
+        );
+      case ProjectTag.stage_3_ND:
+        return stage_3_ND(
+          _api_stage_3_ND!,
+          _url_stage_3_ND!,
+        );
+      case ProjectTag.stage_0_BLK:
+        return stage_0_BLK(
+          _api_stage_0_BLK!,
+          _url_stage_0_BLK!,
+        );
+      case ProjectTag.stage_5_BLK:
+        return stage_5_BLK(
+          _api_stage_5_BLK!,
+          _url_stage_5_BLK!,
         );
     }
   }
@@ -727,149 +1122,245 @@ class Store {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    if (other is! Store) return false;
+    if (other is! Project) return false;
     if (other.runtimeType != runtimeType) return false;
 
     switch (_tag) {
-      case StoreTag.appStore:
+      case ProjectTag.stage_4_BLK:
         return _tag == other._tag &&
             (identical(
-                  other._url_appStore,
-                  _url_appStore,
+                  other._api_stage_4_BLK,
+                  _api_stage_4_BLK,
                 ) ||
-                other._url_appStore == _url_appStore) &&
+                other._api_stage_4_BLK == _api_stage_4_BLK) &&
             (identical(
-                  other._name_appStore,
-                  _name_appStore,
+                  other._url_stage_4_BLK,
+                  _url_stage_4_BLK,
                 ) ||
-                other._name_appStore == _name_appStore);
-      case StoreTag.googlePlay:
+                other._url_stage_4_BLK == _url_stage_4_BLK);
+      case ProjectTag.prod_C7:
         return _tag == other._tag &&
             (identical(
-                  other._url_googlePlay,
-                  _url_googlePlay,
+                  other._api_prod_C7,
+                  _api_prod_C7,
                 ) ||
-                other._url_googlePlay == _url_googlePlay) &&
+                other._api_prod_C7 == _api_prod_C7) &&
             (identical(
-                  other._name_googlePlay,
-                  _name_googlePlay,
+                  other._url_prod_C7,
+                  _url_prod_C7,
                 ) ||
-                other._name_googlePlay == _name_googlePlay);
-      case StoreTag.getApps:
+                other._url_prod_C7 == _url_prod_C7);
+      case ProjectTag.prod_ND:
         return _tag == other._tag &&
             (identical(
-                  other._url_getApps,
-                  _url_getApps,
+                  other._api_prod_ND,
+                  _api_prod_ND,
                 ) ||
-                other._url_getApps == _url_getApps) &&
+                other._api_prod_ND == _api_prod_ND) &&
             (identical(
-                  other._name_getApps,
-                  _name_getApps,
+                  other._url_prod_ND,
+                  _url_prod_ND,
                 ) ||
-                other._name_getApps == _name_getApps);
-      case StoreTag.packageInstaller:
+                other._url_prod_ND == _url_prod_ND);
+      case ProjectTag.prod_BLK:
         return _tag == other._tag &&
             (identical(
-                  other._name_packageInstaller,
-                  _name_packageInstaller,
+                  other._api_prod_BLK,
+                  _api_prod_BLK,
                 ) ||
-                other._name_packageInstaller == _name_packageInstaller);
-      case StoreTag.ruStore:
+                other._api_prod_BLK == _api_prod_BLK) &&
+            (identical(
+                  other._url_prod_BLK,
+                  _url_prod_BLK,
+                ) ||
+                other._url_prod_BLK == _url_prod_BLK);
+      case ProjectTag.stage_1_C7:
         return _tag == other._tag &&
             (identical(
-                  other._name_ruStore,
-                  _name_ruStore,
+                  other._api_stage_1_C7,
+                  _api_stage_1_C7,
                 ) ||
-                other._name_ruStore == _name_ruStore) &&
+                other._api_stage_1_C7 == _api_stage_1_C7) &&
             (identical(
-                  other._url_ruStore,
-                  _url_ruStore,
+                  other._url_stage_1_C7,
+                  _url_stage_1_C7,
                 ) ||
-                other._url_ruStore == _url_ruStore);
-      case StoreTag.appGallery:
+                other._url_stage_1_C7 == _url_stage_1_C7);
+      case ProjectTag.stage_2_C7:
         return _tag == other._tag &&
             (identical(
-                  other._name_appGallery,
-                  _name_appGallery,
+                  other._api_stage_2_C7,
+                  _api_stage_2_C7,
                 ) ||
-                other._name_appGallery == _name_appGallery) &&
+                other._api_stage_2_C7 == _api_stage_2_C7) &&
             (identical(
-                  other._url_appGallery,
-                  _url_appGallery,
+                  other._url_stage_2_C7,
+                  _url_stage_2_C7,
                 ) ||
-                other._url_appGallery == _url_appGallery);
-      case StoreTag.other:
+                other._url_stage_2_C7 == _url_stage_2_C7);
+      case ProjectTag.stage_0_ND:
         return _tag == other._tag &&
             (identical(
-                  other._name_other,
-                  _name_other,
+                  other._api_stage_0_ND,
+                  _api_stage_0_ND,
                 ) ||
-                other._name_other == _name_other);
+                other._api_stage_0_ND == _api_stage_0_ND) &&
+            (identical(
+                  other._url_stage_0_ND,
+                  _url_stage_0_ND,
+                ) ||
+                other._url_stage_0_ND == _url_stage_0_ND);
+      case ProjectTag.stage_1_ND:
+        return _tag == other._tag &&
+            (identical(
+                  other._api_stage_1_ND,
+                  _api_stage_1_ND,
+                ) ||
+                other._api_stage_1_ND == _api_stage_1_ND) &&
+            (identical(
+                  other._url_stage_1_ND,
+                  _url_stage_1_ND,
+                ) ||
+                other._url_stage_1_ND == _url_stage_1_ND);
+      case ProjectTag.stage_3_ND:
+        return _tag == other._tag &&
+            (identical(
+                  other._api_stage_3_ND,
+                  _api_stage_3_ND,
+                ) ||
+                other._api_stage_3_ND == _api_stage_3_ND) &&
+            (identical(
+                  other._url_stage_3_ND,
+                  _url_stage_3_ND,
+                ) ||
+                other._url_stage_3_ND == _url_stage_3_ND);
+      case ProjectTag.stage_0_BLK:
+        return _tag == other._tag &&
+            (identical(
+                  other._api_stage_0_BLK,
+                  _api_stage_0_BLK,
+                ) ||
+                other._api_stage_0_BLK == _api_stage_0_BLK) &&
+            (identical(
+                  other._url_stage_0_BLK,
+                  _url_stage_0_BLK,
+                ) ||
+                other._url_stage_0_BLK == _url_stage_0_BLK);
+      case ProjectTag.stage_5_BLK:
+        return _tag == other._tag &&
+            (identical(
+                  other._api_stage_5_BLK,
+                  _api_stage_5_BLK,
+                ) ||
+                other._api_stage_5_BLK == _api_stage_5_BLK) &&
+            (identical(
+                  other._url_stage_5_BLK,
+                  _url_stage_5_BLK,
+                ) ||
+                other._url_stage_5_BLK == _url_stage_5_BLK);
     }
   }
 
   @override
   int get hashCode {
     switch (_tag) {
-      case StoreTag.appStore:
+      case ProjectTag.stage_4_BLK:
         return Object.hashAll(
           [
             runtimeType,
             _tag,
-            _url_appStore,
-            _name_appStore,
+            _api_stage_4_BLK,
+            _url_stage_4_BLK,
           ],
         );
-      case StoreTag.googlePlay:
+      case ProjectTag.prod_C7:
         return Object.hashAll(
           [
             runtimeType,
             _tag,
-            _url_googlePlay,
-            _name_googlePlay,
+            _api_prod_C7,
+            _url_prod_C7,
           ],
         );
-      case StoreTag.getApps:
+      case ProjectTag.prod_ND:
         return Object.hashAll(
           [
             runtimeType,
             _tag,
-            _url_getApps,
-            _name_getApps,
+            _api_prod_ND,
+            _url_prod_ND,
           ],
         );
-      case StoreTag.packageInstaller:
+      case ProjectTag.prod_BLK:
         return Object.hashAll(
           [
             runtimeType,
             _tag,
-            _name_packageInstaller,
+            _api_prod_BLK,
+            _url_prod_BLK,
           ],
         );
-      case StoreTag.ruStore:
+      case ProjectTag.stage_1_C7:
         return Object.hashAll(
           [
             runtimeType,
             _tag,
-            _name_ruStore,
-            _url_ruStore,
+            _api_stage_1_C7,
+            _url_stage_1_C7,
           ],
         );
-      case StoreTag.appGallery:
+      case ProjectTag.stage_2_C7:
         return Object.hashAll(
           [
             runtimeType,
             _tag,
-            _name_appGallery,
-            _url_appGallery,
+            _api_stage_2_C7,
+            _url_stage_2_C7,
           ],
         );
-      case StoreTag.other:
+      case ProjectTag.stage_0_ND:
         return Object.hashAll(
           [
             runtimeType,
             _tag,
-            _name_other,
+            _api_stage_0_ND,
+            _url_stage_0_ND,
+          ],
+        );
+      case ProjectTag.stage_1_ND:
+        return Object.hashAll(
+          [
+            runtimeType,
+            _tag,
+            _api_stage_1_ND,
+            _url_stage_1_ND,
+          ],
+        );
+      case ProjectTag.stage_3_ND:
+        return Object.hashAll(
+          [
+            runtimeType,
+            _tag,
+            _api_stage_3_ND,
+            _url_stage_3_ND,
+          ],
+        );
+      case ProjectTag.stage_0_BLK:
+        return Object.hashAll(
+          [
+            runtimeType,
+            _tag,
+            _api_stage_0_BLK,
+            _url_stage_0_BLK,
+          ],
+        );
+      case ProjectTag.stage_5_BLK:
+        return Object.hashAll(
+          [
+            runtimeType,
+            _tag,
+            _api_stage_5_BLK,
+            _url_stage_5_BLK,
           ],
         );
     }
@@ -878,171 +1369,281 @@ class Store {
   @override
   String toString() {
     switch (_tag) {
-      case StoreTag.appStore:
-        return 'Store.appStore(url: $_url_appStore, name: $_name_appStore)';
-      case StoreTag.googlePlay:
-        return 'Store.googlePlay(url: $_url_googlePlay, name: $_name_googlePlay)';
-      case StoreTag.getApps:
-        return 'Store.getApps(url: $_url_getApps, name: $_name_getApps)';
-      case StoreTag.packageInstaller:
-        return 'Store.packageInstaller(name: $_name_packageInstaller)';
-      case StoreTag.ruStore:
-        return 'Store.ruStore(name: $_name_ruStore, url: $_url_ruStore)';
-      case StoreTag.appGallery:
-        return 'Store.appGallery(name: $_name_appGallery, url: $_url_appGallery)';
-      case StoreTag.other:
-        return 'Store.other(name: $_name_other)';
+      case ProjectTag.stage_4_BLK:
+        return 'Project.stage_4_BLK(api: $_api_stage_4_BLK, url: $_url_stage_4_BLK)';
+      case ProjectTag.prod_C7:
+        return 'Project.prod_C7(api: $_api_prod_C7, url: $_url_prod_C7)';
+      case ProjectTag.prod_ND:
+        return 'Project.prod_ND(api: $_api_prod_ND, url: $_url_prod_ND)';
+      case ProjectTag.prod_BLK:
+        return 'Project.prod_BLK(api: $_api_prod_BLK, url: $_url_prod_BLK)';
+      case ProjectTag.stage_1_C7:
+        return 'Project.stage_1_C7(api: $_api_stage_1_C7, url: $_url_stage_1_C7)';
+      case ProjectTag.stage_2_C7:
+        return 'Project.stage_2_C7(api: $_api_stage_2_C7, url: $_url_stage_2_C7)';
+      case ProjectTag.stage_0_ND:
+        return 'Project.stage_0_ND(api: $_api_stage_0_ND, url: $_url_stage_0_ND)';
+      case ProjectTag.stage_1_ND:
+        return 'Project.stage_1_ND(api: $_api_stage_1_ND, url: $_url_stage_1_ND)';
+      case ProjectTag.stage_3_ND:
+        return 'Project.stage_3_ND(api: $_api_stage_3_ND, url: $_url_stage_3_ND)';
+      case ProjectTag.stage_0_BLK:
+        return 'Project.stage_0_BLK(api: $_api_stage_0_BLK, url: $_url_stage_0_BLK)';
+      case ProjectTag.stage_5_BLK:
+        return 'Project.stage_5_BLK(api: $_api_stage_5_BLK, url: $_url_stage_5_BLK)';
     }
   }
 }
 
 @immutable
-class _StoreAppStore extends Store {
-  const _StoreAppStore(
+class _ProjectStage_4_BLK extends Project {
+  const _ProjectStage_4_BLK(
+    this.api,
     this.url,
-    this.name,
-  ) : super.appStore(
-          url: url,
-          name: name,
-        );
-  final String url;
-  final String name;
-
-  _StoreAppStore copyWith({
-    String? url,
-    String? name,
-  }) {
-    return _StoreAppStore(
-      url ?? this.url,
-      name ?? this.name,
-    );
-  }
-}
-
-@immutable
-class _StoreGooglePlay extends Store {
-  const _StoreGooglePlay(
-    this.url,
-    this.name,
-  ) : super.googlePlay(
-          url: url,
-          name: name,
-        );
-  final String url;
-  final String name;
-
-  _StoreGooglePlay copyWith({
-    String? url,
-    String? name,
-  }) {
-    return _StoreGooglePlay(
-      url ?? this.url,
-      name ?? this.name,
-    );
-  }
-}
-
-@immutable
-class _StoreGetApps extends Store {
-  const _StoreGetApps(
-    this.url,
-    this.name,
-  ) : super.getApps(
-          url: url,
-          name: name,
-        );
-  final String url;
-  final String name;
-
-  _StoreGetApps copyWith({
-    String? url,
-    String? name,
-  }) {
-    return _StoreGetApps(
-      url ?? this.url,
-      name ?? this.name,
-    );
-  }
-}
-
-@immutable
-class _StorePackageInstaller extends Store {
-  const _StorePackageInstaller(
-    this.name,
-  ) : super.packageInstaller(
-          name: name,
-        );
-  final String name;
-
-  _StorePackageInstaller copyWith({
-    String? name,
-  }) {
-    return _StorePackageInstaller(
-      name ?? this.name,
-    );
-  }
-}
-
-@immutable
-class _StoreRuStore extends Store {
-  const _StoreRuStore(
-    this.name,
-    this.url,
-  ) : super.ruStore(
-          name: name,
+  ) : super.stage_4_BLK(
+          api: api,
           url: url,
         );
-  final String name;
+  final String api;
   final String url;
 
-  _StoreRuStore copyWith({
-    String? name,
+  _ProjectStage_4_BLK copyWith({
+    String? api,
     String? url,
   }) {
-    return _StoreRuStore(
-      name ?? this.name,
+    return _ProjectStage_4_BLK(
+      api ?? this.api,
       url ?? this.url,
     );
   }
 }
 
 @immutable
-class _StoreAppGallery extends Store {
-  const _StoreAppGallery(
-    this.name,
+class _ProjectProd_C7 extends Project {
+  const _ProjectProd_C7(
+    this.api,
     this.url,
-  ) : super.appGallery(
-          name: name,
+  ) : super.prod_C7(
+          api: api,
           url: url,
         );
-  final String name;
+  final String api;
   final String url;
 
-  _StoreAppGallery copyWith({
-    String? name,
+  _ProjectProd_C7 copyWith({
+    String? api,
     String? url,
   }) {
-    return _StoreAppGallery(
-      name ?? this.name,
+    return _ProjectProd_C7(
+      api ?? this.api,
       url ?? this.url,
     );
   }
 }
 
 @immutable
-class _StoreOther extends Store {
-  const _StoreOther(
-    this.name,
-  ) : super.other(
-          name: name,
+class _ProjectProd_ND extends Project {
+  const _ProjectProd_ND(
+    this.api,
+    this.url,
+  ) : super.prod_ND(
+          api: api,
+          url: url,
         );
-  final String name;
+  final String api;
+  final String url;
 
-  _StoreOther copyWith({
-    String? name,
+  _ProjectProd_ND copyWith({
+    String? api,
+    String? url,
   }) {
-    return _StoreOther(
-      name ?? this.name,
+    return _ProjectProd_ND(
+      api ?? this.api,
+      url ?? this.url,
+    );
+  }
+}
+
+@immutable
+class _ProjectProd_BLK extends Project {
+  const _ProjectProd_BLK(
+    this.api,
+    this.url,
+  ) : super.prod_BLK(
+          api: api,
+          url: url,
+        );
+  final String api;
+  final String url;
+
+  _ProjectProd_BLK copyWith({
+    String? api,
+    String? url,
+  }) {
+    return _ProjectProd_BLK(
+      api ?? this.api,
+      url ?? this.url,
+    );
+  }
+}
+
+@immutable
+class _ProjectStage_1_C7 extends Project {
+  const _ProjectStage_1_C7(
+    this.api,
+    this.url,
+  ) : super.stage_1_C7(
+          api: api,
+          url: url,
+        );
+  final String api;
+  final String url;
+
+  _ProjectStage_1_C7 copyWith({
+    String? api,
+    String? url,
+  }) {
+    return _ProjectStage_1_C7(
+      api ?? this.api,
+      url ?? this.url,
+    );
+  }
+}
+
+@immutable
+class _ProjectStage_2_C7 extends Project {
+  const _ProjectStage_2_C7(
+    this.api,
+    this.url,
+  ) : super.stage_2_C7(
+          api: api,
+          url: url,
+        );
+  final String api;
+  final String url;
+
+  _ProjectStage_2_C7 copyWith({
+    String? api,
+    String? url,
+  }) {
+    return _ProjectStage_2_C7(
+      api ?? this.api,
+      url ?? this.url,
+    );
+  }
+}
+
+@immutable
+class _ProjectStage_0_ND extends Project {
+  const _ProjectStage_0_ND(
+    this.api,
+    this.url,
+  ) : super.stage_0_ND(
+          api: api,
+          url: url,
+        );
+  final String api;
+  final String url;
+
+  _ProjectStage_0_ND copyWith({
+    String? api,
+    String? url,
+  }) {
+    return _ProjectStage_0_ND(
+      api ?? this.api,
+      url ?? this.url,
+    );
+  }
+}
+
+@immutable
+class _ProjectStage_1_ND extends Project {
+  const _ProjectStage_1_ND(
+    this.api,
+    this.url,
+  ) : super.stage_1_ND(
+          api: api,
+          url: url,
+        );
+  final String api;
+  final String url;
+
+  _ProjectStage_1_ND copyWith({
+    String? api,
+    String? url,
+  }) {
+    return _ProjectStage_1_ND(
+      api ?? this.api,
+      url ?? this.url,
+    );
+  }
+}
+
+@immutable
+class _ProjectStage_3_ND extends Project {
+  const _ProjectStage_3_ND(
+    this.api,
+    this.url,
+  ) : super.stage_3_ND(
+          api: api,
+          url: url,
+        );
+  final String api;
+  final String url;
+
+  _ProjectStage_3_ND copyWith({
+    String? api,
+    String? url,
+  }) {
+    return _ProjectStage_3_ND(
+      api ?? this.api,
+      url ?? this.url,
+    );
+  }
+}
+
+@immutable
+class _ProjectStage_0_BLK extends Project {
+  const _ProjectStage_0_BLK(
+    this.api,
+    this.url,
+  ) : super.stage_0_BLK(
+          api: api,
+          url: url,
+        );
+  final String api;
+  final String url;
+
+  _ProjectStage_0_BLK copyWith({
+    String? api,
+    String? url,
+  }) {
+    return _ProjectStage_0_BLK(
+      api ?? this.api,
+      url ?? this.url,
+    );
+  }
+}
+
+@immutable
+class _ProjectStage_5_BLK extends Project {
+  const _ProjectStage_5_BLK(
+    this.api,
+    this.url,
+  ) : super.stage_5_BLK(
+          api: api,
+          url: url,
+        );
+  final String api;
+  final String url;
+
+  _ProjectStage_5_BLK copyWith({
+    String? api,
+    String? url,
+  }) {
+    return _ProjectStage_5_BLK(
+      api ?? this.api,
+      url ?? this.url,
     );
   }
 }

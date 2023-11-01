@@ -130,7 +130,7 @@ Future<void> unionStart({
       }
 
       listIndex.clear();
-      listParamRaw.add(v);
+      listParamRaw.add(v.trim());
     }
 
     final listParamFormat = <String>[];
@@ -400,6 +400,7 @@ List<String> _getFormatItemUnion(
         .trim()
         .replaceAll(RegExp('^const '), '')
         .replaceAll('_$className', className)
+        .replaceAll('=', ' = ')
         .trim();
     v = replaceOutsideQuotes(v);
 
