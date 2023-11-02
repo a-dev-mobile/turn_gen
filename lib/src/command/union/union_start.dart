@@ -186,8 +186,9 @@ Future<void> unionStart({
       if (v.contains(separator)) {
         if (arrayInit.length > 2) {
           initValue = (arrayInit[arrayInit.length - 2] +
-              separator +
-              arrayInit[arrayInit.length - 1]).trim();
+                  separator +
+                  arrayInit[arrayInit.length - 1])
+              .trim();
         } else {
           initValue = arrayInit.last.trim();
         }
@@ -411,7 +412,7 @@ List<String> _getFormatItemUnion(
 }
 
 String replaceOutsideQuotes(String v) {
-  var result = StringBuffer();
+  final result = StringBuffer();
   var inSingleQuotes = false;
   var inDoubleQuotes = false;
   var inTripleSingleQuotes = false;
@@ -426,14 +427,23 @@ String replaceOutsideQuotes(String v) {
       inTripleDoubleQuotes = !inTripleDoubleQuotes;
       result.write('"""');
       i += 2;
-    } else if (!inTripleSingleQuotes && !inTripleDoubleQuotes && v.startsWith("'", i)) {
+    } else if (!inTripleSingleQuotes &&
+        !inTripleDoubleQuotes &&
+        v.startsWith("'", i)) {
       inSingleQuotes = !inSingleQuotes;
       result.write("'");
-    } else if (!inTripleSingleQuotes && !inTripleDoubleQuotes && v.startsWith('"', i)) {
+    } else if (!inTripleSingleQuotes &&
+        !inTripleDoubleQuotes &&
+        v.startsWith('"', i)) {
       inDoubleQuotes = !inDoubleQuotes;
       result.write('"');
-    } else if (!inSingleQuotes && !inDoubleQuotes && !inTripleSingleQuotes && !inTripleDoubleQuotes) {
-      if (v[i].trim().isEmpty && (i + 1 < v.length) && v[i + 1].trim().isEmpty) {
+    } else if (!inSingleQuotes &&
+        !inDoubleQuotes &&
+        !inTripleSingleQuotes &&
+        !inTripleDoubleQuotes) {
+      if (v[i].trim().isEmpty &&
+          (i + 1 < v.length) &&
+          v[i + 1].trim().isEmpty) {
         continue;
       }
       result.write(v[i].trim().isEmpty ? ' ' : v[i]);

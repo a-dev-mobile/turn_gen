@@ -49,7 +49,7 @@ void writeToFileUnion(
 ''');
 
     sbUnionGetterIsType.write('''
-   bool get $nameUnion => _tag == ${nameClass}Tag.$nameUnion;
+   bool get is${nameUnion.toTitleCase()} => _tag == ${nameClass}Tag.$nameUnion;
 ''');
   }
   /* ****************************** */
@@ -57,7 +57,7 @@ void writeToFileUnion(
   final sbUnionClass = StringBuffer();
   for (final l in model.listUnion) {
     final unionName =
-        l.nameUnion == ConstHelper.emptyUnionName ? '' : '.${l.nameUnion}';
+        l.nameUnion == ConstHelper.emptyUnionName ? '' : '._${l.nameUnion}';
     sbUnionClass.write('''
 ${l.comment}
   const ${model.nameClass}$unionName${l.paramStr}:
@@ -276,33 +276,34 @@ $sbMaybeMapOrNull1    }
   final sbToString = StringBuffer();
   // ignore: cascade_invocations
   sbToString.write('''
-  @override
-  String toString() {
-    switch (_tag) {
+@override
+String toString() => map(
 ''');
 
   for (final l in model.listUnion) {
     final unionName =
         l.nameUnion == ConstHelper.emptyUnionName ? '' : '.${l.nameUnion}';
-    sbToString.write('''
 
-      case ${model.nameClass}Tag.${l.nameUnion}:
-        return '${model.nameClass}$unionName(''');
+    sbToString
+      ..write('''
+
+${l.nameUnion}: (v)=>
+''')
+      ..write('''
+        '${model.nameClass}$unionName(''');
     final length = l.listParameters.length;
-
-    if (length == 0) sbToString.write(")';");
-
+    if (length == 0) sbToString.write(")',");
     for (var i = 0; i < length; i++) {
       final p = l.listParameters[i];
-      final lastText = i + 1 == length ? ")';" : ', ';
+      final lastText = i + 1 == length ? ")'," : ', ';
 
-      sbToString.write('${p.name}: \$_${p.name}_${l.nameUnion}$lastText');
+      sbToString.write('${p.name}: \${v.${p.name}}$lastText');
     }
   }
   sbToString.write('''
   
-  }
-}''');
+  );
+''');
 
   /* ****************************** */
   //      Hash
@@ -437,6 +438,7 @@ $sbMaybeMapOrNull1    }
   final sbFromMap_1 = StringBuffer();
   final sbToMap = StringBuffer();
   final sbToMap_1 = StringBuffer();
+  final sbFactory = StringBuffer();
 
   final sbFromList = StringBuffer();
   final sbFromList_1 = StringBuffer();
@@ -447,7 +449,7 @@ $sbMaybeMapOrNull1    }
     final nameReturn = '${model.nameClass}.${l.nameUnion}';
     // example _UnionTestTag.a:
     final nameUnionWithTag = '${model.nameClass}Tag.${l.nameUnion}';
-    final nameUnionWithoutTag = '${model.nameClass}.${l.nameUnion}';
+    final nameUnionWithoutTag = '${model.nameClass}._${l.nameUnion}';
     final sbParam = StringBuffer();
     final sbParamSuper = StringBuffer();
     final sbParamFinal = StringBuffer();
@@ -465,6 +467,10 @@ $sbMaybeMapOrNull1    }
     final isNotParam = l.listParameters.isEmpty;
 
     final addConst = isNotParam ? 'const' : '';
+
+    sbFactory.write('''
+static $nameClass ${l.nameUnion}(${isNotParam ? '' : '{'}
+''');
 
     sbFromMap_1.write('''
  case $nameUnionWithTag:
@@ -519,7 +525,15 @@ $sbMaybeMapOrNull1    }
 
       sbParamSuper.write('$addRequiest ${p.name},');
       final addIsNull = p.isCanNull ? '?' : '';
-      sbParamFinal.write('final ${p.typeStr}$addIsNull ${p.name};\n');
+      sbParamFinal.write('''
+final ${p.typeStr}$addIsNull ${p.name};
+''');
+//
+//
+//
+      sbFactory.write('''
+${p.typeStr} ${p.name} = ${p.initValue},
+''');
 
       final paramCopyWith = '${p.typeStr}? ${p.name}, ';
       // если не содержит текст. то добавляем
@@ -567,6 +581,11 @@ $addRequiest $addTextIsNotNull list.map((e)$updateValueFromMap,
       }
     }
 
+    sbFactory.write('''
+ ${isNotParam ? ') {' : '}) {'}
+return $addConst $nameClass(${l.listParameters.map((obj) => obj.name).join(', ')}); } 
+''');
+
 // собираем copyWith
     sbCopyWith.write('''
 
@@ -585,7 +604,7 @@ $addRequiest $addTextIsNotNull list.map((e)$updateValueFromMap,
     sbExtendsClass.write('''
 @immutable
 class $nameClass extends ${model.nameClass} {
-  const $nameClass($sbParam) : super.${l.nameUnion}($sbParamSuper);
+  const $nameClass($sbParam) : super._${l.nameUnion}($sbParamSuper);
 $sbParamFinal
 
 $sbCopyWith
@@ -647,6 +666,8 @@ ${ConstConsole.GEN_MSG_START(EnumTypeRun.union)}
 // ignore_for_file: avoid_unused_constructor_parameters
 // ignore_for_file: avoid_positional_boolean_parameters, 
 // ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: prefer_constructors_over_static_methods
+// ignore_for_file: constant_identifier_names
 
 enum ${model.nameClass}Tag {
 $sbUnionTag
@@ -658,7 +679,7 @@ ${model.classHeader}
 $sbAllParams
 $sbUnionClass
 $sbUnionGetterIsType
-
+$sbFactory
 
 ${isActiveFromJson ? sbFromJson : ''}
 ${isActiveFromJson ? sbFromList : ''}

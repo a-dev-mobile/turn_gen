@@ -1,5 +1,5 @@
 
-## [1.1.3-1.1.4] - 02.11.2023
+## [1.1.3-1.1.5] - 02.11.2023
 
 - Improved `union` script due to parsing error with certain characters
 
