@@ -199,6 +199,18 @@ Future<void> enumStart({
   enumWriteToFile(logger, file, enumCommon);
 }
 
+String removeNameParam(String input) {
+  final pattern = RegExp('(["\'].*?["\'])');
+  final matches = pattern.allMatches(input);
+  final results = <String>[];
+
+  for (final match in matches) {
+    results.add(match.group(0) ?? '');
+  }
+  if (results.isEmpty) return input;
+  return results.join(', ');
+}
+
 List<String> _getFormatEnumRaw(
   List<String> content,
 ) {
@@ -209,6 +221,7 @@ List<String> _getFormatEnumRaw(
     if (!v.contains('(') && v.contains(')')) {
       v = v.replaceAll(RegExp(r'\);$'), '').replaceAll(RegExp(r'\),$'), '');
     }
+    v = removeNameParam(v);
 
     formatList.add(
       v

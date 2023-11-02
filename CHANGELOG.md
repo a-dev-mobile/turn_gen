@@ -1,4 +1,44 @@
 
+## [1.1.6] - 03.11.2023
+
+- Added the ability to add named parameters to the `enum` script
+
+```dart
+enum EnumStore implements Comparable<EnumStore> {
+  appStore(
+    packageId: [
+      'com.apple',
+      'com.apple.testflight',
+      'com.apple.simulator',
+    ],
+    url: 'https://apps.apple.com/us/app/',
+    name: 'AppStore',
+    vendor: '(apple)',
+  ),
+  googlePlay(
+    packageId: [
+      'com.android.vending',
+    ],
+    url: 'https://play.google.com/store/apps/details?',
+    name: 'GooglePlay',
+    vendor: '(google)',
+  );
+
+  const EnumStore({
+    required this.packageId,
+    required this.url,
+    required this.name,
+    required this.vendor,
+  });
+  final List<String> packageId;
+  final String url;
+  final String name;
+  final String vendor;
+
+// end
+}
+```
+
 ## [1.1.3-1.1.5] - 02.11.2023
 
 - Improved `union` script due to parsing error with certain characters
