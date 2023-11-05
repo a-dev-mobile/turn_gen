@@ -1,3 +1,6 @@
+## [1.1.7] - 05.11.2023
+
+- Improved `union` added support for the `fromJson` method for `Freezed`
 
 ## [1.1.6] - 03.11.2023
 

@@ -305,6 +305,12 @@ Future<void> unionStart({
 }
 
 String _replaceOtherSymbol(String v) {
+  // Удаляем скобки, если они являются первым и последним символом.
+  final bracketAtBothEnds = RegExp(r'^\((.*)\)$');
+  v = v.replaceFirstMapped(bracketAtBothEnds, (Match match) {
+    return match.group(1) ?? ''; // явно возвращаем String
+  });
+
   v = v.replaceAll(RegExp(r'^\(\{'), '');
   v = v.replaceAll(RegExp(r'^\(\['), '');
   v = v.replaceAll(RegExp(r'\]\)$'), '');
@@ -318,6 +324,7 @@ String _replaceOtherSymbol(String v) {
   v = v.replaceAll(RegExp(r'^\['), '');
   v = v.replaceAll(RegExp(r'^\{'), '');
   v = v.replaceAll(RegExp(r'\}$'), '');
+  v = v.replaceAll(RegExp(r'\]$'), '');
 
   return v;
 }

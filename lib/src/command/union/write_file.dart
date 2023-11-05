@@ -1,4 +1,6 @@
 // ignore: prefer-static-class
+// ignore_for_file: dead_code
+
 import 'dart:io';
 
 import 'package:turn_gen/src/src.dart';
@@ -57,7 +59,7 @@ void writeToFileUnion(
   final sbUnionClass = StringBuffer();
   for (final l in model.listUnion) {
     final unionName =
-        l.nameUnion == ConstHelper.emptyUnionName ? '' : '._${l.nameUnion}';
+        l.nameUnion == ConstHelper.emptyUnionName ? '' : '.${l.nameUnion}';
     sbUnionClass.write('''
 ${l.comment}
   const ${model.nameClass}$unionName${l.paramStr}:
@@ -393,42 +395,71 @@ ${l.nameUnion}: (v)=>
   );
 
   /* ****************************** */
-  final sbFromJson = StringBuffer();
+  final sbFromJsonWithTag = StringBuffer();
 
   // если у нас есть один параметр и он лист в любом union
   //то добавляем метод fromlist
-  if (model.isHaveOnlyList) {
-    sbFromJson.write('''
-  factory $nameClass.fromJson(dynamic source, [${model.nameClass}Tag? tag,]) {
-    if (source is String && source.isEmpty) {
-      throw ArgumentError('Source string is empty');
-    }
-    final raw = source is String ? json.decode(source) : source;
-
-    if (raw is Map<String, dynamic>) {
-      return $nameClass.fromMap(raw, tag);
-    } else if (raw is List<dynamic>) {
-          if (tag == null) {
-        throw ArgumentError.notNull('tag');
+  // if (model.isHaveOnlyList) {
+  // ignore: cascade_invocations
+  sbFromJsonWithTag.write('''
+  factory $nameClass.fromJsonWithTag(Object source, [${model.nameClass}Tag? tag,]) {
+   
+   
+    if (source is String) {
+      if (source.isEmpty) {
+        throw ArgumentError('Source string is empty');
       }
+      return $nameClass.fromMap(json.decode(source) as Map<String, dynamic>, tag,);
+    } else if (source is Map<String, dynamic>) {
+      return $nameClass.fromMap(source, tag);
+    } else {
+      throw ArgumentError('Unsupported type: \${source.runtimeType}');
+    }
+  }
 
-      return $nameClass.fromList(raw, tag);
+
+''');
+  // } else {
+  // sbFromJsonWithTag.write('''
+
+//  factory $nameClass.fromJsonWithTag(String source, [${model.nameClass}Tag? tag,])  => $nameClass.fromMap(
+  // json.decode(source) as Map<String, dynamic>, tag,
+  // );
+
+// ''');
+  // }
+
+  /* ****************************** */
+
+  /* ****************************** */
+  final sbFromJson = '''
+  factory $nameClass.fromJson(Object source) {
+  Map<String, dynamic> map;
+    if (source is String) {
+      map = json.decode(source) as Map<String, dynamic>;
+    } else if (source is Map) {
+      map = source.cast<String, dynamic>();
+    } else {
+      throw ArgumentError(
+        'Expected a String or a Map as input for JSON deserialization.',
+      );
     }
 
-    return throw ArgumentError('Invalid type: \$raw');
+    final tagStr = map['tag'] as String?;
+    if (tagStr == null) {
+      throw ArgumentError('Missing tag for $nameClass deserialization.',);
+    }
+
+    ${model.nameClass}Tag tag;
+    try {
+       tag = ${model.nameClass}Tag.values.byName(tagStr);
+    } catch (e) {
+      throw ArgumentError('Invalid tag for $nameClass deserialization: \$tagStr',);
+    }
+
+    return $nameClass.fromJsonWithTag(map, tag);
   }
-
-
-''');
-  } else {
-    sbFromJson.write('''
-
- factory $nameClass.fromJson(String source, [${model.nameClass}Tag? tag,])  => $nameClass.fromMap(
-        json.decode(source) as Map<String, dynamic>, tag,
-      );
-
-''');
-  }
+''';
 
   /* ****************************** */
 
@@ -449,7 +480,7 @@ ${l.nameUnion}: (v)=>
     final nameReturn = '${model.nameClass}.${l.nameUnion}';
     // example _UnionTestTag.a:
     final nameUnionWithTag = '${model.nameClass}Tag.${l.nameUnion}';
-    final nameUnionWithoutTag = '${model.nameClass}._${l.nameUnion}';
+    final nameUnionWithoutTag = '${model.nameClass}.${l.nameUnion}';
     final sbParam = StringBuffer();
     final sbParamSuper = StringBuffer();
     final sbParamFinal = StringBuffer();
@@ -467,9 +498,9 @@ ${l.nameUnion}: (v)=>
     final isNotParam = l.listParameters.isEmpty;
 
     final addConst = isNotParam ? 'const' : '';
-
+    final isAddCommon = l.parameter == EnumParameter.default_;
     sbFactory.write('''
-static $nameClass ${l.nameUnion}(${isNotParam ? '' : '{'}
+static $nameClass ${l.nameUnion}(${isNotParam ? '' : isAddCommon ? '' : '{'}
 ''');
 
     sbFromMap_1.write('''
@@ -531,8 +562,19 @@ final ${p.typeStr}$addIsNull ${p.name};
 //
 //
 //
+      var endTextsbFactory = ' = ${p.initValue},';
+      var startTextsbFactory = '';
+      if (p.isRequired) {
+        endTextsbFactory = '  ${p.initValue},';
+        startTextsbFactory = 'required ';
+      } else if (l.parameter == EnumParameter.default_) {
+        endTextsbFactory = ',';
+      } else if (!p.isRequired && p.isCanNull && p.initValue.isEmpty) {
+        endTextsbFactory = '';
+      }
+
       sbFactory.write('''
-${p.typeStr} ${p.name} = ${p.initValue},
+$startTextsbFactory ${p.typeStr}$addIsNull ${p.name} $endTextsbFactory
 ''');
 
       final paramCopyWith = '${p.typeStr}? ${p.name}, ';
@@ -582,7 +624,8 @@ $addRequiest $addTextIsNotNull list.map((e)$updateValueFromMap,
     }
 
     sbFactory.write('''
- ${isNotParam ? ') {' : '}) {'}
+ ${isNotParam || l.parameter == EnumParameter.default_ ? ') {' : '}) {'}
+ 
 return $addConst $nameClass(${l.listParameters.map((obj) => obj.name).join(', ')}); } 
 ''');
 
@@ -604,7 +647,7 @@ return $addConst $nameClass(${l.listParameters.map((obj) => obj.name).join(', ')
     sbExtendsClass.write('''
 @immutable
 class $nameClass extends ${model.nameClass} {
-  const $nameClass($sbParam) : super._${l.nameUnion}($sbParamSuper);
+  const $nameClass($sbParam) : super.${l.nameUnion}($sbParamSuper);
 $sbParamFinal
 
 $sbCopyWith
@@ -650,6 +693,16 @@ $sbToMap_1
 }}      
 ''');
 
+  final textToJson = '''
+  String toJson() {
+    try {
+      return json.encode(toMap());
+    } catch (e) {
+      throw StateError('Failed to encode ${model.nameClass} to JSON: \$e',);
+    }
+  }
+''';
+
   /* ****************************** */
   final newContent = '''
 ${model.contentToEnd}
@@ -679,12 +732,13 @@ ${model.classHeader}
 $sbAllParams
 $sbUnionClass
 $sbUnionGetterIsType
-$sbFactory
+${true ? '' : sbFactory}
 
 ${isActiveFromJson ? sbFromJson : ''}
+${isActiveFromJson ? sbFromJsonWithTag : ''}
 ${isActiveFromJson ? sbFromList : ''}
 ${isActiveToMap ? sbToMap : ''}
-${isActiveToMap ? 'String toJson() => json.encode(toMap());\n' : ''}
+${isActiveToMap ? textToJson : ''}
 ${isActiveFromMap ? sbFromMap : ''}
 $sbMap
 $sbMaybeMap
