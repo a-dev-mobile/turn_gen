@@ -263,7 +263,9 @@ extension \$$nameClass on $nameClass {
 
   for (final e in model.listItem) {
     final name = e.nameEnum;
-    extension.write('bool get $name => this == $nameClass.$name;\n');
+    extension.write(
+      'bool get is${name.toTitleCase()} => this == $nameClass.$name;\n',
+    );
   }
   extension.write('}');
 /* ****************************** */

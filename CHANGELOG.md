@@ -1,3 +1,20 @@
+## [2.0.0] - 09.11.2023
+
+- changed the name of the `extension` to check for type in the `enum` script
+
+```dart
+// example
+// old
+  bool get init => this == EnumValid.init;
+  bool get valid => this == EnumValid.valid;
+  bool get error => this == EnumValid.error;
+// new
+  bool get isInit => this == EnumValid.init;
+  bool get isValid => this == EnumValid.valid;
+  bool get isError => this == EnumValid.error;
+
+```
+
 ## [1.1.7] - 05.11.2023
 
 - Improved `union` added support for the `fromJson` method for `Freezed`

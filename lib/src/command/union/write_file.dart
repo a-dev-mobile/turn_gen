@@ -409,6 +409,7 @@ ${l.nameUnion}: (v)=>
       if (source.isEmpty) {
         throw ArgumentError('Source string is empty');
       }
+
       return $nameClass.fromMap(json.decode(source) as Map<String, dynamic>, tag,);
     } else if (source is Map<String, dynamic>) {
       return $nameClass.fromMap(source, tag);
@@ -434,31 +435,46 @@ ${l.nameUnion}: (v)=>
   /* ****************************** */
   final sbFromJson = '''
   factory $nameClass.fromJson(Object source) {
+    try {
   Map<String, dynamic> map;
     if (source is String) {
       map = json.decode(source) as Map<String, dynamic>;
-    } else if (source is Map) {
-      map = source.cast<String, dynamic>();
+     } else if (source is Map<String, dynamic>) {
+      map = source;
     } else {
-      throw ArgumentError(
-        'Expected a String or a Map as input for JSON deserialization.',
-      );
+      throw ArgumentError.value(source, 'source',
+          'Expected a String or a Map<String, dynamic> as input for JSON deserialization.',);
     }
 
     final tagStr = map['tag'] as String?;
-    if (tagStr == null) {
-      throw ArgumentError('Missing tag for $nameClass deserialization.',);
+   if (tagStr == null) {
+      throw ArgumentError.value(
+          map, 'tag', 'Missing tag for $nameClass deserialization.',);
     }
 
     ${model.nameClass}Tag tag;
-    try {
-       tag = ${model.nameClass}Tag.values.byName(tagStr);
-    } catch (e) {
-      throw ArgumentError('Invalid tag for $nameClass deserialization: \$tagStr',);
+
+  try {
+    if (!${model.nameClass}Tag.values
+        .any((v) => v.toString().split('.').last == tagStr)) {
+      throw ArgumentError.value(tagStr, 'tag',
+          'Invalid tag for ${model.nameClass} deserialization: \$tagStr',);
+      } 
+      } 
+      catch (e) {
+      rethrow; 
     }
+    tag =   ${model.nameClass}Tag.values.byName(tagStr);
 
     return $nameClass.fromJsonWithTag(map, tag);
+  } on Object catch (e, stacktrace) {
+    Error.throwWithStackTrace(
+      StateError('Failed to deserialize $nameClass from JSON: \$e'),
+      stacktrace,
+    );
   }
+}
+
 ''';
 
   /* ****************************** */
@@ -655,6 +671,13 @@ $sbCopyWith
 }''');
   }
 
+  // const a = '';
+  // final listGetter = <Getter>[];
+  // for (final l in model.listUnion) {
+// final getter = Getter(name: );
+// listGetter.add(Getter(name: name, tagWithVar: tagWithVar))
+  // }
+
   /* ****************************** */
 
 // собрать fromMap
@@ -697,8 +720,11 @@ $sbToMap_1
   String toJson() {
     try {
       return json.encode(toMap());
-    } catch (e) {
-      throw StateError('Failed to encode ${model.nameClass} to JSON: \$e',);
+    } on Object catch (e, stackTrace) {
+      Error.throwWithStackTrace(
+        StateError('Failed to encode $nameClass to JSON: \$e'),
+        stackTrace, 
+      );
     }
   }
 ''';
