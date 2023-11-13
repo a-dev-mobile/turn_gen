@@ -262,9 +262,15 @@ extension \$$nameClass on $nameClass {
 ''');
 
   for (final e in model.listItem) {
-    final name = e.nameEnum;
+    var name = e.nameEnum;
+    if (name.contains('_')) {
+      name = 'is_$name';
+    } else {
+      name = 'is${name.toTitleCase()}';
+    }
+
     extension.write(
-      'bool get is${name.toTitleCase()} => this == $nameClass.$name;\n',
+      'bool get $name => this == $nameClass.${e.nameEnum};\n',
     );
   }
   extension.write('}');

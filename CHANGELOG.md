@@ -1,3 +1,7 @@
+## [2.0.1] - 13.11.2023
+
+- slightly modified the `enum` script
+
 ## [2.0.0] - 09.11.2023
 
 - changed the name of the `extension` to check for type in the `enum` script
