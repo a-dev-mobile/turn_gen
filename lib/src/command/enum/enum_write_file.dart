@@ -14,9 +14,11 @@ void enumWriteToFile(
   final newContent = StringBuffer();
   final nameClass = model.nameClass;
   // final nameFile = model.nameFile;
-  final typeEnum = model.listParam.first.enumTypeVarable;
-  final typeStr = typeEnum.value;
-  final nameValueFirst = model.listParam.first.name;
+
+  final typeStrFirst = model.listParam.first.enumTypeVarable.value;
+
+  final listParam = model.listParam;
+
   _isShowComment = model.isShowComment;
 /* ****************************** */
   final paramSb = StringBuffer();
@@ -35,70 +37,76 @@ void enumWriteToFile(
   final fromValueSb = StringBuffer();
 
 /* ****************************** */
-  final fromValueSbSwitch = StringBuffer();
-  // for double other value
-  final switchVar = typeEnum.maybeMapValue(
-    orElse: nameValueFirst,
-    double_: '$nameValueFirst?.toString()',
-    num_: '$nameValueFirst?.toString()',
-  );
-  for (final e in model.listItem) {
-    final name = e.nameEnum;
+
+  for (final l in listParam) {
+    final fromValueSbSwitch = StringBuffer();
+    final nameValue = l.name;
+    final typeEnum = l.enumTypeVarable;
+    final typeStr = typeEnum.value;
     // for double other value
-// для значений с плавающей точкой используем преобразование в строку
-    final value = typeEnum.maybeMapValue(
-      orElse: e.valueEnum,
-      num_: "'${e.valueEnum}'",
-      double_: "'${e.valueEnum}'",
+    final switchVar = typeEnum.maybeMapValue(
+      orElse: nameValue,
+      double_: '$nameValue?.toString()',
+      num_: '$nameValue?.toString()',
     );
 
-    fromValueSbSwitch.write('case $value:\n');
-    fromValueSbSwitch.write('return $name');
-    var lastSymbol = ';\n';
-    if (e == model.listItem.last) lastSymbol = ';';
-    fromValueSbSwitch.write(lastSymbol);
-  }
-/* ******************************* */
-  final typeStrUpdate =
-      typeEnum.maybeMapValue(orElse: '$typeStr?', dynamic_: typeStr);
+    for (var i = 0; i < l.listValue.length; i++) {
+      final valueRaw = l.listValue[i];
+      // for double other value
+// для значений с плавающей точкой используем преобразование в строку
+      final valueFormat = typeEnum.maybeMapValue(
+        orElse: valueRaw,
+        num_: "'$valueRaw'",
+        double_: "'$valueRaw'",
+      );
 
-  fromValueSb.write('''
-  static $nameClass fromValue($typeStrUpdate $nameValueFirst, {$nameClass? fallback,}) {
+      fromValueSbSwitch.write('case $valueFormat:\n');
+      fromValueSbSwitch.write('return ${model.listItem[i].nameEnum}');
+      var lastSymbol = ';\n';
+      if (valueRaw == l.listValue.last) lastSymbol = ';';
+      fromValueSbSwitch.write(lastSymbol);
+    }
+/* ******************************* */
+    final typeStrUpdate =
+        typeEnum.maybeMapValue(orElse: '$typeStr?', dynamic_: typeStr);
+
+    fromValueSb.write('''
+  static $nameClass from${nameValue.toTitleCase()}($typeStrUpdate $nameValue, {$nameClass? fallback,}) {
     switch ($switchVar) {
 $fromValueSbSwitch
       default:
         return fallback ?? (throw ArgumentError.value(
-          $nameValueFirst, '', 'Value not found in $nameClass',));
+          $nameValue, '', 'Value not found in $nameClass',));
     }
   }
 ''');
 
-  if (typeEnum.list_string_ || typeEnum.list_string_null) {
-    fromValueSb.clear();
+    if (typeEnum.list_string_ || typeEnum.list_string_null) {
+      fromValueSb.clear();
 
-    fromValueSb.write('''
+      fromValueSb.write('''
 
-  static $nameClass fromValue(
-    String? $nameValueFirst, {
+  static $nameClass from${nameValue.toTitleCase()}(
+    String? $nameValue, {
     $nameClass? fallback,
   }) {
     for (final enumValue in $nameClass.values) {
-      if (enumValue.$nameValueFirst.contains($nameValueFirst)) {
+      if (enumValue.$nameValue.contains($nameValue)) {
         return enumValue;
       }
     }
 
     return fallback ??
         (throw ArgumentError.value(
-          $nameValueFirst,
+          $nameValue,
           '',
           'Value not found in $nameClass',
         ));
   }
 
 ''');
+    }
   }
-
 /* ****************************** */
 
   final mapCommonSb = StringBuffer();
@@ -307,19 +315,22 @@ $maybeMapNullValueSb2
 /* ****************************** */
 /* ****************************** */
   final constructorSb = StringBuffer();
-
+  final nameValueFirst = model.listParam.first.name;
   constructorSb.write('''
   const $nameClass(this.$nameValueFirst);
-  final $typeStr $nameValueFirst;
+  final $typeStrFirst $nameValueFirst;
 ''');
 
 /* ****************************** */
 /* ****************************** */
   final getValuesSb = StringBuffer();
 
-  getValuesSb.write('''
-  static List<$typeStr> getValues() => $nameClass.values.map((e) => e.$nameValueFirst).toList();
+  for (final v in model.listParam) {
+    getValuesSb.write('''
+  static List<${v.enumTypeVarable.value}> getList${v.name.toTitleCase()}() => $nameClass.values.map((e) => e.${v.name}).toList();
+
 ''');
+  }
 
 /* ****************************** */
 /* ****************************** */
@@ -352,11 +363,12 @@ $constructorSb
   }
 
   newContent.write('''
+
 $updateContentToEnd
 
 ${ConstConsole.GEN_MSG_START(EnumTypeRun.enum_)}
 ${_getComment('''
-  /// Creates a new instance of [$nameClass] from a given $typeStr value.
+  /// Creates a new instance of [$nameClass] from a given $typeStrFirst value.
   ///
   /// If the given value matches one of the values defined in the [$nameClass] enumeration,
   /// a corresponding instance of [$nameClass] is returned.

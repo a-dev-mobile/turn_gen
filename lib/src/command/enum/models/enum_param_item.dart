@@ -15,6 +15,9 @@ class EnumParamItemModel {
   //тип параметра
   /* init:'' */
   final String nameObject;
+
+  /* init:[] */
+  final List<String> listValue;
   // end
 
 //          --TURN_GEN--
@@ -27,6 +30,7 @@ class EnumParamItemModel {
     this.enumTypeVarable = EnumTypeVarable.none,
     this.isCanNull = false,
     this.nameObject = '',
+    this.listValue = const [],
   });
 
   EnumParamItemModel copyWith({
@@ -34,12 +38,14 @@ class EnumParamItemModel {
     EnumTypeVarable? enumTypeVarable,
     bool? isCanNull,
     String? nameObject,
+    List<String>? listValue,
   }) {
     return EnumParamItemModel(
       name: name ?? this.name,
       enumTypeVarable: enumTypeVarable ?? this.enumTypeVarable,
       isCanNull: isCanNull ?? this.isCanNull,
       nameObject: nameObject ?? this.nameObject,
+      listValue: listValue ?? this.listValue,
     );
   }
 }

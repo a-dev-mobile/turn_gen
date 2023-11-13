@@ -1,6 +1,6 @@
-## [2.0.1] - 13.11.2023
+## [2.0.1-2.1.0] - 13.11.2023
 
-- slightly modified the `enum` script
+- the `enum` script has been changed, the `from{value}` and `getList{value}` methods have been added to each type
 
 ## [2.0.0] - 09.11.2023
 

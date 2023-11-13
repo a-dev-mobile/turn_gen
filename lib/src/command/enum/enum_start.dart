@@ -98,13 +98,9 @@ Future<void> enumStart({
           .replaceAll('$itemPlus(', ''),
     );
   }
-
-  final listEnumValueFormat = _getFormatEnumRaw(listEnumValueRaw);
-  // final listEnumValueFormat =listEnumValueRaw;
-
   final listItemFinal = getFinalParamList(contentToEndWithoutComment);
 
-// значение по умолчанию
+  // значение по умолчанию
   final listParameterMain = <EnumParamItemModel>[
     const EnumParamItemModel(
       enumTypeVarable: EnumTypeVarable.string_,
@@ -112,7 +108,6 @@ Future<void> enumStart({
     ),
   ];
 
-  // перебор параметров если enum не по умолчанию
   if (!isDefault) {
     listParameterMain.clear();
     for (var i = 0; i < listItemFinal.length; i++) {
@@ -153,17 +148,29 @@ Future<void> enumStart({
       );
     }
   }
-  if (listEnumValueFormat.isNotEmpty) {
-    // final _ = listEnumValueFormat.removeLast();
+  final listEnumValueFormat = _getFormatEnumRaw(listEnumValueRaw);
+  // final listEnumValueFormat =listEnumValueRaw;
+
+  // перебор параметров если enum не по умолчанию
+  final listParameterMainTemp = [...listParameterMain];
+  listParameterMain.clear();
+  for (var i1 = 0; i1 < listParameterMainTemp.length; i1++) {
+    final item = listParameterMainTemp[i1];
+    final listValue = <String>[];
+    for (var i2 = 0; i2 < listEnumValueFormat.length; i2++) {
+      listValue.add(listEnumValueFormat[i2][i1]);
+    }
+
+    listParameterMain.add(item.copyWith(listValue: listValue));
   }
 
   final enumItem = <EnumItemModel>[];
   for (var i = 0; i < listEnumNameFormat.length; i++) {
     final name = listEnumNameFormat[i];
 
-    var valueClean = isDefault ? "'$name'" : listEnumValueFormat[i].trim();
+    var valueClean = isDefault ? "'$name'" : listEnumValueFormat[i].toString();
     if (!isDefault && listItemFinal.length > 1) {
-      final value = listEnumValueFormat[i].trim();
+      final value = listEnumValueFormat[i].toString();
 
 // если у нас 2 параметра в enum
 //   payed('status.schedule.payed', 'оплачен');
@@ -211,25 +218,70 @@ String removeNameParam(String input) {
   return results.join(', ');
 }
 
-List<String> _getFormatEnumRaw(
+String removeColonedWords(String input) {
+  final regex = RegExp(r'(^\w+: |, \w+: )');
+  final result = input.replaceAllMapped(regex, (Match m) {
+    if (m[0]!.startsWith(',')) {
+      return ', ';
+    }
+    return '';
+  });
+  return result;
+}
+
+String handleSquareBrackets(String input) {
+  final regex = RegExp(r'\[.*?\]');
+  final matches = regex.allMatches(input);
+  final results = <String>[];
+
+  for (final match in matches) {
+    results.add(match.group(0) ?? '');
+  }
+  if (results.isEmpty) return input;
+
+  // Replace the square bracket groups with a placeholder
+  var modifiedInput = input;
+  for (final result in results) {
+    modifiedInput = modifiedInput.replaceFirst(result, '##PLACEHOLDER##');
+  }
+
+  return modifiedInput;
+}
+
+List<List<String>> _getFormatEnumRaw(
   List<String> content,
 ) {
-  final formatList = <String>[];
+  final formatList = <List<String>>[];
   for (var v in content) {
     v = v.replaceAll(RegExp(r'\s{2,}'), ' ').trim();
 
     if (!v.contains('(') && v.contains(')')) {
       v = v.replaceAll(RegExp(r'\);$'), '').replaceAll(RegExp(r'\),$'), '');
     }
-    v = removeNameParam(v);
 
-    formatList.add(
-      v
-          .replaceAll(RegExp(r', \), \($'), '')
-          .replaceAll(RegExp(r'\), \($'), '')
-          .replaceAll(RegExp(r', \);$'), '')
-          .replaceAll(RegExp(r'^\('), ''),
-    );
+    if (v.contains(':')) {
+      v = removeColonedWords(v);
+    }
+
+    if (v.contains('[') && v.contains(']')) {
+      v = handleSquareBrackets(v);
+    }
+
+    v = v
+        .replaceAll(RegExp(r', \), \($'), '')
+        .replaceAll(RegExp(r'\), \($'), '')
+        .replaceAll(RegExp(r', \);$'), '')
+        .replaceAll(RegExp(r', \),$'), '')
+        .replaceAll(RegExp(r'^\('), '');
+
+    // Split and replace placeholders with actual square bracket groups
+    final splitResults = v.split(',').map((item) => item.trim()).toList();
+    for (var i = 0; i < splitResults.length; i++) {
+      if (splitResults[i] == '##PLACEHOLDER##') {
+        splitResults[i] = handleSquareBrackets(content.join(' ')).split(',')[i];
+      }
+    }
+    formatList.add(splitResults);
   }
 
   return formatList;

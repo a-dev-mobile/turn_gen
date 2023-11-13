@@ -1,1135 +1,385 @@
-// // ignore_for_file: avoid-non-null-assertion, non_constant_identifier_names, constant_identifier_names
-// // turngen
-// enum EnumTypeVarable implements Comparable<EnumTypeVarable> {
-//   enum_('enum'),
-//   string_('String'),
-//   bool_('bool'),
-//   int_('int'),
-//   double_('double'),
-//   dynamic_('dynamic'),
-//   num_('num'),
-//   list_('List'),
-//   color('Color'),
-//   list_bool_('List<bool>'),
-//   list_other('List<Object>'),
-//   list_int_('List<int>'),
-//   list_string_('List<String>'),
-//   list_double_('List<double>'),
-//   list_bool_null('List<bool?>'),
-//   list_int_null('List<int?>'),
-//   list_string_null('List<String?>'),
-//   list_double_null('List<double?>'),
-//   list_dynamic_('List<dynamic>'),
-//   list_map_int_string_('List<Map<int, String>>'),
-//   list_map_int_string_null('List<Map<int, String?>>'),
-//   list_map_int_dynamic_('List<Map<int, dynamic>>'),
-//   list_map_string_dynamic_('List<Map<String, dynamic>>'),
-//   list_map_string_string_('List<Map<String, String>>'),
-//   set_('Set'),
-//   set_string('Set<String>'),
-//   set_string_null('Set<String?>'),
-//   set_int('Set<int>'),
-//   set_int_null('Set<int?>'),
-//   set_bool('Set<bool>'),
-//   set_bool_null('Set<bool?>'),
-//   set_double('Set<double>'),
-//   set_double_null('Set<double?>'),
-//   map_('Map'),
-//   map_string_dynamic_('Map<String, dynamic>'),
-//   map_string_bool('Map<String, bool>'),
-//   map_string_int('Map<String, int>'),
-//   map_string_string('Map<String, String>'),
-//   map_string_double_('Map<String, double>'),
-//   map_string_bool_null('Map<String, bool?>'),
-//   map_string_int_null('Map<String, int?>'),
-//   map_string_string_null('Map<String, String?>'),
-//   map_string_double_null('Map<String, double?>'),
-//   map_int_string('Map<int, String>'),
-//   map_int_string_null('Map<int, String?>'),
-//   map_int_double('Map<int, double>'),
-//   map_int_double_null('Map<int, double?>'),
-//   map_int_bool('Map<int, bool>'),
-//   map_int_bool_null('Map<int, bool?>'),
-//   map_int_dynamic_('Map<int, dynamic>'),
-//   date_time('DateTime'),
-//   map_dynamic_dynamic_('Map<dynamic, dynamic>'),
-//   data('data'),
-//   list_data('List<data>'),
-//   list_enum('List<enum>'),
-//   list_enum_null('List<enum?>'),
-//   list_data_null('List<data?>'),
-//   null_('Null'),
-//   none('none');
+// turnGen
 
-//   const EnumTypeVarable(this.value);
-//   final String value;
+// ignore_for_file: no_duplicate_case_values
 
-// // end
+enum EnumStore implements Comparable<EnumStore> {
+  appStore(
+    packageId: [
+      'com.apple',
+      'com.apple.testflight',
+      'com.apple.simulator',
+    ],
+    url: 'https://apps.apple.com/us/app/надо-денег-деньги-онлайн/id1663823713',
+    name: 'AppStore',
+    vendor: '(apple)',
+  ),
+  googlePlay(
+    packageId: [
+      'com.android.vending',
+    ],
+    url: 'https://play.google.com/store/apps/details?id=ru.nadodeneg.mobile',
+    name: 'GooglePlay',
+    vendor: '(google)',
+  ),
+  getApps(
+    packageId: [
+      'com.xiaomi.mipicks',
+    ],
+    url: 'https://global.app.mi.com/details?id=ru.nadodeneg.mobile&lo=RU&la=en',
+    name: 'GetApps',
+    vendor: '(xiaomi)',
+  ),
+  packageInstaller(
+    packageId: [
+      'com.miui.packageinstaller',
+      'com.google.android.packageinstaller',
+      'com.android.packageinstaller',
+    ],
+    url: '',
+    name: 'PackageInstaller',
+    vendor: '(apk)',
+  ),
+  ruStore(
+    packageId: [
+      'ru.vk.store',
+    ],
+    url: 'https://apps.rustore.ru/app/ru.nadodeneg.mobile',
+    name: 'RuStore',
+    vendor: '(vk)',
+  ),
+  appGallery(
+    packageId: [
+      'com.huawei.appmarket',
+    ],
+    url: 'https://appgallery.huawei.com/app/C109195729',
+    name: 'AppGallery',
+    vendor: '(huawei)',
+  ),
+  other(
+    packageId: [
+      'com.sec.android.app.samsungapps',
+      'com.aurora.store',
+      'com.samsung.android.scloud',
+      'com.sec.android.easyMover',
+      'com.xrom.intl.appcenter',
+      'com.miui.huanji',
+      'com.apkpure.aegon',
+      'com.aurora.store',
+    ],
+    url: '',
+    name: 'Other',
+    vendor: '',
+  ),
+  unknown(
+    packageId: [
+      '',
+    ],
+    url: '',
+    name: 'Unknown',
+    vendor: '',
+  );
 
-// //          --TURN_GEN--
-// //             (enum)
-// //  *************************************
-// //         GENERATED CODE
-// //  *************************************
+  const EnumStore({
+    required this.packageId,
+    required this.url,
+    required this.name,
+    required this.vendor,
+  });
+  final List<String> packageId;
+  final String url;
+  final String name;
+  final String vendor;
 
-//   static EnumTypeVarable fromValue(
-//     String? value, {
-//     EnumTypeVarable? fallback,
-//   }) {
-//     switch (value) {
-//       case 'enum':
-//         return enum_;
-//       case 'String':
-//         return string_;
-//       case 'bool':
-//         return bool_;
-//       case 'int':
-//         return int_;
-//       case 'double':
-//         return double_;
-//       case 'dynamic':
-//         return dynamic_;
-//       case 'List':
-//         return list_;
-//       case 'Color':
-//         return color;
-//       case 'List<bool>':
-//         return list_bool_;
-//       case 'List<Object>':
-//         return list_other;
-//       case 'List<int>':
-//         return list_int_;
-//       case 'List<String>':
-//         return list_string_;
-//       case 'List<double>':
-//         return list_double_;
-//       case 'List<bool?>':
-//         return list_bool_null;
-//       case 'List<int?>':
-//         return list_int_null;
-//       case 'List<String?>':
-//         return list_string_null;
-//       case 'List<double?>':
-//         return list_double_null;
-//       case 'List<dynamic>':
-//         return list_dynamic_;
-//       case 'List<Map<int, String>>':
-//         return list_map_int_string_;
-//       case 'List<Map<int, String?>>':
-//         return list_map_int_string_null;
-//       case 'List<Map<int, dynamic>>':
-//         return list_map_int_dynamic_;
-//       case 'List<Map<String, dynamic>>':
-//         return list_map_string_dynamic_;
-//       case 'List<Map<String, String>>':
-//         return list_map_string_string_;
-//       case 'Set':
-//         return set_;
-//       case 'Set<String>':
-//         return set_string;
-//       case 'Set<String?>':
-//         return set_string_null;
-//       case 'Set<int>':
-//         return set_int;
-//       case 'Set<int?>':
-//         return set_int_null;
-//       case 'Set<bool>':
-//         return set_bool;
-//       case 'Set<bool?>':
-//         return set_bool_null;
-//       case 'Set<double>':
-//         return set_double;
-//       case 'Set<double?>':
-//         return set_double_null;
-//       case 'Map':
-//         return map_;
-//       case 'Map<String, bool>':
-//         return map_string_bool;
-//       case 'Map<String, int>':
-//         return map_string_int;
-//       case 'Map<String, String>':
-//         return map_string_string;
-//       case 'Map<String, double>':
-//         return map_string_double_;
-//       case 'Map<String, bool?>':
-//         return map_string_bool_null;
-//       case 'Map<String, int?>':
-//         return map_string_int_null;
-//       case 'Map<String, String?>':
-//         return map_string_string_null;
-//       case 'Map<String, double?>':
-//         return map_string_double_null;
-//       case 'Map<int, String>':
-//         return map_int_string;
-//       case 'Map<int, double>':
-//         return map_int_double;
-//       case 'Map<int, double?>':
-//         return map_int_double_null;
-//       case 'Map<int, bool>':
-//         return map_int_bool;
-//       case 'Map<int, bool?>':
-//         return map_int_bool_null;
-//       case 'DateTime':
-//         return date_time;
-//       case 'Map<dynamic, dynamic>':
-//         return map_dynamic_dynamic_;
-//       case 'data':
-//         return data;
-//       case 'List<data>':
-//         return list_data;
-//       case 'List<enum>':
-//         return list_enum;
-//       case 'List<enum?>':
-//         return list_enum_null;
-//       case 'List<data?>':
-//         return list_data_null;
-//       case 'Null':
-//         return null_;
-//       case 'none':
-//         return none;
-//       default:
-//         return fallback ??
-//             (throw ArgumentError.value(
-//               value,
-//               '',
-//               'Value not found in EnumTypeVarable',
-//             ));
-//     }
-//   }
+// end
 
-//   T map<T>({
-//     required T Function() enum_,
-//     required T Function() string_,
-//     required T Function() bool_,
-//     required T Function() int_,
-//     required T Function() double_,
-//     required T Function() dynamic_,
-//     required T Function() num_,
-//     required T Function() list_,
-//     required T Function() color,
-//     required T Function() list_bool_,
-//     required T Function() list_other,
-//     required T Function() list_int_,
-//     required T Function() list_string_,
-//     required T Function() list_double_,
-//     required T Function() list_bool_null,
-//     required T Function() list_int_null,
-//     required T Function() list_string_null,
-//     required T Function() list_double_null,
-//     required T Function() list_dynamic_,
-//     required T Function() list_map_int_string_,
-//     required T Function() list_map_int_string_null,
-//     required T Function() list_map_int_dynamic_,
-//     required T Function() list_map_string_dynamic_,
-//     required T Function() list_map_string_string_,
-//     required T Function() set_,
-//     required T Function() set_string,
-//     required T Function() set_string_null,
-//     required T Function() set_int,
-//     required T Function() set_int_null,
-//     required T Function() set_bool,
-//     required T Function() set_bool_null,
-//     required T Function() set_double,
-//     required T Function() set_double_null,
-//     required T Function() map_,
-//     required T Function() map_string_dynamic_,
-//     required T Function() map_string_bool,
-//     required T Function() map_string_int,
-//     required T Function() map_string_string,
-//     required T Function() map_string_double_,
-//     required T Function() map_string_bool_null,
-//     required T Function() map_string_int_null,
-//     required T Function() map_string_string_null,
-//     required T Function() map_string_double_null,
-//     required T Function() map_int_string,
-//     required T Function() map_int_string_null,
-//     required T Function() map_int_double,
-//     required T Function() map_int_double_null,
-//     required T Function() map_int_bool,
-//     required T Function() map_int_bool_null,
-//     required T Function() map_int_dynamic_,
-//     required T Function() date_time,
-//     required T Function() map_dynamic_dynamic_,
-//     required T Function() data,
-//     required T Function() list_data,
-//     required T Function() list_enum,
-//     required T Function() list_enum_null,
-//     required T Function() list_data_null,
-//     required T Function() null_,
-//     required T Function() none,
-//   }) {
-//     switch (this) {
-//       case EnumTypeVarable.enum_:
-//         return enum_();
-//       case EnumTypeVarable.string_:
-//         return string_();
-//       case EnumTypeVarable.bool_:
-//         return bool_();
-//       case EnumTypeVarable.int_:
-//         return int_();
-//       case EnumTypeVarable.double_:
-//         return double_();
-//       case EnumTypeVarable.dynamic_:
-//         return dynamic_();
-//       case EnumTypeVarable.num_:
-//         return num_();
-//       case EnumTypeVarable.list_:
-//         return list_();
-//       case EnumTypeVarable.color:
-//         return color();
-//       case EnumTypeVarable.list_bool_:
-//         return list_bool_();
-//       case EnumTypeVarable.list_other:
-//         return list_other();
-//       case EnumTypeVarable.list_int_:
-//         return list_int_();
-//       case EnumTypeVarable.list_string_:
-//         return list_string_();
-//       case EnumTypeVarable.list_double_:
-//         return list_double_();
-//       case EnumTypeVarable.list_bool_null:
-//         return list_bool_null();
-//       case EnumTypeVarable.list_int_null:
-//         return list_int_null();
-//       case EnumTypeVarable.list_string_null:
-//         return list_string_null();
-//       case EnumTypeVarable.list_double_null:
-//         return list_double_null();
-//       case EnumTypeVarable.list_dynamic_:
-//         return list_dynamic_();
-//       case EnumTypeVarable.list_map_int_string_:
-//         return list_map_int_string_();
-//       case EnumTypeVarable.list_map_int_string_null:
-//         return list_map_int_string_null();
-//       case EnumTypeVarable.list_map_int_dynamic_:
-//         return list_map_int_dynamic_();
-//       case EnumTypeVarable.list_map_string_dynamic_:
-//         return list_map_string_dynamic_();
-//       case EnumTypeVarable.list_map_string_string_:
-//         return list_map_string_string_();
-//       case EnumTypeVarable.set_:
-//         return set_();
-//       case EnumTypeVarable.set_string:
-//         return set_string();
-//       case EnumTypeVarable.set_string_null:
-//         return set_string_null();
-//       case EnumTypeVarable.set_int:
-//         return set_int();
-//       case EnumTypeVarable.set_int_null:
-//         return set_int_null();
-//       case EnumTypeVarable.set_bool:
-//         return set_bool();
-//       case EnumTypeVarable.set_bool_null:
-//         return set_bool_null();
-//       case EnumTypeVarable.set_double:
-//         return set_double();
-//       case EnumTypeVarable.set_double_null:
-//         return set_double_null();
-//       case EnumTypeVarable.map_:
-//         return map_();
-//       case EnumTypeVarable.map_string_dynamic_:
-//         return map_string_dynamic_();
-//       case EnumTypeVarable.map_string_bool:
-//         return map_string_bool();
-//       case EnumTypeVarable.map_string_int:
-//         return map_string_int();
-//       case EnumTypeVarable.map_string_string:
-//         return map_string_string();
-//       case EnumTypeVarable.map_string_double_:
-//         return map_string_double_();
-//       case EnumTypeVarable.map_string_bool_null:
-//         return map_string_bool_null();
-//       case EnumTypeVarable.map_string_int_null:
-//         return map_string_int_null();
-//       case EnumTypeVarable.map_string_string_null:
-//         return map_string_string_null();
-//       case EnumTypeVarable.map_string_double_null:
-//         return map_string_double_null();
-//       case EnumTypeVarable.map_int_string:
-//         return map_int_string();
-//       case EnumTypeVarable.map_int_string_null:
-//         return map_int_string_null();
-//       case EnumTypeVarable.map_int_double:
-//         return map_int_double();
-//       case EnumTypeVarable.map_int_double_null:
-//         return map_int_double_null();
-//       case EnumTypeVarable.map_int_bool:
-//         return map_int_bool();
-//       case EnumTypeVarable.map_int_bool_null:
-//         return map_int_bool_null();
-//       case EnumTypeVarable.map_int_dynamic_:
-//         return map_int_dynamic_();
-//       case EnumTypeVarable.date_time:
-//         return date_time();
-//       case EnumTypeVarable.map_dynamic_dynamic_:
-//         return map_dynamic_dynamic_();
-//       case EnumTypeVarable.data:
-//         return data();
-//       case EnumTypeVarable.list_data:
-//         return list_data();
-//       case EnumTypeVarable.list_enum:
-//         return list_enum();
-//       case EnumTypeVarable.list_enum_null:
-//         return list_enum_null();
-//       case EnumTypeVarable.list_data_null:
-//         return list_data_null();
-//       case EnumTypeVarable.null_:
-//         return null_();
-//       case EnumTypeVarable.none:
-//         return none();
-//     }
-//   }
+//          --TURN_GEN--
+//             (enum)
+//  *************************************
+//         GENERATED CODE
+//  *************************************
 
-//   T mapValue<T>({
-//     required T enum_,
-//     required T string_,
-//     required T bool_,
-//     required T int_,
-//     required T double_,
-//     required T dynamic_,
-//     required T num_,
-//     required T list_,
-//     required T color,
-//     required T list_bool_,
-//     required T list_other,
-//     required T list_int_,
-//     required T list_string_,
-//     required T list_double_,
-//     required T list_bool_null,
-//     required T list_int_null,
-//     required T list_string_null,
-//     required T list_double_null,
-//     required T list_dynamic_,
-//     required T list_map_int_string_,
-//     required T list_map_int_string_null,
-//     required T list_map_int_dynamic_,
-//     required T list_map_string_dynamic_,
-//     required T list_map_string_string_,
-//     required T set_,
-//     required T set_string,
-//     required T set_string_null,
-//     required T set_int,
-//     required T set_int_null,
-//     required T set_bool,
-//     required T set_bool_null,
-//     required T set_double,
-//     required T set_double_null,
-//     required T map_,
-//     required T map_string_dynamic_,
-//     required T map_string_bool,
-//     required T map_string_int,
-//     required T map_string_string,
-//     required T map_string_double_,
-//     required T map_string_bool_null,
-//     required T map_string_int_null,
-//     required T map_string_string_null,
-//     required T map_string_double_null,
-//     required T map_int_string,
-//     required T map_int_string_null,
-//     required T map_int_double,
-//     required T map_int_double_null,
-//     required T map_int_bool,
-//     required T map_int_bool_null,
-//     required T map_int_dynamic_,
-//     required T date_time,
-//     required T map_dynamic_dynamic_,
-//     required T data,
-//     required T list_data,
-//     required T list_enum,
-//     required T list_enum_null,
-//     required T list_data_null,
-//     required T null_,
-//     required T none,
-//   }) {
-//     switch (this) {
-//       case EnumTypeVarable.enum_:
-//         return enum_;
-//       case EnumTypeVarable.string_:
-//         return string_;
-//       case EnumTypeVarable.bool_:
-//         return bool_;
-//       case EnumTypeVarable.int_:
-//         return int_;
-//       case EnumTypeVarable.double_:
-//         return double_;
-//       case EnumTypeVarable.dynamic_:
-//         return dynamic_;
-//       case EnumTypeVarable.num_:
-//         return num_;
-//       case EnumTypeVarable.list_:
-//         return list_;
-//       case EnumTypeVarable.color:
-//         return color;
-//       case EnumTypeVarable.list_bool_:
-//         return list_bool_;
-//       case EnumTypeVarable.list_other:
-//         return list_other;
-//       case EnumTypeVarable.list_int_:
-//         return list_int_;
-//       case EnumTypeVarable.list_string_:
-//         return list_string_;
-//       case EnumTypeVarable.list_double_:
-//         return list_double_;
-//       case EnumTypeVarable.list_bool_null:
-//         return list_bool_null;
-//       case EnumTypeVarable.list_int_null:
-//         return list_int_null;
-//       case EnumTypeVarable.list_string_null:
-//         return list_string_null;
-//       case EnumTypeVarable.list_double_null:
-//         return list_double_null;
-//       case EnumTypeVarable.list_dynamic_:
-//         return list_dynamic_;
-//       case EnumTypeVarable.list_map_int_string_:
-//         return list_map_int_string_;
-//       case EnumTypeVarable.list_map_int_string_null:
-//         return list_map_int_string_null;
-//       case EnumTypeVarable.list_map_int_dynamic_:
-//         return list_map_int_dynamic_;
-//       case EnumTypeVarable.list_map_string_dynamic_:
-//         return list_map_string_dynamic_;
-//       case EnumTypeVarable.list_map_string_string_:
-//         return list_map_string_string_;
-//       case EnumTypeVarable.set_:
-//         return set_;
-//       case EnumTypeVarable.set_string:
-//         return set_string;
-//       case EnumTypeVarable.set_string_null:
-//         return set_string_null;
-//       case EnumTypeVarable.set_int:
-//         return set_int;
-//       case EnumTypeVarable.set_int_null:
-//         return set_int_null;
-//       case EnumTypeVarable.set_bool:
-//         return set_bool;
-//       case EnumTypeVarable.set_bool_null:
-//         return set_bool_null;
-//       case EnumTypeVarable.set_double:
-//         return set_double;
-//       case EnumTypeVarable.set_double_null:
-//         return set_double_null;
-//       case EnumTypeVarable.map_:
-//         return map_;
-//       case EnumTypeVarable.map_string_dynamic_:
-//         return map_string_dynamic_;
-//       case EnumTypeVarable.map_string_bool:
-//         return map_string_bool;
-//       case EnumTypeVarable.map_string_int:
-//         return map_string_int;
-//       case EnumTypeVarable.map_string_string:
-//         return map_string_string;
-//       case EnumTypeVarable.map_string_double_:
-//         return map_string_double_;
-//       case EnumTypeVarable.map_string_bool_null:
-//         return map_string_bool_null;
-//       case EnumTypeVarable.map_string_int_null:
-//         return map_string_int_null;
-//       case EnumTypeVarable.map_string_string_null:
-//         return map_string_string_null;
-//       case EnumTypeVarable.map_string_double_null:
-//         return map_string_double_null;
-//       case EnumTypeVarable.map_int_string:
-//         return map_int_string;
-//       case EnumTypeVarable.map_int_string_null:
-//         return map_int_string_null;
-//       case EnumTypeVarable.map_int_double:
-//         return map_int_double;
-//       case EnumTypeVarable.map_int_double_null:
-//         return map_int_double_null;
-//       case EnumTypeVarable.map_int_bool:
-//         return map_int_bool;
-//       case EnumTypeVarable.map_int_bool_null:
-//         return map_int_bool_null;
-//       case EnumTypeVarable.map_int_dynamic_:
-//         return map_int_dynamic_;
-//       case EnumTypeVarable.date_time:
-//         return date_time;
-//       case EnumTypeVarable.map_dynamic_dynamic_:
-//         return map_dynamic_dynamic_;
-//       case EnumTypeVarable.data:
-//         return data;
-//       case EnumTypeVarable.list_data:
-//         return list_data;
-//       case EnumTypeVarable.list_enum:
-//         return list_enum;
-//       case EnumTypeVarable.list_enum_null:
-//         return list_enum_null;
-//       case EnumTypeVarable.list_data_null:
-//         return list_data_null;
-//       case EnumTypeVarable.null_:
-//         return null_;
-//       case EnumTypeVarable.none:
-//         return none;
-//     }
-//   }
+  static EnumStore fromPackageId(
+    String? packageId, {
+    EnumStore? fallback,
+  }) {
+    for (final enumValue in EnumStore.values) {
+      if (enumValue.packageId.contains(packageId)) {
+        return enumValue;
+      }
+    }
 
-//   T maybeMap<T>({
-//     required T Function() orElse,
-//     T Function()? enum_,
-//     T Function()? string_,
-//     T Function()? bool_,
-//     T Function()? int_,
-//     T Function()? double_,
-//     T Function()? dynamic_,
-//     T Function()? num_,
-//     T Function()? list_,
-//     T Function()? color,
-//     T Function()? list_bool_,
-//     T Function()? list_other,
-//     T Function()? list_int_,
-//     T Function()? list_string_,
-//     T Function()? list_double_,
-//     T Function()? list_bool_null,
-//     T Function()? list_int_null,
-//     T Function()? list_string_null,
-//     T Function()? list_double_null,
-//     T Function()? list_dynamic_,
-//     T Function()? list_map_int_string_,
-//     T Function()? list_map_int_string_null,
-//     T Function()? list_map_int_dynamic_,
-//     T Function()? list_map_string_dynamic_,
-//     T Function()? list_map_string_string_,
-//     T Function()? set_,
-//     T Function()? set_string,
-//     T Function()? set_string_null,
-//     T Function()? set_int,
-//     T Function()? set_int_null,
-//     T Function()? set_bool,
-//     T Function()? set_bool_null,
-//     T Function()? set_double,
-//     T Function()? set_double_null,
-//     T Function()? map_,
-//     T Function()? map_string_dynamic_,
-//     T Function()? map_string_bool,
-//     T Function()? map_string_int,
-//     T Function()? map_string_string,
-//     T Function()? map_string_double_,
-//     T Function()? map_string_bool_null,
-//     T Function()? map_string_int_null,
-//     T Function()? map_string_string_null,
-//     T Function()? map_string_double_null,
-//     T Function()? map_int_string,
-//     T Function()? map_int_string_null,
-//     T Function()? map_int_double,
-//     T Function()? map_int_double_null,
-//     T Function()? map_int_bool,
-//     T Function()? map_int_bool_null,
-//     T Function()? map_int_dynamic_,
-//     T Function()? date_time,
-//     T Function()? map_dynamic_dynamic_,
-//     T Function()? data,
-//     T Function()? list_data,
-//     T Function()? list_enum,
-//     T Function()? list_enum_null,
-//     T Function()? list_data_null,
-//     T Function()? null_,
-//     T Function()? none,
-//   }) =>
-//       map<T>(
-//         enum_: enum_ ?? orElse,
-//         string_: string_ ?? orElse,
-//         bool_: bool_ ?? orElse,
-//         int_: int_ ?? orElse,
-//         double_: double_ ?? orElse,
-//         dynamic_: dynamic_ ?? orElse,
-//         num_: num_ ?? orElse,
-//         list_: list_ ?? orElse,
-//         color: color ?? orElse,
-//         list_bool_: list_bool_ ?? orElse,
-//         list_other: list_other ?? orElse,
-//         list_int_: list_int_ ?? orElse,
-//         list_string_: list_string_ ?? orElse,
-//         list_double_: list_double_ ?? orElse,
-//         list_bool_null: list_bool_null ?? orElse,
-//         list_int_null: list_int_null ?? orElse,
-//         list_string_null: list_string_null ?? orElse,
-//         list_double_null: list_double_null ?? orElse,
-//         list_dynamic_: list_dynamic_ ?? orElse,
-//         list_map_int_string_: list_map_int_string_ ?? orElse,
-//         list_map_int_string_null: list_map_int_string_null ?? orElse,
-//         list_map_int_dynamic_: list_map_int_dynamic_ ?? orElse,
-//         list_map_string_dynamic_: list_map_string_dynamic_ ?? orElse,
-//         list_map_string_string_: list_map_string_string_ ?? orElse,
-//         set_: set_ ?? orElse,
-//         set_string: set_string ?? orElse,
-//         set_string_null: set_string_null ?? orElse,
-//         set_int: set_int ?? orElse,
-//         set_int_null: set_int_null ?? orElse,
-//         set_bool: set_bool ?? orElse,
-//         set_bool_null: set_bool_null ?? orElse,
-//         set_double: set_double ?? orElse,
-//         set_double_null: set_double_null ?? orElse,
-//         map_: map_ ?? orElse,
-//         map_string_dynamic_: map_string_dynamic_ ?? orElse,
-//         map_string_bool: map_string_bool ?? orElse,
-//         map_string_int: map_string_int ?? orElse,
-//         map_string_string: map_string_string ?? orElse,
-//         map_string_double_: map_string_double_ ?? orElse,
-//         map_string_bool_null: map_string_bool_null ?? orElse,
-//         map_string_int_null: map_string_int_null ?? orElse,
-//         map_string_string_null: map_string_string_null ?? orElse,
-//         map_string_double_null: map_string_double_null ?? orElse,
-//         map_int_string: map_int_string ?? orElse,
-//         map_int_string_null: map_int_string_null ?? orElse,
-//         map_int_double: map_int_double ?? orElse,
-//         map_int_double_null: map_int_double_null ?? orElse,
-//         map_int_bool: map_int_bool ?? orElse,
-//         map_int_bool_null: map_int_bool_null ?? orElse,
-//         map_int_dynamic_: map_int_dynamic_ ?? orElse,
-//         date_time: date_time ?? orElse,
-//         map_dynamic_dynamic_: map_dynamic_dynamic_ ?? orElse,
-//         data: data ?? orElse,
-//         list_data: list_data ?? orElse,
-//         list_enum: list_enum ?? orElse,
-//         list_enum_null: list_enum_null ?? orElse,
-//         list_data_null: list_data_null ?? orElse,
-//         null_: null_ ?? orElse,
-//         none: none ?? orElse,
-//       );
+    return fallback ??
+        (throw ArgumentError.value(
+          packageId,
+          '',
+          'Value not found in EnumStore',
+        ));
+  }
 
-//   T maybeMapValue<T>({
-//     required T orElse,
-//     T? enum_,
-//     T? string_,
-//     T? bool_,
-//     T? int_,
-//     T? double_,
-//     T? dynamic_,
-//     T? num_,
-//     T? list_,
-//     T? color,
-//     T? list_bool_,
-//     T? list_other,
-//     T? list_int_,
-//     T? list_string_,
-//     T? list_double_,
-//     T? list_bool_null,
-//     T? list_int_null,
-//     T? list_string_null,
-//     T? list_double_null,
-//     T? list_dynamic_,
-//     T? list_map_int_string_,
-//     T? list_map_int_string_null,
-//     T? list_map_int_dynamic_,
-//     T? list_map_string_dynamic_,
-//     T? list_map_string_string_,
-//     T? set_,
-//     T? set_string,
-//     T? set_string_null,
-//     T? set_int,
-//     T? set_int_null,
-//     T? set_bool,
-//     T? set_bool_null,
-//     T? set_double,
-//     T? set_double_null,
-//     T? map_,
-//     T? map_string_dynamic_,
-//     T? map_string_bool,
-//     T? map_string_int,
-//     T? map_string_string,
-//     T? map_string_double_,
-//     T? map_string_bool_null,
-//     T? map_string_int_null,
-//     T? map_string_string_null,
-//     T? map_string_double_null,
-//     T? map_int_string,
-//     T? map_int_string_null,
-//     T? map_int_double,
-//     T? map_int_double_null,
-//     T? map_int_bool,
-//     T? map_int_bool_null,
-//     T? map_int_dynamic_,
-//     T? date_time,
-//     T? map_dynamic_dynamic_,
-//     T? data,
-//     T? list_data,
-//     T? list_enum,
-//     T? list_enum_null,
-//     T? list_data_null,
-//     T? null_,
-//     T? none,
-//   }) =>
-//       mapValue<T>(
-//         enum_: enum_ ?? orElse,
-//         string_: string_ ?? orElse,
-//         bool_: bool_ ?? orElse,
-//         int_: int_ ?? orElse,
-//         double_: double_ ?? orElse,
-//         dynamic_: dynamic_ ?? orElse,
-//         num_: num_ ?? orElse,
-//         list_: list_ ?? orElse,
-//         color: color ?? orElse,
-//         list_bool_: list_bool_ ?? orElse,
-//         list_other: list_other ?? orElse,
-//         list_int_: list_int_ ?? orElse,
-//         list_string_: list_string_ ?? orElse,
-//         list_double_: list_double_ ?? orElse,
-//         list_bool_null: list_bool_null ?? orElse,
-//         list_int_null: list_int_null ?? orElse,
-//         list_string_null: list_string_null ?? orElse,
-//         list_double_null: list_double_null ?? orElse,
-//         list_dynamic_: list_dynamic_ ?? orElse,
-//         list_map_int_string_: list_map_int_string_ ?? orElse,
-//         list_map_int_string_null: list_map_int_string_null ?? orElse,
-//         list_map_int_dynamic_: list_map_int_dynamic_ ?? orElse,
-//         list_map_string_dynamic_: list_map_string_dynamic_ ?? orElse,
-//         list_map_string_string_: list_map_string_string_ ?? orElse,
-//         set_: set_ ?? orElse,
-//         set_string: set_string ?? orElse,
-//         set_string_null: set_string_null ?? orElse,
-//         set_int: set_int ?? orElse,
-//         set_int_null: set_int_null ?? orElse,
-//         set_bool: set_bool ?? orElse,
-//         set_bool_null: set_bool_null ?? orElse,
-//         set_double: set_double ?? orElse,
-//         set_double_null: set_double_null ?? orElse,
-//         map_: map_ ?? orElse,
-//         map_string_dynamic_: map_string_dynamic_ ?? orElse,
-//         map_string_bool: map_string_bool ?? orElse,
-//         map_string_int: map_string_int ?? orElse,
-//         map_string_string: map_string_string ?? orElse,
-//         map_string_double_: map_string_double_ ?? orElse,
-//         map_string_bool_null: map_string_bool_null ?? orElse,
-//         map_string_int_null: map_string_int_null ?? orElse,
-//         map_string_string_null: map_string_string_null ?? orElse,
-//         map_string_double_null: map_string_double_null ?? orElse,
-//         map_int_string: map_int_string ?? orElse,
-//         map_int_string_null: map_int_string_null ?? orElse,
-//         map_int_double: map_int_double ?? orElse,
-//         map_int_double_null: map_int_double_null ?? orElse,
-//         map_int_bool: map_int_bool ?? orElse,
-//         map_int_bool_null: map_int_bool_null ?? orElse,
-//         map_int_dynamic_: map_int_dynamic_ ?? orElse,
-//         date_time: date_time ?? orElse,
-//         map_dynamic_dynamic_: map_dynamic_dynamic_ ?? orElse,
-//         data: data ?? orElse,
-//         list_data: list_data ?? orElse,
-//         list_enum: list_enum ?? orElse,
-//         list_enum_null: list_enum_null ?? orElse,
-//         list_data_null: list_data_null ?? orElse,
-//         null_: null_ ?? orElse,
-//         none: none ?? orElse,
-//       );
+  static EnumStore fromUrl(
+    String? url, {
+    EnumStore? fallback,
+  }) {
+    switch (url) {
+      case 'https://apps.apple.com/us/app/надо-денег-деньги-онлайн/id1663823713':
+        return appStore;
+      case 'https://play.google.com/store/apps/details?id=ru.nadodeneg.mobile':
+        return googlePlay;
+      case 'https://global.app.mi.com/details?id=ru.nadodeneg.mobile&lo=RU&la=en':
+        return getApps;
+      case '':
+        return packageInstaller;
+      case 'https://apps.rustore.ru/app/ru.nadodeneg.mobile':
+        return ruStore;
+      case 'https://appgallery.huawei.com/app/C109195729':
+        return appGallery;
+      case '':
+        return other;
+      case '':
+        return unknown;
+      default:
+        return fallback ??
+            (throw ArgumentError.value(
+              url,
+              '',
+              'Value not found in EnumStore',
+            ));
+    }
+  }
 
-//   T? maybeMapOrNull<T>({
-//     T Function()? enum_,
-//     T Function()? string_,
-//     T Function()? bool_,
-//     T Function()? int_,
-//     T Function()? double_,
-//     T Function()? dynamic_,
-//     T Function()? num_,
-//     T Function()? list_,
-//     T Function()? color,
-//     T Function()? list_bool_,
-//     T Function()? list_other,
-//     T Function()? list_int_,
-//     T Function()? list_string_,
-//     T Function()? list_double_,
-//     T Function()? list_bool_null,
-//     T Function()? list_int_null,
-//     T Function()? list_string_null,
-//     T Function()? list_double_null,
-//     T Function()? list_dynamic_,
-//     T Function()? list_map_int_string_,
-//     T Function()? list_map_int_string_null,
-//     T Function()? list_map_int_dynamic_,
-//     T Function()? list_map_string_dynamic_,
-//     T Function()? list_map_string_string_,
-//     T Function()? set_,
-//     T Function()? set_string,
-//     T Function()? set_string_null,
-//     T Function()? set_int,
-//     T Function()? set_int_null,
-//     T Function()? set_bool,
-//     T Function()? set_bool_null,
-//     T Function()? set_double,
-//     T Function()? set_double_null,
-//     T Function()? map_,
-//     T Function()? map_string_dynamic_,
-//     T Function()? map_string_bool,
-//     T Function()? map_string_int,
-//     T Function()? map_string_string,
-//     T Function()? map_string_double_,
-//     T Function()? map_string_bool_null,
-//     T Function()? map_string_int_null,
-//     T Function()? map_string_string_null,
-//     T Function()? map_string_double_null,
-//     T Function()? map_int_string,
-//     T Function()? map_int_string_null,
-//     T Function()? map_int_double,
-//     T Function()? map_int_double_null,
-//     T Function()? map_int_bool,
-//     T Function()? map_int_bool_null,
-//     T Function()? map_int_dynamic_,
-//     T Function()? date_time,
-//     T Function()? map_dynamic_dynamic_,
-//     T Function()? data,
-//     T Function()? list_data,
-//     T Function()? list_enum,
-//     T Function()? list_enum_null,
-//     T Function()? list_data_null,
-//     T Function()? null_,
-//     T Function()? none,
-//   }) =>
-//       maybeMap<T?>(
-//         orElse: () => null,
-//         enum_: enum_,
-//         string_: string_,
-//         bool_: bool_,
-//         int_: int_,
-//         double_: double_,
-//         dynamic_: dynamic_,
-//         num_: num_,
-//         list_: list_,
-//         color: color,
-//         list_bool_: list_bool_,
-//         list_other: list_other,
-//         list_int_: list_int_,
-//         list_string_: list_string_,
-//         list_double_: list_double_,
-//         list_bool_null: list_bool_null,
-//         list_int_null: list_int_null,
-//         list_string_null: list_string_null,
-//         list_double_null: list_double_null,
-//         list_dynamic_: list_dynamic_,
-//         list_map_int_string_: list_map_int_string_,
-//         list_map_int_string_null: list_map_int_string_null,
-//         list_map_int_dynamic_: list_map_int_dynamic_,
-//         list_map_string_dynamic_: list_map_string_dynamic_,
-//         list_map_string_string_: list_map_string_string_,
-//         set_: set_,
-//         set_string: set_string,
-//         set_string_null: set_string_null,
-//         set_int: set_int,
-//         set_int_null: set_int_null,
-//         set_bool: set_bool,
-//         set_bool_null: set_bool_null,
-//         set_double: set_double,
-//         set_double_null: set_double_null,
-//         map_: map_,
-//         map_string_dynamic_: map_string_dynamic_,
-//         map_string_bool: map_string_bool,
-//         map_string_int: map_string_int,
-//         map_string_string: map_string_string,
-//         map_string_double_: map_string_double_,
-//         map_string_bool_null: map_string_bool_null,
-//         map_string_int_null: map_string_int_null,
-//         map_string_string_null: map_string_string_null,
-//         map_string_double_null: map_string_double_null,
-//         map_int_string: map_int_string,
-//         map_int_string_null: map_int_string_null,
-//         map_int_double: map_int_double,
-//         map_int_double_null: map_int_double_null,
-//         map_int_bool: map_int_bool,
-//         map_int_bool_null: map_int_bool_null,
-//         map_int_dynamic_: map_int_dynamic_,
-//         date_time: date_time,
-//         map_dynamic_dynamic_: map_dynamic_dynamic_,
-//         data: data,
-//         list_data: list_data,
-//         list_enum: list_enum,
-//         list_enum_null: list_enum_null,
-//         list_data_null: list_data_null,
-//         null_: null_,
-//         none: none,
-//       );
+  static EnumStore fromName(
+    String? name, {
+    EnumStore? fallback,
+  }) {
+    switch (name) {
+      case 'AppStore':
+        return appStore;
+      case 'GooglePlay':
+        return googlePlay;
+      case 'GetApps':
+        return getApps;
+      case 'PackageInstaller':
+        return packageInstaller;
+      case 'RuStore':
+        return ruStore;
+      case 'AppGallery':
+        return appGallery;
+      case 'Other':
+        return other;
+      case 'Unknown':
+        return unknown;
+      default:
+        return fallback ??
+            (throw ArgumentError.value(
+              name,
+              '',
+              'Value not found in EnumStore',
+            ));
+    }
+  }
 
-//   T? maybeMapOrNullValue<T>({
-//     T? enum_,
-//     T? string_,
-//     T? bool_,
-//     T? int_,
-//     T? double_,
-//     T? dynamic_,
-//     T? num_,
-//     T? list_,
-//     T? color,
-//     T? list_bool_,
-//     T? list_other,
-//     T? list_int_,
-//     T? list_string_,
-//     T? list_double_,
-//     T? list_bool_null,
-//     T? list_int_null,
-//     T? list_string_null,
-//     T? list_double_null,
-//     T? list_dynamic_,
-//     T? list_map_int_string_,
-//     T? list_map_int_string_null,
-//     T? list_map_int_dynamic_,
-//     T? list_map_string_dynamic_,
-//     T? list_map_string_string_,
-//     T? set_,
-//     T? set_string,
-//     T? set_string_null,
-//     T? set_int,
-//     T? set_int_null,
-//     T? set_bool,
-//     T? set_bool_null,
-//     T? set_double,
-//     T? set_double_null,
-//     T? map_,
-//     T? map_string_dynamic_,
-//     T? map_string_bool,
-//     T? map_string_int,
-//     T? map_string_string,
-//     T? map_string_double_,
-//     T? map_string_bool_null,
-//     T? map_string_int_null,
-//     T? map_string_string_null,
-//     T? map_string_double_null,
-//     T? map_int_string,
-//     T? map_int_string_null,
-//     T? map_int_double,
-//     T? map_int_double_null,
-//     T? map_int_bool,
-//     T? map_int_bool_null,
-//     T? map_int_dynamic_,
-//     T? date_time,
-//     T? map_dynamic_dynamic_,
-//     T? data,
-//     T? list_data,
-//     T? list_enum,
-//     T? list_enum_null,
-//     T? list_data_null,
-//     T? null_,
-//     T? none,
-//   }) =>
-//       maybeMapValue<T?>(
-//         orElse: null,
-//         enum_: enum_,
-//         string_: string_,
-//         bool_: bool_,
-//         int_: int_,
-//         double_: double_,
-//         dynamic_: dynamic_,
-//         num_: num_,
-//         list_: list_,
-//         color: color,
-//         list_bool_: list_bool_,
-//         list_other: list_other,
-//         list_int_: list_int_,
-//         list_string_: list_string_,
-//         list_double_: list_double_,
-//         list_bool_null: list_bool_null,
-//         list_int_null: list_int_null,
-//         list_string_null: list_string_null,
-//         list_double_null: list_double_null,
-//         list_dynamic_: list_dynamic_,
-//         list_map_int_string_: list_map_int_string_,
-//         list_map_int_string_null: list_map_int_string_null,
-//         list_map_int_dynamic_: list_map_int_dynamic_,
-//         list_map_string_dynamic_: list_map_string_dynamic_,
-//         list_map_string_string_: list_map_string_string_,
-//         set_: set_,
-//         set_string: set_string,
-//         set_string_null: set_string_null,
-//         set_int: set_int,
-//         set_int_null: set_int_null,
-//         set_bool: set_bool,
-//         set_bool_null: set_bool_null,
-//         set_double: set_double,
-//         set_double_null: set_double_null,
-//         map_: map_,
-//         map_string_dynamic_: map_string_dynamic_,
-//         map_string_bool: map_string_bool,
-//         map_string_int: map_string_int,
-//         map_string_string: map_string_string,
-//         map_string_double_: map_string_double_,
-//         map_string_bool_null: map_string_bool_null,
-//         map_string_int_null: map_string_int_null,
-//         map_string_string_null: map_string_string_null,
-//         map_string_double_null: map_string_double_null,
-//         map_int_string: map_int_string,
-//         map_int_string_null: map_int_string_null,
-//         map_int_double: map_int_double,
-//         map_int_double_null: map_int_double_null,
-//         map_int_bool: map_int_bool,
-//         map_int_bool_null: map_int_bool_null,
-//         map_int_dynamic_: map_int_dynamic_,
-//         date_time: date_time,
-//         map_dynamic_dynamic_: map_dynamic_dynamic_,
-//         data: data,
-//         list_data: list_data,
-//         list_enum: list_enum,
-//         list_enum_null: list_enum_null,
-//         list_data_null: list_data_null,
-//         null_: null_,
-//         none: none,
-//       );
+  static EnumStore fromVendor(
+    String? vendor, {
+    EnumStore? fallback,
+  }) {
+    switch (vendor) {
+      case '(apple)':
+        return appStore;
+      case '(google)':
+        return googlePlay;
+      case '(xiaomi)':
+        return getApps;
+      case '(apk)':
+        return packageInstaller;
+      case '(vk)':
+        return ruStore;
+      case '(huawei)':
+        return appGallery;
+      case '':
+        return other;
+      case '':
+        return unknown;
+      default:
+        return fallback ??
+            (throw ArgumentError.value(
+              vendor,
+              '',
+              'Value not found in EnumStore',
+            ));
+    }
+  }
 
-//   static List<String> getValues() =>
-//       EnumTypeVarable.values.map((e) => e.value).toList();
+  T map<T>({
+    required T Function() appStore,
+    required T Function() googlePlay,
+    required T Function() getApps,
+    required T Function() packageInstaller,
+    required T Function() ruStore,
+    required T Function() appGallery,
+    required T Function() other,
+    required T Function() unknown,
+  }) {
+    switch (this) {
+      case EnumStore.appStore:
+        return appStore();
+      case EnumStore.googlePlay:
+        return googlePlay();
+      case EnumStore.getApps:
+        return getApps();
+      case EnumStore.packageInstaller:
+        return packageInstaller();
+      case EnumStore.ruStore:
+        return ruStore();
+      case EnumStore.appGallery:
+        return appGallery();
+      case EnumStore.other:
+        return other();
+      case EnumStore.unknown:
+        return unknown();
+    }
+  }
 
-//   @override
-//   int compareTo(EnumTypeVarable other) => index.compareTo(other.index);
-// }
+  T mapValue<T>({
+    required T appStore,
+    required T googlePlay,
+    required T getApps,
+    required T packageInstaller,
+    required T ruStore,
+    required T appGallery,
+    required T other,
+    required T unknown,
+  }) {
+    switch (this) {
+      case EnumStore.appStore:
+        return appStore;
+      case EnumStore.googlePlay:
+        return googlePlay;
+      case EnumStore.getApps:
+        return getApps;
+      case EnumStore.packageInstaller:
+        return packageInstaller;
+      case EnumStore.ruStore:
+        return ruStore;
+      case EnumStore.appGallery:
+        return appGallery;
+      case EnumStore.other:
+        return other;
+      case EnumStore.unknown:
+        return unknown;
+    }
+  }
 
-// extension $EnumTypeVarable on EnumTypeVarable {
-//   bool get enum_ => this == EnumTypeVarable.enum_;
-//   bool get string_ => this == EnumTypeVarable.string_;
-//   bool get bool_ => this == EnumTypeVarable.bool_;
-//   bool get int_ => this == EnumTypeVarable.int_;
-//   bool get double_ => this == EnumTypeVarable.double_;
-//   bool get dynamic_ => this == EnumTypeVarable.dynamic_;
-//   bool get num_ => this == EnumTypeVarable.num_;
-//   bool get list_ => this == EnumTypeVarable.list_;
-//   bool get color => this == EnumTypeVarable.color;
-//   bool get list_bool_ => this == EnumTypeVarable.list_bool_;
-//   bool get list_other => this == EnumTypeVarable.list_other;
-//   bool get list_int_ => this == EnumTypeVarable.list_int_;
-//   bool get list_string_ => this == EnumTypeVarable.list_string_;
-//   bool get list_double_ => this == EnumTypeVarable.list_double_;
-//   bool get list_bool_null => this == EnumTypeVarable.list_bool_null;
-//   bool get list_int_null => this == EnumTypeVarable.list_int_null;
-//   bool get list_string_null => this == EnumTypeVarable.list_string_null;
-//   bool get list_double_null => this == EnumTypeVarable.list_double_null;
-//   bool get list_dynamic_ => this == EnumTypeVarable.list_dynamic_;
-//   bool get list_map_int_string_ => this == EnumTypeVarable.list_map_int_string_;
-//   bool get list_map_int_string_null =>
-//       this == EnumTypeVarable.list_map_int_string_null;
-//   bool get list_map_int_dynamic_ =>
-//       this == EnumTypeVarable.list_map_int_dynamic_;
-//   bool get list_map_string_dynamic_ =>
-//       this == EnumTypeVarable.list_map_string_dynamic_;
-//   bool get list_map_string_string_ =>
-//       this == EnumTypeVarable.list_map_string_string_;
-//   bool get set_ => this == EnumTypeVarable.set_;
-//   bool get set_string => this == EnumTypeVarable.set_string;
-//   bool get set_string_null => this == EnumTypeVarable.set_string_null;
-//   bool get set_int => this == EnumTypeVarable.set_int;
-//   bool get set_int_null => this == EnumTypeVarable.set_int_null;
-//   bool get set_bool => this == EnumTypeVarable.set_bool;
-//   bool get set_bool_null => this == EnumTypeVarable.set_bool_null;
-//   bool get set_double => this == EnumTypeVarable.set_double;
-//   bool get set_double_null => this == EnumTypeVarable.set_double_null;
-//   bool get map_ => this == EnumTypeVarable.map_;
-//   bool get map_string_dynamic_ => this == EnumTypeVarable.map_string_dynamic_;
-//   bool get map_string_bool => this == EnumTypeVarable.map_string_bool;
-//   bool get map_string_int => this == EnumTypeVarable.map_string_int;
-//   bool get map_string_string => this == EnumTypeVarable.map_string_string;
-//   bool get map_string_double_ => this == EnumTypeVarable.map_string_double_;
-//   bool get map_string_bool_null => this == EnumTypeVarable.map_string_bool_null;
-//   bool get map_string_int_null => this == EnumTypeVarable.map_string_int_null;
-//   bool get map_string_string_null =>
-//       this == EnumTypeVarable.map_string_string_null;
-//   bool get map_string_double_null =>
-//       this == EnumTypeVarable.map_string_double_null;
-//   bool get map_int_string => this == EnumTypeVarable.map_int_string;
-//   bool get map_int_string_null => this == EnumTypeVarable.map_int_string_null;
-//   bool get map_int_double => this == EnumTypeVarable.map_int_double;
-//   bool get map_int_double_null => this == EnumTypeVarable.map_int_double_null;
-//   bool get map_int_bool => this == EnumTypeVarable.map_int_bool;
-//   bool get map_int_bool_null => this == EnumTypeVarable.map_int_bool_null;
-//   bool get map_int_dynamic_ => this == EnumTypeVarable.map_int_dynamic_;
-//   bool get date_time => this == EnumTypeVarable.date_time;
-//   bool get map_dynamic_dynamic_ => this == EnumTypeVarable.map_dynamic_dynamic_;
-//   bool get data => this == EnumTypeVarable.data;
-//   bool get list_data => this == EnumTypeVarable.list_data;
-//   bool get list_enum => this == EnumTypeVarable.list_enum;
-//   bool get list_enum_null => this == EnumTypeVarable.list_enum_null;
-//   bool get list_data_null => this == EnumTypeVarable.list_data_null;
-//   bool get null_ => this == EnumTypeVarable.null_;
-//   bool get none => this == EnumTypeVarable.none;
-// }
+  T maybeMap<T>({
+    required T Function() orElse,
+    T Function()? appStore,
+    T Function()? googlePlay,
+    T Function()? getApps,
+    T Function()? packageInstaller,
+    T Function()? ruStore,
+    T Function()? appGallery,
+    T Function()? other,
+    T Function()? unknown,
+  }) =>
+      map<T>(
+        appStore: appStore ?? orElse,
+        googlePlay: googlePlay ?? orElse,
+        getApps: getApps ?? orElse,
+        packageInstaller: packageInstaller ?? orElse,
+        ruStore: ruStore ?? orElse,
+        appGallery: appGallery ?? orElse,
+        other: other ?? orElse,
+        unknown: unknown ?? orElse,
+      );
+
+  T maybeMapValue<T>({
+    required T orElse,
+    T? appStore,
+    T? googlePlay,
+    T? getApps,
+    T? packageInstaller,
+    T? ruStore,
+    T? appGallery,
+    T? other,
+    T? unknown,
+  }) =>
+      mapValue<T>(
+        appStore: appStore ?? orElse,
+        googlePlay: googlePlay ?? orElse,
+        getApps: getApps ?? orElse,
+        packageInstaller: packageInstaller ?? orElse,
+        ruStore: ruStore ?? orElse,
+        appGallery: appGallery ?? orElse,
+        other: other ?? orElse,
+        unknown: unknown ?? orElse,
+      );
+
+  T? maybeMapOrNull<T>({
+    T Function()? appStore,
+    T Function()? googlePlay,
+    T Function()? getApps,
+    T Function()? packageInstaller,
+    T Function()? ruStore,
+    T Function()? appGallery,
+    T Function()? other,
+    T Function()? unknown,
+  }) =>
+      maybeMap<T?>(
+        orElse: () => null,
+        appStore: appStore,
+        googlePlay: googlePlay,
+        getApps: getApps,
+        packageInstaller: packageInstaller,
+        ruStore: ruStore,
+        appGallery: appGallery,
+        other: other,
+        unknown: unknown,
+      );
+
+  T? maybeMapOrNullValue<T>({
+    T? appStore,
+    T? googlePlay,
+    T? getApps,
+    T? packageInstaller,
+    T? ruStore,
+    T? appGallery,
+    T? other,
+    T? unknown,
+  }) =>
+      maybeMapValue<T?>(
+        orElse: null,
+        appStore: appStore,
+        googlePlay: googlePlay,
+        getApps: getApps,
+        packageInstaller: packageInstaller,
+        ruStore: ruStore,
+        appGallery: appGallery,
+        other: other,
+        unknown: unknown,
+      );
+
+  static List<List<String>> getListPackageId() =>
+      EnumStore.values.map((e) => e.packageId).toList();
+
+  static List<String> getListUrl() =>
+      EnumStore.values.map((e) => e.url).toList();
+
+  static List<String> getListName() =>
+      EnumStore.values.map((e) => e.name).toList();
+
+  static List<String> getListVendor() =>
+      EnumStore.values.map((e) => e.vendor).toList();
+
+  @override
+  int compareTo(EnumStore other) => index.compareTo(other.index);
+}
+
+extension $EnumStore on EnumStore {
+  bool get isAppStore => this == EnumStore.appStore;
+  bool get isGooglePlay => this == EnumStore.googlePlay;
+  bool get isGetApps => this == EnumStore.getApps;
+  bool get isPackageInstaller => this == EnumStore.packageInstaller;
+  bool get isRuStore => this == EnumStore.ruStore;
+  bool get isAppGallery => this == EnumStore.appGallery;
+  bool get isOther => this == EnumStore.other;
+  bool get isUnknown => this == EnumStore.unknown;
+}
