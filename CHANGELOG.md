@@ -1,3 +1,8 @@
+## [2.1.1] - 16.11.2023
+
+- the `enum` script has been changed, the `from{value}OrNull` method have been added to each type
+- updated documentation
+
 ## [2.0.1-2.1.0] - 13.11.2023
 
 - the `enum` script has been changed, the `from{value}` and `getList{value}` methods have been added to each type

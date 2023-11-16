@@ -146,21 +146,21 @@ If you use `VSCode`, you can add the task to your `tasks.json`
 
 After running the script, you will get additional methods and override the standard ones:
 
-- `fromValue`
+- `from...`
+- `from...OrNull`
 - `map`
 - `maybeMap`
 - `maybeMapOrNull`
 - `mapValue`
 - `maybeMapValue`
 - `maybeMapOrNullValue`
-- `getValues`
+- `getListValues`
 - `compareTo`
 - `toString`
 
 #### Example
   
 ```dart
-// turngen
 enum Speed implements Comparable<Speed> {
   stop(0),
   slow(5),
@@ -195,9 +195,26 @@ enum Speed implements Comparable<Speed> {
         return fallback ??
             (throw ArgumentError.value(
               value,
-              '',
+              'value',
               'Value not found in Speed',
             ));
+    }
+  }
+
+  static Speed? fromValueOrNull(
+    int? value,
+  ) {
+    switch (value) {
+      case 0:
+        return stop;
+      case 5:
+        return slow;
+      case 10:
+        return normal;
+      case 20:
+        return fast;
+      default:
+        return null;
     }
   }
 
@@ -293,20 +310,17 @@ enum Speed implements Comparable<Speed> {
         fast: fast,
       );
 
-  static List<int> getValues() => Speed.values.map((e) => e.value).toList();
+  static List<int> getListValue() => Speed.values.map((e) => e.value).toList();
 
   @override
   int compareTo(Speed other) => index.compareTo(other.index);
-
-  @override
-  String toString() => 'Speed.$name';
 }
 
-extension SpeedX on Speed {
-  bool get stop => this == Speed.stop;
-  bool get slow => this == Speed.slow;
-  bool get normal => this == Speed.normal;
-  bool get fast => this == Speed.fast;
+extension $Speed on Speed {
+  bool get isStop => this == Speed.stop;
+  bool get isSlow => this == Speed.slow;
+  bool get isNormal => this == Speed.normal;
+  bool get isFast => this == Speed.fast;
 }
 
 

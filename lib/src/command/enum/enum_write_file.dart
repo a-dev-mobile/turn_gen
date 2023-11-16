@@ -35,11 +35,13 @@ void enumWriteToFile(
 /* ****************************** */
 /* ****************************** */
   final fromValueSb = StringBuffer();
+  final fromValueOrNullSb = StringBuffer();
 
 /* ****************************** */
 
   for (final l in listParam) {
     final fromValueSbSwitch = StringBuffer();
+    final fromValueOrNullSwitch = StringBuffer();
     final nameValue = l.name;
     final typeEnum = l.enumTypeVarable;
     final typeStr = typeEnum.value;
@@ -61,10 +63,16 @@ void enumWriteToFile(
       );
 
       fromValueSbSwitch.write('case $valueFormat:\n');
+      fromValueOrNullSwitch.write('case $valueFormat:\n');
+
       fromValueSbSwitch.write('return ${model.listItem[i].nameEnum}');
+      fromValueOrNullSwitch.write('return ${model.listItem[i].nameEnum}');
+
       var lastSymbol = ';\n';
       if (valueRaw == l.listValue.last) lastSymbol = ';';
+
       fromValueSbSwitch.write(lastSymbol);
+      fromValueOrNullSwitch.write(lastSymbol);
     }
 /* ******************************* */
     final typeStrUpdate =
@@ -76,13 +84,24 @@ void enumWriteToFile(
 $fromValueSbSwitch
       default:
         return fallback ?? (throw ArgumentError.value(
-          $nameValue, '', 'Value not found in $nameClass',));
+          $nameValue, '$nameValue', 'Value not found in $nameClass',));
+    }
+  }
+''');
+// копия чтобы вернула null
+    fromValueOrNullSb.write('''
+  static $nameClass? from${nameValue.toTitleCase()}OrNull($typeStrUpdate $nameValue,) {
+    switch ($switchVar) {
+$fromValueOrNullSwitch
+      default:
+        return null;
     }
   }
 ''');
 
     if (typeEnum.list_string_ || typeEnum.list_string_null) {
       fromValueSb.clear();
+      fromValueOrNullSb.clear();
 
       fromValueSb.write('''
 
@@ -99,14 +118,30 @@ $fromValueSbSwitch
     return fallback ??
         (throw ArgumentError.value(
           $nameValue,
-          '',
+          '$nameClass',
           'Value not found in $nameClass',
         ));
   }
 
 ''');
+
+      fromValueOrNullSb.write('''
+
+  static $nameClass? from${nameValue.toTitleCase()}OrNull(
+    String? $nameValue,) {
+    for (final enumValue in $nameClass.values) {
+      if (enumValue.$nameValue.contains($nameValue)) {
+        return enumValue;
+      }
+    }
+
+    return null;
+  }
+
+''');
     }
   }
+
 /* ****************************** */
 
   final mapCommonSb = StringBuffer();
@@ -384,6 +419,7 @@ ${_getComment('''
   /// print(locale); // Output: LocaleEnum.en(en)
   /// ```''')}
 $fromValueSb
+$fromValueOrNullSb
 ${_getComment('''
   /// Calls the appropriate function based on the value of this [$nameClass] instance.
   ///
